@@ -6,11 +6,11 @@
 
 !/sourcemod/plugins/
 /sourcemod/plugins/*
-
+!/sourcemod/plugins/dummy*
 
 !/sourcemod/scripting/
 /sourcemod/scripting/*
-
+!/sourcemod/scripting/dummy*
 
 !/sourcemod/configs/
 /sourcemod/configs/*
