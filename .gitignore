@@ -6,11 +6,16 @@
 
 !/sourcemod/plugins/
 /sourcemod/plugins/*
-!/sourcemod/plugins/dummy*
+!/sourcemod/plugins/JailbreakFromScratch*
 
 !/sourcemod/scripting/
 /sourcemod/scripting/*
-!/sourcemod/scripting/dummy*
+!/sourcemod/scripting/JailbreakFromScratch*
+
+!/sourcemod/scripting/include/
+/sourcemod/scripting/include/*
+!/sourcemod/scripting/include/JBFS/
+!/sourcemod/scripting/include/JBFS/*
 
 !/sourcemod/configs/
 /sourcemod/configs/*
