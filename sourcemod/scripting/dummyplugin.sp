@@ -17,7 +17,7 @@ public void OnPluginStart()
     PrintToServer("Hello world!");
     RegAdminCmd("sm_myslap", Command_MySlap, ADMFLAG_SLAY);
     g_cvarMySlapDamage = CreateConVar("sm_myslap_damage","5","Default slap damage");
-    AutoExecConfig(true,"plugin_myslap","sourcemod/jbfs");
+    AutoExecConfig(true,"JBFS");
 }
 
 public Action Command_MySlap(int client, int args)
