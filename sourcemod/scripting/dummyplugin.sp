@@ -17,7 +17,7 @@ public void OnPluginStart()
     PrintToServer("Hello world!");
     RegAdminCmd("sm_myslap", Command_MySlap, ADMFLAG_SLAY);
     g_cvarMySlapDamage = CreateConVar("sm_myslap_damage","5","Default slap damage");
-    AutoExecConfig(true,"plugin_myslap");
+    AutoExecConfig(true,"jbfs/plugin_myslap");
 }
 
 public Action Command_MySlap(int client, int args)
@@ -41,7 +41,13 @@ public Action Command_MySlap(int client, int args)
     }
 
     SlapPlayer(target,damage);
-    ReplyToCommand(client, "[SM] You slapped %N for %d damage!", target, damage);
+
+    char name[MAX_NAME_LENGTH];
+ 
+    GetClientName(target, name, sizeof(name));
+ 
+    ShowActivity2(client, "[SM] ", "Slapped %s for %d damage!", name, damage);
+    LogAction(client, target, "\"%L\" slapped \"%L\" (damage %d)", client, target, damage);
 
     return Plugin_Handled;
 }
