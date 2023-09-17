@@ -10,17 +10,21 @@ public Plugin myinfo =
 	url = "https://castaway.tf/"
 };
 
+ConVar g_cvarMySlapDamage = null;
+
 public void OnPluginStart()
 {
     PrintToServer("Hello world!");
     RegAdminCmd("sm_myslap", Command_MySlap, ADMFLAG_SLAY);
+    g_cvarMySlapDamage = CreateConVar("sm_myslap_damage","5","Default slap damage");
+    AutoExecConfig(true,"plugin_myslap");
 }
 
 public Action Command_MySlap(int client, int args)
 {
     char arg1[32], arg2[32];
 
-    int damage = 0;
+    int damage = g_cvarMySlapDamage.IntValue;
 
     GetCmdArg(1,arg1,sizeof(arg1));
 
