@@ -34,20 +34,39 @@ public Action Command_MySlap(int client, int args)
         damage = StringToInt(arg2);
     }
 
-    int target = FindTarget(client,arg1);
-    if (target == -1)
+    char target_name[MAX_TARGET_LENGTH];
+    int target_list[MAXPLAYERS], target_count;
+    bool tn_is_ml;
+
+    if ((target_count = ProcessTargetString(
+                    arg1,
+                    client,
+                    target_list,
+                    MAXPLAYERS,
+                    COMMAND_FILTER_ALIVE,
+                    target_name,
+                    sizeof(target_name),
+                    tn_is_ml)) <= 0)
     {
+        ReplyToTargetError(client, target_count);
         return Plugin_Handled;
     }
 
-    SlapPlayer(target,damage);
+    for (int i = 0; i < target_count; i++)
+    {
+        SlapPlayer(target_list[i],damage);
+        LogAction(client,target_list[i],"\%L\" slapped \"%L\" (damage %d)",client,target_list[i],damage);
+    }
 
-    char name[MAX_NAME_LENGTH];
- 
-    GetClientName(target, name, sizeof(name));
- 
-    ShowActivity2(client, "[SM] ", "Slapped %s for %d damage!", name, damage);
-    LogAction(client, target, "\"%L\" slapped \"%L\" (damage %d)", client, target, damage);
+    if (tn_is_ml)
+    {
+        ShowActivity2(client,"[SM] ", "Slapped %t for %d damage!", target_name, damage);
+    }
+    else
+    {
+        ShowActivity2(client,"[SM] ", "Slapped %s for %d damage!", target_name, damage);
+
+    }
 
     return Plugin_Handled;
 }
