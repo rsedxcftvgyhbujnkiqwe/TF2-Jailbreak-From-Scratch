@@ -1,7 +1,7 @@
 #define PLUGIN_NAME         "Jailbreak From Scratch"
 #define PLUGIN_VERSION      "0.1"
 #define PLUGIN_AUTHOR       "blank"
-#define PLUGIN_DESCRIPTION  "Modern TF2 Jailbreak plugin"
+#define PLUGIN_DESCRIPTION  "Minimal TF2 Jailbreak plugin"
 
 #include <sourcemod>
 #include <sdktools>
