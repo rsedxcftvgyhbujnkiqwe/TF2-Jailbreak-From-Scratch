@@ -31,6 +31,8 @@ enum
 }
 ConVar cvarJBFS[Version+1];
 
+bool HasMic[MAXPLAYERS+1];
+
 #include <JBFS/jbfs_funcs>
 #include <JBFS/jbfs_events>
 #include <JBFS/jbfs_commands>

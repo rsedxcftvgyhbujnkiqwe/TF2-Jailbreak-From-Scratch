@@ -2,6 +2,7 @@
 stock int GetNumPlayers(const int team=0,const bool alive=false)
 {
     int AlivePlayers = 0;
+    //iterate through player indexes
     for (int i = MaxClients ; i; --i)
     {
         if (!IsClientInGame(i))
@@ -15,7 +16,7 @@ stock int GetNumPlayers(const int team=0,const bool alive=false)
     return AlivePlayers;
 }
 
-//
+//get list of player indexes by team
 stock void GetPlayers(const int team=0,const bool alive=false,int[] clients,int clientsize)
 {
     int clientCount;
@@ -31,6 +32,7 @@ stock void GetPlayers(const int team=0,const bool alive=false,int[] clients,int 
     }
 }
 
+//get random player by team
 stock int GetRandomPlayer(const int team=0,const bool alive=false)  
 {
     int playercount = GetNumPlayers(team,alive);
@@ -39,6 +41,7 @@ stock int GetRandomPlayer(const int team=0,const bool alive=false)
     return (playercount == 0) ? -1 : players[GetRandomInt(0, playercount - 1)];
 }
 
+//force player to change teams, and respawn
 stock void ForceTeamChange(const int client, const int team,const bool spawn = true )
 {
     if (TF2_GetPlayerClass(client) > TFClass_Unknown) 

@@ -28,11 +28,42 @@ public void AutoBalanceTeams()
             return;
         else
         {
-            for(int i = iBalanceNum;i>0;i--)
+            int balancecount = iBalanceNum;
+            int[] BluePlayers = new int[iNumBlue];
+            GetPlayers(BLU,true,BluePlayers,iNumBlue);
+
+            int[] MicBlues= new int[iNumBlue];
+            int[] NoMicBlues= new int[iNumBlue];
+            int MicCount, NoMicCount;
+
+            for(int i;i<iNumBlue;i++)
             {
-                int Player = GetRandomPlayer(BLU,true);
-                PrintToServer("%N autobalanced!",Player);
-                ForceTeamChange(Player,RED,true)
+                if(HasMic[BluePlayers[i]])
+                    MicBlues[MicCount++] = BluePlayers[i];
+                else
+                    NoMicBlues[NoMicCount++] = BluePlayers[i];
+            }
+
+            int NumNoMic = NoMicCount;
+            for(int i;i<NoMicCount;i++)
+            {
+                int RandPlayer = NoMicBlues[GetRandomInt(0, NumNoMic-- -1)]
+                ForceTeamChange(RandPlayer,RED,true);
+                PrintToServer("%N (no mic) autobalanced!",RandPlayer);
+                balancecount--;
+                if (!balancecount)
+                    return;
+            }
+
+            int NumMic = MicCount;
+            for(int i;i<MicCount;i++)
+            {
+                int RandPlayer = MicBlues[GetRandomInt(0, NumMic-- -1)]
+                ForceTeamChange(RandPlayer,RED,true);
+                PrintToServer("%N (mic) autobalanced!",RandPlayer);
+                balancecount--;
+                if (!balancecount)
+                    return;
             }
         }
     }
