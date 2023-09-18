@@ -32,6 +32,10 @@ enum
 ConVar cvarJBFS[Version+1];
 
 bool HasMic[MAXPLAYERS+1];
+int Warden;
+bool WardenLocked = true;
+
+#define PLUGIN_TAG = "[JBFS]"
 
 #include <JBFS/jbfs_funcs>
 #include <JBFS/jbfs_events>
@@ -49,6 +53,9 @@ public void OnPluginStart()
     AutoExecConfig(true,"JBFS");
 
     HookEvent("arena_round_start",OnArenaRoundStart);
+    HookEvent("player_disconnect",OnPlayerDisconnect);
+    HookEvent("player_death",OnPlayerDeath);
+
 
     SetConVars(true);
 

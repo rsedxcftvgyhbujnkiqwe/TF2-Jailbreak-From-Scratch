@@ -48,3 +48,47 @@ public Action Command_MySlap(int client, int args)
 
     return Plugin_Handled;
 }
+
+public Action Command_Warden(int client, int args)
+{
+    if (GetClientTeam(client)==BLU)
+    {
+        if(IsPlayerAlive(client))
+        {
+            if(HasMic[client])
+            {
+                if (!Warden)
+                {
+                    if (WardenLocked){
+
+                    }
+                    else
+                    {
+                        PrintToChat(client,"[JBFS] Warden is locked!",Warden);
+                        return Plugin_Handled;
+                    }
+                }
+                else
+                {
+                    PrintToChat(client,"[JBFS] %N is already warden!",Warden);
+                    return Plugin_Handled;
+                }
+            }
+            else
+            {
+                PrintToChat(client,"[JBFS] You must use a mic to become warden!");
+                return Plugin_Handled;
+            }
+        }
+        else
+        {
+            PrintToChat(client,"[JBFS] Must be on alive to become warden!");
+            return Plugin_Handled;
+        }
+    }
+    else
+    {
+        PrintToChat(client,"[JBFS] Must be on BLU to become warden!");
+        return Plugin_Handled;
+    }
+}
