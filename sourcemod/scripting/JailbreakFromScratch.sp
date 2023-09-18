@@ -5,6 +5,8 @@
 
 #include <sourcemod>
 #include <sdktools>
+#include <tf2>
+#include <tf2_stocks>
 
 public Plugin myinfo =
 {
@@ -15,8 +17,11 @@ public Plugin myinfo =
 	url = "https://github.com/rsedxcftvgyhbujnkiqwe/TF2-Jailbreak-From-Scratch"
 };
 
-#define RED 2
-#define BLU 3
+enum
+{
+    RED=2,
+    BLU
+}
 
 enum 
 {

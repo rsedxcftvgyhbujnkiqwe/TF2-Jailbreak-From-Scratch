@@ -4,12 +4,18 @@ public void AutoBalanceTeams()
     int iNumBlue = GetNumPlayers(BLU,true);
     int iNumRed = GetNumPlayers(RED,true);
     int iTotalPlayers = iNumBlue+iNumRed
-    //current ratio
-    float flRatio = float(iNumBlue)/float(iNumBlue);
-    //diff between target ratio and current
-    float flDiff = flRatio - flBalanceRatio;
+    float flRatio;
+    float flDiff = 1.0;
+    if(iNumRed>0)
+    {
+        //current ratio
+        flRatio = float(iNumBlue)/float(iNumRed);
+        //diff between target ratio and current
+        flDiff = flRatio - flBalanceRatio;
+    }
     //if diff <=0, ratio is already achieved
-    if (flDiff <= 0)
+    //edge case of 1 red 1 blue also handled
+    if (flDiff <= 0 || (iTotalPlayers==2 && iNumBlue==2))
         return;
     else
     {
@@ -25,7 +31,8 @@ public void AutoBalanceTeams()
             for(int i = iBalanceNum;i>0;i--)
             {
                 int Player = GetRandomPlayer(BLU,true);
-                PrintToServer("%N set to be autobalanced!",Player);
+                PrintToServer("%N autobalanced!",Player);
+                ForceTeamChange(Player,RED,true)
             }
         }
     }
