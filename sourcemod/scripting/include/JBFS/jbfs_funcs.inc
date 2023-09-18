@@ -15,7 +15,7 @@ public void AutoBalanceTeams()
     }
     //if diff <=0, ratio is already achieved
     //edge case of 1 red 1 blue also handled
-    if (flDiff <= 0 || (iTotalPlayers==2 && iNumBlue==2))
+    if (flDiff <= 0 || (iTotalPlayers==2 && iNumBlue==1))
         return;
     else
     {
