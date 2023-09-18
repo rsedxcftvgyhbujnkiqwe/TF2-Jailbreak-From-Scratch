@@ -28,14 +28,20 @@ public void AutoBalanceTeams()
             return;
         else
         {
+            //temp var that will be decremented
             int balancecount = iBalanceNum;
+            //get all blues
             int[] BluePlayers = new int[iNumBlue];
             GetPlayers(BLU,true,BluePlayers,iNumBlue);
 
+            //mic balancing is done by first autobalancing those without mic
+            //and after that, balancing those with mic
             int[] MicBlues= new int[iNumBlue];
             int[] NoMicBlues= new int[iNumBlue];
             int MicCount, NoMicCount;
 
+            //get arrays of mic/nomic
+            //MicBlues is a global bool array for whether every client has a mic
             for(int i;i<iNumBlue;i++)
             {
                 if(HasMic[BluePlayers[i]])
@@ -44,6 +50,7 @@ public void AutoBalanceTeams()
                     NoMicBlues[NoMicCount++] = BluePlayers[i];
             }
 
+            //iterate through nomics
             int NumNoMic = NoMicCount;
             for(int i;i<NoMicCount;i++)
             {
@@ -55,6 +62,7 @@ public void AutoBalanceTeams()
                     return;
             }
 
+            //iterate through mics
             int NumMic = MicCount;
             for(int i;i<MicCount;i++)
             {
@@ -66,5 +74,28 @@ public void AutoBalanceTeams()
                     return;
             }
         }
+    }
+}
+
+public void SetConvars(const bool side)
+{
+    if(side)
+    {
+        FindConVar("mp_stalemate_enable").SetInt(0);
+        FindConVar("tf_arena_use_queue").SetInt(0);
+        FindConVar("mp_teams_unbalance_limit").SetInt(0);
+        FindConVar("mp_autoteambalance").SetInt(0);
+        FindConVar("tf_arena_first_blood").SetInt(0);
+        FindConVar("mp_scrambleteams_auto").SetInt(0);
+        FindConVar("phys_pushscale").SetInt(1000);
+    }
+    else
+    {
+        FindConVar("mp_stalemate_enable").SetInt(1);
+        FindConVar("tf_arena_use_queue").SetInt(1);
+        FindConVar("mp_teams_unbalance_limit").SetInt(1);
+        FindConVar("mp_autoteambalance").SetInt(1);
+        FindConVar("tf_arena_first_blood").SetInt(1);
+        FindConVar("mp_scrambleteams_auto").SetInt(1);
     }
 }

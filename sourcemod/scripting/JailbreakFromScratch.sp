@@ -41,14 +41,21 @@ bool HasMic[MAXPLAYERS+1];
 public void OnPluginStart()
 {
     cvarJBFS[SlapDamage] = CreateConVar("sm_myslap_damage","5","Default slap damage");
-    cvarJBFS[BalanceRatio] = CreateConVar("sm_jbfs_balanceratio","0.5","Default balance ratio",FCVAR_NOTIFY,true,0.1,true,1.0)
+    cvarJBFS[BalanceRatio] = CreateConVar("sm_jbfs_balanceratio","0.5","Default balance ratio",FCVAR_NOTIFY,true,0.1,true,1.0);
     cvarJBFS[Version] = CreateConVar("jbfs_version",PLUGIN_VERSION,PLUGIN_NAME,FCVAR_REPLICATED | FCVAR_NOTIFY | FCVAR_SPONLY | FCVAR_DONTRECORD);
 
     RegAdminCmd("sm_myslap", Command_MySlap, ADMFLAG_SLAY);
     RegAdminCmd("sm_ms", Command_MySlap, ADMFLAG_SLAY);
     AutoExecConfig(true,"JBFS");
 
-    HookEvent("arena_round_start",OnArenaRoundStart)
+    HookEvent("arena_round_start",OnArenaRoundStart);
 
-    LoadTranslations("common.phrases")
+    SetCvars(true);
+
+    LoadTranslations("common.phrases");
+}
+
+public void OnPluginEnd()
+{
+    SetCvars(false);
 }
