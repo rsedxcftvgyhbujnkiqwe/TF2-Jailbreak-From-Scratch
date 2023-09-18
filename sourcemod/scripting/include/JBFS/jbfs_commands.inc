@@ -7,9 +7,9 @@ public Action Command_Warden(int client, int args)
         {
             if(HasMic[client])
             {
-                if (!Warden)
+                if (!JBFS.Warden)
                 {
-                    if (!WardenLocked){
+                    if (!JBFS.WardenLocked){
                         SetWarden(client);
                     }
                     else
@@ -20,7 +20,7 @@ public Action Command_Warden(int client, int args)
                 }
                 else
                 {
-                    CPrintToChat(client,"%t %t","PluginTag","WardenWarnTaken",Warden);
+                    CPrintToChat(client,"%t %t","PluginTag","WardenWarnTaken",JBFS.Warden);
                     return Plugin_Handled;
                 }
             }
@@ -46,7 +46,7 @@ public Action Command_Warden(int client, int args)
 
 public Action Command_UnWarden(int client, int args)
 {
-    if (client == Warden)
+    if (client == JBFS.Warden)
     {
         RemoveWarden(UW_Retire);
     }

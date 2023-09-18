@@ -17,34 +17,7 @@ public Plugin myinfo =
 	url = "https://github.com/rsedxcftvgyhbujnkiqwe/TF2-Jailbreak-From-Scratch"
 };
 
-enum
-{
-    RED=2,
-    BLU
-}
-
-enum 
-{
-    BalanceRatio=0,
-    Version
-}
-ConVar cvarJBFS[Version+1];
-
-enum
-{
-    W_Chose=0,
-    W_Force,
-    W_Random,
-    UW_Retire=0,
-    UW_Force,
-    UW_Death,
-    UW_Disconnect
-}
-
-bool HasMic[MAXPLAYERS+1];
-int Warden;
-bool WardenLocked = true;
-
+#include <JBFS/jbfs_vars>
 #include <JBFS/jbfs_events>
 #include <JBFS/jbfs_commands>
 #include <JBFS/jbfs_stocks>
@@ -65,9 +38,11 @@ public void OnPluginStart()
     //admin commands
 
     //hook gameevents for use as functions
+	HookEvent("teamplay_round_start",OnPreRoundStart);
     HookEvent("arena_round_start",OnArenaRoundStart);
     HookEvent("player_disconnect",OnPlayerDisconnect);
     HookEvent("player_death",OnPlayerDeath);
+    HookEvent("player_spawn",OnPlayerSpawn);
 
     SetConVars(true);
 

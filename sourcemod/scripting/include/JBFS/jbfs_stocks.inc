@@ -44,7 +44,7 @@ stock void AutoBalanceTeams()
             //HasMic is a global bool array for whether every client has a mic
             for(int i;i<iNumBlue;i++)
             {
-                if(HasMic[BluePlayers[i]])
+                if(JBFS.HasMic[BluePlayers[i]])
                     MicBlues[MicCount++] = BluePlayers[i];
                 else
                     NoMicBlues[NoMicCount++] = BluePlayers[i];
@@ -106,7 +106,8 @@ stock void SetConVars(const bool side)
 
 stock bool SetWarden(int client,int reason)
 {
-    Warden = client;
+    JBFS.Warden = client;
+    JBFS.WardenLocked = true;
     switch (reason)
     {
         case W_Chose:
@@ -126,7 +127,8 @@ stock bool SetWarden(int client,int reason)
 
 stock bool RemoveWarden(int reason)
 {
-    Warden = 0;
+    JBFS.Warden = 0;
+    JBFS.WardenLocked = false;
     switch (reason)
     {
         case UW_Retire:
@@ -145,5 +147,22 @@ stock bool RemoveWarden(int reason)
         {
             CPrintToChatAll("%t %t","PluginTag","WardenUWDisconnect",client);
         }
+    }
+}
+
+stock void RemoveAmmo(int client)
+{
+    int weapon;
+	int length = GetEntPropArraySize(client, Prop_Send, "m_hMyWeapons");
+    for (int i;i < length; i++)
+    {
+        weapon = GetEntPropEnt(client,Prop_Send,"m_hMyWeapons",i);
+        if (GetEntProp(weapon, Prop_Data, "m_iClip1") != -1)
+            SetEntProp(weapon, Prop_Send, "m_iClip1", 0);
+
+        if (GetEntProp(weapon, Prop_Data, "m_iClip2") != -1)
+            SetEntProp(weapon, Prop_Send, "m_iClip2", 0);
+        int reserve = GetEntProp(weapon,Prop_Send,"m_iPrimaryAmmoType");
+        SetEntProp(client,Prop_Send,"m_iAmmo",reserve);
     }
 }
