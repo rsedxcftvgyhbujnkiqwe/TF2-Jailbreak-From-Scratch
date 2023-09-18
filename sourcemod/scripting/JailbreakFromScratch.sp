@@ -50,12 +50,12 @@ public void OnPluginStart()
 
     HookEvent("arena_round_start",OnArenaRoundStart);
 
-    SetCvars(true);
+    SetConVars(true);
 
     LoadTranslations("common.phrases");
 }
 
 public void OnPluginEnd()
 {
-    SetCvars(false);
+    SetConVars(false);
 }

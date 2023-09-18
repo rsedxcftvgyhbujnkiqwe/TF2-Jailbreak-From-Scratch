@@ -77,7 +77,7 @@ public void AutoBalanceTeams()
     }
 }
 
-public void SetConvars(const bool side)
+public void SetConVars(const bool side)
 {
     if(side)
     {
