@@ -1,0 +1,70 @@
+"Phrases"
+{
+    "PluginTag"
+    {
+        "en"        "{day9}[JBFS]{wheat}"
+    }
+    "WardenWarnLocked"
+    {
+        "en"        "Warden is locked."
+    }
+    "WardenWarnTaken"
+    {
+        "#format"   "{1:N}"
+        "en"        "{1} is currently the warden."
+    }
+    "WardenWarnNoMic"
+    {
+        "en"        "You must have a microphone to become warden. Use it at least once."
+    }
+    "WardenWarnDead"
+    {
+        "en"        "Must be alive to become warden."
+    }
+    "WardenWarnNotBlue"
+    {
+        "en"        "Must be on BLU to become warden."
+    }
+    "WardenWarnNotWarden"
+    {
+        "en"        "You are not the warden."
+    }
+    "WardenWChose"
+    {
+        "#format"   "{1:N}"
+        "en"        "{unique}{1}{wheat} has chosen to become Warden."
+    }
+    "WardenWForce"
+    {
+        "#format"   "{1:N}"
+        "en"        "{unique}{1}{wheat} was forced to become Warden by an admin."
+    }
+    "WardenWRandom"
+    {
+        "#format"   "{1:N}"
+        "en"        "{unique}{1}{wheat} was randomly selected to become Warden."
+    }
+    "WardenUWRetire"
+    {
+        "#format"   "{1:N}"
+        "en"        "{unique}{1}{wheat} has retired from Warden."
+    }
+    "WardenUWForce"
+    {
+        "#format"   "{1:N}"
+        "en"        "{unique}{1}{wheat} was forced to step down from Warden by an admin."
+
+    }
+    "WardenUWDeath"
+    {
+        "#format"   "{1:N}"
+        "en"        "{unique}{1}{wheat} has died as Warden!"
+
+    }
+    "WardenUWDisconnect"
+    {
+        "#format"   "{1:N}"
+        "en"        "{unique}{1}{wheat} has disconnected as Warden."
+
+    }
+}

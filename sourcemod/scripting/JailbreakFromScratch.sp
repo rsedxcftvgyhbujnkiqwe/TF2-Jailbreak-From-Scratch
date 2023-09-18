@@ -25,41 +25,59 @@ enum
 
 enum 
 {
-    SlapDamage=0,
-    BalanceRatio,
+    BalanceRatio=0,
     Version
 }
 ConVar cvarJBFS[Version+1];
+
+enum
+{
+    W_Chose=0,
+    W_Force,
+    W_Random,
+    UW_Retire=0,
+    UW_Force,
+    UW_Death,
+    UW_Disconnect
+}
 
 bool HasMic[MAXPLAYERS+1];
 int Warden;
 bool WardenLocked = true;
 
-#define PLUGIN_TAG = "[JBFS]"
-
-#include <JBFS/jbfs_funcs>
 #include <JBFS/jbfs_events>
 #include <JBFS/jbfs_commands>
+#include <JBFS/jbfs_stocks>
 #include <JBFS/stocks>
+
+#include <morecolors>
 
 public void OnPluginStart()
 {
-    cvarJBFS[SlapDamage] = CreateConVar("sm_myslap_damage","5","Default slap damage");
+    //register cvars
     cvarJBFS[BalanceRatio] = CreateConVar("sm_jbfs_balanceratio","0.5","Default balance ratio",FCVAR_NOTIFY,true,0.1,true,1.0);
     cvarJBFS[Version] = CreateConVar("jbfs_version",PLUGIN_VERSION,PLUGIN_NAME,FCVAR_REPLICATED | FCVAR_NOTIFY | FCVAR_SPONLY | FCVAR_DONTRECORD);
-
-    RegAdminCmd("sm_myslap", Command_MySlap, ADMFLAG_SLAY);
-    RegAdminCmd("sm_ms", Command_MySlap, ADMFLAG_SLAY);
     AutoExecConfig(true,"JBFS");
 
+    //regular commands
+    RegConsoleCmd("sm_w",Command_Warden);
+    RegConsoleCmd("sm_warden",Command_Warden);
+    //admin commands
+
+    //hook gameevents for use as functions
     HookEvent("arena_round_start",OnArenaRoundStart);
     HookEvent("player_disconnect",OnPlayerDisconnect);
     HookEvent("player_death",OnPlayerDeath);
 
-
     SetConVars(true);
 
+    //add custom color(s) to morecolors
+    CCheckTrie();
+    SetTrieValue(CTrie,"day9",0xFFA71A);
+
+    //import translations
     LoadTranslations("common.phrases");
+    LoadTranslations("jbfs.phrases");
 }
 
 public void OnPluginEnd()
