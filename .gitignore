@@ -20,4 +20,6 @@
 !/sourcemod/configs/
 /sourcemod/configs/*
 
-
+!/sourcemod/translations/
+/sourcemod/translations/*
+!/sourcemod/translations/jbfs.phrases.txt
