@@ -164,9 +164,21 @@ stock void RemoveAmmo(int client)
 
             if (GetEntProp(weapon, Prop_Data, "m_iClip2") != -1)
                 SetEntProp(weapon, Prop_Send, "m_iClip2", 0);
-
-            int reserve = GetEntProp(weapon,Prop_Send,"m_iPrimaryAmmoType");
-            SetEntProp(client,Prop_Send,"m_iAmmo",0,.element=reserve);
+            SetWeaponAmmo(weapon,0);
         }
     }
+}
+
+stock int SetWeaponAmmo(const int weapon, const int ammo)
+{
+	int owner = GetEntPropEnt(weapon, Prop_Send, "m_hOwnerEntity");
+	if (owner <= 0)
+		return 0;
+	if (IsValidEntity(weapon))
+	{
+		int iOffset = GetEntProp(weapon, Prop_Send, "m_iPrimaryAmmoType", 1)*4;
+		int iAmmoTable = FindSendPropInfo("CTFPlayer", "m_iAmmo");
+		SetEntData(owner, iAmmoTable+iOffset, ammo, 4, true);
+	}
+	return 0;
 }

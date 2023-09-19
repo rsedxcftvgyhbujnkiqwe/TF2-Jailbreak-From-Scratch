@@ -11,6 +11,7 @@ public void OnArenaRoundStart(Event event, const char[] name, bool dontBroadcast
 public void OnPlayerSpawn(Event event, const char[] name, bool dontBroadcast)
 {
     int client = event.GetInt("userid");
+    PrintToServer("%N just spawned!",client)
     if (GetClientTeam(client)==RED)
     {
         RemoveAmmo(client);
