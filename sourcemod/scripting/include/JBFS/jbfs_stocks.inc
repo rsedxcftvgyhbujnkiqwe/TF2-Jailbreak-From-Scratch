@@ -157,12 +157,16 @@ stock void RemoveAmmo(int client)
     for (int i;i < length; i++)
     {
         weapon = GetEntPropEnt(client,Prop_Send,"m_hMyWeapons",i);
-        if (GetEntProp(weapon, Prop_Data, "m_iClip1") != -1)
-            SetEntProp(weapon, Prop_Send, "m_iClip1", 0);
+        if (weapon != -1)
+        {
+            if (GetEntProp(weapon, Prop_Data, "m_iClip1") != -1)
+                SetEntProp(weapon, Prop_Send, "m_iClip1", 0);
 
-        if (GetEntProp(weapon, Prop_Data, "m_iClip2") != -1)
-            SetEntProp(weapon, Prop_Send, "m_iClip2", 0);
-        int reserve = GetEntProp(weapon,Prop_Send,"m_iPrimaryAmmoType");
-        SetEntProp(client,Prop_Send,"m_iAmmo",reserve);
+            if (GetEntProp(weapon, Prop_Data, "m_iClip2") != -1)
+                SetEntProp(weapon, Prop_Send, "m_iClip2", 0);
+
+            int reserve = GetEntProp(weapon,Prop_Send,"m_iPrimaryAmmoType");
+            SetEntProp(client,Prop_Send,"m_iAmmo",0,.element=reserve);
+        }
     }
 }
