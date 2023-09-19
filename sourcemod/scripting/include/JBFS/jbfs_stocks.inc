@@ -105,8 +105,14 @@ stock void SetConVars(const bool side)
 
 stock void SetWarden(int client,int reason)
 {
+    //generally don't call LockWarden() if you dont want the chat msg
     JBFS.Warden = client;
     JBFS.WardenLocked = true;
+    //we just set warden + wardenlock, so no need for this anymore
+    if(JBFS.WardenLockTimer) {
+        KillTimer(JBFS.WardenLockTimer);
+        JBFS.WardenLockTimer = INVALID_HANDLE;
+    }
     switch (reason)
     {
         case W_Chose:
@@ -127,27 +133,91 @@ stock void SetWarden(int client,int reason)
 stock void RemoveWarden(int reason)
 {
     int currentwarden = JBFS.Warden;
-    JBFS.Warden = 0;
-    JBFS.WardenLocked = false;
     switch (reason)
     {
         case UW_Retire:
         {
             CPrintToChatAll("%t %t","PluginTag","WardenUWRetire",currentwarden);
+            UnlockWarden();
         }
         case UW_Force:
         {
+            JBFS.Warden = 0;
+            JBFS.WardenLocked = false;
             CPrintToChatAll("%t %t","PluginTag","WardenUWForce",currentwarden);
         }
         case UW_Death:
         {
             CPrintToChatAll("%t %t","PluginTag","WardenUWDeath",currentwarden);
+            UnlockWarden();
         }
         case UW_Disconnect:
         {
             CPrintToChatAll("%t %t","PluginTag","WardenUWDisconnect",currentwarden);
+            UnlockWarden();
         }
     }
+}
+
+//choose a random warden
+stock void ChooseWarden(bool adminforce = false)
+{
+    if (!JBFS.Warden || adminforce)
+    {
+        //get blues
+        int[] BluePlayers = new int[iNumBlue];
+        GetPlayers(BLU,true,BluePlayers,iNumBlue);
+
+        //do nothing if no blues available
+        if (iNumBlue == 0) return;
+    
+        //get arrays of mic/nomic
+        //HasMic is a global bool array for whether every client has a mic
+        int[] MicBlues= new int[iNumBlue];
+        int MicCount;
+        for(int i;i<iNumBlue;i++)
+        {
+            if(JBFS.HasMic[BluePlayers[i]]) MicBlues[MicCount++] = BluePlayers[i];
+        }
+
+        if (MicCount==0){
+            //nobody with mic eligible
+            CPrintToChatAll("%t %t","PluginTag","WardenChooseNone")
+            UnlockWarden()
+            return;
+        }
+        //set client to ignore if being admin forced
+        //this prevents the current warden from being re-set to warden
+        int clientignore;
+        if(adminforce) clientignore = JBFS.Warden;
+
+        //number of blues who can become warden
+        int NumEligible = MicCount - 1;
+        if (clientignore) NumEligible--;
+
+        //select random player until valid one selected
+        int RandPlayer;
+        do RandPlayer = MicBlues[GetRandomInt(0,MicCount-1)];
+        while (NumEligible > 0 && RandPlayer == clientignore);
+
+        if (JBFS.Warden && adminforce) RemoveWarden(UW_Force);
+
+        SetWarden(RandPlayer,W_Random);
+    }
+}
+
+stock void LockWarden()
+{
+    JBFS.WardenLocked = true;
+    CPrintToChatAll("%t %t","PluginTag","WardenLock")
+}
+
+stock void UnlockWarden()
+{
+    JBFS.WardenLocked = false;
+    CPrintToChatAll("%t %t","PluginTag","WardenUnlock")
+    //if no one goes warden in 30s, lock it
+    JBFS.WardenLockTimer = CreateTimer(30.0,Timer_LockWarden)
 }
 
 stock void RemoveAmmo(int client)

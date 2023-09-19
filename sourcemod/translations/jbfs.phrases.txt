@@ -11,7 +11,7 @@
     "WardenWarnTaken"
     {
         "#format"   "{1:N}"
-        "en"        "{1} is currently the warden."
+        "en"        "{unique}{1}{wheat} is currently the warden."
     }
     "WardenWarnNoMic"
     {
@@ -28,6 +28,20 @@
     "WardenWarnNotWarden"
     {
         "en"        "You are not the warden."
+    }
+    "WardenWarnAdminInvalid"
+    {
+        "#format"   "{1:N}"
+        "en"        "{unique}{1}{wheat} is ineligible to become Warden."
+    }
+    "WardenWarnAdminRedundant"
+    {
+        "#format"   "{1:N}"
+        "en"        "{unique}{1}{wheat} is already the Warden."
+    }
+    "WardenWarnAdminNone"
+    {
+        "en"        "There is no Warden."
     }
     "WardenWChose"
     {
@@ -53,18 +67,27 @@
     {
         "#format"   "{1:N}"
         "en"        "{unique}{1}{wheat} was forced to step down from Warden by an admin."
-
     }
     "WardenUWDeath"
     {
         "#format"   "{1:N}"
         "en"        "{unique}{1}{wheat} has died as Warden!"
-
     }
     "WardenUWDisconnect"
     {
         "#format"   "{1:N}"
         "en"        "{unique}{1}{wheat} has disconnected as Warden."
-
+    }
+    "WardenChooseNone"
+    {
+        "en"        "No players eligible to become warden. Guards must have a microphone to become the Warden."
+    }
+    "WardenLock"
+    {
+        "en"        "Warden has been locked."
+    }
+    "WardenUnlock"
+    {
+        "en"        "Warden has been unlocked."
     }
 }

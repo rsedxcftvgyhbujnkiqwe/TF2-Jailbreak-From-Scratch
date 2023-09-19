@@ -27,6 +27,7 @@ enum struct gamemode
     bool HasMic[MAXPLAYERS+1];
     int Warden;
     bool WardenLocked;
+    Handle WardenLockTimer;
 }
 public gamemode JBFS;
 

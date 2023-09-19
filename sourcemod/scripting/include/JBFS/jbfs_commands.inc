@@ -54,3 +54,72 @@ public Action Command_UnWarden(int client, int args)
 }
 
 //Admin Commands
+public Action Command_Admin_ForceWarden(int client, int args)
+{
+    //handle no arg first
+    //if none, select random
+    if (args == 0) ChooseWarden(true);
+
+    char arg[32];
+	GetCmdArg(1, arg, sizeof(arg));
+    int target = FindTarget(client, arg);
+	if (target == -1) return Plugin_Handled;
+    //is target eligible to be warden?
+    if (IsClientInGame(target)&& IsPlayerAlive(target) && GetClientTeam(target)==BLU){
+        if (target != JBFS.Warden)
+        {
+            RemoveWarden(UW_Force);
+            SetWarden(target,W_Force);
+        }
+        else
+        {
+            CPrintToChat(client,"%t %t","PluginTag","WardenWarnAdminRedundant");
+        }
+    } 
+    else
+    {
+        CPrintToChat(client,"%t %t","PluginTag","WardenWarnAdminInvalid");
+    }
+    return Plugin_Handled;
+}
+
+public Action Command_Admin_ForceUnWarden(int client, int args)
+{
+    if (JBFS.Warden)
+    {
+        RemoveWarden(UW_Force);
+    }
+    else
+    {
+        CPrintToChat(client,"%t %t","PluginTag","WardenWarnAdminNone");
+    }
+    return Plugin_Handled;
+}
+
+public Action Command_Admin_LockWarden(int client, int args)
+{
+    if(JBFS.WardenLockTimer)
+    {
+        KillTimer(JBFS.WardenLockTimer);
+        JBFS.WardenLockTimer = INVALID_HANDLE;
+    }
+    if(JBFS.WardenLocked)
+    {
+        CPrintToChat(client,"%t %t","PluginTag","WardenLock")
+        return Plugin_Handled;
+    }
+    LockWarden();
+    return Plugin_Handled;
+}
+
+public Action Command_Admin_UnlockWarden(int client, int args)
+{
+    if(!JBFS.WardenLocked)
+    {
+        CPrintToChat(client,"%t %t","PluginTag","WardenUnlock")
+        return Plugin_Handled;
+    }
+    UnlockWarden();
+    return Plugin_Handled;
+    
+}

@@ -37,7 +37,16 @@ public void OnPluginStart()
     RegConsoleCmd("sm_warden",Command_Warden);
     RegConsoleCmd("sm_uw",Command_UnWarden);
     RegConsoleCmd("sm_unwarden",Command_UnWarden);
+
     //admin commands
+    RegConsoleCmd("sm_fw",Command_Admin_ForceWarden,Admin_Generic);
+    RegConsoleCmd("sm_forcewarden",Command_Admin_ForceWarden,Admin_Generic);
+    RegConsoleCmd("sm_fuw",Command_Admin_ForceUnWarden,Admin_Generic);
+    RegConsoleCmd("sm_forceunwarden",Command_Admin_ForceUnWarden,Admin_Generic);
+    RegConsoleCmd("sm_lw",Command_Admin_LockWarden,Admin_Generic);
+    RegConsoleCmd("sm_lockwarden",Command_Admin_LockWarden,Admin_Generic);
+    RegConsoleCmd("sm_ulw",Command_Admin_UnlockWarden,Admin_Generic);
+    RegConsoleCmd("sm_unlockwarden",Command_Admin_UnlockWarden,Admin_Generic);
 
     //hook gameevents for use as functions
     HookEvent("teamplay_round_start",OnPreRoundStart);
