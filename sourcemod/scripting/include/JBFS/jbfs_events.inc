@@ -8,14 +8,16 @@ public void OnArenaRoundStart(Event event, const char[] name, bool dontBroadcast
     AutoBalanceTeams();
 }
 
-public void OnPlayerSpawn(Event event, const char[] name, bool dontBroadcast)
+public Action OnPlayerSpawn(Event event, const char[] name, bool dontBroadcast)
 {
-    int client = event.GetInt("userid");
-    PrintToServer("%N just spawned!",client)
+    int client = GetClientOfUserId(event.GetInt("userid"));
+    if (!IsClientInGame(client))
+        return Plugin_Continue;
     if (GetClientTeam(client)==RED)
     {
         RemoveAmmo(client);
     }
+    return Plugin_Handled;
 }
 
 public void OnPlayerDeath(Event event, const char[] name, bool dontBroadcast)
