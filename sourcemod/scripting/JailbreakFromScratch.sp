@@ -35,6 +35,8 @@ public void OnPluginStart()
     //regular commands
     RegConsoleCmd("sm_w",Command_Warden);
     RegConsoleCmd("sm_warden",Command_Warden);
+    RegConsoleCmd("sm_uw",Command_UnWarden);
+    RegConsoleCmd("sm_unwarden",Command_UnWarden);
     //admin commands
 
     //hook gameevents for use as functions
