@@ -38,7 +38,7 @@ public void OnPluginStart()
     //admin commands
 
     //hook gameevents for use as functions
-	HookEvent("teamplay_round_start",OnPreRoundStart);
+    HookEvent("teamplay_round_start",OnPreRoundStart);
     HookEvent("arena_round_start",OnArenaRoundStart);
     HookEvent("player_disconnect",OnPlayerDisconnect);
     HookEvent("player_death",OnPlayerDeath);

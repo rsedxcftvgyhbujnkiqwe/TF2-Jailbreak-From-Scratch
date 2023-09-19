@@ -5,42 +5,38 @@ public Action Command_Warden(int client, int args)
     {
         if(IsPlayerAlive(client))
         {
-            if(HasMic[client])
+            if(JBFS.HasMic[client])
             {
                 if (!JBFS.Warden)
                 {
                     if (!JBFS.WardenLocked){
-                        SetWarden(client);
+                        SetWarden(client,W_Chose);
                     }
                     else
                     {
                         CPrintToChat(client,"%t %t","PluginTag","WardenWarnLocked");
-                        return Plugin_Handled;
                     }
                 }
                 else
                 {
                     CPrintToChat(client,"%t %t","PluginTag","WardenWarnTaken",JBFS.Warden);
-                    return Plugin_Handled;
                 }
             }
             else
             {
                 CPrintToChat(client,"%t %t","PluginTag","WardenWarnNoMic");
-                return Plugin_Handled;
             }
         }
         else
         {
             CPrintToChat(client,"%t %t","PluginTag","WardenWarnDead");
-            return Plugin_Handled;
         }
     }
     else
     {
         CPrintToChat(client,"%t %t","PluginTag","WardenWarnNotBlue");
-        return Plugin_Handled;
     }
+    return Plugin_Handled;
 }
 
 
@@ -53,8 +49,8 @@ public Action Command_UnWarden(int client, int args)
     else
     {
         CPrintToChat(client,"%t %t","PluginTag","WardenWarnNotWarden");
-        return Plugin_Handled;
     }
+    return Plugin_Handled;
 }
 
 //Admin Commands

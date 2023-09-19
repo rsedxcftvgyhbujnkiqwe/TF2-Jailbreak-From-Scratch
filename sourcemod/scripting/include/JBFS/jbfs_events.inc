@@ -1,4 +1,4 @@
-public void OnArenaRoundStart(Event event, const char[] name, bool dontBroadcast)
+public void OnPreRoundStart(Event event, const char[] name, bool dontBroadcast)
 {
     JBFS.WardenLocked = true;
 }
@@ -11,7 +11,7 @@ public void OnArenaRoundStart(Event event, const char[] name, bool dontBroadcast
 public void OnPlayerSpawn(Event event, const char[] name, bool dontBroadcast)
 {
     int client = event.GetInt("userid");
-    if (GetPlayerTeam(client)==RED)
+    if (GetClientTeam(client)==RED)
     {
         RemoveAmmo(client);
     }
@@ -38,5 +38,5 @@ public void OnPlayerDisconnect(Event event, const char[] name, bool dontBroadcas
 
 public void OnClientSpeaking(int client)
 {
-    HasMic[client] = true;
+    JBFS.HasMic[client] = true;
 }

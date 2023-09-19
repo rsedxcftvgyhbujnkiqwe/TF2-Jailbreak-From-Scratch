@@ -53,3 +53,15 @@ stock void ForceTeamChange(const int client, const int team,const bool spawn = t
             TF2_RespawnPlayer(client);
     }
 }
+
+stock bool RemoveFromIntArray(int[] array,int length, int index)
+{
+    if (index < 0 || index >= length)
+        return false;
+    for(int i = index; i < length - 1; i++)
+    {
+        array[i] = array[i + 1];
+    }
+    array[length - 1] = 0;
+    return true;
+}

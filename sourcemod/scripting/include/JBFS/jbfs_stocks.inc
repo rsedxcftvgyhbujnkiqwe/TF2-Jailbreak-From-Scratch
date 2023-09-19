@@ -58,12 +58,11 @@ stock void AutoBalanceTeams()
                 int RandPlayer = NoMicBlues[RandIndex];
                 ForceTeamChange(RandPlayer,RED,true);
                 PrintToServer("%N (no mic) autobalanced!",RandPlayer);
-                RemoveFromArray(NoMicBlues,RandIndex);
+                RemoveFromIntArray(NoMicBlues,NumNoMic+1,RandIndex);
                 balancecount--;
                 if (!balancecount)
                     return;
             }
-
             //iterate through mics
             int NumMic = MicCount;
             for(int i;i<MicCount;i++)
@@ -72,7 +71,7 @@ stock void AutoBalanceTeams()
                 int RandPlayer = MicBlues[RandIndex]
                 ForceTeamChange(RandPlayer,RED,true);
                 PrintToServer("%N (mic) autobalanced!",RandPlayer);
-                RemoveFromArray(MicBlues,RandIndex);
+                RemoveFromIntArray(MicBlues,NumMic+1,RandIndex);
                 balancecount--;
                 if (!balancecount)
                     return;
@@ -104,7 +103,7 @@ stock void SetConVars(const bool side)
     }
 }
 
-stock bool SetWarden(int client,int reason)
+stock void SetWarden(int client,int reason)
 {
     JBFS.Warden = client;
     JBFS.WardenLocked = true;
@@ -125,27 +124,28 @@ stock bool SetWarden(int client,int reason)
     }
 }
 
-stock bool RemoveWarden(int reason)
+stock void RemoveWarden(int reason)
 {
+    int currentwarden = JBFS.Warden;
     JBFS.Warden = 0;
     JBFS.WardenLocked = false;
     switch (reason)
     {
         case UW_Retire:
         {
-            CPrintToChatAll("%t %t","PluginTag","WardenUWRetire",client);
+            CPrintToChatAll("%t %t","PluginTag","WardenUWRetire",currentwarden);
         }
         case UW_Force:
         {
-            CPrintToChatAll("%t %t","PluginTag","WardenUWForce",client);
+            CPrintToChatAll("%t %t","PluginTag","WardenUWForce",currentwarden);
         }
         case UW_Death:
         {
-            CPrintToChatAll("%t %t","PluginTag","WardenUWDeath",client);
+            CPrintToChatAll("%t %t","PluginTag","WardenUWDeath",currentwarden);
         }
         case UW_Disconnect:
         {
-            CPrintToChatAll("%t %t","PluginTag","WardenUWDisconnect",client);
+            CPrintToChatAll("%t %t","PluginTag","WardenUWDisconnect",currentwarden);
         }
     }
 }
@@ -153,7 +153,7 @@ stock bool RemoveWarden(int reason)
 stock void RemoveAmmo(int client)
 {
     int weapon;
-	int length = GetEntPropArraySize(client, Prop_Send, "m_hMyWeapons");
+    int length = GetEntPropArraySize(client, Prop_Send, "m_hMyWeapons");
     for (int i;i < length; i++)
     {
         weapon = GetEntPropEnt(client,Prop_Send,"m_hMyWeapons",i);

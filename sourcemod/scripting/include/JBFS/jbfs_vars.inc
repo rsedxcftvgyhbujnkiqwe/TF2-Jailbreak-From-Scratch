@@ -28,7 +28,7 @@ enum struct gamemode
     int Warden;
     bool WardenLocked;
 }
-gamemode JBFS;
+public gamemode JBFS;
 
 enum celldoortype
 {
@@ -48,4 +48,4 @@ enum struct JBMapConfig
     int bspawn[3];
     bool hasbspawn;
 }
-JBMapConfig MapConfig;
+public JBMapConfig MapConfig;
