@@ -7,6 +7,7 @@ enum
 enum 
 {
     BalanceRatio=0,
+    TextChannel=2,
     Version
 }
 ConVar cvarJBFS[Version+1];
@@ -28,6 +29,7 @@ enum struct gamemode
     int Warden;
     bool WardenLocked;
     Handle WardenLockTimer;
+    int TimeLeft;
 }
 public gamemode JBFS;
 

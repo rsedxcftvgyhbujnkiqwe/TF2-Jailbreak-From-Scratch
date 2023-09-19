@@ -28,13 +28,16 @@ public Plugin myinfo =
 public void OnPluginStart()
 {
     //register cvars
-    cvarJBFS[BalanceRatio] = CreateConVar("sm_jbfs_balanceratio","0.5","Default balance ratio",FCVAR_NOTIFY,true,0.1,true,1.0);
+    cvarJBFS[BalanceRatio] = CreateConVar("sm_jbfs_balanceratio","0.5","Default balance ratio of blues to reds.",FCVAR_NOTIFY,true,0.1,true,1.0);
+    cvarJBFS[TextChannel] = CreateConVar("sm_jbfs_textchannel","4","Default text channel for JBFS Hud text.",FCVAR_NOTIFY,true,0,true,5);
+    cvarJBFS[GuardCrits] = CreateConVar("sm_jbfs_guardcrits","1","Should Guards have crits.\n0 = No Crits\n1 = Crits",FCVAR_NOTIFY,true,0,true,1);
     cvarJBFS[Version] = CreateConVar("jbfs_version",PLUGIN_VERSION,PLUGIN_NAME,FCVAR_REPLICATED | FCVAR_NOTIFY | FCVAR_SPONLY | FCVAR_DONTRECORD);
     AutoExecConfig(true,"JBFS");
 
-    //regular commands
+    //regular commands for players
     RegConsoleCmd("sm_w",Command_Warden);
     RegConsoleCmd("sm_warden",Command_Warden);
+    //warden commands
     RegConsoleCmd("sm_uw",Command_UnWarden);
     RegConsoleCmd("sm_unwarden",Command_UnWarden);
 

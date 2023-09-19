@@ -55,21 +55,27 @@ public void OnClientSpeaking(int client)
 
 public Action:OnTakeDamage(victim,&attacker,&inflictor,&Float:damage,&damagetype)
 {
+    Action action = Plugin_Continue;
     //valid player attacking?
     if(attacker && attacker <= MaxClients && IsClientInGame(attacker))
     {
         //only for blues
         if(GetPlayerTeam(attacker)==BLU)
         {
-            //cases for crits: 
-            //is_warden    true    true    false   false
-            //is_locked    true    false   false   true
-            //return       true    true    true    false
-            if(JBFS.Warden || !JBFS.WardenLocked)
+            if(cvarJBFS[GuardCrits])
             {
-                //crit conditions have been met
-                damagetype &= DMG_CRIT;
+                //cases for crits: 
+                //is_warden    true    true    false   false
+                //is_locked    true    false   false   true
+                //return       true    true    true    false
+                if(JBFS.Warden || !JBFS.WardenLocked)
+                {
+                    //crit conditions have been met
+                    damagetype |= DMG_CRIT;
+                    action = Plugin_Changed;
+                }
             }
         }
     }
+    return action
 }

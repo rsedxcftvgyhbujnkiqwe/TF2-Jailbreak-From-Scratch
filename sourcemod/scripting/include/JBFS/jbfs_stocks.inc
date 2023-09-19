@@ -252,3 +252,15 @@ stock int SetWeaponAmmo(const int weapon, const int ammo)
 	}
 	return 0;
 }
+
+stock void HudTextAll(const char[] message, any ...)
+{
+    SetHudTextParamsEx(0.1,-1,1.0,{255,183,27,255},{255,183,27,255},0.0,0.0,0.0)
+    for(int i = 1;i<=MaxClients;i++)
+    {
+        if (IsClientInGame(i))
+        {
+            ShowHudText(i,cvarJBFS[TextChannel],message,...)
+        }
+    }
+}
