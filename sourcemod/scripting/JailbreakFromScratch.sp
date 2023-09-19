@@ -35,21 +35,21 @@ public void OnPluginStart()
     AutoExecConfig(true,"JBFS");
 
     //regular commands for players
-    RegConsoleCmd("sm_w",Command_Warden);
-    RegConsoleCmd("sm_warden",Command_Warden);
+    RegConsoleCmd("sm_w",Command_Warden,"Become the Warden");
+    RegConsoleCmd("sm_warden",Command_Warden,"Become the Warden");
     //warden commands
-    RegConsoleCmd("sm_uw",Command_UnWarden);
-    RegConsoleCmd("sm_unwarden",Command_UnWarden);
+    RegConsoleCmd("sm_uw",Command_UnWarden,"Retire from Warden");
+    RegConsoleCmd("sm_unwarden",Command_UnWarden,"Retire from Warden");
 
     //admin commands
-    RegConsoleCmd("sm_fw",Command_Admin_ForceWarden,Admin_Generic);
-    RegConsoleCmd("sm_forcewarden",Command_Admin_ForceWarden,Admin_Generic);
-    RegConsoleCmd("sm_fuw",Command_Admin_ForceUnWarden,Admin_Generic);
-    RegConsoleCmd("sm_forceunwarden",Command_Admin_ForceUnWarden,Admin_Generic);
-    RegConsoleCmd("sm_lw",Command_Admin_LockWarden,Admin_Generic);
-    RegConsoleCmd("sm_lockwarden",Command_Admin_LockWarden,Admin_Generic);
-    RegConsoleCmd("sm_ulw",Command_Admin_UnlockWarden,Admin_Generic);
-    RegConsoleCmd("sm_unlockwarden",Command_Admin_UnlockWarden,Admin_Generic);
+    RegConsoleCmd("sm_fw",Command_Admin_ForceWarden,Admin_Generic,"Force a player to become Warden.");
+    RegConsoleCmd("sm_forcewarden",Command_Admin_ForceWarden,Admin_Generic,"Force a player to become Warden.");
+    RegConsoleCmd("sm_fuw",Command_Admin_ForceUnWarden,Admin_Generic,"Force the current Warden to retire.");
+    RegConsoleCmd("sm_forceunwarden",Command_Admin_ForceUnWarden,Admin_Generic,"Force the current Warden to retire.");
+    RegConsoleCmd("sm_lw",Command_Admin_LockWarden,Admin_Generic,"Lock Warden.");
+    RegConsoleCmd("sm_lockwarden",Command_Admin_LockWarden,Admin_Generic,"Lock Warden.");
+    RegConsoleCmd("sm_ulw",Command_Admin_UnlockWarden,Admin_Generic,"Unlock Warden.");
+    RegConsoleCmd("sm_unlockwarden",Command_Admin_UnlockWarden,Admin_Generic,"Unlock Warden.");
 
     //hook gameevents for use as functions
     HookEvent("teamplay_round_start",OnPreRoundStart);
