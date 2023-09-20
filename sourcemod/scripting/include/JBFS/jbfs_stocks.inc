@@ -281,7 +281,7 @@ stock bool ModifyCells(bool open,int client = 0)
         if(client) CPrintToChat(client,"%t %t","PluginTag","CellsWarnNone");
         return false;
     }
-    int cells = FindEntityByName(-1,MapConfig.cells);
+    int cells = FindEntityByName(-1,"*",MapConfig.cells);
     char class[PLATFORM_MAX_PATH];
     GetEntityClassname(cells,class,PLATFORM_MAX_PATH);
     if (StrEqual(class,"func_door")||StrEqual(class,"func_door_rotating"))

@@ -79,22 +79,17 @@ stock bool RemoveFromIntArray(int[] array,int length, int index)
     return true;
 }
 
-stock int FindEntityByName(int startEnt, const char[] targetname)
+stock int FindEntityByName(int e, const char[] classname, const char[] targetname)
 {
-    //no wildcard support!!!
-    //too much work! just specify what you want
-    char entname[PLATFORM_MAX_PATH];
-    int MaxEnts = GetMaxEntities();
-    for(int ent=startEnt;ent<MaxEnts;++ent){
-        if(IsValidEntity(ent))
+    char buffer[32];
+    while ((e = FindEntityByClassname(e, classname)) != -1)
+    {
+        GetEntPropString(e, Prop_Data, "m_iName", buffer, sizeof(buffer));
+        if (StrEqual(buffer, targetname))
         {
-            GetEntPropString(startEnt,Prop_Data,"m_iName",entname,sizeof(entname))
-            PrintToServer("%d %s",ent,entname);
-            if(StrEqual(entname,targetname))
-            {
-                return ent;
-            }
+            return e;
         }
     }
+
     return -1;
 }

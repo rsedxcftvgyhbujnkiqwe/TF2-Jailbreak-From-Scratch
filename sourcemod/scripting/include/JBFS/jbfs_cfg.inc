@@ -23,7 +23,7 @@ public void LoadMapConfig()
         if (!StrEqual(cellname,"\0"))
         {
             MapConfig.cells = cellname;
-            int cells = FindEntityByName(-1,MapConfig.cells);
+            int cells = FindEntityByName(-1,"*",MapConfig.cells);
             if (cells > 0){
                 MapConfig.hascells = true;
             }
@@ -72,34 +72,28 @@ public void LoadMapConfig()
         func_button named open_cells
         */
         MapConfig.cells = "cell_door";
-        int cells = FindEntityByName(-1,"cell_door");
+        int cells = FindEntityByName(-1,"*","cell_door");
         if (cells > 0) MapConfig.hascells = true;
         /*
-        this section is to allow mappers to set these values on their own using named logic relays
-        why relays? they dont take up edicts and can be named and found.
+        this section is to allow mappers to set these values on their own using named entities
+        I would recommend logic_relay because it's not an edict
         server config will still override but these work as defaults
         note: can't check if vec exists or not because 0,0,0 could be a correct coord
         */
-        int i = -1;
-        while((i=FindEntityByClassname(i, "logic_relay"))!=-1)
-        {
-            char entname[64];
-            GetEntPropString(i,Prop_Data,"m_iName",entname,sizeof(entname));
-            if (StrEqual(entname,"lrspawn_freeday"))
-            {
-                GetEntPropVector(i,Prop_Data,"m_vecAbsOrigin",MapConfig.fspawn);
-                MapConfig.hasfspawn = true;
-            }
-            else if (StrEqual(entname,"lrspawn_red"))
-            {
-                GetEntPropVector(i,Prop_Data,"m_vecAbsOrigin",MapConfig.rspawn);
-                MapConfig.hasrspawn = true;
-            }
-            else if (StrEqual(entname,"lrspawn_blue"))
-            {
-                GetEntPropVector(i,Prop_Data,"m_vecAbsOrigin",MapConfig.bspawn);
-                MapConfig.hasbspawn = true;
-            }
+        int fspawn = FindEntityByName(-1,"*","lrspawn_freeday");
+        if (fspawn > 0){
+            GetEntPropVector(fspawn,Prop_Data,"m_vecAbsOrigin",MapConfig.fspawn);
+            MapConfig.hasfspawn = true;
+        }
+        int rspawn = FindEntityByName(-1,"*","lrspawn_red");
+        if (fspawn > 0){
+            GetEntPropVector(rspawn,Prop_Data,"m_vecAbsOrigin",MapConfig.rspawn);
+            MapConfig.hasrspawn = true;
+        }
+        int bspawn = FindEntityByName(-1,"*","lrspawn_blue");
+        if (fspawn > 0){
+            GetEntPropVector(bspawn,Prop_Data,"m_vecAbsOrigin",MapConfig.bspawn);
+            MapConfig.hasbspawn = true;
         }
 
         //write config to file
