@@ -74,6 +74,10 @@ public void LoadMapConfig()
             MapConfig.cells = "cell_door";
             MapConfig.hascells = true;
         }
+        else
+        {
+            MapConfig.cells = "\0";
+        }
         /*
         this section is to allow mappers to set these values on their own using named logic relays
         server config will still override but these work as defaults
@@ -103,7 +107,7 @@ public void LoadMapConfig()
 
         //write config to file
         kv.JumpToKey(map,true);
-        kv.SetString("Cells",MapConfig.cells);
+        kv.SetString("Cells","");
         SetKVCoord(kv,"LR_Freeday_Spawn",MapConfig.fspawn,MapConfig.hasfspawn);
         SetKVCoord(kv,"LR_Red_Spawn",MapConfig.rspawn,MapConfig.hasrspawn);
         SetKVCoord(kv,"LR_Blue_Spawn",MapConfig.bspawn,MapConfig.hasbspawn);
