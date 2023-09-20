@@ -16,5 +16,5 @@ public Action RoundTimer(Handle timer)
     int Minutes = TimeLeft/60;
     int Seconds = TimeLeft%60;
     HudTextAll("%d:%d",Minutes,Seconds);
-    return Plugin_Stop;
+    return Plugin_Continue;
 }
