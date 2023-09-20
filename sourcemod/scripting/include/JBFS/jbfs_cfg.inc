@@ -79,7 +79,7 @@ public void LoadMapConfig()
         server config will still override but these work as defaults
         note: can't check if vec exists or not because 0,0,0 could be a correct coord
         */
-        int i;
+        int i = -1;
         while((i=FindEntityByClassname(i, "logic_relay"))!=-1)
         {
             char entname[PLATFORM_MAX_PATH];
