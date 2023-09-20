@@ -38,7 +38,7 @@ public gamemode JBFS;
 
 enum struct JBMapConfig
 {
-    char cells[PLATFORM_MAX_PATH];
+    char cells[64];
     bool hascells;
     float fspawn[3];
     bool hasfspawn;

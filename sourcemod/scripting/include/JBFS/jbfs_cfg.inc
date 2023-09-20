@@ -5,10 +5,10 @@ public void LoadConfigs()
 
 public void LoadMapConfig()
 {
-    char mapcfg[PLATFORM_MAX_PATH] = "configs/jbfs/maps.cfg";
+    char mapcfg[64] = "configs/jbfs/maps.cfg";
     KeyValues kv = new KeyValues("Maps");
     char path[PLATFORM_MAX_PATH];
-    if(!kv.ImportFromFile(mapcfg))
+    if(!kv.ImportFromFile(path))
     {
         BuildPath(Path_SM,path,sizeof(path),mapcfg);
     }
@@ -18,7 +18,7 @@ public void LoadMapConfig()
     if(kv.JumpToKey(map))
     {
         //configs found, load existing
-        char cellname[PLATFORM_MAX_PATH];
+        char cellname[64];
         kv.GetString("Cells",cellname,sizeof(cellname));
         if (StrEqual(MapConfig.cells,"\0"))
         {
@@ -82,7 +82,7 @@ public void LoadMapConfig()
         int i = -1;
         while((i=FindEntityByClassname(i, "logic_relay"))!=-1)
         {
-            char entname[PLATFORM_MAX_PATH];
+            char entname[64];
             GetEntPropString(i,Prop_Data,"m_iName",entname,sizeof(entname));
             if (StrEqual(entname,"lrspawn_freeday"))
             {
@@ -108,7 +108,7 @@ public void LoadMapConfig()
         SetKVCoord(kv,"LR_Red_Spawn",MapConfig.rspawn,MapConfig.hasrspawn);
         SetKVCoord(kv,"LR_Blue_Spawn",MapConfig.bspawn,MapConfig.hasbspawn);
         kv.Rewind();
-        kv.ExportToFile(mapcfg);
+        kv.ExportToFile(path);
         delete kv;
     }
     //MapConfig values should be set by now
