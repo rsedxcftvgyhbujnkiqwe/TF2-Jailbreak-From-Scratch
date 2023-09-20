@@ -71,16 +71,9 @@ public void LoadMapConfig()
         cell button is assumed to be:
         func_button named open_cells
         */
+        MapConfig.cells = "cell_door";
         int cells = FindEntityByName(-1,"cell_door");
-        if (cells > 0)
-        {
-            MapConfig.cells = "cell_door";
-            MapConfig.hascells = true;
-        }
-        else
-        {
-            MapConfig.cells = "\0";
-        }
+        if (cells > 0) MapConfig.hascells = true;
         /*
         this section is to allow mappers to set these values on their own using named logic relays
         server config will still override but these work as defaults
