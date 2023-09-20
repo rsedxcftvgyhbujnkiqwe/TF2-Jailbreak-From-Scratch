@@ -7,6 +7,7 @@ public void OnPreRoundStart(Event event, const char[] name, bool dontBroadcast)
 public void OnArenaRoundStart(Event event, const char[] name, bool dontBroadcast)
 {
     AutoBalanceTeams();
+    JBFS.TimeLeft = cvarJBFS[RoundTime].IntValue;
     JBFS.RoundTimer = CreateTimer(1.0,RoundTimer,_,TIMER_REPEAT);
     JBFS.WardenLockTimer = CreateTimer(3.0,Timer_ChooseWarden);
 }

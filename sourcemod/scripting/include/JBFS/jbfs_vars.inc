@@ -9,6 +9,7 @@ enum
     BalanceRatio=0,
     TextChannel,
     GuardCrits,
+    RoundTime,
     Version
 }
 ConVar cvarJBFS[Version+1];
