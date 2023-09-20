@@ -4,10 +4,11 @@ enum
     BLU
 }
 
-enum 
+enum
 {
     BalanceRatio=0,
-    TextChannel=2,
+    TextChannel,
+    GuardCrits,
     Version
 }
 ConVar cvarJBFS[Version+1];
@@ -30,6 +31,7 @@ enum struct gamemode
     bool WardenLocked;
     Handle WardenLockTimer;
     int TimeLeft;
+    Handle RoundTimer;
 }
 public gamemode JBFS;
 

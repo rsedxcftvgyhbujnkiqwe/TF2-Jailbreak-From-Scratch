@@ -61,9 +61,9 @@ public Action Command_Admin_ForceWarden(int client, int args)
     if (args == 0) ChooseWarden(true);
 
     char arg[32];
-	GetCmdArg(1, arg, sizeof(arg));
+    GetCmdArg(1, arg, sizeof(arg));
     int target = FindTarget(client, arg);
-	if (target == -1) return Plugin_Handled;
+    if (target == -1) return Plugin_Handled;
     //is target eligible to be warden?
     if (IsClientInGame(target)&& IsPlayerAlive(target) && GetClientTeam(target)==BLU){
         if (target != JBFS.Warden)

@@ -7,7 +7,14 @@ public void OnPreRoundStart(Event event, const char[] name, bool dontBroadcast)
 public void OnArenaRoundStart(Event event, const char[] name, bool dontBroadcast)
 {
     AutoBalanceTeams();
-    CreateTimer(3.0,Timer_ChooseWarden);
+    JBFS.RoundTimer = CreateTimer(1.0,RoundTimer,_,TIMER_REPEAT);
+    JBFS.WardenLockTimer = CreateTimer(3.0,Timer_ChooseWarden);
+}
+
+public void OnArenaRoundEnd(Event event, const char[] name, bool dontBroadcast)
+{
+    if (IsValidHandle(JBFS.RoundTimer)) KillTimer(JBFS.RoundTimer);
+    if (IsValidHandle(JBFS.WardenLockTimer)) KillTimer(JBFS.WardenLockTimer);
 }
 
 public OnClientPutInServer(client)
@@ -27,7 +34,7 @@ public Action OnPlayerSpawn(Event event, const char[] name, bool dontBroadcast)
     return Plugin_Handled;
 }
 
-public void OnPlayerDeath(Event event, const char[] name, bool dontBroadcast)
+public Action OnPlayerDeath(Event event, const char[] name, bool dontBroadcast)
 {
     int client = GetClientOfUserId(event.GetInt("userid"));
     if (!IsClientInGame(client))
@@ -36,6 +43,7 @@ public void OnPlayerDeath(Event event, const char[] name, bool dontBroadcast)
     {
         RemoveWarden(UW_Death);
     }
+    return Plugin_Handled;
 }
 
 public void OnPlayerDisconnect(Event event, const char[] name, bool dontBroadcast)
@@ -60,11 +68,11 @@ public Action:OnTakeDamage(victim,&attacker,&inflictor,&Float:damage,&damagetype
     if(attacker && attacker <= MaxClients && IsClientInGame(attacker))
     {
         //only for blues
-        if(GetPlayerTeam(attacker)==BLU)
+        if(GetClientTeam(attacker)==BLU)
         {
             if(cvarJBFS[GuardCrits])
             {
-                //cases for crits: 
+                //cases for crits:
                 //is_warden    true    true    false   false
                 //is_locked    true    false   false   true
                 //return       true    true    true    false

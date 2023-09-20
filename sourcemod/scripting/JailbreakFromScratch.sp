@@ -5,6 +5,7 @@
 
 #include <sourcemod>
 #include <sdktools>
+#include <sdkhooks>
 #include <tf2>
 #include <tf2_stocks>
 
@@ -21,6 +22,7 @@ public Plugin myinfo =
 #include <JBFS/jbfs_events>
 #include <JBFS/jbfs_commands>
 #include <JBFS/jbfs_stocks>
+#include <JBFS/jbfs_timers>
 #include <JBFS/stocks>
 
 #include <morecolors>
@@ -29,8 +31,8 @@ public void OnPluginStart()
 {
     //register cvars
     cvarJBFS[BalanceRatio] = CreateConVar("sm_jbfs_balanceratio","0.5","Default balance ratio of blues to reds.",FCVAR_NOTIFY,true,0.1,true,1.0);
-    cvarJBFS[TextChannel] = CreateConVar("sm_jbfs_textchannel","4","Default text channel for JBFS Hud text.",FCVAR_NOTIFY,true,0,true,5);
-    cvarJBFS[GuardCrits] = CreateConVar("sm_jbfs_guardcrits","1","Should Guards have crits.\n0 = No Crits\n1 = Crits",FCVAR_NOTIFY,true,0,true,1);
+    cvarJBFS[TextChannel] = CreateConVar("sm_jbfs_textchannel","4","Default text channel for JBFS Hud text.",FCVAR_NOTIFY,true,0.0,true,5.0);
+    cvarJBFS[GuardCrits] = CreateConVar("sm_jbfs_guardcrits","1","Should Guards have crits.\n0 = No Crits\n1 = Crits",FCVAR_NOTIFY,true,0.0,true,1.0);
     cvarJBFS[Version] = CreateConVar("jbfs_version",PLUGIN_VERSION,PLUGIN_NAME,FCVAR_REPLICATED | FCVAR_NOTIFY | FCVAR_SPONLY | FCVAR_DONTRECORD);
     AutoExecConfig(true,"JBFS");
 
@@ -42,14 +44,14 @@ public void OnPluginStart()
     RegConsoleCmd("sm_unwarden",Command_UnWarden,"Retire from Warden");
 
     //admin commands
-    RegConsoleCmd("sm_fw",Command_Admin_ForceWarden,Admin_Generic,"Force a player to become Warden.");
-    RegConsoleCmd("sm_forcewarden",Command_Admin_ForceWarden,Admin_Generic,"Force a player to become Warden.");
-    RegConsoleCmd("sm_fuw",Command_Admin_ForceUnWarden,Admin_Generic,"Force the current Warden to retire.");
-    RegConsoleCmd("sm_forceunwarden",Command_Admin_ForceUnWarden,Admin_Generic,"Force the current Warden to retire.");
-    RegConsoleCmd("sm_lw",Command_Admin_LockWarden,Admin_Generic,"Lock Warden.");
-    RegConsoleCmd("sm_lockwarden",Command_Admin_LockWarden,Admin_Generic,"Lock Warden.");
-    RegConsoleCmd("sm_ulw",Command_Admin_UnlockWarden,Admin_Generic,"Unlock Warden.");
-    RegConsoleCmd("sm_unlockwarden",Command_Admin_UnlockWarden,Admin_Generic,"Unlock Warden.");
+    RegAdminCmd("sm_fw",Command_Admin_ForceWarden,ADMFLAG_GENERIC,"Force a player to become Warden.");
+    RegAdminCmd("sm_forcewarden",Command_Admin_ForceWarden,ADMFLAG_GENERIC,"Force a player to become Warden.");
+    RegAdminCmd("sm_fuw",Command_Admin_ForceUnWarden,ADMFLAG_GENERIC,"Force the current Warden to retire.");
+    RegAdminCmd("sm_forceunwarden",Command_Admin_ForceUnWarden,ADMFLAG_GENERIC,"Force the current Warden to retire.");
+    RegAdminCmd("sm_lw",Command_Admin_LockWarden,ADMFLAG_GENERIC,"Lock Warden.");
+    RegAdminCmd("sm_lockwarden",Command_Admin_LockWarden,ADMFLAG_GENERIC,"Lock Warden.");
+    RegAdminCmd("sm_ulw",Command_Admin_UnlockWarden,ADMFLAG_GENERIC,"Unlock Warden.");
+    RegAdminCmd("sm_unlockwarden",Command_Admin_UnlockWarden,ADMFLAG_GENERIC,"Unlock Warden.");
 
     //hook gameevents for use as functions
     HookEvent("teamplay_round_start",OnPreRoundStart);
@@ -57,6 +59,8 @@ public void OnPluginStart()
     HookEvent("player_disconnect",OnPlayerDisconnect);
     HookEvent("player_death",OnPlayerDeath);
     HookEvent("player_spawn",OnPlayerSpawn);
+    HookEvent("teamplay_round_win",OnArenaRoundEnd);
+    HookEvent("teamplay_round_stalemate",OnArenaRoundEnd);
 
     SetConVars(true);
 
