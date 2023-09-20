@@ -58,8 +58,11 @@ public Action Command_Admin_ForceWarden(int client, int args)
 {
     //handle no arg first
     //if none, select random
-    if (args == 0) ChooseWarden(true);
-
+    if (args == 0)
+    {
+        ChooseWarden(true);
+        return Plugin_Handled;
+    }
     char arg[32];
     GetCmdArg(1, arg, sizeof(arg));
     int target = FindTarget(client, arg);
@@ -75,7 +78,7 @@ public Action Command_Admin_ForceWarden(int client, int args)
         {
             CPrintToChat(client,"%t %t","PluginTag","WardenWarnAdminRedundant");
         }
-    } 
+    }
     else
     {
         CPrintToChat(client,"%t %t","PluginTag","WardenWarnAdminInvalid");
@@ -121,5 +124,19 @@ public Action Command_Admin_UnlockWarden(int client, int args)
     }
     UnlockWarden();
     return Plugin_Handled;
-    
+
+}
+
+public Action Command_Admin_JailTime(int client, int args)
+{
+    int seconds;
+    if (args == 1 && GetCmdArgIntEx(1,seconds) && seconds >= 0)
+    {
+        JBFS.TimeLeft = seconds;
+    }
+    else
+    {
+        CPrintToChat(client,"%t %t","PluginTag","CommandUsageJTime");
+    }
+    return Plugin_Handled;
 }

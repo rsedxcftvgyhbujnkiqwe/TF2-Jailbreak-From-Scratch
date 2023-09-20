@@ -13,8 +13,19 @@ public Action Timer_LockWarden(Handle timer)
 public Action RoundTimer(Handle timer)
 {
     int TimeLeft = JBFS.TimeLeft--;
+    switch (TimeLeft)
+    {
+        case 0:
+        {
+            ForceTeamWin(BLU)
+            return Plugin_Stop;
+        }
+    }
+
     int Minutes = TimeLeft/60;
     int Seconds = TimeLeft%60;
-    HudTextAll("%d:%d",Minutes,Seconds);
+    if (Seconds<10) HudTextAll("%d:0%d",Minutes,Seconds);
+    else HudTextAll("%d:%d",Minutes,Seconds);
+
     return Plugin_Continue;
 }

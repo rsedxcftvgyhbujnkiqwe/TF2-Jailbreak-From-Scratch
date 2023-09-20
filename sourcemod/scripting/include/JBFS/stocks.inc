@@ -7,7 +7,7 @@ stock int GetNumPlayers(const int team=0,const bool alive=false)
     {
         if (!IsClientInGame(i))
             continue;
-        if (team && GetClientTeam(i) != team) 
+        if (team && GetClientTeam(i) != team)
             continue;
         if (alive && !IsPlayerAlive(i))
             continue;
@@ -24,7 +24,7 @@ stock void GetPlayers(const int team=0,const bool alive=false,int[] clients,int 
     {
         if (!IsClientInGame(i))
             continue;
-        if (team && GetClientTeam(i) != team) 
+        if (team && GetClientTeam(i) != team)
             continue;
         if (alive && !IsPlayerAlive(i))
             continue;
@@ -33,7 +33,7 @@ stock void GetPlayers(const int team=0,const bool alive=false,int[] clients,int 
 }
 
 //get random player by team
-stock int GetRandomPlayer(const int team=0,const bool alive=false)  
+stock int GetRandomPlayer(const int team=0,const bool alive=false)
 {
     int playercount = GetNumPlayers(team,alive);
     int[] players = new int[playercount];
@@ -44,7 +44,7 @@ stock int GetRandomPlayer(const int team=0,const bool alive=false)
 //force player to change teams, and respawn
 stock void ForceTeamChange(const int client, const int team,const bool spawn = true )
 {
-    if (TF2_GetPlayerClass(client) > TFClass_Unknown) 
+    if (TF2_GetPlayerClass(client) > TFClass_Unknown)
     {
         SetEntProp(client, Prop_Send, "m_lifeState", 2);
         ChangeClientTeam(client, team);
@@ -52,6 +52,19 @@ stock void ForceTeamChange(const int client, const int team,const bool spawn = t
         if (spawn)
             TF2_RespawnPlayer(client);
     }
+}
+
+stock void ForceTeamWin(const int team)
+{
+	int entity = FindEntityByClassname(-1, "team_control_point_master");
+	if (entity <= 0)
+	{
+		entity = CreateEntityByName("team_control_point_master");
+		DispatchSpawn(entity);
+		AcceptEntityInput(entity, "Enable");
+	}
+	SetVariantInt(team);
+	AcceptEntityInput(entity, "SetWinner");
 }
 
 stock bool RemoveFromIntArray(int[] array,int length, int index)

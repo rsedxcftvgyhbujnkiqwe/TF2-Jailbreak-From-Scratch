@@ -53,6 +53,8 @@ public void OnPluginStart()
     RegAdminCmd("sm_lockwarden",Command_Admin_LockWarden,ADMFLAG_GENERIC,"Lock Warden.");
     RegAdminCmd("sm_ulw",Command_Admin_UnlockWarden,ADMFLAG_GENERIC,"Unlock Warden.");
     RegAdminCmd("sm_unlockwarden",Command_Admin_UnlockWarden,ADMFLAG_GENERIC,"Unlock Warden.");
+    RegAdminCmd("sm_jtime",Command_Admin_JailTime,ADMFLAG_GENERIC,"Set time left in round, in seconds.");
+    RegAdminCmd("sm_jailtime",Command_Admin_JailTime,ADMFLAG_GENERIC,"Set time left in round, in seconds.");
 
     //hook gameevents for use as functions
     HookEvent("teamplay_round_start",OnPreRoundStart);

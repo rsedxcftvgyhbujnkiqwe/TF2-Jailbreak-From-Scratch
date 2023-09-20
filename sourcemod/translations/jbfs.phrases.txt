@@ -90,4 +90,8 @@
     {
         "en"        "Warden has been unlocked."
     }
+    "CommandUsageJTime"
+    {
+        "en"        "Usage: sm_jailtime <seconds>"
+    }
 }
