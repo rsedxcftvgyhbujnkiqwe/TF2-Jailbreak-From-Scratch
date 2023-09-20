@@ -20,7 +20,7 @@ public void LoadMapConfig()
         //configs found, load existing
         char cellname[64];
         kv.GetString("Cells",cellname,sizeof(cellname));
-        if (!StrEqual(MapConfig.cells,"\0"))
+        if (!StrEqual(cellname,"\0"))
         {
             MapConfig.cells = cellname;
             int cells = FindEntityByName(-1,MapConfig.cells);
