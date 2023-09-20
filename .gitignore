@@ -20,6 +20,8 @@
 
 !/sourcemod/configs/
 /sourcemod/configs/*
+!/sourcemod/configs/jbfs
+!/sourcemod/configs/jbfs/*
 
 !/sourcemod/translations/
 /sourcemod/translations/*

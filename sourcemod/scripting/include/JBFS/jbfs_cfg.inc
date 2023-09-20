@@ -8,10 +8,10 @@ public void LoadMapConfig()
     char mapcfg[64] = "configs/jbfs/maps.cfg";
     KeyValues kv = new KeyValues("Maps");
     char path[PLATFORM_MAX_PATH];
-    if(!kv.ImportFromFile(path))
-    {
-        BuildPath(Path_SM,path,sizeof(path),mapcfg);
-    }
+    BuildPath(Path_SM,path,sizeof(path),mapcfg);
+
+    if(!kv.ImportFromFile(path))  return;
+
     char map[PLATFORM_MAX_PATH];
     GetCurrentMap(map,sizeof(map));
 
