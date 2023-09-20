@@ -89,6 +89,7 @@ stock int FindEntityByName(int startEnt, const char[] targetname)
         if(IsValidEntity(ent))
         {
             GetEntPropString(startEnt,Prop_Data,"m_iName",entname,sizeof(entname))
+            PrintToServer("%d %s",ent,entname);
             if(StrEqual(entname,targetname))
             {
                 return ent;
