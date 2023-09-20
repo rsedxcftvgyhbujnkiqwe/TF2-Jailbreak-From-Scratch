@@ -103,7 +103,7 @@ public void LoadMapConfig()
 
         //write config to file
         kv.JumpToKey(map,true);
-        kv.SetString("Cells","");
+        kv.SetString("Cells",MapConfig.cells);
         SetKVCoord(kv,"LR_Freeday_Spawn",MapConfig.fspawn,MapConfig.hasfspawn);
         SetKVCoord(kv,"LR_Red_Spawn",MapConfig.rspawn,MapConfig.hasrspawn);
         SetKVCoord(kv,"LR_Blue_Spawn",MapConfig.bspawn,MapConfig.hasbspawn);
