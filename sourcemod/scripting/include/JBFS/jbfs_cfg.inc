@@ -20,10 +20,13 @@ public void LoadMapConfig()
         //configs found, load existing
         char cellname[64];
         kv.GetString("Cells",cellname,sizeof(cellname));
-        if (StrEqual(MapConfig.cells,"\0"))
+        if (!StrEqual(MapConfig.cells,"\0"))
         {
             MapConfig.cells = cellname;
-            MapConfig.hascells = true;
+            int cells = FindEntityByName(-1,MapConfig.cells);
+            if (cells > 0){
+                MapConfig.hascells = true;
+            }
         }
         if (kv.JumpToKey("LR_Freeday_Spawn"))
         {
