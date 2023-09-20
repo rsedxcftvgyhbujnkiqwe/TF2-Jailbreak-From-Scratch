@@ -30,6 +30,7 @@ public Plugin myinfo =
 
 public void OnPluginStart()
 {
+    PrintToServer("Starting %s, version %s",PLUGIN_NAME,PLUGIN_VERSION);
     //register cvars
     cvarJBFS[BalanceRatio] = CreateConVar("sm_jbfs_balanceratio","0.5","Default balance ratio of blues to reds.",FCVAR_NOTIFY,true,0.1,true,1.0);
     cvarJBFS[TextChannel] = CreateConVar("sm_jbfs_textchannel","4","Default text channel for JBFS Hud text.",FCVAR_NOTIFY,true,0.0,true,5.0);
@@ -60,10 +61,10 @@ public void OnPluginStart()
     RegAdminCmd("sm_unlockwarden",Command_Admin_UnlockWarden,ADMFLAG_GENERIC,"Unlock Warden");
     RegAdminCmd("sm_jtime",Command_Admin_JailTime,ADMFLAG_GENERIC,"Set time left in round, in seconds");
     RegAdminCmd("sm_jailtime",Command_Admin_JailTime,ADMFLAG_GENERIC,"Set time left in round, in seconds");
-    RegAdminCmd("sm_oc",Command_Admin_OpenCells,ADMFLAG_GENERIC,"Open the cell doors");
-    RegAdminCmd("sm_opencells",Command_Admin_OpenCells,ADMFLAG_GENERIC,"Open the cell doors");
-    RegAdminCmd("sm_cc",Command_Admin_CloseCells,ADMFLAG_GENERIC,"Close the cell doors");
-    RegAdminCmd("sm_closecells",Command_Admin_CloseCells,ADMFLAG_GENERIC,"Close the cell doors");
+    RegAdminCmd("sm_foc",Command_Admin_OpenCells,ADMFLAG_GENERIC,"Force open the cell doors");
+    RegAdminCmd("sm_forceopencells",Command_Admin_OpenCells,ADMFLAG_GENERIC,"Force open the cell doors");
+    RegAdminCmd("sm_fcc",Command_Admin_CloseCells,ADMFLAG_GENERIC,"Force close the cell doors");
+    RegAdminCmd("sm_forceclosecells",Command_Admin_CloseCells,ADMFLAG_GENERIC,"Force close the cell doors");
 
     //hook gameevents for use as functions
     HookEvent("teamplay_round_start",OnPreRoundStart);

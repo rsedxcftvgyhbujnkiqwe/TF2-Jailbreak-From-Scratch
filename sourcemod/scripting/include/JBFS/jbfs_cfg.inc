@@ -10,6 +10,7 @@ public void LoadMapConfig()
     char path[PLATFORM_MAX_PATH];
     if(!kv.ImportFromFile(path))
     {
+        PrintToServer("Config not found, creating...")
         BuildPath(Path_SM,path,sizeof(path),mapcfg);
     }
     char map[PLATFORM_MAX_PATH];
@@ -57,6 +58,7 @@ public void LoadMapConfig()
     }
     else
     {
+        PrintToServer("Config not found for %s, creating...",map)
         /*
         map config not set! autogenerate one
         cell doors are assumed to be an entity named cell_door
@@ -108,7 +110,9 @@ public void LoadMapConfig()
         SetKVCoord(kv,"LR_Red_Spawn",MapConfig.rspawn,MapConfig.hasrspawn);
         SetKVCoord(kv,"LR_Blue_Spawn",MapConfig.bspawn,MapConfig.hasbspawn);
         kv.Rewind();
+        PrintToServer("Writing config to file...")
         kv.ExportToFile(mapcfg);
+        PrintToServer("Wrote config to file")
         delete kv;
     }
     //MapConfig values should be set by now
