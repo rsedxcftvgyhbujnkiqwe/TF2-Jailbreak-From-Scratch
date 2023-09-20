@@ -39,12 +39,42 @@ public Action Command_Warden(int client, int args)
     return Plugin_Handled;
 }
 
-
+//Warden Commands
 public Action Command_UnWarden(int client, int args)
 {
     if (client == JBFS.Warden)
     {
         RemoveWarden(UW_Retire);
+    }
+    else
+    {
+        CPrintToChat(client,"%t %t","PluginTag","WardenWarnNotWarden");
+    }
+    return Plugin_Handled;
+}
+
+public Action Command_OpenCells(int client, int args)
+{
+    if (client == JBFS.Warden)
+    {
+        if (ModifyCells(true,client)){
+            CPrintToChatAll("%t %t","PluginTag","CellsOpen");
+        }
+    }
+    else
+    {
+        CPrintToChat(client,"%t %t","PluginTag","WardenWarnNotWarden");
+    }
+    return Plugin_Handled;
+}
+
+public Action Command_CloseCells(int client, int args)
+{
+    if (client == JBFS.Warden)
+    {
+        if (ModifyCells(false,client)){
+            CPrintToChatAll("%t %t","PluginTag","CellsClose");
+        }
     }
     else
     {
@@ -130,13 +160,29 @@ public Action Command_Admin_UnlockWarden(int client, int args)
 public Action Command_Admin_JailTime(int client, int args)
 {
     int seconds;
-    if (args == 1 && GetCmdArgIntEx(1,seconds) && seconds >= 0)
+    if (args < 1 && GetCmdArgIntEx(1,seconds) && seconds >= 0)
     {
         JBFS.TimeLeft = seconds;
     }
     else
     {
         CPrintToChat(client,"%t %t","PluginTag","CommandUsageJTime");
+    }
+    return Plugin_Handled;
+}
+
+public Action Command_Admin_OpenCells(int client, int args)
+{
+    if (ModifyCells(true,client)){
+        CPrintToChatAll("%t %t","PluginTag","CellsOpen");
+    }
+    return Plugin_Handled;
+}
+
+public Action Command_Admin_CloseCells(int client, int args)
+{
+    if (ModifyCells(false,client)){
+        CPrintToChatAll("%t %t","PluginTag","CellsClose");
     }
     return Plugin_Handled;
 }

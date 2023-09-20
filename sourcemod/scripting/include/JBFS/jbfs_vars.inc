@@ -36,22 +36,15 @@ enum struct gamemode
 }
 public gamemode JBFS;
 
-enum celldoortype
-{
-    Door,
-    Breakable,
-    Relay
-}
-
 enum struct JBMapConfig
 {
-    char cells[32];
+    char cells[PLATFORM_MAX_PATH];
     bool hascells;
-    int fspawn[3];
+    float fspawn[3];
     bool hasfspawn;
-    int rspawn[3];
+    float rspawn[3];
     bool hasrspawn;
-    int bspawn[3];
+    float bspawn[3];
     bool hasbspawn;
 }
 public JBMapConfig MapConfig;

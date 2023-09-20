@@ -94,4 +94,24 @@
     {
         "en"        "Usage: sm_jailtime <seconds>"
     }
+    "CellsOpen"
+    {
+        "en"        "The cell doors have been opened."
+    }
+    "CellsClose"
+    {
+        "en"        "The cell doors have been closed."
+    }
+    "CellsWarnNone"
+    {
+        "en"        "Cell door config for map not set properly by server."
+    }
+    "CellsWarnBadClass"
+    {
+        "en"        "Cell door config set by server is not a cell door."
+    }
+    "CellsWarnCantClose"
+    {
+        "en"        "Cell doors can't be closed."
+    }
 }

@@ -267,3 +267,39 @@ stock void HudTextAll(const char[] fmt, any ...)
         }
     }
 }
+
+stock bool ModifyCells(bool open,int client = 0)
+{
+    if (!MapConfig.hascells)
+    {
+        if(client) CPrintToChat(client,"%t %t","PluginTag","CellsWarnNone");
+        return false;
+    }
+    int cells = FindEntityByName(-1,MapConfig.cells);
+    char class[PLATFORM_MAX_PATH];
+    GetEntityClassname(cells,class,PLATFORM_MAX_PATH);
+    if (StrEqual(class,"func_door")||StrEqual(class,"func_door_rotating"))
+    {
+        if(open) AcceptEntityInput(cells,"Open");
+        else AcceptEntityInput(cells,"Close");
+    }
+    else if (StrEqual(class,"logic_relay"))
+    {
+        AcceptEntityInput(cells,"Trigger");
+    }
+    else if (StrEqual(class,"func_breakable"))
+    {
+        if(open) AcceptEntityInput(cells,"Break");
+        else
+        {
+            if(client) CPrintToChat(client,"%t %t","PluginTag","CellsCantClose");
+            return false;
+        }
+    }
+    else
+    {
+        if(client) CPrintToChat(client,"%t %t","PluginTag","CellsBadClass");
+        return false;
+    }
+    return true;
+}

@@ -5,22 +5,22 @@ public void LoadConfigs()
 
 public void LoadMapConfig()
 {
-    char mapcfg[32] = "configs/jbfs/maps.cfg";
+    char mapcfg[PLATFORM_MAX_PATH] = "configs/jbfs/maps.cfg";
     KeyValues kv = new KeyValues("Maps");
     char path[PLATFORM_MAX_PATH];
     if(!kv.ImportFromFile(path))
     {
         BuildPath(Path_SM,path,sizeof(path),mapcfg);
     }
-    char map[128];
+    char map[PLATFORM_MAX_PATH];
     GetCurrentMap(map,sizeof(map));
 
     if(kv.JumpToKey(map))
     {
         //configs found, load existing
-        char cellname[128];
+        char cellname[PLATFORM_MAX_PATH];
         kv.GetString("Cells",cellname,sizeof(cellname));
-        if (MapConfig.cells != "\0")
+        if (StrEqual(MapConfig.cells,"\0"))
         {
             MapConfig.cells = cellname;
             MapConfig.hascells = true;
@@ -59,21 +59,20 @@ public void LoadMapConfig()
     {
         /*
         map config not set! autogenerate one
-        cell doors are assumed to be:
-        func_door named cell_door
+        cell doors are assumed to be an entity named cell_door
+        this can be either:
+        -func_door
+        -func_door_rotating
+        -logic_relay
+        -func_breakable
         cell button is assumed to be:
         func_button named open_cells
         */
-        int i;
-        while((i=FindEntityByClassname(i, "func_door"))!=-1)
+        int cells = FindEntityByName(-1,"cell_door");
+        if (cells > 0)
         {
-            char entname[32];
-            if((entname=GetEntPropString(i,Prop_Data,"m_iName",entname,sizeof(entname)))=="cell_door")
-            {
-                MapConfig.cells = entname;
-                MapConfig.hascells = true;
-                break;
-            }
+            MapConfig.cells = "cell_door";
+            MapConfig.hascells = true;
         }
         /*
         this section is to allow mappers to set these values on their own using named logic relays
@@ -83,31 +82,28 @@ public void LoadMapConfig()
         int i;
         while((i=FindEntityByClassname(i, "logic_relay"))!=-1)
         {
-            char entname[32];
-            entname=GetEntPropString(i,Prop_Data,"m_iName",entname,sizeof(entname));
-            switch(entname)
+            char entname[PLATFORM_MAX_PATH];
+            GetEntPropString(i,Prop_Data,"m_iName",entname,sizeof(entname));
+            if (StrEqual(entname,"lrspawn_freeday"))
             {
-                case "lrspawn_freeday":
-                {
-                    GetEntPropVector(i,Prop_Data,"m_vecAbsOrigin",MapConfig.fspawn);
-                    MapConfig.hasfspawn = true;
-                }
-                case "lrspawn_red":
-                {
-                    GetEntPropVector(i,Prop_Data,"m_vecAbsOrigin",MapConfig.rspawn);
-                    MapConfig.hasrspawn = true;
-                }
-                case "lrspawn_blue":
-                {
-                    GetEntPropVector(i,Prop_Data,"m_vecAbsOrigin",MapConfig.bspawn);
-                    MapConfig.hasbspawn = true;
-                }
+                GetEntPropVector(i,Prop_Data,"m_vecAbsOrigin",MapConfig.fspawn);
+                MapConfig.hasfspawn = true;
+            }
+            else if (StrEqual(entname,"lrspawn_red"))
+            {
+                GetEntPropVector(i,Prop_Data,"m_vecAbsOrigin",MapConfig.rspawn);
+                MapConfig.hasrspawn = true;
+            }
+            else if (StrEqual(entname,"lrspawn_blue"))
+            {
+                GetEntPropVector(i,Prop_Data,"m_vecAbsOrigin",MapConfig.bspawn);
+                MapConfig.hasbspawn = true;
             }
         }
 
         //write config to file
         kv.JumpToKey(map,true);
-        kv.SetString("Cells",cells);
+        kv.SetString("Cells",MapConfig.cells);
         SetKVCoord(kv,"LR_Freeday_Spawn",MapConfig.fspawn,MapConfig.hasfspawn);
         SetKVCoord(kv,"LR_Red_Spawn",MapConfig.rspawn,MapConfig.hasrspawn);
         SetKVCoord(kv,"LR_Blue_Spawn",MapConfig.bspawn,MapConfig.hasbspawn);
@@ -120,7 +116,7 @@ public void LoadMapConfig()
 
 }
 
-stock SetKVCoord(KeyValues kv, char keyname[32], float vec[3], bool usevec)
+stock SetKVCoord(KeyValues kv, char[] keyname, float vec[3], bool usevec)
 {
     kv.JumpToKey(keyname,true);
     float xcoord,ycoord,zcoord;
@@ -134,9 +130,9 @@ stock SetKVCoord(KeyValues kv, char keyname[32], float vec[3], bool usevec)
     }
     else
     {
-        xcoord = 0;
-        ycoord = 0;
-        zcoord = 0;
+        xcoord = 0.0;
+        ycoord = 0.0;
+        zcoord = 0.0;
         enabled = 0;
     }
     kv.SetFloat("CoordX",xcoord);

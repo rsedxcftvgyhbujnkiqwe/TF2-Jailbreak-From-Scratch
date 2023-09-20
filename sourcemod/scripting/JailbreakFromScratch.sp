@@ -23,6 +23,7 @@ public Plugin myinfo =
 #include <JBFS/jbfs_commands>
 #include <JBFS/jbfs_stocks>
 #include <JBFS/jbfs_timers>
+#include <JBFS/jbfs_cfg>
 #include <JBFS/stocks>
 
 #include <morecolors>
@@ -43,18 +44,26 @@ public void OnPluginStart()
     //warden commands
     RegConsoleCmd("sm_uw",Command_UnWarden,"Retire from Warden");
     RegConsoleCmd("sm_unwarden",Command_UnWarden,"Retire from Warden");
+    RegConsoleCmd("sm_oc",Command_OpenCells,"Open the cell doors");
+    RegConsoleCmd("sm_opencells",Command_OpenCells,"Open the cell doors");
+    RegConsoleCmd("sm_cc",Command_CloseCells,"Close the cell doors");
+    RegConsoleCmd("sm_closecells",Command_CloseCells,"Close the cell doors");
 
     //admin commands
-    RegAdminCmd("sm_fw",Command_Admin_ForceWarden,ADMFLAG_GENERIC,"Force a player to become Warden.");
-    RegAdminCmd("sm_forcewarden",Command_Admin_ForceWarden,ADMFLAG_GENERIC,"Force a player to become Warden.");
-    RegAdminCmd("sm_fuw",Command_Admin_ForceUnWarden,ADMFLAG_GENERIC,"Force the current Warden to retire.");
-    RegAdminCmd("sm_forceunwarden",Command_Admin_ForceUnWarden,ADMFLAG_GENERIC,"Force the current Warden to retire.");
-    RegAdminCmd("sm_lw",Command_Admin_LockWarden,ADMFLAG_GENERIC,"Lock Warden.");
-    RegAdminCmd("sm_lockwarden",Command_Admin_LockWarden,ADMFLAG_GENERIC,"Lock Warden.");
-    RegAdminCmd("sm_ulw",Command_Admin_UnlockWarden,ADMFLAG_GENERIC,"Unlock Warden.");
-    RegAdminCmd("sm_unlockwarden",Command_Admin_UnlockWarden,ADMFLAG_GENERIC,"Unlock Warden.");
-    RegAdminCmd("sm_jtime",Command_Admin_JailTime,ADMFLAG_GENERIC,"Set time left in round, in seconds.");
-    RegAdminCmd("sm_jailtime",Command_Admin_JailTime,ADMFLAG_GENERIC,"Set time left in round, in seconds.");
+    RegAdminCmd("sm_fw",Command_Admin_ForceWarden,ADMFLAG_GENERIC,"Force a player to become Warden");
+    RegAdminCmd("sm_forcewarden",Command_Admin_ForceWarden,ADMFLAG_GENERIC,"Force a player to become Warden");
+    RegAdminCmd("sm_fuw",Command_Admin_ForceUnWarden,ADMFLAG_GENERIC,"Force the current Warden to retire");
+    RegAdminCmd("sm_forceunwarden",Command_Admin_ForceUnWarden,ADMFLAG_GENERIC,"Force the current Warden to retire");
+    RegAdminCmd("sm_lw",Command_Admin_LockWarden,ADMFLAG_GENERIC,"Lock Warden");
+    RegAdminCmd("sm_lockwarden",Command_Admin_LockWarden,ADMFLAG_GENERIC,"Lock Warden");
+    RegAdminCmd("sm_ulw",Command_Admin_UnlockWarden,ADMFLAG_GENERIC,"Unlock Warden");
+    RegAdminCmd("sm_unlockwarden",Command_Admin_UnlockWarden,ADMFLAG_GENERIC,"Unlock Warden");
+    RegAdminCmd("sm_jtime",Command_Admin_JailTime,ADMFLAG_GENERIC,"Set time left in round, in seconds");
+    RegAdminCmd("sm_jailtime",Command_Admin_JailTime,ADMFLAG_GENERIC,"Set time left in round, in seconds");
+    RegAdminCmd("sm_oc",Command_Admin_OpenCells,ADMFLAG_GENERIC,"Open the cell doors");
+    RegAdminCmd("sm_opencells",Command_Admin_OpenCells,ADMFLAG_GENERIC,"Open the cell doors");
+    RegAdminCmd("sm_cc",Command_Admin_CloseCells,ADMFLAG_GENERIC,"Close the cell doors");
+    RegAdminCmd("sm_closecells",Command_Admin_CloseCells,ADMFLAG_GENERIC,"Close the cell doors");
 
     //hook gameevents for use as functions
     HookEvent("teamplay_round_start",OnPreRoundStart);
@@ -74,9 +83,28 @@ public void OnPluginStart()
     //import translations
     LoadTranslations("common.phrases");
     LoadTranslations("jbfs.phrases");
+
+    //sounds to precache
+    ManagePrecache();
+
+    //various plugin configs
+    LoadConfigs();
 }
 
 public void OnPluginEnd()
 {
     SetConVars(false);
+}
+
+public void ManagePrecache()
+{
+    PrecacheSound("vo/announcer_ends_60sec.mp3", true);
+    PrecacheSound("vo/announcer_ends_30sec.mp3", true);
+    PrecacheSound("vo/announcer_ends_10sec.mp3", true);
+    char sound[PLATFORM_MAX_PATH];
+    for(int i=1;i<6;i++)
+    {
+        FormatEx(sound,PLATFORM_MAX_PATH,"vo/announcer_ends_%dsec.mp3",i);
+        PrecacheSound(sound,true);
+    }
 }

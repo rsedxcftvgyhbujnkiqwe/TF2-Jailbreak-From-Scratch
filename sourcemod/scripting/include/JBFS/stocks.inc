@@ -78,3 +78,16 @@ stock bool RemoveFromIntArray(int[] array,int length, int index)
     array[length - 1] = 0;
     return true;
 }
+
+stock int FindEntityByName(int startEnt, const char[] targetname)
+{
+    //no wildcard support!!!
+    //too much work! just specify what you want
+    char entname[PLATFORM_MAX_PATH];
+    while((startEnt=FindEntityByClassname(startEnt, "*"))!=-1)
+    {
+        GetEntPropString(startEnt,Prop_Data,"m_iName",entname,sizeof(entname))
+        if(StrEqual(entname,targetname)) break;
+    }
+    return startEnt;
+}
