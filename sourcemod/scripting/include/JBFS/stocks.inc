@@ -84,12 +84,16 @@ stock int FindEntityByName(int startEnt, const char[] targetname)
     //no wildcard support!!!
     //too much work! just specify what you want
     char entname[PLATFORM_MAX_PATH];
-    while((startEnt=FindEntityByClassname(startEnt, "*"))!=-1)
-    {
-        GetEntPropString(startEnt,Prop_Data,"m_iName",entname,sizeof(entname))
-        if(StrEqual(entname,targetname)) break;
-        if(entname[0]==targetname[0])
-            PrintToServer("ENTETST %s ~ %s",targetname,entname);
+    int MaxEnts = GetMaxEntities();
+    for(int ent=startEnt;ent<MaxEnts;++ent){
+        if(IsValidEntity(ent))
+        {
+            GetEntPropString(startEnt,Prop_Data,"m_iName",entname,sizeof(entname))
+            if(StrEqual(entname,targetname))
+            {
+                return ent;
+            }
+        }
     }
-    return startEnt;
+    return -1;
 }

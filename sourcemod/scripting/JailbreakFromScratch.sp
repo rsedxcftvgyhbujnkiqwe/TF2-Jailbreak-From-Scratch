@@ -75,6 +75,13 @@ public void OnPluginStart()
     HookEvent("teamplay_round_win",OnArenaRoundEnd);
     HookEvent("teamplay_round_stalemate",OnArenaRoundEnd);
 
+    //create custom game events for vscript in maps to hook off of
+    //we can't actually make entirely custom ones, BUT we can abuse existing events
+    //in the case of this plugin, pass-time events will be used
+    JBFSEvents.plugin_load = CreateEvent("pass_get",true);
+    JBFSEvents.player_warden_set = CreateEvent("pass_free",true);
+    JBFSEvents.player_warden_unset = CreateEvent("pass_stolen",true);
+
     SetConVars(true);
 
     //add custom color(s) to morecolors

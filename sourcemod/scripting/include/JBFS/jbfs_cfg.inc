@@ -76,6 +76,7 @@ public void LoadMapConfig()
         if (cells > 0) MapConfig.hascells = true;
         /*
         this section is to allow mappers to set these values on their own using named logic relays
+        why relays? they dont take up edicts and can be named and found.
         server config will still override but these work as defaults
         note: can't check if vec exists or not because 0,0,0 could be a correct coord
         */

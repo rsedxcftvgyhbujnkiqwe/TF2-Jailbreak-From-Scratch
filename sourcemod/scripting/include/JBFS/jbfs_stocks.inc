@@ -125,6 +125,9 @@ stock void SetWarden(int client,int reason)
             CPrintToChatAll("%t %t","PluginTag","WardenWRandom",client);
         }
     }
+    SetEventInt(JBFSEvents.player_warden_set,"owner",GetClientUserId(client));
+    SetEventInt(JBFSEvents.player_warden_set,"attacker",reason);
+    FireEvent(JBFSEvents.player_warden_set,true);
 }
 
 stock void RemoveWarden(int reason)
@@ -154,6 +157,9 @@ stock void RemoveWarden(int reason)
             UnlockWarden(true);
         }
     }
+    SetEventInt(JBFSEvents.player_warden_unset,"victim",GetClientUserId(currentwarden));
+    SetEventInt(JBFSEvents.player_warden_unset,"attacker",reason);
+    FireEvent(JBFSEvents.player_warden_unset,true);
 }
 
 //choose a random warden

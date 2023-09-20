@@ -48,3 +48,11 @@ enum struct JBMapConfig
     bool hasbspawn;
 }
 public JBMapConfig MapConfig;
+
+enum struct JBEvents
+{
+    Handle plugin_load;
+    Handle player_warden_set;
+    Handle player_warden_unset;
+}
+public JBEvents JBFSEvents;

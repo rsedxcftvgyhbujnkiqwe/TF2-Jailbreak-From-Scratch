@@ -2,6 +2,8 @@ public void OnPreRoundStart(Event event, const char[] name, bool dontBroadcast)
 {
     JBFS.Warden = 0;
     JBFS.WardenLocked = true;
+    SetEventInt(JBFSEvents.plugin_load,"owner",1);
+    FireEvent(JBFSEvents.plugin_load)
 }
 
 public void OnArenaRoundStart(Event event, const char[] name, bool dontBroadcast)
@@ -32,6 +34,7 @@ public Action OnPlayerSpawn(Event event, const char[] name, bool dontBroadcast)
     {
         RemoveAmmo(client);
     }
+
     return Plugin_Handled;
 }
 
