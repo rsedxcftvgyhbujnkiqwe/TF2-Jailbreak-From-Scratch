@@ -57,7 +57,7 @@ stock void ForceTeamChange(const int client, const int team,const bool spawn = t
 stock void ForceTeamWin(const int team)
 {
 	int entity = FindEntityByClassname(-1, "team_control_point_master");
-	if (entity <= 0)
+	if (!IsValidEntity(entity))
 	{
 		entity = CreateEntityByName("team_control_point_master");
 		DispatchSpawn(entity);

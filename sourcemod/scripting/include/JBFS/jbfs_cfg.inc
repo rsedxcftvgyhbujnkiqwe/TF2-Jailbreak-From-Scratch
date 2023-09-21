@@ -24,7 +24,7 @@ public void LoadMapConfig()
         {
             MapConfig.cells = cellname;
             int cells = FindEntityByName(-1,"*",MapConfig.cells);
-            if (cells > 0){
+            if (IsValidEntity(cells)){
                 MapConfig.hascells = true;
             }
         }
@@ -73,7 +73,7 @@ public void LoadMapConfig()
         */
         MapConfig.cells = "cell_door";
         int cells = FindEntityByName(-1,"*","cell_door");
-        if (cells > 0) MapConfig.hascells = true;
+        if (IsValidEntity(cells)) MapConfig.hascells = true;
         /*
         this section is to allow mappers to set these values on their own using named entities
         I would recommend logic_relay because it's not an edict
@@ -81,17 +81,17 @@ public void LoadMapConfig()
         note: can't check if vec exists or not because 0,0,0 could be a correct coord
         */
         int fspawn = FindEntityByName(-1,"*","lrspawn_freeday");
-        if (fspawn > 0){
+        if (IsValidEntity(fspawn)){
             GetEntPropVector(fspawn,Prop_Data,"m_vecAbsOrigin",MapConfig.fspawn);
             MapConfig.hasfspawn = true;
         }
         int rspawn = FindEntityByName(-1,"*","lrspawn_red");
-        if (fspawn > 0){
+        if (IsValidEntity(rspawn)){
             GetEntPropVector(rspawn,Prop_Data,"m_vecAbsOrigin",MapConfig.rspawn);
             MapConfig.hasrspawn = true;
         }
         int bspawn = FindEntityByName(-1,"*","lrspawn_blue");
-        if (fspawn > 0){
+        if (IsValidEntity(bspawn)){
             GetEntPropVector(bspawn,Prop_Data,"m_vecAbsOrigin",MapConfig.bspawn);
             MapConfig.hasbspawn = true;
         }
