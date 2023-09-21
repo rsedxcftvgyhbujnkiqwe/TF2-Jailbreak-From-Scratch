@@ -105,11 +105,9 @@ stock void SetConVars(const bool side)
 
 stock void SetWarden(int client,int reason)
 {
-    //generally don't call LockWarden() if you dont want the chat msg
     JBFS.Warden = client;
-    JBFS.WardenLocked = true;
+    LockWarden(false)
     //we just set warden + wardenlock, so no need for this anymore
-    if (IsValidHandle(JBFS.WardenLockTimer)) KillTimer(JBFS.WardenLockTimer);
     switch (reason)
     {
         case W_Chose:
@@ -134,6 +132,10 @@ stock void RemoveWarden(int reason)
 {
     int currentwarden = JBFS.Warden;
     JBFS.Warden = 0;
+    //close warden menu if it's open
+    delete g_WMenu[currentwarden];
+    Menu defaultmenu;
+    g_WMenu[currentwarden] = defaultmenu;
     switch (reason)
     {
         case UW_Retire:
@@ -155,6 +157,10 @@ stock void RemoveWarden(int reason)
         {
             CPrintToChatAll("%t %t","PluginTag","WardenUWDisconnect",currentwarden);
             UnlockWarden(true);
+        }
+        case UW_Silent:
+        {
+            UnlockWarden(false);
         }
     }
     SetEventInt(JBFS_Event,"owner",JBEvent_PlayerUnsetWarden);
@@ -187,7 +193,7 @@ stock void ChooseWarden(bool adminforce = false)
         if (MicCount==0){
             //nobody with mic eligible
             CPrintToChatAll("%t %t","PluginTag","WardenChooseNone")
-            UnlockWarden()
+            UnlockWarden(true)
             return;
         }
         //set client to ignore if being admin forced
@@ -212,10 +218,11 @@ stock void ChooseWarden(bool adminforce = false)
     }
 }
 
-stock void LockWarden()
+stock void LockWarden(bool message = true)
 {
     JBFS.WardenLocked = true;
-    CPrintToChatAll("%t %t","PluginTag","WardenLock")
+    if (message) CPrintToChatAll("%t %t","PluginTag","WardenLock");
+    if (IsValidHandle(JBFS.WardenLockTimer)) KillTimer(JBFS.WardenLockTimer);
 }
 
 stock void UnlockWarden(bool message = false)

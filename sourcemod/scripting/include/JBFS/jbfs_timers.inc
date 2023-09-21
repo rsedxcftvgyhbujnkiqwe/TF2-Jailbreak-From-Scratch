@@ -6,7 +6,7 @@ public Action Timer_ChooseWarden(Handle timer)
 
 public Action Timer_LockWarden(Handle timer)
 {
-    LockWarden();
+    LockWarden(true);
     return Plugin_Stop;
 }
 

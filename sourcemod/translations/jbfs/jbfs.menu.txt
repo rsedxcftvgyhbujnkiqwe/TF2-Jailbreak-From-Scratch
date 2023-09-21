@@ -1,0 +1,19 @@
+"Phrases"
+{
+    "WardenMenuTitle"
+    {
+        "en"        "Warden Menu"
+    }
+    "WardenMenuReOpen"
+    {
+        "en"        "Warden menu closed. Type !wm to reopen it."
+    }
+    "WardenMenuOpenCells"
+    {
+        "en"        "Open Cells"
+    }
+    "WardenMenuCloseCells"
+    {
+        "en"        "Close Cells"
+    }
+}

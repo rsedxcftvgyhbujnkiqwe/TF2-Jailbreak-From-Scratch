@@ -22,7 +22,8 @@ enum
     UW_Retire=0,
     UW_Force,
     UW_Death,
-    UW_Disconnect
+    UW_Disconnect,
+    UW_Silent
 }
 
 enum struct gamemode
@@ -61,3 +62,5 @@ enum
 }
 
 public Handle JBFS_Event;
+
+Menu g_WMenu[MAXPLAYERS+1];

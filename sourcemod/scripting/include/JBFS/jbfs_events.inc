@@ -1,7 +1,7 @@
 public void OnPreRoundStart(Event event, const char[] name, bool dontBroadcast)
 {
-    JBFS.Warden = 0;
-    JBFS.WardenLocked = true;
+    RemoveWarden(UW_Silent);
+    LockWarden(false);
     //send plugin load
     SetEventInt(JBFS_Event,"owner",JBEvent_PluginLoad);
     SetEventInt(JBFS_Event,"attacker",0);
@@ -10,6 +10,8 @@ public void OnPreRoundStart(Event event, const char[] name, bool dontBroadcast)
     SetEventInt(JBFS_Event,"owner",JBEvent_PlayerSetWarden);
     SetEventInt(JBFS_Event,"attacker",0);
     FireEvent(JBFS_Event);
+    //reset convars
+    FindConVar("mp_friendlyfire").SetBool(false);
 }
 
 public void OnArenaRoundStart(Event event, const char[] name, bool dontBroadcast)
@@ -17,13 +19,13 @@ public void OnArenaRoundStart(Event event, const char[] name, bool dontBroadcast
     AutoBalanceTeams();
     JBFS.TimeLeft = cvarJBFS[RoundTime].IntValue;
     JBFS.RoundTimer = CreateTimer(1.0,RoundTimer,_,TIMER_REPEAT);
-    JBFS.WardenLockTimer = CreateTimer(3.0,Timer_ChooseWarden);
+    CreateTimer(3.0,Timer_ChooseWarden);
 }
 
 public void OnArenaRoundEnd(Event event, const char[] name, bool dontBroadcast)
 {
     if (IsValidHandle(JBFS.RoundTimer)) KillTimer(JBFS.RoundTimer);
-    if (IsValidHandle(JBFS.WardenLockTimer)) KillTimer(JBFS.WardenLockTimer);
+    LockWarden(false);
 }
 
 public OnClientPutInServer(client)

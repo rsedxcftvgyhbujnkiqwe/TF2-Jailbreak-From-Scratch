@@ -114,13 +114,20 @@
     {
         "en"        "Cell doors can't be closed."
     }
-    "Choice 3"
+    "FFNotifyOn"
     {
-        "en"  "Choice Translated"
+        "en"        "Warden has enabled Friendly-Fire!"
     }
-
-    "Menu Title"
+    "FFNotifyOff"
     {
-        "en"  "Menu Title Translated"
+        "en"        "Warden has disabled Friendly-Fire!"
+    }
+    "FFNotifyOnAdmin"
+    {
+        "en"        "An admin has enabled Friendly-Fire!"
+    }
+    "FFNotifyOffAdmin"
+    {
+        "en"        "An admin has disabled Friendly-Fire!"
     }
 }

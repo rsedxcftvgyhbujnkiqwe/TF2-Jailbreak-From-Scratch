@@ -83,6 +83,28 @@ public Action Command_CloseCells(int client, int args)
     return Plugin_Handled;
 }
 
+public Action Command_ToggleFriendlyFire(int client, int args)
+{
+    if (client == JBFS.Warden)
+    {
+        if (FindConVar("mp_friendlyfire").BoolValue)
+        {
+            FindConVar("mp_friendlyfire").SetBool(false);
+            CPrintToChatAll("%t %t","PluginTag","FFNotifyOff");
+        }
+        else
+        {
+            FindConVar("mp_friendlyfire").SetBool(true);
+            CPrintToChatAll("%t %t","PluginTag","FFNotifyOn");
+        }
+    }
+    else
+    {
+        CPrintToChat(client,"%t %t","PluginTag","WardenWarnNotWarden");
+    }
+    return Plugin_Handled;
+}
+
 //Admin Commands
 public Action Command_Admin_ForceWarden(int client, int args)
 {
@@ -131,17 +153,12 @@ public Action Command_Admin_ForceUnWarden(int client, int args)
 
 public Action Command_Admin_LockWarden(int client, int args)
 {
-    if(JBFS.WardenLockTimer)
-    {
-        KillTimer(JBFS.WardenLockTimer);
-        JBFS.WardenLockTimer = INVALID_HANDLE;
-    }
     if(JBFS.WardenLocked)
     {
         CPrintToChat(client,"%t %t","PluginTag","WardenLock")
         return Plugin_Handled;
     }
-    LockWarden();
+    LockWarden(true);
     return Plugin_Handled;
 }
 
@@ -152,7 +169,7 @@ public Action Command_Admin_UnlockWarden(int client, int args)
         CPrintToChat(client,"%t %t","PluginTag","WardenUnlock")
         return Plugin_Handled;
     }
-    UnlockWarden();
+    UnlockWarden(true);
     return Plugin_Handled;
 
 }
@@ -183,6 +200,21 @@ public Action Command_Admin_CloseCells(int client, int args)
 {
     if (ModifyCells(false,client)){
         CPrintToChatAll("%t %t","PluginTag","CellsClose");
+    }
+    return Plugin_Handled;
+}
+
+public Action Command_Admin_ToggleFriendlyFire(int client, int args)
+{
+    if (FindConVar("mp_friendlyfire").BoolValue)
+    {
+        FindConVar("mp_friendlyfire").SetBool(false);
+        CPrintToChatAll("%t %t","PluginTag","FFNotifyOff");
+    }
+    else
+    {
+        FindConVar("mp_friendlyfire").SetBool(true);
+        CPrintToChatAll("%t %t","PluginTag","FFNotifyOn");
     }
     return Plugin_Handled;
 }

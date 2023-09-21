@@ -50,6 +50,11 @@ public void OnPluginStart()
     RegConsoleCmd("sm_opencells",Command_OpenCells,"Open the cell doors");
     RegConsoleCmd("sm_cc",Command_CloseCells,"Close the cell doors");
     RegConsoleCmd("sm_closecells",Command_CloseCells,"Close the cell doors");
+    RegConsoleCmd("sm_wm",Command_WardenMenu,"Open the Warden menu");
+    RegConsoleCmd("sm_wmenu",Command_WardenMenu,"Open the Warden menu");
+    RegConsoleCmd("sm_wardenmenu",Command_WardenMenu,"Open the Warden menu");
+    RegConsoleCmd("sm_tff",Command_ToggleFriendlyFire,"Toggle Friendly Fire");
+    RegConsoleCmd("sm_toggleff",Command_ToggleFriendlyFire,"Toggle Friendly Fire");
 
     //admin commands
     RegAdminCmd("sm_fw",Command_Admin_ForceWarden,ADMFLAG_GENERIC,"Force a player to become Warden");
@@ -66,6 +71,10 @@ public void OnPluginStart()
     RegAdminCmd("sm_forceopencells",Command_Admin_OpenCells,ADMFLAG_GENERIC,"Force open the cell doors");
     RegAdminCmd("sm_fcc",Command_Admin_CloseCells,ADMFLAG_GENERIC,"Force close the cell doors");
     RegAdminCmd("sm_forceclosecells",Command_Admin_CloseCells,ADMFLAG_GENERIC,"Force close the cell doors");
+    RegAdminCmd("sm_awm",Command_Admin_WardenMenu,ADMFLAG_GENERIC,"Open the Admin Warden menu");
+    RegAdminCmd("sm_awmenu",Command_Admin_WardenMenu,ADMFLAG_GENERIC,"Open the Admin Warden menu");
+    RegAdminCmd("sm_aff",Command_Admin_ToggleFriendlyFire,ADMFLAG_GENERIC,"Toggle Friendly Fire");
+    RegAdminCmd("sm_adminff",Command_Admin_ToggleFriendlyFire,ADMFLAG_GENERIC,"Toggle Friendly Fire");
 
     //hook gameevents for use as functions
     HookEvent("teamplay_round_start",OnPreRoundStart);
@@ -91,12 +100,11 @@ public void OnPluginStart()
 
     //import translations
     LoadTranslations("common.phrases");
-    LoadTranslations("jbfs.phrases");
+    LoadTranslations("jbfs/jbfs.phrases");
+    LoadTranslations("jbfs/jbfs.menu.phrases");
 
     //sounds to precache
     ManagePrecache();
-
-    RegConsoleCmd("menu_test1", Menu_Test1);
 }
 
 public void OnMapStart()
