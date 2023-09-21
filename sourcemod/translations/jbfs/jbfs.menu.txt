@@ -16,4 +16,24 @@
     {
         "en"        "Close Cells"
     }
+    "WardenMenuToggleFF"
+    {
+        "en"        "Toggle Friendly Fire"
+    }
+    "AdminWardenMenuForceWarden"
+    {
+        "en"        "Force Random Warden"
+    }
+    "AdminWardenMenuRetireWarden"
+    {
+        "en"        "Fire Warden"
+    }
+    "AdminWardenMenuLockWarden"
+    {
+        "en"        "Lock Warden"
+    }
+    "AdminWardenMenuUnlockWarden"
+    {
+        "en"        "Unlock Warden"
+    }
 }

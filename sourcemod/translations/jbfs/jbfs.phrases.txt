@@ -130,4 +130,20 @@
     {
         "en"        "An admin has disabled Friendly-Fire!"
     }
+    "CCNotifyOn"
+    {
+        "en"        "Warden has enabled collisions."
+    }
+    "CCNotifyOff"
+    {
+        "en"        "Warden has disabled collisions."
+    }
+    "CCNotifyOnAdmin"
+    {
+        "en"        "An admin has enabled collisions."
+    }
+    "CCNotifyOffAdmin"
+    {
+        "en"        "An admin has disabled collisions."
+    }
 }

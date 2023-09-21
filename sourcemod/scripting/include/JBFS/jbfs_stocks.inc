@@ -326,3 +326,35 @@ stock bool ModifyCells(bool open,int client = 0,bool message = true)
     }
     return true;
 }
+
+stock void ToggleFF(bool admin = false)
+{
+    if (FindConVar("mp_friendlyfire").BoolValue)
+    {
+        FindConVar("mp_friendlyfire").SetBool(false);
+        if (admin) CPrintToChatAll("%t %t","PluginTag","FFNotifyOffAdmin");
+        else CPrintToChatAll("%t %t","PluginTag","FFNotifyOff");
+    }
+    else
+    {
+        FindConVar("mp_friendlyfire").SetBool(true);
+        if (admin) CPrintToChatAll("%t %t","PluginTag","FFNotifyOnAdmin");
+        else CPrintToChatAll("%t %t","PluginTag","FFNotifyOn");
+    }
+}
+
+stock void ToggleCC(bool admin = false)
+{
+    if (FindConVar("tf_avoidteammates_pushaway").BoolValue)
+    {
+        FindConVar("tf_avoidteammates_pushaway").SetBool(false);
+        if (admin) CPrintToChatAll("%t %t","PluginTag","FFNotifyOffAdmin");
+        else CPrintToChatAll("%t %t","PluginTag","FFNotifyOff");
+    }
+    else
+    {
+        FindConVar("tf_avoidteammates_pushaway").SetBool(true);
+        if (admin) CPrintToChatAll("%t %t","PluginTag","FFNotifyOnAdmin");
+        else CPrintToChatAll("%t %t","PluginTag","FFNotifyOn");
+    }
+}

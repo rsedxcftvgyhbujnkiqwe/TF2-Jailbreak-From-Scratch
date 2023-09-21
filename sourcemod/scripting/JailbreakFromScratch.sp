@@ -3,6 +3,7 @@
 #define PLUGIN_AUTHOR       "blank"
 #define PLUGIN_DESCRIPTION  "Minimal TF2 Jailbreak plugin"
 
+//sourcemod incs
 #include <sourcemod>
 #include <sdktools>
 #include <sdkhooks>
@@ -17,7 +18,7 @@ public Plugin myinfo =
 	version = PLUGIN_VERSION,
 	url = "https://github.com/rsedxcftvgyhbujnkiqwe/TF2-Jailbreak-From-Scratch"
 };
-
+//jbfs incs
 #include <JBFS/jbfs_vars>
 #include <JBFS/jbfs_events>
 #include <JBFS/jbfs_commands>
@@ -26,7 +27,7 @@ public Plugin myinfo =
 #include <JBFS/jbfs_cfg>
 #include <JBFS/jbfs_menu>
 #include <JBFS/stocks>
-
+//third party deps
 #include <morecolors>
 
 public void OnPluginStart()
@@ -38,11 +39,20 @@ public void OnPluginStart()
     cvarJBFS[GuardCrits] = CreateConVar("sm_jbfs_guardcrits","1","Should Guards have crits.\n0 = No Crits\n1 = Crits",FCVAR_NOTIFY,true,0.0,true,1.0);
     cvarJBFS[RoundTime] = CreateConVar("sm_jbfs_roundtime","600","Time per round, in seconds",FCVAR_NOTIFY,true,120.0);
     cvarJBFS[Version] = CreateConVar("jbfs_version",PLUGIN_VERSION,PLUGIN_NAME,FCVAR_REPLICATED | FCVAR_NOTIFY | FCVAR_SPONLY | FCVAR_DONTRECORD);
+    //admincmd cvars
+    cvarJBFS_ACMD[ACMD_WardenMenu] = CreateConVar("sm_jbfs_acmd_adminmenu","2","Admin command section. Requires setting admin flag bits.\nSee: https://wiki.alliedmods.net/Checking_Admin_Flags_(SourceMod_Scripting)\n\nAdmin flag(s) required to open the admin warden menu.",FCVAR_NOTIFY,true,0.0,true,2097151.0);
+    cvarJBFS_ACMD[ACMD_ForceWarden] = CreateConVar("sm_jbfs_acmd_forcewarden","2","Admin flag(s) required to force warden/unwarden.",FCVAR_NOTIFY,true,0.0,true,2097151.0);
+    cvarJBFS_ACMD[ACMD_LockWarden] = CreateConVar("sm_jbfs_acmd_lockwarden","2","Admin flag(s) required to lock/unlock warden.",FCVAR_NOTIFY,true,0.0,true,2097151.0);
+    cvarJBFS_ACMD[ACMD_JailTime] = CreateConVar("sm_jbfs_acmd_jailtime","2","Admin flag(s) required to change jail time.",FCVAR_NOTIFY,true,0.0,true,2097151.0);
+    cvarJBFS_ACMD[ACMD_Cells] = CreateConVar("sm_jbfs_acmd_cells","2","Admin flag(s) required to open/close cells.",FCVAR_NOTIFY,true,0.0,true,2097151.0);
+    cvarJBFS_ACMD[ACMD_FF] = CreateConVar("sm_jbfs_acmd_ff","2","Admin flag(s) required to toggle friendly fire.",FCVAR_NOTIFY,true,0.0,true,2097151.0);
+    cvarJBFS_ACMD[ACMD_CC] = CreateConVar("sm_jbfs_acmd_cc","2","Admin flag(s) required to toggle collisions.",FCVAR_NOTIFY,true,0.0,true,2097151.0);
     AutoExecConfig(true,"JBFS");
 
     //regular commands for players
     RegConsoleCmd("sm_w",Command_Warden,"Become the Warden");
     RegConsoleCmd("sm_warden",Command_Warden,"Become the Warden");
+
     //warden commands
     RegConsoleCmd("sm_uw",Command_UnWarden,"Retire from Warden");
     RegConsoleCmd("sm_unwarden",Command_UnWarden,"Retire from Warden");
@@ -53,28 +63,36 @@ public void OnPluginStart()
     RegConsoleCmd("sm_wm",Command_WardenMenu,"Open the Warden menu");
     RegConsoleCmd("sm_wmenu",Command_WardenMenu,"Open the Warden menu");
     RegConsoleCmd("sm_wardenmenu",Command_WardenMenu,"Open the Warden menu");
-    RegConsoleCmd("sm_tff",Command_ToggleFriendlyFire,"Toggle Friendly Fire");
-    RegConsoleCmd("sm_toggleff",Command_ToggleFriendlyFire,"Toggle Friendly Fire");
+    RegConsoleCmd("sm_wff",Command_ToggleFriendlyFire,"Toggle Friendly Fire");
+    RegConsoleCmd("sm_wardenff",Command_ToggleFriendlyFire,"Toggle Friendly Fire");
+    RegConsoleCmd("sm_wcc",Command_ToggleCollisions,"Toggle Collisions");
+    RegConsoleCmd("sm_wcol",Command_ToggleCollisions,"Toggle Collisions");
+    RegConsoleCmd("sm_wardencol",Command_ToggleCollisions,"Toggle Collisions");
 
     //admin commands
-    RegAdminCmd("sm_fw",Command_Admin_ForceWarden,ADMFLAG_GENERIC,"Force a player to become Warden");
-    RegAdminCmd("sm_forcewarden",Command_Admin_ForceWarden,ADMFLAG_GENERIC,"Force a player to become Warden");
-    RegAdminCmd("sm_fuw",Command_Admin_ForceUnWarden,ADMFLAG_GENERIC,"Force the current Warden to retire");
-    RegAdminCmd("sm_forceunwarden",Command_Admin_ForceUnWarden,ADMFLAG_GENERIC,"Force the current Warden to retire");
-    RegAdminCmd("sm_lw",Command_Admin_LockWarden,ADMFLAG_GENERIC,"Lock Warden");
-    RegAdminCmd("sm_lockwarden",Command_Admin_LockWarden,ADMFLAG_GENERIC,"Lock Warden");
-    RegAdminCmd("sm_ulw",Command_Admin_UnlockWarden,ADMFLAG_GENERIC,"Unlock Warden");
-    RegAdminCmd("sm_unlockwarden",Command_Admin_UnlockWarden,ADMFLAG_GENERIC,"Unlock Warden");
-    RegAdminCmd("sm_jtime",Command_Admin_JailTime,ADMFLAG_GENERIC,"Set time left in round, in seconds");
-    RegAdminCmd("sm_jailtime",Command_Admin_JailTime,ADMFLAG_GENERIC,"Set time left in round, in seconds");
-    RegAdminCmd("sm_foc",Command_Admin_OpenCells,ADMFLAG_GENERIC,"Force open the cell doors");
-    RegAdminCmd("sm_forceopencells",Command_Admin_OpenCells,ADMFLAG_GENERIC,"Force open the cell doors");
-    RegAdminCmd("sm_fcc",Command_Admin_CloseCells,ADMFLAG_GENERIC,"Force close the cell doors");
-    RegAdminCmd("sm_forceclosecells",Command_Admin_CloseCells,ADMFLAG_GENERIC,"Force close the cell doors");
-    RegAdminCmd("sm_awm",Command_Admin_WardenMenu,ADMFLAG_GENERIC,"Open the Admin Warden menu");
-    RegAdminCmd("sm_awmenu",Command_Admin_WardenMenu,ADMFLAG_GENERIC,"Open the Admin Warden menu");
-    RegAdminCmd("sm_aff",Command_Admin_ToggleFriendlyFire,ADMFLAG_GENERIC,"Toggle Friendly Fire");
-    RegAdminCmd("sm_adminff",Command_Admin_ToggleFriendlyFire,ADMFLAG_GENERIC,"Toggle Friendly Fire");
+    RegAdminCmd("sm_fw",Command_Admin_ForceWarden,cvarJBFS_ACMD[ACMD_ForceWarden].IntValue,"Force a player to become Warden");
+    RegAdminCmd("sm_forcewarden",Command_Admin_ForceWarden,cvarJBFS_ACMD[ACMD_ForceWarden].IntValue,"Force a player to become Warden");
+    RegAdminCmd("sm_fuw",Command_Admin_ForceUnWarden,cvarJBFS_ACMD[ACMD_ForceWarden].IntValue,"Force the current Warden to retire");
+    RegAdminCmd("sm_forceretire",Command_Admin_ForceUnWarden,cvarJBFS_ACMD[ACMD_ForceWarden].IntValue,"Force the current Warden to retire");
+    RegAdminCmd("sm_forceunwarden",Command_Admin_ForceUnWarden,cvarJBFS_ACMD[ACMD_ForceWarden].IntValue,"Force the current Warden to retire");
+    RegAdminCmd("sm_lw",Command_Admin_LockWarden,cvarJBFS_ACMD[ACMD_LockWarden].IntValue,"Lock Warden");
+    RegAdminCmd("sm_lockwarden",Command_Admin_LockWarden,cvarJBFS_ACMD[ACMD_LockWarden].IntValue,"Lock Warden");
+    RegAdminCmd("sm_ulw",Command_Admin_UnlockWarden,cvarJBFS_ACMD[ACMD_LockWarden].IntValue,"Unlock Warden");
+    RegAdminCmd("sm_unlockwarden",Command_Admin_UnlockWarden,cvarJBFS_ACMD[ACMD_LockWarden].IntValue,"Unlock Warden");
+    RegAdminCmd("sm_jtime",Command_Admin_JailTime,cvarJBFS_ACMD[ACMD_JailTime].IntValue,"Set time left in round, in seconds");
+    RegAdminCmd("sm_jailtime",Command_Admin_JailTime,cvarJBFS_ACMD[ACMD_JailTime].IntValue,"Set time left in round, in seconds");
+    RegAdminCmd("sm_foc",Command_Admin_OpenCells,cvarJBFS_ACMD[ACMD_Cells].IntValue,"Force open the cell doors");
+    RegAdminCmd("sm_forceopencells",Command_Admin_OpenCells,cvarJBFS_ACMD[ACMD_Cells].IntValue,"Force open the cell doors");
+    RegAdminCmd("sm_fcc",Command_Admin_CloseCells,cvarJBFS_ACMD[ACMD_Cells].IntValue,"Force close the cell doors");
+    RegAdminCmd("sm_forceclosecells",Command_Admin_CloseCells,cvarJBFS_ACMD[ACMD_Cells].IntValue,"Force close the cell doors");
+    RegAdminCmd("sm_aff",Command_Admin_ToggleFriendlyFire,cvarJBFS_ACMD[ACMD_FF].IntValue,"Toggle Friendly Fire");
+    RegAdminCmd("sm_adminff",Command_Admin_ToggleFriendlyFire,cvarJBFS_ACMD[ACMD_FF].IntValue,"Toggle Friendly Fire");
+    RegAdminCmd("sm_acc",Command_Admin_ToggleCollisions,cvarJBFS_ACMD[ACMD_CC].IntValue,"Toggle Collisions");
+    RegAdminCmd("sm_acol",Command_Admin_ToggleCollisions,cvarJBFS_ACMD[ACMD_CC].IntValue,"Toggle Collisions");
+    RegAdminCmd("sm_admincol",Command_Admin_ToggleCollisions,cvarJBFS_ACMD[ACMD_CC].IntValue,"Toggle Collisions");
+
+    RegAdminCmd("sm_awm",Command_Admin_WardenMenu,cvarJBFS_ACMD[ACMD_WardenMenu].IntValue,"Open the Admin Warden menu");
+    RegAdminCmd("sm_awmenu",Command_Admin_WardenMenu,cvarJBFS_ACMD[ACMD_WardenMenu].IntValue,"Open the Admin Warden menu");
 
     //hook gameevents for use as functions
     HookEvent("teamplay_round_start",OnPreRoundStart);

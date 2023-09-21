@@ -4,6 +4,8 @@ enum
     BLU
 }
 
+//general cvars
+//always leave Version at the bottom
 enum
 {
     BalanceRatio=0,
@@ -13,6 +15,20 @@ enum
     Version
 }
 ConVar cvarJBFS[Version+1];
+
+//command cvars
+//always leave ACMDWmenu at the bottom
+enum
+{
+    ACMD_ForceWarden,
+    ACMD_LockWarden,
+    ACMD_JailTime,
+    ACMD_Cells,
+    ACMD_FF,
+    ACMD_CC,
+    ACMD_WardenMenu
+}
+ConVar cvarJBFS_ACMD[ACMD_WardenMenu+1];
 
 enum
 {

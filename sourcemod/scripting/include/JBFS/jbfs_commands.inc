@@ -83,16 +83,20 @@ public Action Command_ToggleFriendlyFire(int client, int args)
 {
     if (client == JBFS.Warden)
     {
-        if (FindConVar("mp_friendlyfire").BoolValue)
-        {
-            FindConVar("mp_friendlyfire").SetBool(false);
-            CPrintToChatAll("%t %t","PluginTag","FFNotifyOff");
-        }
-        else
-        {
-            FindConVar("mp_friendlyfire").SetBool(true);
-            CPrintToChatAll("%t %t","PluginTag","FFNotifyOn");
-        }
+        ToggleFF(false);
+    }
+    else
+    {
+        CPrintToChat(client,"%t %t","PluginTag","WardenWarnNotWarden");
+    }
+    return Plugin_Handled;
+}
+
+public Action Command_ToggleCollisions(int client, int args)
+{
+    if (client == JBFS.Warden)
+    {
+        ToggleCC(false);
     }
     else
     {
@@ -198,15 +202,12 @@ public Action Command_Admin_CloseCells(int client, int args)
 
 public Action Command_Admin_ToggleFriendlyFire(int client, int args)
 {
-    if (FindConVar("mp_friendlyfire").BoolValue)
-    {
-        FindConVar("mp_friendlyfire").SetBool(false);
-        CPrintToChatAll("%t %t","PluginTag","FFNotifyOffAdmin");
-    }
-    else
-    {
-        FindConVar("mp_friendlyfire").SetBool(true);
-        CPrintToChatAll("%t %t","PluginTag","FFNotifyOnAdmin");
-    }
+    ToggleFF(true);
+    return Plugin_Handled;
+}
+
+public Action Command_Admin_ToggleCollisions(int client, int args)
+{
+    ToggleCC(true);
     return Plugin_Handled;
 }
