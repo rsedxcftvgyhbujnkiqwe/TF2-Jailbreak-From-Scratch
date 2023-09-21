@@ -114,4 +114,13 @@
     {
         "en"        "Cell doors can't be closed."
     }
+    "Choice 3"
+    {
+        "en"  "Choice Translated"
+    }
+
+    "Menu Title"
+    {
+        "en"  "Menu Title Translated"
+    }
 }

@@ -24,6 +24,7 @@ public Plugin myinfo =
 #include <JBFS/jbfs_stocks>
 #include <JBFS/jbfs_timers>
 #include <JBFS/jbfs_cfg>
+#include <JBFS/jbfs_menu>
 #include <JBFS/stocks>
 
 #include <morecolors>
@@ -95,6 +96,7 @@ public void OnPluginStart()
     //sounds to precache
     ManagePrecache();
 
+    RegConsoleCmd("menu_test1", Menu_Test1);
 }
 
 public void OnMapStart()
