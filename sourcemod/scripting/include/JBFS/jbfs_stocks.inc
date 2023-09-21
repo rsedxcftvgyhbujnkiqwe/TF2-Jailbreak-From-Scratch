@@ -164,7 +164,7 @@ stock void RemoveWarden(int reason)
         }
     }
     SetEventInt(JBFS_Event,"owner",JBEvent_PlayerUnsetWarden);
-    if (IsClientInGame(currentwarden) && currentwarden > 0)
+    if (currentwarden > 0)
         SetEventInt(JBFS_Event,"attacker",GetClientUserId(currentwarden));
     else
         SetEventInt(JBFS_Event,"attacker",0);
