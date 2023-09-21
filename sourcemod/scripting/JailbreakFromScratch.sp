@@ -95,6 +95,10 @@ public void OnPluginStart()
     //sounds to precache
     ManagePrecache();
 
+}
+
+public void OnMapStart()
+{
     //various plugin configs
     LoadConfigs();
 }
