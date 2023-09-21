@@ -5,7 +5,7 @@ public Action Command_Warden(int client, int args)
     {
         if(IsPlayerAlive(client))
         {
-            if(HasMic(client))
+            if(HasMic(client,!cvarJBFS[MicWarden].BoolValue))
             {
                 if (!JBFS.Warden)
                 {
