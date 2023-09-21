@@ -85,13 +85,6 @@ public void OnPluginStart()
     HookEvent("teamplay_round_win",OnArenaRoundEnd);
     HookEvent("teamplay_round_stalemate",OnArenaRoundEnd);
 
-    /*
-    all jb events use the pass_free event
-    with 'owner' being the event type 
-    and 'attacker' being user id (if applicable)
-    */
-    JBFS_Event = CreateEvent("pass_free",true);
-
     SetConVars(true);
 
     //add custom color(s) to morecolors

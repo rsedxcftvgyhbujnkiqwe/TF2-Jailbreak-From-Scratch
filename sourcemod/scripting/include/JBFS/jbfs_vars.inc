@@ -61,6 +61,4 @@ enum
     JBEvent_PlayerUnsetFreeday
 }
 
-public Handle JBFS_Event;
-
 Menu g_WMenu[MAXPLAYERS+1];

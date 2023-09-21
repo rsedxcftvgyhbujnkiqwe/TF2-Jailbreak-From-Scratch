@@ -123,6 +123,7 @@ stock void SetWarden(int client,int reason)
             CPrintToChatAll("%t %t","PluginTag","WardenWRandom",client);
         }
     }
+    Handle JBFS_Event = CreateEvent("pass_free",true);
     SetEventInt(JBFS_Event,"owner",JBEvent_PlayerSetWarden);
     SetEventInt(JBFS_Event,"attacker",GetClientUserId(client));
     FireEvent(JBFS_Event,true);
@@ -163,6 +164,7 @@ stock void RemoveWarden(int reason)
             UnlockWarden(false);
         }
     }
+    Handle JBFS_Event = CreateEvent("pass_free",true);
     SetEventInt(JBFS_Event,"owner",JBEvent_PlayerUnsetWarden);
     if (currentwarden > 0)
         SetEventInt(JBFS_Event,"attacker",GetClientUserId(currentwarden));

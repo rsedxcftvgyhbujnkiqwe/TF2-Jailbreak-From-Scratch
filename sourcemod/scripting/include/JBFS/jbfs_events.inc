@@ -3,10 +3,12 @@ public void OnPreRoundStart(Event event, const char[] name, bool dontBroadcast)
     RemoveWarden(UW_Silent);
     LockWarden(false);
     //send plugin load
+    Handle JBFS_Event = CreateEvent("pass_free",true);
     SetEventInt(JBFS_Event,"owner",JBEvent_PluginLoad);
     SetEventInt(JBFS_Event,"attacker",0);
     FireEvent(JBFS_Event);
     //send warden set 0
+    JBFS_Event = CreateEvent("pass_free",true);
     SetEventInt(JBFS_Event,"owner",JBEvent_PlayerSetWarden);
     SetEventInt(JBFS_Event,"attacker",0);
     FireEvent(JBFS_Event);
