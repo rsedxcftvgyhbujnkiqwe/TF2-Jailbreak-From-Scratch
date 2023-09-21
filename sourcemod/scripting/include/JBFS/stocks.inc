@@ -82,15 +82,16 @@ stock bool RemoveFromIntArray(int[] array,int length, int index)
 stock int FindEntityByName(int e, const char[] classname, const char[] targetname)
 {
     char buffer[64];
+    PrintToServer("Running find by name")
     while ((e = FindEntityByClassname(e, classname)) != -1)
     {
+        PrintToServer("Found ent %d",e)
         GetEntPropString(e, Prop_Data, "m_iName", buffer, sizeof(buffer));
-        PrintToServer("---COMPARE--- %s|%s",buffer,targetname)
         if (StrEqual(buffer, targetname))
         {
             return e;
         }
     }
-
+    PrintToServer("Ending find by name")
     return -1;
 }
