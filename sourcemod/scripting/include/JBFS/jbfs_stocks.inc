@@ -126,6 +126,7 @@ stock void SetWarden(int client,int reason)
     SetEventInt(JBFS_Event,"owner",JBEvent_PlayerSetWarden);
     SetEventInt(JBFS_Event,"attacker",GetClientUserId(client));
     FireEvent(JBFS_Event,true);
+    CreateWardenMenu(client,0);
 }
 
 stock void RemoveWarden(int reason)
@@ -280,7 +281,7 @@ stock void HudTextAll(const char[] fmt, any ...)
     }
 }
 
-stock bool ModifyCells(bool open,int client = 0)
+stock bool ModifyCells(bool open,int client = 0,bool message = true)
 {
     if (!MapConfig.hascells)
     {
@@ -312,6 +313,11 @@ stock bool ModifyCells(bool open,int client = 0)
     {
         if(client) CPrintToChat(client,"%t %t","PluginTag","CellsBadClass");
         return false;
+    }
+    if(message)
+    {
+        if (open) CPrintToChatAll("%t %t","PluginTag","CellsOpen");
+        else CPrintToChatAll("%t %t","PluginTag","CellsClose");
     }
     return true;
 }

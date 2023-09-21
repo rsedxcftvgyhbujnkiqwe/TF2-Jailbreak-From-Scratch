@@ -57,9 +57,7 @@ public Action Command_OpenCells(int client, int args)
 {
     if (client == JBFS.Warden)
     {
-        if (ModifyCells(true,client)){
-            CPrintToChatAll("%t %t","PluginTag","CellsOpen");
-        }
+        ModifyCells(true,client);
     }
     else
     {
@@ -72,9 +70,7 @@ public Action Command_CloseCells(int client, int args)
 {
     if (client == JBFS.Warden)
     {
-        if (ModifyCells(false,client)){
-            CPrintToChatAll("%t %t","PluginTag","CellsClose");
-        }
+        ModifyCells(false,client);
     }
     else
     {
@@ -190,17 +186,13 @@ public Action Command_Admin_JailTime(int client, int args)
 
 public Action Command_Admin_OpenCells(int client, int args)
 {
-    if (ModifyCells(true,client)){
-        CPrintToChatAll("%t %t","PluginTag","CellsOpen");
-    }
+    ModifyCells(true,client)
     return Plugin_Handled;
 }
 
 public Action Command_Admin_CloseCells(int client, int args)
 {
-    if (ModifyCells(false,client)){
-        CPrintToChatAll("%t %t","PluginTag","CellsClose");
-    }
+    ModifyCells(false,client)
     return Plugin_Handled;
 }
 
