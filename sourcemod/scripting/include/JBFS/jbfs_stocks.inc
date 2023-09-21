@@ -1,3 +1,15 @@
+stock bool HasMic(int client,bool ignore = false)
+{
+    //this bool will just force the check to succeed
+    //useful if this check is disabled in the cvars 
+    if(ignore) return true;
+    if(JBFS.MicStatus[client])
+    {
+        return true;
+    }
+    return false;
+}
+
 stock void AutoBalanceTeams()
 {
     float flBalanceRatio = cvarJBFS[BalanceRatio].FloatValue;
@@ -41,10 +53,9 @@ stock void AutoBalanceTeams()
             int MicCount, NoMicCount;
 
             //get arrays of mic/nomic
-            //HasMic is a global bool array for whether every client has a mic
             for(int i;i<iNumBlue;i++)
             {
-                if(JBFS.HasMic[BluePlayers[i]])
+                if(HasMic(BluePlayers[i],!cvarJBFS[MicBalance].BoolValue))
                     MicBlues[MicCount++] = BluePlayers[i];
                 else
                     NoMicBlues[NoMicCount++] = BluePlayers[i];
@@ -187,12 +198,11 @@ stock void ChooseWarden(bool adminforce = false)
         if (iNumBlue == 0) return;
 
         //get arrays of mic/nomic
-        //HasMic is a global bool array for whether every client has a mic
         int[] MicBlues= new int[iNumBlue];
         int MicCount;
         for(int i;i<iNumBlue;i++)
         {
-            if(JBFS.HasMic[BluePlayers[i]]) MicBlues[MicCount++] = BluePlayers[i];
+            if(HasMic(BluePlayers[i],!cvarJBFS[MicWarden].BoolValue)) MicBlues[MicCount++] = BluePlayers[i];
         }
 
         if (MicCount==0){

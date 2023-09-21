@@ -67,12 +67,12 @@ public void OnPlayerDisconnect(Event event, const char[] name, bool dontBroadcas
     {
         RemoveWarden(UW_Disconnect);
     }
-    JBFS.HasMic[client] = false;
+    JBFS.MicStatus[client] = false;
 }
 
 public void OnClientSpeaking(int client)
 {
-    JBFS.HasMic[client] = true;
+    JBFS.MicStatus[client] = true;
 }
 
 public Action:OnTakeDamage(victim,&attacker,&inflictor,&Float:damage,&damagetype)

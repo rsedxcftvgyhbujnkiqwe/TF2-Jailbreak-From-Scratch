@@ -5,7 +5,7 @@ public Action Command_Warden(int client, int args)
     {
         if(IsPlayerAlive(client))
         {
-            if(JBFS.HasMic[client])
+            if(HasMic(client))
             {
                 if (!JBFS.Warden)
                 {
@@ -120,7 +120,7 @@ public Action Command_Admin_ForceWarden(int client, int args)
     int target = FindTarget(client, arg);
     if (target == -1) return Plugin_Handled;
     //is target eligible to be warden?
-    if (IsClientInGame(target)&& IsPlayerAlive(target) && GetClientTeam(target)==BLU){
+    if (IsClientInGame(target)&& IsPlayerAlive(target) && GetClientTeam(target)==BLU && HasMic(target,!cvarJBFS[MicWarden].BoolValue)){
         if (target != JBFS.Warden)
         {
             RemoveWarden(UW_Force);
