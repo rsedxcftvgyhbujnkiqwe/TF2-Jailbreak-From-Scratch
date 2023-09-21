@@ -101,7 +101,7 @@ public void OnPluginStart()
     //import translations
     LoadTranslations("common.phrases");
     LoadTranslations("jbfs/jbfs.phrases");
-    LoadTranslations("jbfs/jbfs.menu.phrases");
+    LoadTranslations("jbfs/jbfs.menu");
 
     //sounds to precache
     ManagePrecache();
