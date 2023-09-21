@@ -81,10 +81,11 @@ stock bool RemoveFromIntArray(int[] array,int length, int index)
 
 stock int FindEntityByName(int e, const char[] classname, const char[] targetname)
 {
-    char buffer[32];
+    char buffer[64];
     while ((e = FindEntityByClassname(e, classname)) != -1)
     {
         GetEntPropString(e, Prop_Data, "m_iName", buffer, sizeof(buffer));
+        PrintToServer("---COMPARE--- %s|%s",buffer,targetname)
         if (StrEqual(buffer, targetname))
         {
             return e;

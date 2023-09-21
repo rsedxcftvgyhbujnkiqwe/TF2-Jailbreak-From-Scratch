@@ -73,7 +73,6 @@ public void LoadMapConfig()
         */
         MapConfig.cells = "cell_door";
         int cells = FindEntityByName(-1,"*","cell_door");
-        PrintToServer("%d ENT FOUND?",cells)
         if (IsValidEntity(cells)) MapConfig.hascells = true;
         /*
         this section is to allow mappers to set these values on their own using named entities
