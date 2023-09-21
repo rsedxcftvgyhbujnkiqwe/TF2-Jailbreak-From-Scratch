@@ -34,13 +34,13 @@ public int WardenMenuHandler(Menu menu, MenuAction action, int param1, int param
             {
                 ModifyCells(false,param1);
             }
-            menu.DisplayAt(param1, menu.Selection, MENU_TIME_FOREVER);
+            CreateWardenMenu(param1, menu.Selection)
         }
         case MenuAction_Cancel:
         {
             switch(param2)
             {
-                case MenuCancel_Exit,MenuCancel_Interrupted,MenuCancel_NoDisplay:
+                case MenuCancel_Exit,MenuCancel_NoDisplay:
                 {
                     CPrintToChat(param1,"%t %t","PluginTag","WardenMenuReOpen");
                 }
@@ -81,13 +81,18 @@ public Action Command_WardenMenu(int client, int args)
         CPrintToChat(client,"%t %t","PluginTag","WardenWarnNotWarden");
         return Plugin_Handled;
     }
+    CreateWardenMenu(client,1);
+    return Plugin_Handled;
+}
+//abstration done so this can be called from menu handler
+public void CreateWardenMenu(int client,int selection)
+{
     Menu menu = new Menu(WardenMenuHandler, MENU_ACTIONS_ALL);
     menu.SetTitle("%T","WardenMenuTitle",LANG_SERVER);
     menu.AddItem(WMENU_CHOICE1,"Open Cells");
     menu.AddItem(WMENU_CHOICE2,"Close Cells");
-    menu.Display(client,MENU_TIME_FOREVER);
+    menu.DisplayAt(client,1,MENU_TIME_FOREVER);
     g_WMenu[client] = menu;
-    return Plugin_Handled;
 }
 
 public int AdminWardenMenuHandler(Menu menu, MenuAction action, int param1, int param2)
@@ -117,13 +122,13 @@ public int AdminWardenMenuHandler(Menu menu, MenuAction action, int param1, int 
             {
                 ModifyCells(false,param1);
             }
-            menu.DisplayAt(param1, menu.Selection, MENU_TIME_FOREVER);
+            CreateAdminWardenMenu(param1, menu.Selection)
         }
         case MenuAction_Cancel:
         {
             switch(param2)
             {
-                case MenuCancel_Exit,MenuCancel_Interrupted,MenuCancel_NoDisplay:
+                case MenuCancel_Exit,MenuCancel_NoDisplay:
                 {
                     CPrintToChat(param1,"%t %t","PluginTag","WardenMenuReOpen");
                 }
@@ -159,10 +164,14 @@ public int AdminWardenMenuHandler(Menu menu, MenuAction action, int param1, int 
 
 public Action Command_Admin_WardenMenu(int client, int args)
 {
+    CreateAdminWardenMenu(client,1);
+    return Plugin_Handled;
+}
+public void CreateAdminWardenMenu(int client,int selection)
+{
     Menu menu = new Menu(AdminWardenMenuHandler,MENU_ACTIONS_ALL);
     menu.SetTitle("%T","WardenMenuTitle",LANG_SERVER);
     menu.AddItem(WMENU_CHOICE1,"Open Cells");
     menu.AddItem(WMENU_CHOICE2,"Close Cells");
-    menu.Display(client,MENU_TIME_FOREVER);
-    return Plugin_Handled;
+    menu.DisplayAt(client,1,MENU_TIME_FOREVER);
 }

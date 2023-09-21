@@ -134,8 +134,7 @@ stock void RemoveWarden(int reason)
     JBFS.Warden = 0;
     //close warden menu if it's open
     delete g_WMenu[currentwarden];
-    Menu defaultmenu;
-    g_WMenu[currentwarden] = defaultmenu;
+    g_WMenu[currentwarden] = null;
     switch (reason)
     {
         case UW_Retire:

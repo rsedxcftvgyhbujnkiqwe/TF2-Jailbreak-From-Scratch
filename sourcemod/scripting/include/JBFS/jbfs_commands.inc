@@ -209,12 +209,12 @@ public Action Command_Admin_ToggleFriendlyFire(int client, int args)
     if (FindConVar("mp_friendlyfire").BoolValue)
     {
         FindConVar("mp_friendlyfire").SetBool(false);
-        CPrintToChatAll("%t %t","PluginTag","FFNotifyOff");
+        CPrintToChatAll("%t %t","PluginTag","FFNotifyOffAdmin");
     }
     else
     {
         FindConVar("mp_friendlyfire").SetBool(true);
-        CPrintToChatAll("%t %t","PluginTag","FFNotifyOn");
+        CPrintToChatAll("%t %t","PluginTag","FFNotifyOnAdmin");
     }
     return Plugin_Handled;
 }
