@@ -49,10 +49,15 @@ enum struct JBMapConfig
 }
 public JBMapConfig MapConfig;
 
-enum struct JBEvents
+//always add to the bottom of this enum!!
+//this will preserve backwards compatibility
+enum 
 {
-    Handle plugin_load;
-    Handle player_warden_set;
-    Handle player_warden_unset;
+    JBEvent_PluginLoad=0,
+    JBEvent_PlayerSetWarden,
+    JBEvent_PlayerUnsetWarden,
+    JBEvent_PlayerSetFreeday,
+    JBEvent_PlayerUnsetFreeday
 }
-public JBEvents JBFSEvents;
+
+public Handle JBFS_Event;

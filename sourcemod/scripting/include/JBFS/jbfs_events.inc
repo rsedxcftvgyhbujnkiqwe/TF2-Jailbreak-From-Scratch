@@ -2,8 +2,14 @@ public void OnPreRoundStart(Event event, const char[] name, bool dontBroadcast)
 {
     JBFS.Warden = 0;
     JBFS.WardenLocked = true;
-    SetEventInt(JBFSEvents.plugin_load,"owner",1);
-    FireEvent(JBFSEvents.plugin_load)
+    //send plugin load
+    SetEventInt(JBFS_Event,"owner",JBEvent_PluginLoad);
+    SetEventInt(JBFS_Event,"attacker",0);
+    FireEvent(JBFS_Event);
+    //send warden set 0
+    SetEventInt(JBFS_Event,"owner",JBEvent_PlayerSetWarden);
+    SetEventInt(JBFS_Event,"attacker",0);
+    FireEvent(JBFS_Event);
 }
 
 public void OnArenaRoundStart(Event event, const char[] name, bool dontBroadcast)
