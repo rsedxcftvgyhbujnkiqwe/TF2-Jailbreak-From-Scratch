@@ -1,7 +1,9 @@
 public void OnPreRoundStart(Event event, const char[] name, bool dontBroadcast)
 {
+    //warden stuff
     RemoveWarden(UW_Silent);
     LockWarden(false);
+    SetBoolArray(JBFS.FireStatus,MAXPLAYERS+1,false);
     //send plugin load
     Handle JBFS_Event = CreateEvent("pass_free",true);
     SetEventInt(JBFS_Event,"owner",JBEvent_PluginLoad);
@@ -68,6 +70,9 @@ public void OnPlayerDisconnect(Event event, const char[] name, bool dontBroadcas
         RemoveWarden(UW_Disconnect);
     }
     JBFS.MicStatus[client] = false;
+    if(JBFS.FireVotes[client]) JBFS.FireVoteCount--;
+    JBFS.FireVotes[client] = false;
+    JBFS.FireStatus[client] = false;
 }
 
 public void OnClientSpeaking(int client)

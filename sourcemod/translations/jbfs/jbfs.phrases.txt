@@ -11,23 +11,27 @@
     "WardenWarnTaken"
     {
         "#format"   "{1:N}"
-        "en"        "{unique}{1}{wheat} is currently the warden."
+        "en"        "{unique}{1}{wheat} is currently the Warden."
     }
     "WardenWarnNoMic"
     {
-        "en"        "You must have a microphone to become warden. Use it at least once."
+        "en"        "You must have a microphone to become Warden. Use it at least once."
     }
     "WardenWarnDead"
     {
-        "en"        "Must be alive to become warden."
+        "en"        "Must be alive to become Warden."
     }
     "WardenWarnNotBlue"
     {
-        "en"        "Must be on BLU to become warden."
+        "en"        "Must be on BLU to become Warden."
     }
     "WardenWarnNotWarden"
     {
-        "en"        "You are not the warden."
+        "en"        "You are not the Warden."
+    }
+    "WardenWarnFired"
+    {
+        "en"        "You were fired from Warden, and cannot become warden again this round."
     }
     "WardenWarnAdminInvalid"
     {
@@ -77,6 +81,11 @@
     {
         "#format"   "{1:N}"
         "en"        "{unique}{1}{wheat} has disconnected as Warden."
+    }
+    "WardenUWFire"
+    {
+        "#format"   "{1:N}"
+        "en"        "{unique}{1}{wheat} has been fired from Warden."
     }
     "WardenChooseNone"
     {
@@ -130,6 +139,14 @@
     {
         "en"        "An admin has disabled Friendly-Fire!"
     }
+    "FFStatusOn"
+    {
+        "en"        "Friendly fire is on."
+    }
+    "FFStatusOff"
+    {
+        "en"        "Friendly fire is off."
+    }
     "CCNotifyOn"
     {
         "en"        "Warden has enabled collisions."
@@ -145,5 +162,34 @@
     "CCNotifyOffAdmin"
     {
         "en"        "An admin has disabled collisions."
+    }
+    "CommandFireWarnDisabled"
+    {
+        "en"        "Firing is not enabled on this server."
+    }
+    "CommandFireWarnNone"
+    {
+        "en"        "There is no Warden to fire."
+    }
+    "CommandFireWarnSelf"
+    {
+        "en"        "You can't fire yourself!"
+    }
+    "CommandFireWarnDead"
+    {
+        "en"        "Must be alive to participate in a fire vote."
+    }
+    "CommandFireWarnDone"
+    {
+        "en"        "You have already voted to fire the Warden"
+    }
+    "CommandFireWarnGuard"
+    {
+        "en"        "Guard firing is not enabled on this server."
+    }
+    "CommandFireNotifyVote"
+    {
+        "#format"   "{1:N}{2:d}{3:d}"
+        "en"        "{1} has voted to fire the Warden ({2}/{3})."
     }
 }

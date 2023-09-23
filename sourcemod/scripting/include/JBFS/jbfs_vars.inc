@@ -14,6 +14,9 @@ enum
     RoundTime,
     MicBalance,
     MicWarden,
+    FireVote,
+    GuardFire,
+    FireRatio,
     Version
 }
 ConVar cvarJBFS[Version+1];
@@ -41,6 +44,7 @@ enum
     UW_Force,
     UW_Death,
     UW_Disconnect,
+    UW_Fire,
     UW_Silent
 }
 
@@ -52,6 +56,9 @@ enum struct gamemode
     Handle WardenLockTimer;
     int TimeLeft;
     Handle RoundTimer;
+    bool FireVotes[MAXPLAYERS+1];
+    int FireVoteCount;
+    bool FireStatus[MAXPLAYERS+1];
 }
 public gamemode JBFS;
 

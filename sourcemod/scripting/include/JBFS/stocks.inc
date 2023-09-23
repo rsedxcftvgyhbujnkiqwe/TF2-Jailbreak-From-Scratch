@@ -92,3 +92,11 @@ stock int FindEntityByName(int e, const char[] classname, const char[] targetnam
     }
     return -1;
 }
+
+stock void SetBoolArray(bool[] array, int length, bool value)
+{
+    for(int i;i<length;i++)
+    {
+        array[i]=value;
+    }
+}

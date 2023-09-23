@@ -154,6 +154,9 @@ stock void RemoveWarden(int reason)
     //close warden menu if it's open
     delete g_WMenu[currentwarden];
     g_WMenu[currentwarden] = null;
+    //reset fire votes
+    SetBoolArray(JBFS.FireStatus,MAXPLAYERS+1,false);
+    JBFS.FireVoteCount = 0;
     switch (reason)
     {
         case UW_Retire:
@@ -174,6 +177,11 @@ stock void RemoveWarden(int reason)
         case UW_Disconnect:
         {
             CPrintToChatAll("%t %t","PluginTag","WardenUWDisconnect",currentwarden);
+            UnlockWarden(true);
+        }
+        case UW_Fire:
+        {
+            CPrintToChatAll("%t %t","PluginTag","WardenUWFire",currentwarden);
             UnlockWarden(true);
         }
         case UW_Silent:

@@ -10,7 +10,14 @@ public Action Command_Warden(int client, int args)
                 if (!JBFS.Warden)
                 {
                     if (!JBFS.WardenLocked){
-                        SetWarden(client,W_Chose);
+                        if (!JBFS.FireStatus[client])
+                        {
+                            SetWarden(client,W_Chose);
+                        }
+                        else
+                        {
+                            CPrintToChat(client,"%t %t","PluginTag","WardenWarnFired");
+                        }
                     }
                     else
                     {
@@ -35,6 +42,70 @@ public Action Command_Warden(int client, int args)
     else
     {
         CPrintToChat(client,"%t %t","PluginTag","WardenWarnNotBlue");
+    }
+    return Plugin_Handled;
+}
+
+public Action Command_FriendlyFireStatus(int client, int args)
+{
+    if (FindConVar("mp_friendlyfire").BoolValue) CPrintToChat(client,"%t %t","PluginTag","FFStatusOn");
+    else CPrintToChat(client,"%t %t","PluginTag","FFStatusOff");
+    return Plugin_Handled;
+}
+
+public Action Command_FireWarden(int client, int args)
+{
+    if(!cvarJBFS[FireVote].BoolValue)
+    {
+        CPrintToChat(client,"%t %t","PluginTag","CommandFireWarnDisabled")
+        return Plugin_Handled;
+    }
+    if (JBFS.Warden == 0)
+    {
+        CPrintToChat(client,"%t %t","PluginTag","CommandFireWarnNone")
+        return Plugin_Handled;
+    }
+    if (client == JBFS.Warden)
+    {
+        CPrintToChat(client,"%t %t","PluginTag","CommandFireWarnSelf")
+        return Plugin_Handled;
+    }
+    if (!IsPlayerAlive(client))
+    {
+        CPrintToChat(client,"%t %t","PluginTag","CommandFireWarnDead")
+        return Plugin_Handled;
+    }
+    if (JBFS.FireVotes[client])
+    {
+        CPrintToChat(client,"%t %t","PluginTag","CommandFireWarnDone")
+        return Plugin_Handled;
+    }
+    if (!cvarJBFS[GuardFire].BoolValue && GetClientTeam(client)==BLU)
+    {
+        CPrintToChat(client,"%t %t","PluginTag","CommandFireWarnGuard")
+        return Plugin_Handled;
+    }
+    //finally, assuming all checks pass, this is a valid fire vote
+    //register player's fire vote
+    JBFS.FireVotes[client] = true;
+    JBFS.FireVoteCount++;
+    //check if this was the tipping point
+    float cvarRatio = cvarJBFS[FireRatio].FloatValue;
+    int validclients;
+    for(int i=1;i<MaxClients;i++)
+    {
+        int team = GetClientTeam(i);
+        if(team==RED) validclients++;
+        else if (cvarJBFS[GuardFire].BoolValue && team==BLU) validclients++;
+    }
+    int targetVotes = RoundToCeil(validclients*cvarRatio);
+    if (targetVotes==0) targetVotes = 1;
+    CPrintToChatAll("%t %t","PluginTag","CommandFireNotifyVote",client,JBFS.FireVoteCount,targetVotes);
+
+    if (targetVotes >= JBFS.FireVoteCount)
+    {
+        //time to fire the warden!
+        RemoveWarden(UW_Fire);
     }
     return Plugin_Handled;
 }
