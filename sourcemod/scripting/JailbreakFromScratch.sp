@@ -30,6 +30,10 @@ public Plugin myinfo =
 //third party deps
 #include <morecolors>
 
+#undef REQUIRE_PLUGIN
+#tryinclude <sourcecomms>
+#define REQUIRE_PLUGIN
+
 public void OnPluginStart()
 {
     PrintToServer("Starting %s, version %s",PLUGIN_NAME,PLUGIN_VERSION);
@@ -141,4 +145,31 @@ public void ManagePrecache()
         FormatEx(sound,PLATFORM_MAX_PATH,"vo/announcer_ends_%dsec.mp3",i);
         PrecacheSound(sound,true);
     }
+}
+
+public void OnAllPluginsLoaded()
+{
+#if defined _sourcecomms_included
+    sourcecommspp = LibraryExists("sourcecomms++");
+#endif
+}
+ 
+public void OnLibraryRemoved(const char[] name)
+{
+#if defined _sourcecomms_included
+    if (StrEqual(name, "sourcecomms++"))
+    {
+        sourcecommspp = false;
+    }
+#endif
+}
+ 
+public void OnLibraryAdded(const char[] name)
+{
+#if defined _sourcecomms_included
+    if (StrEqual(name, "sourcecomms++"))
+    {
+        sourcecommspp = true;
+    }
+#endif
 }

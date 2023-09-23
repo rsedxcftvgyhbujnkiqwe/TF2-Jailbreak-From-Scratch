@@ -78,3 +78,5 @@ enum
 }
 
 Menu g_WMenu[MAXPLAYERS+1];
+
+bool sourcecommspp = false;

@@ -5,6 +5,9 @@ stock bool HasMic(int client,bool ignore = false)
     if(ignore) return true;
     if(JBFS.MicStatus[client])
     {
+#if defined _sourcecomms_included
+        if (sourcecommspp && SourceComms_GetClientMuteType(client)) return false;
+#endif
         return true;
     }
     return false;
