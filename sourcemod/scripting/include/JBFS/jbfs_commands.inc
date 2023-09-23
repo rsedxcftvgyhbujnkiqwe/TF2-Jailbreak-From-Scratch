@@ -96,8 +96,9 @@ public Action Command_FireWarden(int client, int args)
     {
         int team = GetClientTeam(i);
         if(team==RED) validclients++;
-        else if (cvarJBFS[GuardFire].BoolValue && team==BLU) validclients++;
+        else if (cvarJBFS[GuardFire].BoolValue && team==BLU && i!=JBFS.Warden) validclients++;
     }
+    if (cvarJBFS[GuardFire].BoolValue) validclients--;
     int targetVotes = RoundToCeil(validclients*cvarRatio);
     if (targetVotes==0) targetVotes = 1;
     CPrintToChatAll("%t %t","PluginTag","CommandFireNotifyVote",client,JBFS.FireVoteCount,targetVotes);
