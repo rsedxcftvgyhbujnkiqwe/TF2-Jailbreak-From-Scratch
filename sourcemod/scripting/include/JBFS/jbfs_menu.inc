@@ -56,6 +56,10 @@ public int WardenMenuHandler(Menu menu, MenuAction action, int param1, int param
             {
                 ToggleCC(false);
             }
+            else if (StrEqual(info, WMENU_CHOICE5))
+            {
+                CreateMarker(param1);
+            }
             g_WMenuTime = gametime;
             CreateWardenMenu(param1, menu.Selection)
         }
@@ -102,6 +106,11 @@ public int WardenMenuHandler(Menu menu, MenuAction action, int param1, int param
                 Format(display,sizeof(display),"%T","WardenMenuToggleCC",param1);
                 return RedrawMenuItem(display);
             }
+            else if (StrEqual(info,WMENU_CHOICE4))
+            {
+                Format(display,sizeof(display),"%T","WardenMenuMarker",param1);
+                return RedrawMenuItem(display);
+            }
         }
     }
     return 0;
@@ -126,6 +135,7 @@ public void CreateWardenMenu(int client,int selection)
     menu.AddItem(WMENU_CHOICE2,"Close Cells");
     menu.AddItem(WMENU_CHOICE3,"Toggle Friendly-Fire");
     menu.AddItem(WMENU_CHOICE4,"Toggle Collisions");
+    menu.AddItem(WMENU_CHOICE5,"Marker");
     menu.DisplayAt(client,selection,MENU_TIME_FOREVER);
     g_WMenu[client] = menu;
 }

@@ -20,6 +20,10 @@
     {
         "en"        "Toggle Friendly Fire"
     }
+    "WardenMenuMarker"
+    {
+        "en"        "Marker"
+    }
     "AdminWardenMenuForceWarden"
     {
         "en"        "Force Random Warden"
