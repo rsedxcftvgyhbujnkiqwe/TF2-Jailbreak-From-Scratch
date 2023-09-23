@@ -82,6 +82,7 @@ public void OnPluginStart()
     RegConsoleCmd("sm_wcc",Command_ToggleCollisions,"Toggle Collisions");
     RegConsoleCmd("sm_wcol",Command_ToggleCollisions,"Toggle Collisions");
     RegConsoleCmd("sm_wardencol",Command_ToggleCollisions,"Toggle Collisions");
+    RegConsoleCmd("sm_marker",Command_WardenMarker,"Create a Warden marker");
 
     //admin commands
     RegAdminCmd("sm_fw",Command_Admin_ForceWarden,cvarJBFS_ACMD[ACMD_ForceWarden].IntValue,"Force a player to become Warden");
