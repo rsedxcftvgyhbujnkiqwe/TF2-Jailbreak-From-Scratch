@@ -12,6 +12,8 @@ enum
     TextChannel,
     GuardCrits,
     RoundTime,
+    MicBalance,
+    MicWarden,
     Version
 }
 ConVar cvarJBFS[Version+1];

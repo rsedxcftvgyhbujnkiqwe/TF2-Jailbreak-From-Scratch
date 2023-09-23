@@ -251,21 +251,21 @@ public void CreateAdminWardenMenu(int client,int selection)
 {
     Menu menu = new Menu(AdminWardenMenuHandler,MENU_ACTIONS_ALL);
     menu.SetTitle("%T","WardenMenuTitle",LANG_SERVER);
-    if(CheckCommandAccess(param1,"sm_forceopencells"))
+    if(CheckCommandAccess(client,"sm_forceopencells",2))
     {
         menu.AddItem(WMENU_CHOICE1,"Open Cells");
         menu.AddItem(WMENU_CHOICE2,"Close Cells");
     }
-    if(CheckCommandAccess(param1,"sm_adminff"))
+    if(CheckCommandAccess(client,"sm_adminff",2))
         menu.AddItem(WMENU_CHOICE3,"Toggle Friendly-Fire");
-    if(CheckCommandAccess(param1,"sm_admincc"))
+    if(CheckCommandAccess(client,"sm_admincc",2))
         menu.AddItem(WMENU_CHOICE4,"Toggle Collisions");
-    if(CheckCommandAccess(param1,"sm_forcewarden"))
+    if(CheckCommandAccess(client,"sm_forcewarden",2))
     {
         menu.AddItem(WMENU_CHOICE5,"Force Random Warden");
         menu.AddItem(WMENU_CHOICE6,"Force Warden to Retire");
     }
-    if(CheckCommandAccess(param1,"sm_lockwarden"))
+    if(CheckCommandAccess(client,"sm_lockwarden",2))
     {
         menu.AddItem(WMENU_CHOICE7,"Lock Warden");
         menu.AddItem(WMENU_CHOICE8,"Unlock Warden");
