@@ -47,6 +47,9 @@ public void OnPluginStart()
     cvarJBFS[FireVote] = CreateConVar("sm_jbfs_firevote","1","Enable the firing system, allowing prisoners to fire the warden by popular vote.\n0 = Disabled\n1 = Enabled",FCVAR_NOTIFY,true,0.0,true,1.0);
     cvarJBFS[GuardFire] = CreateConVar("sm_jbfs_guardfire","1","If the firing system is enalbed, allow guards to participate in fire votes\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0);
     cvarJBFS[FireRatio] = CreateConVar("sm_jbfs_fireratio","0.7","Ratio of eligible players required to fire the Warden.\nIf guard firing is enabled, guards are included in the ratio.",FCVAR_NOTIFY,true,0.1,true,1.0)
+    cvarJBFS[MarkerTime] = CreateConVar("sm_jbfs_markertime","10.0","Timed life of markers.\n0 disables marker system.",FCVAR_NOTIFY,true,0.0,true,20.0);
+    cvarJBFS[MarkerRadius] = CreateConVar("sm_jbfs_markerradius","256","Radius of markers, in hammer units.",FCVAR_NOTIFY,true,32.0,true,512.0);
+    cvarJBFS[MarkerColor] = CreateConVar("sm_jbfs_markercolor","FFFFFF","Hex color to use for markers.",FCVAR_NOTIFY);
     cvarJBFS[Version] = CreateConVar("jbfs_version",PLUGIN_VERSION,PLUGIN_NAME,FCVAR_REPLICATED | FCVAR_NOTIFY | FCVAR_SPONLY | FCVAR_DONTRECORD);
     //admincmd cvars
     cvarJBFS_ACMD[ACMD_WardenMenu] = CreateConVar("sm_jbfs_acmd_adminmenu","2","Admin command section. Requires setting admin flag bits.\nSee: https://wiki.alliedmods.net/Checking_Admin_Flags_(SourceMod_Scripting)\n\nAdmin flag(s) required to open the admin warden menu.",FCVAR_NOTIFY,true,0.0,true,2097151.0);
@@ -113,6 +116,7 @@ public void OnPluginStart()
     HookEvent("player_spawn",OnPlayerSpawn);
     HookEvent("teamplay_round_win",OnArenaRoundEnd);
     HookEvent("teamplay_round_stalemate",OnArenaRoundEnd);
+    HookEvent("player_team",OnPlayerTeamChange);
 
     SetConVars(true);
 
@@ -150,6 +154,15 @@ public void ManagePrecache()
     {
         FormatEx(sound,PLATFORM_MAX_PATH,"vo/announcer_ends_%dsec.mp3",i);
         PrecacheSound(sound,true);
+    }
+    
+    JBMarker.BeamSprite = PrecacheModel("materials/sprites/laserbeam.vmt", true);
+    JBMarker.HaloSprite = PrecacheModel("materials/sprites/halo01.vmt", true);
+    cvarJBFS[MarkerColor].GetString(JBMarker.MarkerColorHex,sizeof(JBMarker.MarkerColorHex))
+    int rgb[3];
+    HexToRGB(JBMarker.MarkerColorHex,rgb);
+    for(int i;i<3;i++){
+        JBMarker.MarkerColorRGBA[i] = rgb[i];
     }
 }
 

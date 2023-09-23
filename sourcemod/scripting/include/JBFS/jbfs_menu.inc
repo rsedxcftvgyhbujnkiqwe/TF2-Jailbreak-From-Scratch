@@ -30,6 +30,14 @@ public int WardenMenuHandler(Menu menu, MenuAction action, int param1, int param
                 delete menu;
                 return 0;
             }
+            float gametime = GetGameTime();
+                //0.5s cooldown between picks
+            if (gametime - g_WMenuTime < 0.5)
+            {
+                CreateWardenMenu(param1, menu.Selection)
+                return 0;
+            }
+
             char info[32];
             menu.GetItem(param2, info, sizeof(info));
             if (StrEqual(info, WMENU_CHOICE1))
@@ -48,6 +56,7 @@ public int WardenMenuHandler(Menu menu, MenuAction action, int param1, int param
             {
                 ToggleCC(false);
             }
+            g_WMenuTime = gametime;
             CreateWardenMenu(param1, menu.Selection)
         }
         case MenuAction_Cancel:

@@ -75,6 +75,15 @@ public void OnPlayerDisconnect(Event event, const char[] name, bool dontBroadcas
     JBFS.FireStatus[client] = false;
 }
 
+public void OnPlayerTeamChange(Event event, const char[] name, bool dontBroadcast)
+{
+    int client = GetClientOfUserId(event.GetInt("userid"));
+    if (client == JBFS.Warden)
+    {
+        RemoveWarden(UW_TeamChange);
+    }
+}
+
 public void OnClientSpeaking(int client)
 {
     JBFS.MicStatus[client] = true;

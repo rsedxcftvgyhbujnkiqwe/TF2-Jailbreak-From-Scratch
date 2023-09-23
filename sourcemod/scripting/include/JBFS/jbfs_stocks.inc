@@ -184,6 +184,11 @@ stock void RemoveWarden(int reason)
             CPrintToChatAll("%t %t","PluginTag","WardenUWFire",currentwarden);
             UnlockWarden(true);
         }
+        case UW_TeamChange:
+        {
+            CPrintToChatAll("%t %t","PluginTag","WardenUWTeamChange",currentwarden);
+            UnlockWarden(true);
+        }
         case UW_Silent:
         {
             UnlockWarden(false);
@@ -381,4 +386,31 @@ stock void ToggleCC(bool admin = false)
         if (admin) CPrintToChatAll("%t %t","PluginTag","FFNotifyOnAdmin");
         else CPrintToChatAll("%t %t","PluginTag","FFNotifyOn");
     }
+}
+
+stock void CreateMarker(int client)
+{
+    float time = cvarJBFS[MarkerTime].FloatValue;
+    if (time == 0.0)
+    {
+        CPrintToChat(client,"%t %t","PluginTag","CommandMarkerDisabled")
+        return;
+    }
+    float eyepos[3];
+    float eyeangles[3];
+
+    GetClientEyePosition(client, eyepos);
+    GetClientEyeAngles(client,eyeangles);
+
+    Handle trace = TR_TraceRayFilterEx(eyepos,eyeangles,MASK_SHOT,RayType_Infinite,TraceRayFilterPlayers)
+    if (TR_DidHit(trace))
+    {
+        float endpoint[3];
+        TR_GetEndPosition(endpoint,trace);
+        float radius = cvarJBFS[MarkerRadius].FloatValue;
+        TE_SetupBeamRingPoint(endpoint,radius,radius + 0.1,JBMarker.BeamSprite,JBMarker.HaloSprite,0,10,time,2.0,0.0,JBMarker.MarkerColorRGBA,10,0);
+        TE_SendToAll();
+    }
+    JBFS.MarkerPlaced = true;
+    CreateTimer(1.0,Timer_AllowMarkerPlacement);
 }

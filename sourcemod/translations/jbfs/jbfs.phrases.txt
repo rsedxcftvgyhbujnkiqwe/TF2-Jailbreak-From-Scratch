@@ -87,6 +87,11 @@
         "#format"   "{1:N}"
         "en"        "{unique}{1}{wheat} has been fired from Warden."
     }
+    "WardenUWTeamChange"
+    {
+        "#format"   "{1:N}"
+        "en"        "{unique}{1}{wheat} changed teams as Warden."
+    }
     "WardenChooseNone"
     {
         "en"        "No players eligible to become warden. Guards must have a microphone to become the Warden."
@@ -191,5 +196,13 @@
     {
         "#format"   "{1:N}{2:d}{3:d}"
         "en"        "{1} has voted to fire the Warden ({2}/{3})."
+    }
+    "CommandMarkerDisabled"
+    {
+        "en"        "Markers are not enabled on this server"
+    }
+    "CommandMarkerSlow"
+    {
+        "en"        "Placing markers too fast, slow down and try again."
     }
 }

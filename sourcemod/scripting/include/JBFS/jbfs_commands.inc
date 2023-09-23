@@ -177,6 +177,20 @@ public Action Command_ToggleCollisions(int client, int args)
     return Plugin_Handled;
 }
 
+public Action Command_WardenMarker(int client, int args)
+{
+    if (client == JBFS.Warden)
+    {
+        if (JBFS.MarkerPlaced) CPrintToChat(client,"%t %t","CommandMarkerSlow");
+        else CreateMarker(client);
+    }
+    else
+    {
+        CPrintToChat(client,"%t %t","PluginTag","WardenWarnNotWarden");
+    }
+    return Plugin_Handled;
+}
+
 //Admin Commands
 public Action Command_Admin_ForceWarden(int client, int args)
 {

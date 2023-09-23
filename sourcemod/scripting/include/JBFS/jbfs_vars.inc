@@ -17,6 +17,9 @@ enum
     FireVote,
     GuardFire,
     FireRatio,
+    MarkerTime,
+    MarkerRadius,
+    MarkerColor,
     Version
 }
 ConVar cvarJBFS[Version+1];
@@ -45,6 +48,7 @@ enum
     UW_Death,
     UW_Disconnect,
     UW_Fire,
+    UW_TeamChange,
     UW_Silent
 }
 
@@ -59,6 +63,7 @@ enum struct gamemode
     bool FireVotes[MAXPLAYERS+1];
     int FireVoteCount;
     bool FireStatus[MAXPLAYERS+1];
+    bool MarkerPlaced;
 }
 public gamemode JBFS;
 
@@ -87,5 +92,15 @@ enum
 }
 
 Menu g_WMenu[MAXPLAYERS+1];
-
+float g_WMenuTime;
 bool sourcecommspp = false;
+
+enum struct Marker
+{
+    int BeamSprite;
+    int GlowSprite;
+    int HaloSprite;
+    char MarkerColorHex[32];
+    int MarkerColorRGBA[4];
+}
+public Marker JBMarker;

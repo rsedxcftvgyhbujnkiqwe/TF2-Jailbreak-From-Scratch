@@ -100,3 +100,15 @@ stock void SetBoolArray(bool[] array, int length, bool value)
         array[i]=value;
     }
 }
+
+stock bool TraceRayFilterPlayers(int entity, int mask, any data)
+{
+    return !(0 < entity <= MaxClients);
+}
+
+stock void HexToRGB(const char[] hex, int rgb[3]) {
+    int hexInt = StringToInt(hex, 16);
+    rgb[0] = ((hexInt >> 16) & 0xFF);
+    rgb[1] = ((hexInt >>  8) & 0xFF);
+    rgb[2] = ((hexInt      ) & 0xFF);
+}

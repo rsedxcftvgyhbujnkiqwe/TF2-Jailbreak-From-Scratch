@@ -34,3 +34,9 @@ public Action RoundTimer(Handle timer)
 
     return Plugin_Continue;
 }
+
+public Action Timer_AllowMarkerPlacement(Handle timer)
+{
+    JBFS.MarkerPlaced = false;
+    return Plugin_Stop;
+}
