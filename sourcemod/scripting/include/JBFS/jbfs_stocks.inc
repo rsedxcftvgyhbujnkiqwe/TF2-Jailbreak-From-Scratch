@@ -152,7 +152,7 @@ stock void RemoveWarden(int reason)
     int currentwarden = JBFS.Warden;
     JBFS.Warden = 0;
     //close warden menu if it's open
-    delete g_WMenu[currentwarden];
+    if (g_WMenu[currentwarden]!= null) delete g_WMenu[currentwarden];
     g_WMenu[currentwarden] = null;
     //reset fire votes
     SetBoolArray(JBFS.FireStatus,MAXPLAYERS+1,false);
@@ -427,8 +427,8 @@ stock bool SetLRWinner(int client, int warden, bool adminforce = false)
     ResetLR();
     LRConfig.LRWinner = client;
     CreateLRMenu(client);
-    if (!adminforce) CPrintToChatAll("%t %t","PluginTag","LRMenuWinner");
-    else CPrintToChatAll("%t %t","PluginTag","LRMenuWinnerAdmin");
+    if (!adminforce) CPrintToChatAll("%t %t","PluginTag","LRMenuWinner",client);
+    else CPrintToChatAll("%t %t","PluginTag","LRMenuWinnerAdmin",client);
     return true;
 }
 
