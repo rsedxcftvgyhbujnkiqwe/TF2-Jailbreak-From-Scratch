@@ -80,6 +80,29 @@ enum struct JBMapConfig
 }
 public JBMapConfig MapConfig;
 
+enum
+{
+    LR_None,
+    LR_FreedaySelf,
+    LR_FreedayOthers,
+    LR_FreedayAll,
+    LR_Warday,
+    LR_Custom,
+    LR_Map
+}
+
+enum struct JBLRConfig
+{
+    int LRType;
+    int LRWinner;
+    Handle menu;
+    int Freedays[3];
+    char maplrs[32];
+    int maplrcount;
+    bool WardayActive;
+}
+public JBLRConfig LRConfig;
+
 //always add to the bottom of this enum!!
 //this will preserve backwards compatibility
 enum 
@@ -104,3 +127,9 @@ enum struct Marker
     int MarkerColorRGBA[4];
 }
 public Marker JBMarker;
+
+//client menu defs
+typedef ClientFilterFunc = function bool(int client);
+typedef ClientRunFunc = function void(int client,int target);
+ClientRunFunc g_RunFn[MAXPLAYERS+1];
+Menu g_ClientMenu[MAXPLAYERS+1];

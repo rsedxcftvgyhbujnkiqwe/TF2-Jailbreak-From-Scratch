@@ -40,4 +40,67 @@
     {
         "en"        "Unlock Warden"
     }
+    "LRMenuTitle"
+    {
+        "en"        "Last Request"
+    }
+    "LRMenuClose"
+    {
+        "en"        "Last Request menu has been closed. Give LR again to reopen it."
+    }
+    "LRMenuOptionFreeday"
+    {
+        "en"        "Freeday for yourself"
+    }
+    "LRMenuOptionFreedayOthers"
+    {
+        "en"        "Freeday for others"
+    }
+    "LRMenuOptionFreedayAll"
+    {
+        "en"        "Freeday for all"
+    }
+    "LRMenuOptionWarday"
+    {
+        "en"        "Warday"
+    }
+    "LRMenuOptionCustom"
+    {
+        "en"        "Custom"
+    }
+    "LRMenuPickedFreeday"
+    {
+        "#format"   "{1:N}"
+        "en"        "{1} has chosen to give themself a Freeday."
+    }
+    "LRMenuPickedFreedayOthers"
+    {
+        "#format"   "{1:N}"
+        "en"        "{1} has chosen to choose others for a Freeday."
+    }
+    "LRMenuPickedFreedayAll"
+    {
+        "#format"   "{1:N}"
+        "en"        "{1} has chosen to give all prisoners a Freeday."
+    }
+    "LRMenuPickedWarday"
+    {
+        "#format"   "{1:N}"
+        "en"        "{1} has chosen to have a Warday."
+    }
+    "LRMenuPickedCustom"
+    {
+        "#format"   "{1:N}"
+        "en"        "{1} is typing out a custom last request."
+    }
+    "LRMenuWinner"
+    {
+        "#format"   "{1:N}"
+        "en"        "{1} has been given a last request."
+    }
+    "LRMenuWinnerAdmin"
+    {
+        "#format"   "{1:N}"
+        "en"        "{1} was forcibly given a last request by an admin."
+    }
 }

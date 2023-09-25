@@ -16,6 +16,8 @@ public void OnPreRoundStart(Event event, const char[] name, bool dontBroadcast)
     FireEvent(JBFS_Event);
     //reset convars
     FindConVar("mp_friendlyfire").SetBool(false);
+    //reset lr stuff
+    LRConfig.WardayActive=false;
 }
 
 public void OnArenaRoundStart(Event event, const char[] name, bool dontBroadcast)
@@ -30,6 +32,9 @@ public void OnArenaRoundEnd(Event event, const char[] name, bool dontBroadcast)
 {
     if (IsValidHandle(JBFS.RoundTimer)) KillTimer(JBFS.RoundTimer);
     LockWarden(false);
+    //reset lr stuff
+    LRConfig.WardayActive=false;
+    LRConfig.LRWinner = 0;
 }
 
 public OnClientPutInServer(client)

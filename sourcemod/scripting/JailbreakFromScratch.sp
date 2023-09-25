@@ -83,7 +83,8 @@ public void OnPluginStart()
     RegConsoleCmd("sm_wcol",Command_ToggleCollisions,"Toggle Collisions");
     RegConsoleCmd("sm_wardencol",Command_ToggleCollisions,"Toggle Collisions");
     RegConsoleCmd("sm_marker",Command_WardenMarker,"Create a Warden marker");
-
+    RegConsoleCmd("sm_glr",Command_GiveLastRequest,"Give a prisoner LR");
+    RegConsoleCmd("sm_givelr",Command_GiveLastRequest,"Give a prisoner LR");
     //admin commands
     RegAdminCmd("sm_fw",Command_Admin_ForceWarden,cvarJBFS_ACMD[ACMD_ForceWarden].IntValue,"Force a player to become Warden");
     RegAdminCmd("sm_forcewarden",Command_Admin_ForceWarden,cvarJBFS_ACMD[ACMD_ForceWarden].IntValue,"Force a player to become Warden");
@@ -105,6 +106,8 @@ public void OnPluginStart()
     RegAdminCmd("sm_acc",Command_Admin_ToggleCollisions,cvarJBFS_ACMD[ACMD_CC].IntValue,"Toggle Collisions");
     RegAdminCmd("sm_acol",Command_Admin_ToggleCollisions,cvarJBFS_ACMD[ACMD_CC].IntValue,"Toggle Collisions");
     RegAdminCmd("sm_admincol",Command_Admin_ToggleCollisions,cvarJBFS_ACMD[ACMD_CC].IntValue,"Toggle Collisions");
+    RegAdminCmd("sm_flr",Command_Admin_ForceLastRequest,ADMFLAG_GENERIC,"Force give a prisoner LR");
+    RegAdminCmd("sm_forcelr",Command_Admin_ForceLastRequest,ADMFLAG_GENERIC,"Force give a prisoner LR");
 
     RegAdminCmd("sm_awm",Command_Admin_WardenMenu,cvarJBFS_ACMD[ACMD_WardenMenu].IntValue,"Open the Admin Warden menu");
     RegAdminCmd("sm_awmenu",Command_Admin_WardenMenu,cvarJBFS_ACMD[ACMD_WardenMenu].IntValue,"Open the Admin Warden menu");
@@ -138,6 +141,8 @@ public void OnMapStart()
 {
     //various plugin configs
     LoadConfigs();
+    //make sure LRs dont carry-over
+    ResetLR();
 }
 
 public void OnPluginEnd()

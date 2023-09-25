@@ -414,3 +414,64 @@ stock void CreateMarker(int client)
     JBFS.MarkerPlaced = true;
     CreateTimer(1.0,Timer_AllowMarkerPlacement);
 }
+
+stock bool SetLRWinner(int client, int warden, bool adminforce = false)
+{
+    if((!IsClientInGame(client) || !IsPlayerAlive(client) || !(GetClientTeam(client)==RED) || (warden != JBFS.Warden)) && !adminforce)
+    {
+        return false;
+    }
+    ResetLR();
+    LRConfig.LRWinner = client;
+    CreateLRMenu(client);
+    if (!adminforce) CPrintToChatAll("%t %t","PluginTag","LRMenuWinner");
+    else CPrintToChatAll("%t %t","PluginTag","LRMenuWinnerAdmin");
+    return true;
+}
+
+stock void ChooseLR(int client,int selection)
+{
+    LRConfig.LRType = selection;
+    switch (selection)
+    {
+        case LR_FreedaySelf:
+        {
+            LRConfig.Freedays[0] = client;
+            CPrintToChatAll("%t %t","PluginTag","LRMenuPickedFreeday",client);
+        }
+        case LR_FreedayAll:
+        {
+            LRConfig.Freedays[0] = client;
+            CPrintToChatAll("%t %t","PluginTag","LRMenuPickedFreedayAll",client);
+        }
+        case LR_FreedayOthers:
+        {
+            LRConfig.Freedays[0] = client;
+            CPrintToChatAll("%t %t","PluginTag","LRMenuPickedFreedayOthers",client);
+        }
+        case LR_Warday:
+        {
+            LRConfig.Freedays[0] = client;
+            CPrintToChatAll("%t %t","PluginTag","LRMenuPickedWarday",client);
+        }
+        case LR_Custom:
+        {
+            LRConfig.Freedays[0] = client;
+            CPrintToChatAll("%t %t","PluginTag","LRMenuPickedCustom",client);
+        }
+    }
+}
+
+stock void ResetLR()
+{
+    LRConfig.LRType = LR_None;
+    LRConfig.Freedays[0] = 0;
+    LRConfig.Freedays[1] = 0;
+    LRConfig.Freedays[2] = 0;
+    LRConfig.LRWinner = 0;
+    if (LRConfig.menu != null)
+    {
+        CancelMenu(LRConfig.menu)
+        LRConfig.menu = null;
+    }
+}

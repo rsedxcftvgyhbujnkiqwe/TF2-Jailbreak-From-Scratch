@@ -136,3 +136,18 @@ stock SetKVCoord(KeyValues kv, char[] keyname, float vec[3], bool usevec)
     kv.SetNum("Enabled",enabled);
     kv.GoBack();
 }
+
+public void LoadLRConfig()
+{
+    /*custom map LRs defined by logic relays
+    convention: relay must be named "jblr_<Name of LR>"
+    name can have spaces and such, for instance
+    "jblr_Magic Day"
+    this relay will be called on round START, the following round.
+    */
+    int e = -1;
+    while((e = FindEntityByClassname(e,"logic_relay"))!=-1)
+    {
+        //
+    }
+}
