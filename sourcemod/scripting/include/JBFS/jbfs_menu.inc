@@ -319,7 +319,6 @@ public int LRMenuHandler(Menu menu, MenuAction action, int param1, int param2)
             //sanity check just in case someone somehow gets the lr menu opened when not lr winner
             if (param1 != LRConfig.LRWinner)
             {
-                LRConfig.menu = null;
                 delete menu;
                 return 0;
             }
@@ -398,6 +397,7 @@ public int LRMenuHandler(Menu menu, MenuAction action, int param1, int param2)
 //abstration done so this can be called from elsewhere
 public void CreateLRMenu(int client)
 {
+    PrintToServer("--Creating LR menu")
     Menu menu = new Menu(LRMenuHandler, MENU_ACTIONS_ALL);
     menu.SetTitle("%T","LRMenuTitle",LANG_SERVER);
     menu.AddItem(LRCHOICE1,"Freeday for yourself");
@@ -453,7 +453,6 @@ public void CreateClientSelectMenu(int client, ClientFilterFunc filterFn, Client
         char key[12], name[MAX_NAME_LENGTH];
         FormatEx(key, sizeof(key), "%d", GetClientUserId(i));
         GetClientName(i, name, sizeof(name));
-        PrintToServer("%s eligible for menu, adding with %s",name,key)
         menu.AddItem(key, name);
         clients++
     }
@@ -496,5 +495,6 @@ public Action Command_Admin_ForceLastRequest(int client, int args)
 
 public void AdminGiveLR(int admin, int target)
 {
+    PrintToServer("--Admin force giving LR")
     SetLRWinner(target,admin,true)
 }
