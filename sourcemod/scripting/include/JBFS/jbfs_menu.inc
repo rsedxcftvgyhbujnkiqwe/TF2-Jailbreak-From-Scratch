@@ -316,6 +316,7 @@ public int LRMenuHandler(Menu menu, MenuAction action, int param1, int param2)
         }
         case MenuAction_Select:
         {
+            PrintToServer("LR Menu MenuAction_Select")
             //sanity check just in case someone somehow gets the lr menu opened when not lr winner
             if (param1 != LRConfig.LRWinner)
             {
@@ -348,10 +349,12 @@ public int LRMenuHandler(Menu menu, MenuAction action, int param1, int param2)
         }
         case MenuAction_Cancel:
         {
+            PrintToServer("LR Menu MenuAction_Cancel")
             //do nothing
         }
         case MenuAction_End:
         {
+            PrintToServer("LR Menu MenuAction_End")
             LRConfig.menu = null;
             delete menu;
         }
