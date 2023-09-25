@@ -319,6 +319,7 @@ public int LRMenuHandler(Menu menu, MenuAction action, int param1, int param2)
             //sanity check just in case someone somehow gets the lr menu opened when not lr winner
             if (param1 != LRConfig.LRWinner)
             {
+                LRConfig.menu = null;
                 delete menu;
                 return 0;
             }
@@ -352,8 +353,8 @@ public int LRMenuHandler(Menu menu, MenuAction action, int param1, int param2)
         }
         case MenuAction_End:
         {
-            delete menu;
             LRConfig.menu = null;
+            delete menu;
         }
         case MenuAction_DrawItem:
         {
@@ -459,6 +460,7 @@ public void CreateClientSelectMenu(int client, ClientFilterFunc filterFn, Client
     if (clients==0)
     {
         delete menu;
+        g_ClientMenu[client] = null;
         return;
     }
     menu.Display(client, MENU_TIME_FOREVER);

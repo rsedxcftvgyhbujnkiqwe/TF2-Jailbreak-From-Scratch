@@ -94,7 +94,7 @@ public Action Command_FireWarden(int client, int args)
     int validclients;
     for(int i=1;i<MaxClients;i++)
     {
-        if (IsClientInGame(i)) continue;
+        if (!IsClientInGame(i)) continue;
         int team = GetClientTeam(i);
         if(team==RED) validclients++;
         else if (cvarJBFS[GuardFire].BoolValue && team==BLU && i!=JBFS.Warden) validclients++;
