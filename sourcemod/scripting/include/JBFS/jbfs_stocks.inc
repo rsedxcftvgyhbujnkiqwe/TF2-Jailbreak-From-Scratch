@@ -377,14 +377,14 @@ stock void ToggleCC(bool admin = false)
     if (FindConVar("tf_avoidteammates_pushaway").BoolValue)
     {
         FindConVar("tf_avoidteammates_pushaway").SetBool(false);
-        if (admin) CPrintToChatAll("%t %t","PluginTag","FFNotifyOffAdmin");
-        else CPrintToChatAll("%t %t","PluginTag","FFNotifyOff");
+        if (admin) CPrintToChatAll("%t %t","PluginTag","CCNotifyOffAdmin");
+        else CPrintToChatAll("%t %t","PluginTag","CCNotifyOff");
     }
     else
     {
         FindConVar("tf_avoidteammates_pushaway").SetBool(true);
-        if (admin) CPrintToChatAll("%t %t","PluginTag","FFNotifyOnAdmin");
-        else CPrintToChatAll("%t %t","PluginTag","FFNotifyOn");
+        if (admin) CPrintToChatAll("%t %t","PluginTag","CCNotifyOnAdmin");
+        else CPrintToChatAll("%t %t","PluginTag","CCNotifyOn");
     }
 }
 

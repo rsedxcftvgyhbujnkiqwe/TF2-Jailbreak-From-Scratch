@@ -20,6 +20,10 @@
     {
         "en"        "Toggle Friendly Fire"
     }
+    "WardenMenuToggleCC"
+    {
+        "en"        "Toggle Collisions"
+    }
     "WardenMenuMarker"
     {
         "en"        "Marker"

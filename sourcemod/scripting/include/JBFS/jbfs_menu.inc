@@ -452,6 +452,7 @@ public void CreateClientSelectMenu(int client, ClientFilterFunc filterFn, Client
         char key[12], name[MAX_NAME_LENGTH];
         FormatEx(key, sizeof(key), "%d", GetClientUserId(i));
         GetClientName(i, name, sizeof(name));
+        PrintToServer("%s eligible for menu, adding with %s",name,key)
         menu.AddItem(key, name);
         clients++
     }
@@ -487,7 +488,7 @@ public void WardenGiveLR(int warden, int target)
 
 public Action Command_Admin_ForceLastRequest(int client, int args)
 {
-    if (client) CreateClientSelectMenu(client, ClientEligibleForLR, WardenGiveLR);
+    if (client) CreateClientSelectMenu(client, ClientEligibleForLR, AdminGiveLR);
     return Plugin_Handled;
 }
 
