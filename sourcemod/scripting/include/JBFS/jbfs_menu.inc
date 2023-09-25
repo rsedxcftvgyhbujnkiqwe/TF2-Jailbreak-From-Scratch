@@ -436,6 +436,7 @@ public void CreateClientSelectMenu(int client, ClientFilterFunc filterFn, Client
     g_RunFn[client] = runFn;
     Menu menu = new Menu(ClientMenuHandler);
     g_ClientMenu[client] = menu;
+    int clients;
     for (int i = 1; i <= MaxClients; i++) 
     {
         if (!IsClientInGame(i)) continue;
@@ -452,13 +453,19 @@ public void CreateClientSelectMenu(int client, ClientFilterFunc filterFn, Client
         FormatEx(key, sizeof(key), "%d", GetClientUserId(i));
         GetClientName(i, name, sizeof(name));
         menu.AddItem(key, name);
+        clients++
+    }
+    if (clients==0)
+    {
+        delete menu;
+        return;
     }
     menu.Display(client, MENU_TIME_FOREVER);
 }
 
 public bool ClientEligibleForLR(int client)
 {
-    if (IsClientInGame(client)&&GetClientTeam(client)&&IsPlayerAlive(client)) return true;
+    if (GetClientTeam(client)==RED&&IsPlayerAlive(client)) return true;
     return false;
 }
 
