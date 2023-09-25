@@ -316,7 +316,6 @@ public int LRMenuHandler(Menu menu, MenuAction action, int param1, int param2)
         }
         case MenuAction_Select:
         {
-            PrintToServer("LR Menu MenuAction_Select")
             //sanity check just in case someone somehow gets the lr menu opened when not lr winner
             if (param1 != LRConfig.LRWinner)
             {
@@ -349,12 +348,10 @@ public int LRMenuHandler(Menu menu, MenuAction action, int param1, int param2)
         }
         case MenuAction_Cancel:
         {
-            PrintToServer("LR Menu MenuAction_Cancel")
             //do nothing
         }
         case MenuAction_End:
         {
-            PrintToServer("LR Menu MenuAction_End")
             LRConfig.menu = null;
             delete menu;
         }
@@ -400,8 +397,8 @@ public int LRMenuHandler(Menu menu, MenuAction action, int param1, int param2)
 //abstration done so this can be called from elsewhere
 public void CreateLRMenu(int client)
 {
-    PrintToServer("--Creating LR menu")
     Menu menu = new Menu(LRMenuHandler, MENU_ACTIONS_ALL);
+    LRConfig.menu = menu;
     menu.SetTitle("%T","LRMenuTitle",LANG_SERVER);
     menu.AddItem(LRCHOICE1,"Freeday for yourself");
     menu.AddItem(LRCHOICE2,"Freeday for others");
@@ -409,7 +406,6 @@ public void CreateLRMenu(int client)
     menu.AddItem(LRCHOICE4,"Warday");
     menu.AddItem(LRCHOICE5,"Custom");
     menu.Display(client,MENU_TIME_FOREVER);
-    LRConfig.menu = menu;
 }
 
 public int ClientMenuHandler(Menu menu, MenuAction action, int param1, int param2)
@@ -498,6 +494,5 @@ public Action Command_Admin_ForceLastRequest(int client, int args)
 
 public void AdminGiveLR(int admin, int target)
 {
-    PrintToServer("--Admin force giving LR")
     SetLRWinner(target,admin,true)
 }
