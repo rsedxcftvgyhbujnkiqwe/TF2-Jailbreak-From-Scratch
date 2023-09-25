@@ -118,6 +118,7 @@ enum
 Menu g_WMenu[MAXPLAYERS+1];
 float g_WMenuTime;
 bool sourcecommspp = false;
+bool vscript = false;
 
 enum struct Marker
 {

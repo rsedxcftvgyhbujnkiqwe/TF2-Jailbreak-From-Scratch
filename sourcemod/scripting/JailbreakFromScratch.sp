@@ -138,9 +138,6 @@ public void OnPluginStart()
 
     //sounds to precache
     ManagePrecache();
-
-    //vscript
-    CreateVScriptFunctions()
 }
 
 public void OnMapStart()
@@ -153,9 +150,9 @@ public void OnMapStart()
     ResetActiveLR();
 
     //vscript
+#if defined _vscript_included
     RegisterVScriptFunctions();
-    //register global var so scripts know if plugin loaded
-    RunScript("::jbplugin<-JBFS");
+#endif
 }
 
 public void OnPluginEnd()
@@ -189,6 +186,12 @@ public void OnAllPluginsLoaded()
 {
 #if defined _sourcecomms_included
     sourcecommspp = LibraryExists("sourcecomms++");
+#endif
+#if defined _vscript_included
+    vscript = LibraryExists("vscript");
+    if(vscript)
+        //vscript
+        CreateVScriptFunctions()
 #endif
 }
  
