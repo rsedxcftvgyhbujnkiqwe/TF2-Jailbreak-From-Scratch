@@ -71,6 +71,8 @@ public int WardenMenuHandler(Menu menu, MenuAction action, int param1, int param
         }
         case MenuAction_Cancel:
         {
+            PrintToServer("nulling wmenu")
+            g_WMenu[param1] = null;
             switch(param2)
             {
                 case MenuCancel_Exit,MenuCancel_NoDisplay:
@@ -136,6 +138,7 @@ public Action Command_WardenMenu(int client, int args)
 public void CreateWardenMenu(int client,int selection)
 {
     Menu menu = new Menu(WardenMenuHandler, MENU_ACTIONS_ALL);
+    g_WMenu[client] = menu;
     menu.SetTitle("%T","WardenMenuTitle",LANG_SERVER);
     menu.AddItem(WMENU_CHOICE1,"Open Cells");
     menu.AddItem(WMENU_CHOICE2,"Close Cells");
@@ -143,7 +146,6 @@ public void CreateWardenMenu(int client,int selection)
     menu.AddItem(WMENU_CHOICE4,"Toggle Collisions");
     menu.AddItem(WMENU_CHOICE5,"Marker");
     menu.DisplayAt(client,selection,MENU_TIME_FOREVER);
-    g_WMenu[client] = menu;
 }
 
 public int AdminWardenMenuHandler(Menu menu, MenuAction action, int param1, int param2)

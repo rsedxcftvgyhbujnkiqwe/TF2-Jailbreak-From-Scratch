@@ -104,7 +104,7 @@ public Action Command_FireWarden(int client, int args)
     if (targetVotes==0) targetVotes = 1;
     CPrintToChatAll("%t %t","PluginTag","CommandFireNotifyVote",client,JBFS.FireVoteCount,targetVotes);
 
-    if (targetVotes >= JBFS.FireVoteCount)
+    if (JBFS.FireVoteCount >= targetVotes)
     {
         //time to fire the warden!
         RemoveWarden(UW_Fire);

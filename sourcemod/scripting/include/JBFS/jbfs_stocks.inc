@@ -472,7 +472,6 @@ stock void ResetLR()
     LRConfig.Freedays[1] = 0;
     LRConfig.Freedays[2] = 0;
     LRConfig.LRWinner = 0;
-    PrintToServer("--Resetting lr menu")
     if (LRConfig.menu != null)
     {
         CancelMenu(LRConfig.menu)
