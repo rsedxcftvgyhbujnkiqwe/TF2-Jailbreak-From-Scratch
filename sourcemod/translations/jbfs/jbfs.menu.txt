@@ -80,7 +80,7 @@
     "LRMenuPickedFreedayOthers"
     {
         "#format"   "{1:N}"
-        "en"        "{1} has chosen to choose others for a Freeday."
+        "en"        "{1} is choosing others for a Freeday..."
     }
     "LRMenuPickedFreedayAll"
     {

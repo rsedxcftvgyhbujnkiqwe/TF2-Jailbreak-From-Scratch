@@ -226,8 +226,11 @@ stock void ChooseWarden(bool adminforce = false)
 
         if (MicCount==0){
             //nobody with mic eligible
-            CPrintToChatAll("%t %t","PluginTag","WardenChooseNone")
-            UnlockWarden(true)
+            if(!adminforce)
+            {
+                CPrintToChatAll("%t %t","PluginTag","WardenChooseNone")
+                UnlockWarden(true)
+            }
             return;
         }
         //set client to ignore if being admin forced
