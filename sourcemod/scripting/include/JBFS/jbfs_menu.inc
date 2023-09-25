@@ -445,7 +445,7 @@ public void CreateClientSelectMenu(int client, ClientFilterFunc filterFn, Client
         Call_StartFunction(null, filterFn);
         Call_PushCell(i);
         bool result;
-        Call_Finish(i);
+        Call_Finish(result);
 
         if (!result) continue;
 
