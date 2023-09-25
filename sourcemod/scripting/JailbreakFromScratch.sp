@@ -26,12 +26,14 @@ public Plugin myinfo =
 #include <JBFS/jbfs_timers>
 #include <JBFS/jbfs_cfg>
 #include <JBFS/jbfs_menu>
+#include <JBFS/jbfs_vscript>
 #include <JBFS/stocks>
+
 //third party deps
 #include <morecolors>
-
 #undef REQUIRE_PLUGIN
 #tryinclude <sourcecomms>
+#tryinclude <vscript>
 #define REQUIRE_PLUGIN
 
 public void OnPluginStart()
@@ -42,6 +44,7 @@ public void OnPluginStart()
     cvarJBFS[TextChannel] = CreateConVar("sm_jbfs_textchannel","4","Default text channel for JBFS Hud text.",FCVAR_NOTIFY,true,0.0,true,5.0);
     cvarJBFS[GuardCrits] = CreateConVar("sm_jbfs_guardcrits","1","Should Guards have crits.\n0 = No Crits\n1 = Crits",FCVAR_NOTIFY,true,0.0,true,1.0);
     cvarJBFS[RoundTime] = CreateConVar("sm_jbfs_roundtime","600","Time per round, in seconds",FCVAR_NOTIFY,true,120.0);
+    cvarJBFS[WardayTime] = CreateConVar("sm_jbfs_wardaytime","300","Time per round on Warday, in seconds",FCVAR_NOTIFY,true,120.0);
     cvarJBFS[MicBalance] = CreateConVar("sm_jbfs_micblanace","1","Whether to check for guard mics when autobalancing.\nGuards without a mic are autobalanced first.\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.1,true,1.0)
     cvarJBFS[MicWarden] = CreateConVar("sm_jbfs_micwarden","1","Whether to check for guard mics when assigning warden.\nGuards without a mic are not allowed to be warden.\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.1,true,1.0)
     cvarJBFS[FireVote] = CreateConVar("sm_jbfs_firevote","1","Enable the firing system, allowing prisoners to fire the warden by popular vote.\n0 = Disabled\n1 = Enabled",FCVAR_NOTIFY,true,0.0,true,1.0);
@@ -135,14 +138,24 @@ public void OnPluginStart()
 
     //sounds to precache
     ManagePrecache();
+
+    //vscript
+    CreateVScriptFunctions()
 }
 
 public void OnMapStart()
 {
     //various plugin configs
     LoadConfigs();
+
     //make sure LRs dont carry-over
     ResetLR();
+    ResetActiveLR();
+
+    //vscript
+    RegisterVScriptFunctions();
+    //register global var so scripts know if plugin loaded
+    RunScript("::jbplugin<-JBFS");
 }
 
 public void OnPluginEnd()

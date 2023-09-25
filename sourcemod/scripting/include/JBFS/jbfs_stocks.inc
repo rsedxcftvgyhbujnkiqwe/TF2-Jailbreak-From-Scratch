@@ -140,10 +140,7 @@ stock void SetWarden(int client,int reason)
             CPrintToChatAll("%t %t","PluginTag","WardenWRandom",client);
         }
     }
-    Handle JBFS_Event = CreateEvent("pass_free",true);
-    SetEventInt(JBFS_Event,"owner",JBEvent_PlayerSetWarden);
-    SetEventInt(JBFS_Event,"attacker",GetClientUserId(client));
-    FireEvent(JBFS_Event,true);
+    JBGameEvent(JBEvent_SetWarden);
     CreateWardenMenu(client,0);
 }
 
@@ -194,12 +191,7 @@ stock void RemoveWarden(int reason)
             UnlockWarden(false);
         }
     }
-    Handle JBFS_Event = CreateEvent("pass_free",true);
-    SetEventInt(JBFS_Event,"owner",JBEvent_PlayerUnsetWarden);
-    if (currentwarden > 0)
-        SetEventInt(JBFS_Event,"attacker",GetClientUserId(currentwarden));
-    else
-        SetEventInt(JBFS_Event,"attacker",0);
+    JBGameEvent(JBEvent_SetWarden);
     FireEvent(JBFS_Event,true);
 }
 
@@ -444,22 +436,18 @@ stock void ChooseLR(int client,int selection)
         }
         case LR_FreedayAll:
         {
-            LRConfig.Freedays[0] = client;
             CPrintToChatAll("%t %t","PluginTag","LRMenuPickedFreedayAll",client);
         }
         case LR_FreedayOthers:
         {
-            LRConfig.Freedays[0] = client;
             CPrintToChatAll("%t %t","PluginTag","LRMenuPickedFreedayOthers",client);
         }
         case LR_Warday:
         {
-            LRConfig.Freedays[0] = client;
             CPrintToChatAll("%t %t","PluginTag","LRMenuPickedWarday",client);
         }
         case LR_Custom:
         {
-            LRConfig.Freedays[0] = client;
             CPrintToChatAll("%t %t","PluginTag","LRMenuPickedCustom",client);
         }
     }
@@ -477,4 +465,50 @@ stock void ResetLR()
         CancelMenu(LRConfig.menu)
         LRConfig.menu = null;
     }
+}
+
+stock void ResetActiveLR()
+{
+    LRConfig.WardayActive = false;
+    LRConfig.FreedaysActive = false;
+}
+
+stock void LRWarday()
+{
+    LRConfig.WardayActive = true;
+    for(int i=1;i<=MaxClients;i++)
+    {
+        if (!IsClientInGame(i)) continue;
+        TF2_RespawnPlayer(i);
+        if (GetClientTeam(i)==RED){
+            if(MapConfig.hasrspawn)
+            {
+                TeleportEntity(i,MapConfig.rspawn,NULL_VECTOR,{0,0,0})
+            }
+        }
+        else if (GetClientTeam(i)==BLU){
+            if(MapConfig.hasbspawn)
+            {
+                TeleportEntity(i,MapConfig.bspawn,NULL_VECTOR,{0,0,0})
+            }
+        }
+    }
+}
+
+stock void LRSetFreeday(int client)
+{
+    //by being in the freeday array, a client has invuln, so no setting it up here
+    //invuln done on a per-damage basis to only apply to player attacks
+    //spawn particles
+    AttachParticle(client,"eyeboss_team_sparks_red")
+    //teleport them
+    if (MapConfig.hasfspawn)
+    {
+        TeleportEntity(client,MapConfig.fspawn,NULL_VECTOR,{0,0,0})
+    }
+}
+
+stock void LRRemoveFreeday(int client)
+{
+    LRConfig.FreedaysActive[client] = false;
 }

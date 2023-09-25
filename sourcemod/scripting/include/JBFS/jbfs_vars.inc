@@ -12,6 +12,7 @@ enum
     TextChannel,
     GuardCrits,
     RoundTime,
+    WardayTime,
     MicBalance,
     MicWarden,
     FireVote,
@@ -64,6 +65,8 @@ enum struct gamemode
     int FireVoteCount;
     bool FireStatus[MAXPLAYERS+1];
     bool MarkerPlaced;
+    bool RoundActive;
+    int AttachedParticle[MAXPLAYERS+1];
 }
 public gamemode JBFS;
 
@@ -100,18 +103,16 @@ enum struct JBLRConfig
     char maplrs[32];
     int maplrcount;
     bool WardayActive;
+    bool FreedaysActive[MAXCLIENTS+1];
 }
 public JBLRConfig LRConfig;
 
-//always add to the bottom of this enum!!
-//this will preserve backwards compatibility
+//jb events for vscript
 enum 
 {
-    JBEvent_PluginLoad=0,
-    JBEvent_PlayerSetWarden,
-    JBEvent_PlayerUnsetWarden,
-    JBEvent_PlayerSetFreeday,
-    JBEvent_PlayerUnsetFreeday
+    JBEvent_Warday,
+    JBEvent_SetWarden,
+    JBEvent_RemoveWarden
 }
 
 Menu g_WMenu[MAXPLAYERS+1];

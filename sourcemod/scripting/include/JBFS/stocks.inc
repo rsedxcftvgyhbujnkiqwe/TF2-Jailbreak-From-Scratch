@@ -112,3 +112,33 @@ stock void HexToRGB(const char[] hex, int rgb[3]) {
     rgb[1] = ((hexInt >>  8) & 0xFF);
     rgb[2] = ((hexInt      ) & 0xFF);
 }
+
+stock void AttachParticle(int client, char[] particle_name)
+{
+    int particle = CreateEntityByName("info_particle_system");
+    float clientpos[3];
+    GetEntityPropVector(client,Prop_Send,"m_vecOrigin",clientpos);
+    TeleportEntity(particle,clientpos,NULL_VECTOR,NULL_VECTOR);
+
+    DispatchKeyValue(particle,"effect_name",particle_name);
+    DispatchSpawn(particle);
+    SetEntPropEnt(particle,Prop_Send,"m_hOwnerEntity",client);
+    ActivateEntity(particle);
+    AcceptEntityInput(particle,"Start");
+
+    int curparticle = JBFS.AttachedParticle[client];
+    if(curparticle > 0)
+    {
+        AcceptEntityInout(curparticle,"Kill");
+    }
+    JBFS.AttachedParticle[client] = particle;
+}
+
+stock void RemoveParticle(int client)
+{
+    int particle = JBFS.AttachedParticle[client];
+    if (particle > 0) {
+        AcceptEntityInput(particle,"Kill");
+        JBFS.AttachedParticle[client]=0;
+    }
+}
