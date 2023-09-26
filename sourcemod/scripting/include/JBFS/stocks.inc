@@ -125,8 +125,6 @@ stock void AttachParticle(int client, char[] particle_name)
 
     SetVariantString("!activator");
     AcceptEntityInput(particle, "SetParent", client);
-    SetVariantString("origin");
-    AcceptEntityInput(particle, "SetParentAttachmentMaintainOffset");
 
     SetEntPropEnt(particle,Prop_Send,"m_hOwnerEntity",client);
     ActivateEntity(particle);

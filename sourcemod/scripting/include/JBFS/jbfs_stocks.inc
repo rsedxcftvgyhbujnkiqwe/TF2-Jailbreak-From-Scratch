@@ -123,6 +123,7 @@ stock void SetConVars(const bool side)
 stock void SetWarden(int client,int reason)
 {
     JBFS.Warden = client;
+    JBGameEvent(JBEvent_SetWarden);
     LockWarden(false)
     //we just set warden + wardenlock, so no need for this anymore
     switch (reason)
@@ -140,13 +141,14 @@ stock void SetWarden(int client,int reason)
             CPrintToChatAll("%t %t","PluginTag","WardenWRandom",client);
         }
     }
-    JBGameEvent(JBEvent_SetWarden);
+    AttachParticle(client,"eyeboss_vortex_blue")
     CreateWardenMenu(client,0);
 }
 
 stock void RemoveWarden(int reason)
 {
     int currentwarden = JBFS.Warden;
+    JBGameEvent(JBEvent_RemoveWarden);
     JBFS.Warden = 0;
     //close warden menu if it's open
     if (g_WMenu[currentwarden]!= null) delete g_WMenu[currentwarden];
@@ -191,7 +193,7 @@ stock void RemoveWarden(int reason)
             UnlockWarden(false);
         }
     }
-    JBGameEvent(JBEvent_SetWarden);
+    RemoveParticle(currentwarden);
 }
 
 //choose a random warden
@@ -499,7 +501,7 @@ stock void LRSetFreeday(int client)
     //by being in the freeday array, a client has invuln, so no setting it up here
     //invuln done on a per-damage basis to only apply to player attacks
     //spawn particles
-    AttachParticle(client,"eyeboss_team_sparks_red")
+    AttachParticle(client,"eyeboss_vortex_red")
     //teleport them
     if (MapConfig.hasfspawn)
     {
