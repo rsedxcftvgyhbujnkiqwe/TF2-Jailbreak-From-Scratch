@@ -122,9 +122,18 @@ stock void AttachParticle(int client, char[] particle_name)
 
     DispatchKeyValue(particle,"effect_name",particle_name);
     DispatchSpawn(particle);
+
+    SetVariantString("!activator");
+    AcceptEntityInput(particle, "SetParent", client);
+    SetVariantString("origin");
+    AcceptEntityInput(particle, "SetParentAttachmentMaintainOffset");
+
     SetEntPropEnt(particle,Prop_Send,"m_hOwnerEntity",client);
     ActivateEntity(particle);
     AcceptEntityInput(particle,"Start");
+
+
+
 
     int curparticle = JBFS.AttachedParticle[client];
     if(curparticle > 0)
