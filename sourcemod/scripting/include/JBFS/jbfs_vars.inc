@@ -103,7 +103,7 @@ enum struct JBLRConfig
     char maplrs[32];
     int maplrcount;
     bool WardayActive;
-    bool FreedaysActive[MAXCLIENTS+1];
+    bool FreedaysActive[MAXPLAYERS+1];
 }
 public JBLRConfig LRConfig;
 

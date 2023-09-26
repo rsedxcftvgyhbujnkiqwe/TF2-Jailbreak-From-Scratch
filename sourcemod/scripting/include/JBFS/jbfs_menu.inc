@@ -71,7 +71,6 @@ public int WardenMenuHandler(Menu menu, MenuAction action, int param1, int param
         }
         case MenuAction_Cancel:
         {
-            PrintToServer("nulling wmenu")
             g_WMenu[param1] = null;
             switch(param2)
             {

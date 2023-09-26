@@ -117,7 +117,7 @@ stock void AttachParticle(int client, char[] particle_name)
 {
     int particle = CreateEntityByName("info_particle_system");
     float clientpos[3];
-    GetEntityPropVector(client,Prop_Send,"m_vecOrigin",clientpos);
+    GetEntPropVector(client,Prop_Send,"m_vecOrigin",clientpos);
     TeleportEntity(particle,clientpos,NULL_VECTOR,NULL_VECTOR);
 
     DispatchKeyValue(particle,"effect_name",particle_name);
@@ -129,7 +129,7 @@ stock void AttachParticle(int client, char[] particle_name)
     int curparticle = JBFS.AttachedParticle[client];
     if(curparticle > 0)
     {
-        AcceptEntityInout(curparticle,"Kill");
+        AcceptEntityInput(curparticle,"Kill");
     }
     JBFS.AttachedParticle[client] = particle;
 }

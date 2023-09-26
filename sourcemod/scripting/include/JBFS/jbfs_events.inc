@@ -5,7 +5,7 @@ public void OnPreRoundStart(Event event, const char[] name, bool dontBroadcast)
     RemoveWarden(UW_Silent);
     LockWarden(false);
     SetBoolArray(JBFS.FireStatus,MAXPLAYERS+1,false);
-    SetBoolArray(LRConfig.Freedays,MAXPLAYERS+1,false)
+    ResetActiveLR();
     //send warden set 0
     JBGameEvent(JBEvent_SetWarden);
     //reset convars
@@ -105,7 +105,7 @@ public void OnPlayerDisconnect(Event event, const char[] name, bool dontBroadcas
 public void DeathEvents(client)
 {
     if (LRConfig.FreedaysActive[client]) LRRemoveFreeday(client);
-    RemoveParticle();
+    RemoveParticle(client);
 }
 
 public void OnPlayerTeamChange(Event event, const char[] name, bool dontBroadcast)
@@ -146,7 +146,7 @@ public Action:OnTakeDamage(victim,&attacker,&inflictor,&Float:damage,&damagetype
             }
         }
         //freedays take no player-player damage
-        if(LRConfig.FreedaysActive[victim]) damage = 0;
+        if(LRConfig.FreedaysActive[victim]) damage = 0.0;
         //dealing damage removes your freeday
         if(LRConfig.FreedaysActive[attacker]) LRRemoveFreeday(attacker);
     }

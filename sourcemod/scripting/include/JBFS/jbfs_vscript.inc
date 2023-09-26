@@ -29,9 +29,9 @@ stock MRESReturn Detour_GetWarden(DHookReturn hReturn)
 
 stock void JBGameEvent(int eventType)
 {
-#if defined _vscript_included
     if(vscript)
     {
+#if defined _vscript_included
         HSCRIPT script;
         switch (eventType)
         {
@@ -67,6 +67,6 @@ stock void JBGameEvent(int eventType)
         execute.Execute();
         delete execute;
         script.ReleaseScript();
-    }
 #endif
+    }
 }

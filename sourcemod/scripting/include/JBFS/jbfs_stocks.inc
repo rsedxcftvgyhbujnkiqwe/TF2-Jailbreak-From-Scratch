@@ -192,7 +192,6 @@ stock void RemoveWarden(int reason)
         }
     }
     JBGameEvent(JBEvent_SetWarden);
-    FireEvent(JBFS_Event,true);
 }
 
 //choose a random warden
@@ -470,7 +469,7 @@ stock void ResetLR()
 stock void ResetActiveLR()
 {
     LRConfig.WardayActive = false;
-    LRConfig.FreedaysActive = false;
+    SetBoolArray(LRConfig.FreedaysActive,MAXPLAYERS+1,false)
 }
 
 stock void LRWarday()
@@ -483,13 +482,13 @@ stock void LRWarday()
         if (GetClientTeam(i)==RED){
             if(MapConfig.hasrspawn)
             {
-                TeleportEntity(i,MapConfig.rspawn,NULL_VECTOR,{0,0,0})
+                TeleportEntity(i,MapConfig.rspawn,NULL_VECTOR,{0.0,0.0,0.0})
             }
         }
         else if (GetClientTeam(i)==BLU){
             if(MapConfig.hasbspawn)
             {
-                TeleportEntity(i,MapConfig.bspawn,NULL_VECTOR,{0,0,0})
+                TeleportEntity(i,MapConfig.bspawn,NULL_VECTOR,{0.0,0.0,0.0})
             }
         }
     }
@@ -504,7 +503,7 @@ stock void LRSetFreeday(int client)
     //teleport them
     if (MapConfig.hasfspawn)
     {
-        TeleportEntity(client,MapConfig.fspawn,NULL_VECTOR,{0,0,0})
+        TeleportEntity(client,MapConfig.fspawn,NULL_VECTOR,{0.0,0.0,0.0})
     }
 }
 
