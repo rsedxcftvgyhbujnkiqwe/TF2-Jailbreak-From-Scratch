@@ -16,8 +16,7 @@ public void OnPreRoundStart(Event event, const char[] name, bool dontBroadcast)
         for (int i;i<3;i++)
         {
             int client = LRConfig.Freedays[i]
-            if (!(client>0)) continue;
-            if(!IsClientInGame(i) || GetClientTeam(i)!=RED) continue;
+            if(client == 0 || !IsClientInGame(client) || GetClientTeam(client)!=RED) continue;
             LRConfig.FreedaysActive[client] = true;
             TF2_RespawnPlayer(client);
         }
