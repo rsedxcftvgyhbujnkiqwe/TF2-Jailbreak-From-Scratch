@@ -471,7 +471,7 @@ stock bool SetLRWinner(int client, int warden, bool adminforce = false)
 
 stock void ChooseLR(int client,int selection)
 {
-    LRConfig.LRType = selection;
+    LRConfig.LRChosen = selection;
     switch (selection)
     {
         case LR_FreedaySelf:
@@ -501,7 +501,7 @@ stock void ChooseLR(int client,int selection)
 
 stock void ResetLR()
 {
-    LRConfig.LRType = LR_None;
+    LRConfig.LRActive = LR_None;
     LRConfig.Freedays[0] = 0;
     LRConfig.Freedays[1] = 0;
     LRConfig.Freedays[2] = 0;

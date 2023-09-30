@@ -149,6 +149,7 @@ public void OnMapStart()
     //make sure LRs dont carry-over
     ResetLR();
     ResetActiveLR();
+    LRConfig.LRChosen = LR_None;
 
     //vscript
 #if defined _vscript_included

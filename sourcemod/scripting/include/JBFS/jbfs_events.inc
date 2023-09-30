@@ -1,5 +1,7 @@
 public void OnPreRoundStart(Event event, const char[] name, bool dontBroadcast)
 {
+    LRConfig.LRActive = LRConfig.LRChosen;
+    LRConfig.LRChosen = LR_None;
     JBFS.RoundActive = false;
     //warden stuff
     RemoveWarden(UW_Silent);
@@ -13,7 +15,7 @@ public void OnPreRoundStart(Event event, const char[] name, bool dontBroadcast)
     //unlock cells
     ModifyCellLock(false,0,false);
     //fire preround lr stuff (freedays)
-    if(LRConfig.LRType == LR_FreedaySelf || LRConfig.LRType == LR_FreedayOthers)
+    if(LRConfig.LRActive == LR_FreedaySelf || LRConfig.LRActive == LR_FreedayOthers)
     {
         for (int i;i<3;i++)
         {
@@ -34,13 +36,13 @@ public void OnArenaRoundStart(Event event, const char[] name, bool dontBroadcast
     AutoBalanceTeams();
     JBFS.TimeLeft = cvarJBFS[RoundTime].IntValue;
     //modify for LR
-    if(LRConfig.LRType == LR_Warday)
+    if(LRConfig.LRActive == LR_Warday)
     {
         LRWarday();
         JBFS.TimeLeft = cvarJBFS[WardayTime].IntValue;
         CPrintToChatAll("%t %t","PluginTag","LRWardayActive");
     }
-    else if (LRConfig.LRType == LR_FreedayAll)
+    else if (LRConfig.LRActive == LR_FreedayAll)
     {
         CPrintToChatAll("%t %t","PluginTag","LRFreedayAllActive");
         //open cells
@@ -49,7 +51,7 @@ public void OnArenaRoundStart(Event event, const char[] name, bool dontBroadcast
         ModifyCellLock(true,0,true);
         JBFS.TimeLeft = cvarJBFS[FreedayTime].IntValue;
     }
-    else if (LRConfig.LRType == LR_Custom)
+    else if (LRConfig.LRActive == LR_Custom)
     {
         CPrintToChatAll("%t %t","PluginTag","LRCustomActive",LRConfig.CustomLR);
     }

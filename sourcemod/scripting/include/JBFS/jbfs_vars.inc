@@ -97,7 +97,8 @@ enum
 
 enum struct JBLRConfig
 {
-    int LRType;
+    int LRActive;
+    int LRChosen;
     int LRWinner;
     Handle menu;
     int Freedays[3];
