@@ -587,7 +587,8 @@ stock bool LRChooseFreeday(int client, int target)
         return false;
     }
     LRConfig.Freedays[num] = target;
-    CPrintToChatAll("%t %t","PluginTag","LRChooseFreedayOthers",client,target,num)
+    CPrintToChatAll("%t %t","PluginTag","LRChooseFreedayOthers",client,target,num+1)
+    if (num == 2) return false;
     return true;
 }
 
