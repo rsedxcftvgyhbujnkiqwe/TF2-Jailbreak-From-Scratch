@@ -319,6 +319,11 @@ stock bool ModifyCells(bool open,int client = 0,bool message = true)
         return false;
     }
     int cells = FindEntityByName(-1,"*",MapConfig.cells);
+    if (cells == -1 && LRConfig.LRActive)
+    {
+        if(client) CPrintToChat(client,"%t %t","PluginTag","CellsWarnLR");
+        return false;
+    }
     char class[PLATFORM_MAX_PATH];
     GetEntityClassname(cells,class,PLATFORM_MAX_PATH);
     if (StrEqual(class,"func_door")||StrEqual(class,"func_door_rotating"))
@@ -348,44 +353,6 @@ stock bool ModifyCells(bool open,int client = 0,bool message = true)
     {
         if (open) CPrintToChatAll("%t %t","PluginTag","CellsOpen");
         else CPrintToChatAll("%t %t","PluginTag","CellsClose");
-    }
-    return true;
-}
-
-stock bool ModifyCellLock(bool lock,int client=0,bool message=true)
-{
-    if (!MapConfig.hascells)
-    {
-        if(client) CPrintToChat(client,"%t %t","PluginTag","CellsWarnNone");
-        return false;
-    }
-    int cells = FindEntityByName(-1,"*",MapConfig.cells);
-    char class[PLATFORM_MAX_PATH];
-    GetEntityClassname(cells,class,PLATFORM_MAX_PATH);
-    if (StrEqual(class,"func_door")||StrEqual(class,"func_door_rotating"))
-    {
-        if(lock) AcceptEntityInput(cells,"Lock");
-        else AcceptEntityInput(cells,"Unlock");
-    }
-    else if (StrEqual(class,"logic_relay"))
-    {
-        if(lock) AcceptEntityInput(cells,"Disable");
-        else AcceptEntityInput(cells,"Enable");
-    }
-    else if (StrEqual(class,"func_breakable"))
-    {
-        if(client) CPrintToChat(client,"%t %t","PluginTag","CellsWarnCantLock");
-        return false;
-    }
-    else
-    {
-        if(client) CPrintToChat(client,"%t %t","PluginTag","CellsWarnBadClass");
-        return false;
-    }
-    if(message)
-    {
-        if (lock) CPrintToChatAll("%t %t","PluginTag","CellsLock");
-        else CPrintToChatAll("%t %t","PluginTag","CellsUnlock");
     }
     return true;
 }

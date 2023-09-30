@@ -46,3 +46,11 @@ public Action Timer_AllowLRQuery(Handle timer)
     LRConfig.LRPrinted = false;
     return Plugin_Stop;
 }
+
+public Action Timer_KillCells(Handle timer)
+{
+    if (!MapConfig.hascells) return Plugin_Stop;
+    int cells = FindEntityByName(-1,"*",MapConfig.cells);
+    AcceptEntityInput(cells,"Kill")
+    return Plugin_Stop;
+}

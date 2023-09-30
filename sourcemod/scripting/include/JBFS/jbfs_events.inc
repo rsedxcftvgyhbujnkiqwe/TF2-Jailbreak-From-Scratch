@@ -12,8 +12,6 @@ public void OnPreRoundStart(Event event, const char[] name, bool dontBroadcast)
     JBGameEvent(JBEvent_SetWarden);
     //reset convars
     FindConVar("mp_friendlyfire").SetBool(false);
-    //unlock cells
-    ModifyCellLock(false,0,false);
     //fire preround lr stuff (freedays)
     if(LRConfig.LRActive == LR_FreedaySelf || LRConfig.LRActive == LR_FreedayOthers)
     {
@@ -46,8 +44,8 @@ public void OnArenaRoundStart(Event event, const char[] name, bool dontBroadcast
             CPrintToChatAll("%t %t","PluginTag","LRFreedayAllActive");
             //open cells
             ModifyCells(true,0,true);
-            //lock cells to prevent closure on freeday
-            ModifyCellLock(true,0,true);
+            //kill cells to prevent them from being closed
+            CreateTimer(5.0,Timer_KillCells);
             JBFS.TimeLeft = cvarJBFS[FreedayTime].IntValue;
         }
         case LR_Warday:

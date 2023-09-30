@@ -116,14 +116,6 @@
     {
         "en"        "The cell doors have been closed."
     }
-    "CellsLock"
-    {
-        "en"        "The cell doors have been locked."
-    }
-    "CellsUnlock"
-    {
-        "en"        "The cell doors have been unlocked."
-    }
     "CellsWarnNone"
     {
         "en"        "Cell door config for map not set properly by server."
@@ -136,9 +128,9 @@
     {
         "en"        "Cell doors can't be closed."
     }
-    "CellsWarnCantLock"
+    "CellsWarnLR"
     {
-        "en"        "Cell doors can't be locked/unlocked."
+        "en"        "Cells can't be modified during this LR.
     }
     "FFNotifyOn"
     {
