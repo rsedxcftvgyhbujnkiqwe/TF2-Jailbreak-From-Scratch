@@ -125,7 +125,6 @@ public void OnPluginStart()
     HookEvent("teamplay_round_win",OnArenaRoundEnd);
     HookEvent("teamplay_round_stalemate",OnArenaRoundEnd);
     HookEvent("player_team",OnPlayerTeamChange);
-    HookEvent("player_say",OnPlayerSay);
 
     SetConVars(true);
 

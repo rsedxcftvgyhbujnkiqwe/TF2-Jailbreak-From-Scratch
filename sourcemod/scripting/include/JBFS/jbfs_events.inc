@@ -173,16 +173,12 @@ public Action:OnTakeDamage(victim,&attacker,&inflictor,&Float:damage,&damagetype
     return action
 }
 
-public void OnPlayerSay(Event event, const char[] name, bool dontBroadcast)
+public void OnClientSayCommand_Post(int client, const char[] command, const char[] argc)
 {
-    if (LRConfig.CustomChatWait)
-    {
-        int client = GetClientOfUserId(event.GetInt("userid"));
+    if (!IsChatTrigger() && LRConfig.CustomChatWait){
         if (LRConfig.CustomChatWait && LRConfig.LRWinner == client)
         {
-            char msg[64];
-            event.GetString("text",msg,sizeof(msg));
-            SetCustomLR(msg);
+            SetCustomLR(argc);
         }
     }
 }

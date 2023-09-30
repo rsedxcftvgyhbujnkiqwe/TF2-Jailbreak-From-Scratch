@@ -591,9 +591,9 @@ stock bool LRChooseFreeday(int client, int target)
     return true;
 }
 
-stock void SetCustomLR(char playermessage[64])
+stock void SetCustomLR(const char[] playermessage)
 {
-    LRConfig.CustomLR = playermessage;
+    strcopy(LRConfig.CustomLR,sizeof(LRConfig.CustomLR),playermessage);
     CPrintToChatAll("%t %t","PluginTag","LRChooseCustom",LRConfig.CustomChatWait,playermessage);
     LRConfig.CustomChatWait = false;
 }
