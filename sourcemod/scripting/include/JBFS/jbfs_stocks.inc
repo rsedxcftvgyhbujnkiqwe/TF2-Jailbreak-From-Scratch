@@ -572,10 +572,9 @@ stock bool LRChooseFreeday(int client, int target)
 {
     if(!IsClientInGame(client) || !IsPlayerAlive(client) || !(GetClientTeam(client)==RED) || (client != LRConfig.LRWinner))
     {
-        PrintToServer("Client using menu ineligible to select LR!")
         return false;
     }
-    int num = 0;
+    int num = -1;
     for(int i;i<3;i++)
     {
         if (LRConfig.Freedays[i]==0)
@@ -584,8 +583,7 @@ stock bool LRChooseFreeday(int client, int target)
             break
         }
     }
-    if (num == 0){
-        PrintToServer("All freeday slots taken!")
+    if (num == -1){
         return false;
     }
     LRConfig.Freedays[num] = target;
