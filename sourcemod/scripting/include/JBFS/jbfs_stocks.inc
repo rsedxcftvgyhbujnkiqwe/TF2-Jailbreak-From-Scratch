@@ -494,6 +494,7 @@ stock void ChooseLR(int client,int selection)
         }
         case LR_Custom:
         {
+            LRConfig.CustomChatWait = true;
             CPrintToChatAll("%t %t","PluginTag","LRMenuPickedCustom",client);
         }
     }
@@ -518,6 +519,7 @@ stock void ResetActiveLR()
 {
     LRConfig.WardayActive = false;
     SetBoolArray(LRConfig.FreedaysActive,MAXPLAYERS+1,false)
+    LRConfig.CustomChatWait = false;
 }
 
 stock void LRWarday()
