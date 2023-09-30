@@ -234,12 +234,10 @@
     }
     "LRFreedayAllActive"
     {
-        "#format"   "{1:s}"
         "en"        "Last Request: {strange}Freeday for all."
     }
     "LRWardayActive"
     {
-        "#format"   "{1:s}"
         "en"        "Last Request: {collectors}Warday."
     }
     "LRCustomActive"
