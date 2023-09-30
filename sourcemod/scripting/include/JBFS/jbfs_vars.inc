@@ -108,6 +108,7 @@ enum struct JBLRConfig
     bool FreedaysActive[MAXPLAYERS+1];
     bool CustomChatWait;
     char CustomLR[64];
+    bool LRPrinted;
 }
 public JBLRConfig LRConfig;
 

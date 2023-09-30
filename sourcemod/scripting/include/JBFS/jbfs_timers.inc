@@ -40,3 +40,9 @@ public Action Timer_AllowMarkerPlacement(Handle timer)
     JBFS.MarkerPlaced = false;
     return Plugin_Stop;
 }
+
+public Action Timer_AllowLRQuery(Handle timer)
+{
+    LRConfig.LRPrinted = false;
+    return Plugin_Stop;
+}

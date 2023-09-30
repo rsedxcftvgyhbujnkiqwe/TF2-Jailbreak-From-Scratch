@@ -70,6 +70,7 @@ public void OnPluginStart()
     RegConsoleCmd("sm_warden",Command_Warden,"Become the Warden");
     RegConsoleCmd("sm_ff",Command_FriendlyFireStatus,"Show status of Friendly Fire");
     RegConsoleCmd("sm_fire",Command_FireWarden,"Vote to fire the Warden");
+    RegConsoleCmd("sm_lr",Command_CheckLastRequest,"Check the current Last Request");
 
     //warden commands
     RegConsoleCmd("sm_uw",Command_UnWarden,"Retire from Warden");

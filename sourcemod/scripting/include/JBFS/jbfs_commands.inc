@@ -112,6 +112,25 @@ public Action Command_FireWarden(int client, int args)
     return Plugin_Handled;
 }
 
+public Action Command_CheckLastRequest(int client, int args)
+{
+    if (!LRConfig.LRPrinted){
+        LRConfig.LRPrinted = true;
+        switch (LRConfig.LRActive)
+        {
+            case LR_None: CPrintToChatAll("%t %t","PluginTag","LRNoneActive");
+            case LR_FreedaySelf: CPrintToChatAll("%t %t","PluginTag","LRFreedaySelfActive");
+            case LR_FreedayOthers: CPrintToChatAll("%t %t","PluginTag","LRFreedayOthersActive");
+            case LR_FreedayAll: CPrintToChatAll("%t %t","PluginTag","LRFreedayAllActive");
+            case LR_Warday: CPrintToChatAll("%t %t","PluginTag","LRWardayActive");
+            case LR_Custom: CPrintToChatAll("%t %t","PluginTag","LRCustomActive",LRConfig.CustomLR);
+        }
+        CreateTimer(5.0,Timer_AllowLRQuery);
+    }
+    else CPrintToChat(client,"%t %t","PluginTag","SlowDown")
+    return Plugin_Handled;
+}
+
 //Warden Commands
 public Action Command_UnWarden(int client, int args)
 {
