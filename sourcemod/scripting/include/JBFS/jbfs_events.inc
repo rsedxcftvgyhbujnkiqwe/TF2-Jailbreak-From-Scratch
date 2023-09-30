@@ -36,25 +36,29 @@ public void OnArenaRoundStart(Event event, const char[] name, bool dontBroadcast
     AutoBalanceTeams();
     JBFS.TimeLeft = cvarJBFS[RoundTime].IntValue;
     //modify for LR
-    if(LRConfig.LRActive == LR_Warday)
+    switch (LRConfig.LRActive)
     {
-        LRWarday();
-        JBFS.TimeLeft = cvarJBFS[WardayTime].IntValue;
-        CPrintToChatAll("%t %t","PluginTag","LRWardayActive");
+        case LR_None: CPrintToChatAll("%t %t","PluginTag","LRNoneActive");
+        case LR_FreedaySelf: CPrintToChatAll("%t %t","PluginTag","LRFreedaySelfActive");
+        case LR_FreedayOthers: CPrintToChatAll("%t %t","PluginTag","LRFreedayOthersActive");
+        case LR_FreedayAll:
+        {
+            CPrintToChatAll("%t %t","PluginTag","LRFreedayAllActive");
+            //open cells
+            ModifyCells(true,0,true);
+            //lock cells to prevent closure on freeday
+            ModifyCellLock(true,0,true);
+            JBFS.TimeLeft = cvarJBFS[FreedayTime].IntValue;
+        }
+        case LR_Warday:
+        {
+            LRWarday();
+            JBFS.TimeLeft = cvarJBFS[WardayTime].IntValue;
+            CPrintToChatAll("%t %t","PluginTag","LRWardayActive");
+        }
+        case LR_Custom: CPrintToChatAll("%t %t","PluginTag","LRCustomActive",LRConfig.CustomLR);
     }
-    else if (LRConfig.LRActive == LR_FreedayAll)
-    {
-        CPrintToChatAll("%t %t","PluginTag","LRFreedayAllActive");
-        //open cells
-        ModifyCells(true,0,true);
-        //lock cells to prevent closure on freeday
-        ModifyCellLock(true,0,true);
-        JBFS.TimeLeft = cvarJBFS[FreedayTime].IntValue;
-    }
-    else if (LRConfig.LRActive == LR_Custom)
-    {
-        CPrintToChatAll("%t %t","PluginTag","LRCustomActive",LRConfig.CustomLR);
-    }
+    CreateTimer(5.0,Timer_AllowLRQuery);
     JBFS.RoundTimer = CreateTimer(1.0,RoundTimer,_,TIMER_REPEAT);
     CreateTimer(3.0,Timer_ChooseWarden);
 }
