@@ -13,6 +13,7 @@ enum
     GuardCrits,
     RoundTime,
     WardayTime,
+    FreedayTime,
     MicBalance,
     MicWarden,
     FireVote,
@@ -104,6 +105,8 @@ enum struct JBLRConfig
     int maplrcount;
     bool WardayActive;
     bool FreedaysActive[MAXPLAYERS+1];
+    bool CustomChatWait;
+    char CustomLR[64];
 }
 public JBLRConfig LRConfig;
 
@@ -132,6 +135,7 @@ public Marker JBMarker;
 
 //client menu defs
 typedef ClientFilterFunc = function bool(int client);
-typedef ClientRunFunc = function void(int client,int target);
+typedef ClientRunFunc = function bool(int client,int target);
 ClientRunFunc g_RunFn[MAXPLAYERS+1];
+ClientFilterFunc g_filterFn[MAXPLAYERS+1];
 Menu g_ClientMenu[MAXPLAYERS+1];

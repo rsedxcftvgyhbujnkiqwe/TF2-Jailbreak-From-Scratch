@@ -45,6 +45,7 @@ public void OnPluginStart()
     cvarJBFS[GuardCrits] = CreateConVar("sm_jbfs_guardcrits","1","Should Guards have crits.\n0 = No Crits\n1 = Crits",FCVAR_NOTIFY,true,0.0,true,1.0);
     cvarJBFS[RoundTime] = CreateConVar("sm_jbfs_roundtime","600","Time per round, in seconds",FCVAR_NOTIFY,true,120.0);
     cvarJBFS[WardayTime] = CreateConVar("sm_jbfs_wardaytime","300","Time per round on Warday, in seconds",FCVAR_NOTIFY,true,120.0);
+    cvarJBFS[FreedayTime] = CreateConVar("sm_jbfs_freedaytime","300","Time per round on Freeday for all, in seconds",FCVAR_NOTIFY,true,120.0);
     cvarJBFS[MicBalance] = CreateConVar("sm_jbfs_micblanace","1","Whether to check for guard mics when autobalancing.\nGuards without a mic are autobalanced first.\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.1,true,1.0)
     cvarJBFS[MicWarden] = CreateConVar("sm_jbfs_micwarden","1","Whether to check for guard mics when assigning warden.\nGuards without a mic are not allowed to be warden.\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.1,true,1.0)
     cvarJBFS[FireVote] = CreateConVar("sm_jbfs_firevote","1","Enable the firing system, allowing prisoners to fire the warden by popular vote.\n0 = Disabled\n1 = Enabled",FCVAR_NOTIFY,true,0.0,true,1.0);
@@ -124,6 +125,7 @@ public void OnPluginStart()
     HookEvent("teamplay_round_win",OnArenaRoundEnd);
     HookEvent("teamplay_round_stalemate",OnArenaRoundEnd);
     HookEvent("player_team",OnPlayerTeamChange);
+    HookEvent("player_say",OnPlayerSay);
 
     SetConVars(true);
 

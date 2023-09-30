@@ -10,14 +10,18 @@ public void OnPreRoundStart(Event event, const char[] name, bool dontBroadcast)
     JBGameEvent(JBEvent_SetWarden);
     //reset convars
     FindConVar("mp_friendlyfire").SetBool(false);
+    //unlock cells
+    ModifyCellLock(false,0,false);
     //fire preround lr stuff (freedays)
     if(LRConfig.LRType & (LR_FreedaySelf|LR_FreedayOthers))
     {
         for (int i;i<3;i++)
         {
             int client = LRConfig.Freedays[i]
-            if(client == 0 || !IsClientInGame(client) || GetClientTeam(client)!=RED) continue;
+            if(client == 0 || !IsClientInGame(client)) continue;
             LRConfig.FreedaysActive[client] = true;
+            CPrintToChatAll("%t %t","PluginTag","LRFreedayActive",client);
+            if(GetClientTeam(client)!=RED) continue;
             TF2_RespawnPlayer(client);
         }
     }
@@ -30,10 +34,24 @@ public void OnArenaRoundStart(Event event, const char[] name, bool dontBroadcast
     AutoBalanceTeams();
     JBFS.TimeLeft = cvarJBFS[RoundTime].IntValue;
     //modify for LR
-    if(LRConfig.LRType == LR_Warday)
+    if(LRConfig.LRType & LR_Warday)
     {
         LRWarday();
         JBFS.TimeLeft = cvarJBFS[WardayTime].IntValue;
+        CPrintToChatAll("%t %t","PluginTag","LRWardayActive");
+    }
+    else if (LRConfig.LRType & LR_FreedayAll)
+    {
+        CPrintToChatAll("%t %t","PluginTag","LRFreedayAllActive");
+        //open cells
+        ModifyCells(true,0,true);
+        //lock cells to prevent closure on freeday
+        ModifyCellLock(true,0,true);
+        JBFS.TimeLeft = cvarJBFS[FreedayTime].IntValue;
+    }
+    else if (LRConfig.LRType & LR_Custom)
+    {
+        CPrintToChatAll("%t %t","PluginTag","LRCustomActive",LRConfig.CustomLR);
     }
     JBFS.RoundTimer = CreateTimer(1.0,RoundTimer,_,TIMER_REPEAT);
     CreateTimer(3.0,Timer_ChooseWarden);
@@ -105,6 +123,8 @@ public void OnPlayerDisconnect(Event event, const char[] name, bool dontBroadcas
 public void DeathEvents(client)
 {
     if (LRConfig.FreedaysActive[client]) LRRemoveFreeday(client);
+    int fday = FindInArray(LRConfig.Freedays,3,client)
+    if (fday != -1) LRConfig.Freedays[fday] = 0;
     RemoveParticle(client);
 }
 
@@ -151,4 +171,18 @@ public Action:OnTakeDamage(victim,&attacker,&inflictor,&Float:damage,&damagetype
         if(LRConfig.FreedaysActive[attacker]) LRRemoveFreeday(attacker);
     }
     return action
+}
+
+public void OnPlayerSay(Event event, const char[] name, bool dontBroadcast)
+{
+    if (LRConfig.CustomChatWait)
+    {
+        int client = GetClientOfUserId(event.GetInt("userid"));
+        if (LRConfig.CustomChatWait && LRConfig.LRWinner == client)
+        {
+            char msg[64];
+            event.GetString("text",msg,sizeof(msg));
+            SetCustomLR(msg);
+        }
+    }
 }

@@ -352,6 +352,44 @@ stock bool ModifyCells(bool open,int client = 0,bool message = true)
     return true;
 }
 
+stock bool ModifyCellLock(bool lock,int client=0,bool message=true)
+{
+    if (!MapConfig.hascells)
+    {
+        if(client) CPrintToChat(client,"%t %t","PluginTag","CellsWarnNone");
+        return false;
+    }
+    int cells = FindEntityByName(-1,"*",MapConfig.cells);
+    char class[PLATFORM_MAX_PATH];
+    GetEntityClassname(cells,class,PLATFORM_MAX_PATH);
+    if (StrEqual(class,"func_door")||StrEqual(class,"func_door_rotating"))
+    {
+        if(lock) AcceptEntityInput(cells,"Lock");
+        else AcceptEntityInput(cells,"Unlock");
+    }
+    else if (StrEqual(class,"logic_relay"))
+    {
+        if(lock) AcceptEntityInput(cells,"Disable");
+        else AcceptEntityInput(cells,"Enable");
+    }
+    else if (StrEqual(class,"func_breakable"))
+    {
+        if(client) CPrintToChat(client,"%t %t","PluginTag","CellsWarnCantLock");
+        return false;
+    }
+    else
+    {
+        if(client) CPrintToChat(client,"%t %t","PluginTag","CellsWarnBadClass");
+        return false;
+    }
+    if(message)
+    {
+        if (lock) CPrintToChatAll("%t %t","PluginTag","CellsLock");
+        else CPrintToChatAll("%t %t","PluginTag","CellsUnlock");
+    }
+    return true;
+}
+
 stock void ToggleFF(bool admin = false)
 {
     if (FindConVar("mp_friendlyfire").BoolValue)
@@ -411,6 +449,12 @@ stock void CreateMarker(int client)
     CreateTimer(1.0,Timer_AllowMarkerPlacement);
 }
 
+public bool ClientEligibleForLR(int client)
+{
+    if (GetClientTeam(client)==RED&&IsPlayerAlive(client)) return true;
+    return false;
+}
+
 stock bool SetLRWinner(int client, int warden, bool adminforce = false)
 {
     if((!IsClientInGame(client) || !IsPlayerAlive(client) || !(GetClientTeam(client)==RED) || (warden != JBFS.Warden)) && !adminforce)
@@ -422,7 +466,7 @@ stock bool SetLRWinner(int client, int warden, bool adminforce = false)
     CreateLRMenu(client);
     if (!adminforce) CPrintToChatAll("%t %t","PluginTag","LRMenuWinner",client);
     else CPrintToChatAll("%t %t","PluginTag","LRMenuWinnerAdmin",client);
-    return true;
+    return false;
 }
 
 stock void ChooseLR(int client,int selection)
@@ -442,6 +486,7 @@ stock void ChooseLR(int client,int selection)
         case LR_FreedayOthers:
         {
             CPrintToChatAll("%t %t","PluginTag","LRMenuPickedFreedayOthers",client);
+            CreateClientSelectMenu(client,ClientEligibleForFreeday,LRChooseFreeday);
         }
         case LR_Warday:
         {
@@ -461,6 +506,7 @@ stock void ResetLR()
     LRConfig.Freedays[1] = 0;
     LRConfig.Freedays[2] = 0;
     LRConfig.LRWinner = 0;
+    LRConfig.CustomChatWait = false;
     if (LRConfig.menu != null)
     {
         CancelMenu(LRConfig.menu)
@@ -512,4 +558,40 @@ stock void LRSetFreeday(int client)
 stock void LRRemoveFreeday(int client)
 {
     LRConfig.FreedaysActive[client] = false;
+}
+
+stock bool ClientEligibleForFreeday(int client)
+{
+    if(!IsClientInGame(client)) return false;
+    int fday = FindInArray(LRConfig.Freedays,3,client);
+    if (fday != -1) return false;
+    return true
+}
+
+stock bool LRChooseFreeday(int client, int target)
+{
+    if(!IsClientInGame(client) || !IsPlayerAlive(client) || !(GetClientTeam(client)==RED) || (client != LRConfig.LRWinner))
+    {
+        return false;
+    }
+    int num = 0;
+    for(int i;i<3;i++)
+    {
+        if (LRConfig.Freedays[i]==0)
+        {
+            num = i;
+            break
+        }
+    }
+    if (num == 0) return false;
+    LRConfig.Freedays[num] = target;
+    CPrintToChatAll("%t %t","PluginTag","LRChooseFreedayOthers",client,target,num)
+    return true;
+}
+
+stock void SetCustomLR(char playermessage[64])
+{
+    LRConfig.CustomLR = playermessage;
+    CPrintToChatAll("%t %t","PluginTag","LRChooseCustom",LRConfig.CustomChatWait,playermessage);
+    LRConfig.CustomChatWait = false;
 }

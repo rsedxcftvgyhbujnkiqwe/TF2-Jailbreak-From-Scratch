@@ -149,3 +149,12 @@ stock void RemoveParticle(int client)
         JBFS.AttachedParticle[client]=0;
     }
 }
+
+stock int FindInArray(any[] array, int maxlength, value)
+{
+    for(int i;i<maxlength;i++)
+    {
+        if (array[i]==value) return i;
+    }
+    return -1;
+}

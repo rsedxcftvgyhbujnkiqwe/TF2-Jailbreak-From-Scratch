@@ -116,6 +116,14 @@
     {
         "en"        "The cell doors have been closed."
     }
+    "CellsLock"
+    {
+        "en"        "The cell doors have been locked."
+    }
+    "CellsUnlock"
+    {
+        "en"        "The cell doors have been unlocked."
+    }
     "CellsWarnNone"
     {
         "en"        "Cell door config for map not set properly by server."
@@ -127,6 +135,10 @@
     "CellsWarnCantClose"
     {
         "en"        "Cell doors can't be closed."
+    }
+    "CellsWarnCantLock"
+    {
+        "en"        "Cell doors can't be locked/unlocked."
     }
     "FFNotifyOn"
     {
@@ -195,7 +207,7 @@
     "CommandFireNotifyVote"
     {
         "#format"   "{1:N}{2:d}{3:d}"
-        "en"        "{1} has voted to fire the Warden ({2}/{3})."
+        "en"        "{unique}{1}{wheat} has voted to fire the Warden ({2}/{3})."
     }
     "CommandMarkerDisabled"
     {
@@ -204,5 +216,35 @@
     "CommandMarkerSlow"
     {
         "en"        "Placing markers too fast, slow down and try again."
+    }
+    "LRChooseFreedayOthers"
+    {
+        "#format"   "{1:N}{2:N}{3:d}"
+        "en"        "{unique}{1}{wheat} has chosen {unique}{1}{wheat} for a {strange}Freeday {wheat}({3}/3)."
+    }
+    "LRChooseCustom"
+    {
+        "#format"   "{1:N}{2:s}"
+        "en"        "{unique}{1}{wheat} has chosen: {selfmade}{2}"
+    }
+    "LRFreedayActive"
+    {
+        "#format"   "{1:N}"
+        "en"        "{strange}Freeday{wheat} activated for {unique}{1}{wheat}."
+    }
+    "LRFreedayAllActive"
+    {
+        "#format"   "{1:s}"
+        "en"        "Last Request: {strange}Freeday for all."
+    }
+    "LRWardayActive"
+    {
+        "#format"   "{1:s}"
+        "en"        "Last Request: {collectors}Warday."
+    }
+    "LRCustomActive"
+    {
+        "#format"   "{1:s}"
+        "en"        "Custom Last Request: {selfmade}{1}."
     }
 }

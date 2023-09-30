@@ -75,22 +75,22 @@
     "LRMenuPickedFreeday"
     {
         "#format"   "{1:N}"
-        "en"        "{unique}{1}{wheat} has chosen to give themself a Freeday."
+        "en"        "{unique}{1}{wheat} has chosen to give themself a {strange}Freeday."
     }
     "LRMenuPickedFreedayOthers"
     {
         "#format"   "{1:N}"
-        "en"        "{unique}{1}{wheat} is choosing others for a Freeday..."
+        "en"        "{unique}{1}{wheat} is choosing others for a {strange}Freeday..."
     }
     "LRMenuPickedFreedayAll"
     {
         "#format"   "{1:N}"
-        "en"        "{unique}{1}{wheat} has chosen to give all prisoners a Freeday."
+        "en"        "{unique}{1}{wheat} has chosen to give all prisoners a {strange}Freeday."
     }
     "LRMenuPickedWarday"
     {
         "#format"   "{1:N}"
-        "en"        "{unique}{1}{wheat} has chosen to have a Warday."
+        "en"        "{unique}{1}{wheat} has chosen to have a {collectors}Warday."
     }
     "LRMenuPickedCustom"
     {
@@ -100,11 +100,11 @@
     "LRMenuWinner"
     {
         "#format"   "{1:N}"
-        "en"        "{unique}{1}{wheat} has been given a last request."
+        "en"        "{unique}{1}{wheat} has been given a {unusual}last request."
     }
     "LRMenuWinnerAdmin"
     {
         "#format"   "{1:N}"
-        "en"        "{unique}{1}{wheat} was forcibly given a last request by an admin."
+        "en"        "{unique}{1}{wheat} was forcibly given a {unusual}last request{wheat} by an admin."
     }
 }

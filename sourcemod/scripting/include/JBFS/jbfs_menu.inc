@@ -425,7 +425,14 @@ public int ClientMenuHandler(Menu menu, MenuAction action, int param1, int param
             Call_StartFunction(null, g_RunFn[param1]);
             Call_PushCell(param1);
             Call_PushCell(GetClientOfUserId(StringToInt(target)));
-            Call_Finish();
+            bool result;
+            Call_Finish(result);
+            //if the runfn returns true, redraw the menu
+            //else, do nothing
+            if(result)
+            {
+                CreateClientSelectMenu(param1,g_filterFn[param1],g_RunFn[param1]);
+            }
         }
     }
 
@@ -435,6 +442,7 @@ public int ClientMenuHandler(Menu menu, MenuAction action, int param1, int param
 public void CreateClientSelectMenu(int client, ClientFilterFunc filterFn, ClientRunFunc runFn)
 {
     g_RunFn[client] = runFn;
+    g_filterFn[client] = filterFn;
     Menu menu = new Menu(ClientMenuHandler);
     g_ClientMenu[client] = menu;
     int clients;
@@ -464,13 +472,6 @@ public void CreateClientSelectMenu(int client, ClientFilterFunc filterFn, Client
     }
     menu.Display(client, MENU_TIME_FOREVER);
 }
-
-public bool ClientEligibleForLR(int client)
-{
-    if (GetClientTeam(client)==RED&&IsPlayerAlive(client)) return true;
-    return false;
-}
-
 public Action Command_GiveLastRequest(int client, int args)
 {
     if(client!=JBFS.Warden)
@@ -482,9 +483,9 @@ public Action Command_GiveLastRequest(int client, int args)
     return Plugin_Handled;
 }
 
-public void WardenGiveLR(int warden, int target)
+public bool WardenGiveLR(int warden, int target)
 {
-    SetLRWinner(target,warden,false)
+    return SetLRWinner(target,warden,false)
 }
 
 public Action Command_Admin_ForceLastRequest(int client, int args)
@@ -493,7 +494,7 @@ public Action Command_Admin_ForceLastRequest(int client, int args)
     return Plugin_Handled;
 }
 
-public void AdminGiveLR(int admin, int target)
+public bool AdminGiveLR(int admin, int target)
 {
-    SetLRWinner(target,admin,true)
+    return SetLRWinner(target,admin,true)
 }
