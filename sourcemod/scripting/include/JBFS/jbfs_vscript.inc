@@ -45,7 +45,7 @@ stock void JBGameEvent(int eventType)
                 int clientid;
                 if (JBFS.Warden > 0) clientid = GetClientUserId(JBFS.Warden);
                 else clientid = 0;
-                Format(scriptstring,sizeof(scriptstring,"FireGameEvent(\"JB_OnSetWarden\",{warden=%d})"),clientid);
+                Format(scriptstring,sizeof(scriptstring),"FireGameEvent(\"JB_OnSetWarden\",{warden=%d})",clientid);
                 script = VScript_CompileScript(scriptstring);
             }
             case JBEvent_RemoveWarden:
@@ -54,7 +54,7 @@ stock void JBGameEvent(int eventType)
                 int clientid;
                 if (JBFS.Warden > 0) clientid = GetClientUserId(JBFS.Warden);
                 else clientid = 0;
-                Format(scriptstring,sizeof(scriptstring,"FireGameEvent(\"JB_OnRemoveWarden\",{warden=%d})"),clientid);
+                Format(scriptstring,sizeof(scriptstring),"FireGameEvent(\"JB_OnRemoveWarden\",{warden=%d})",clientid);
                 script = VScript_CompileScript(scriptstring);
             }
             default

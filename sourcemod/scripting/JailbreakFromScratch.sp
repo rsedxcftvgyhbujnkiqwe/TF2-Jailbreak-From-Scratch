@@ -63,6 +63,7 @@ public void OnPluginStart()
     cvarJBFS_ACMD[ACMD_Cells] = CreateConVar("sm_jbfs_acmd_cells","2","Admin flag(s) required to open/close cells.",FCVAR_NOTIFY,true,0.0,true,2097151.0);
     cvarJBFS_ACMD[ACMD_FF] = CreateConVar("sm_jbfs_acmd_ff","2","Admin flag(s) required to toggle friendly fire.",FCVAR_NOTIFY,true,0.0,true,2097151.0);
     cvarJBFS_ACMD[ACMD_CC] = CreateConVar("sm_jbfs_acmd_cc","2","Admin flag(s) required to toggle collisions.",FCVAR_NOTIFY,true,0.0,true,2097151.0);
+    cvarJBFS_ACMD[ACMD_ForceLR] = CreateConVar("sm_jbfs_acmd_forcelr","2","Admin flag(s) required to force last request.",FCVAR_NOTIFY,true,0.0,true,2097151.0);
     AutoExecConfig(true,"JBFS");
 
     //regular commands for players
@@ -111,8 +112,8 @@ public void OnPluginStart()
     RegAdminCmd("sm_acc",Command_Admin_ToggleCollisions,cvarJBFS_ACMD[ACMD_CC].IntValue,"Toggle Collisions");
     RegAdminCmd("sm_acol",Command_Admin_ToggleCollisions,cvarJBFS_ACMD[ACMD_CC].IntValue,"Toggle Collisions");
     RegAdminCmd("sm_admincol",Command_Admin_ToggleCollisions,cvarJBFS_ACMD[ACMD_CC].IntValue,"Toggle Collisions");
-    RegAdminCmd("sm_flr",Command_Admin_ForceLastRequest,ADMFLAG_GENERIC,"Force give a prisoner LR");
-    RegAdminCmd("sm_forcelr",Command_Admin_ForceLastRequest,ADMFLAG_GENERIC,"Force give a prisoner LR");
+    RegAdminCmd("sm_flr",Command_Admin_ForceLastRequest,cvarJBFS_ACMD[ACMD_ForceLR].IntValue,"Force give a prisoner LR");
+    RegAdminCmd("sm_forcelr",Command_Admin_ForceLastRequest,cvarJBFS_ACMD[ACMD_ForceLR].IntValue,"Force give a prisoner LR");
 
     RegAdminCmd("sm_awm",Command_Admin_WardenMenu,cvarJBFS_ACMD[ACMD_WardenMenu].IntValue,"Open the Admin Warden menu");
     RegAdminCmd("sm_awmenu",Command_Admin_WardenMenu,cvarJBFS_ACMD[ACMD_WardenMenu].IntValue,"Open the Admin Warden menu");

@@ -36,6 +36,7 @@ enum
     ACMD_Cells,
     ACMD_FF,
     ACMD_CC,
+    ACMD_ForceLR,
     ACMD_WardenMenu
 }
 ConVar cvarJBFS_ACMD[ACMD_WardenMenu+1];
