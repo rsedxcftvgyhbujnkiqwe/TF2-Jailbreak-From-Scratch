@@ -100,6 +100,13 @@ stock void SetBoolArray(bool[] array, int length, bool value)
         array[i]=value;
     }
 }
+stock void SetIntArray(int[] array, int length, int value)
+{
+    for(int i;i<length;i++)
+    {
+        array[i]=value;
+    }
+}
 
 stock bool TraceRayFilterPlayers(int entity, int mask, any data)
 {

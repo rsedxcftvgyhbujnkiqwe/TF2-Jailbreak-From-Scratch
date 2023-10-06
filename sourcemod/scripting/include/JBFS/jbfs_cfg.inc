@@ -1,6 +1,7 @@
 public void LoadConfigs()
 {
     LoadMapConfig();
+    LoadWeaponConfig();
 }
 
 public void LoadMapConfig()
@@ -150,4 +151,89 @@ public void LoadLRConfig()
     {
         //
     }
+}
+
+public void LoadWeaponConfig()
+{
+    char mapcfg[64] = "configs/jbfs/weapons.cfg";
+    KeyValues kv = new KeyValues("Weapons");
+    char path[PLATFORM_MAX_PATH];
+    BuildPath(Path_SM,path,sizeof(path),mapcfg);
+
+    if(!kv.ImportFromFile(path)) return;
+
+    /*
+    config structure:
+    "Weapons"
+    {
+        //requires ammo to have
+        //guards have by default
+        //reds need ammo to acquire
+        //for instance: jarate, bonk, etc.
+        "Ammo"
+        {
+            "0"     "123"
+        }
+        //only available on warday (both teams)
+        "Warday"
+        {
+            "0"     "456"
+        }
+        //never allowed
+        "All"
+        {
+            "0"     "789"
+        }
+    }
+    */
+    
+    //ammo
+    kv.JumpToKey("Ammo",true)
+    if(!kv.GotoFirstSubKey()){
+        kv.JumpToKey("0",true);
+        kv.SetNum("0",0);
+    }
+    int count;
+    do
+    {
+        char sec[64];
+        kv.GetSectionName(sec,sizeof(sec));
+        int wep = kv.GetNum(sec);
+        WeaponConfig.BlockedWeapons_Ammo[count++] = wep;
+    }
+    while(kv.GotoNextKey(false))
+    kv.Rewind()
+
+    //warday
+    kv.JumpToKey("Warday",true)
+    if(!kv.GotoFirstSubKey()){
+        kv.JumpToKey("0",true);
+        kv.SetNum("0",0);
+    }
+    int count;
+    do
+    {
+        char sec[64];
+        kv.GetSectionName(sec,sizeof(sec));
+        int wep = kv.GetNum(sec);
+        WeaponConfig.BlockedWeapons_Warday[count++] = wep;
+    }
+    while(kv.GotoNextKey(false))
+    kv.Rewind()
+
+    //all
+    kv.JumpToKey("All",true)
+    if(!kv.GotoFirstSubKey()){
+        kv.JumpToKey("0",true);
+        kv.SetNum("0",0);
+    }
+    int count;
+    do
+    {
+        char sec[64];
+        kv.GetSectionName(sec,sizeof(sec));
+        int wep = kv.GetNum(sec);
+        WeaponConfig.BlockedWeapons_All[count++] = wep;
+    }
+    while(kv.GotoNextKey(false))
 }

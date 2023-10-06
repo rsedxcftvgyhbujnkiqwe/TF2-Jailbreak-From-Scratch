@@ -567,3 +567,62 @@ stock void SetCustomLR(const char[] playermessage)
     CPrintToChatAll("%t %t","PluginTag","LRChooseCustom",LRConfig.CustomChatWait,playermessage);
     LRConfig.CustomChatWait = false;
 }
+
+stock void RemoveWeapons(int client)
+{
+    int weapon;
+    int index;
+    bool AmmoWep;
+    bool WardayWep;
+    bool AllWep;
+    bool HasBlocked;
+    SetIntArray(g_BlockedWeapons[client],sizeof(g_BlockedWeapons[client]),0);
+    for (int i; i < length; ++i)
+    {
+        weapon = GetEntPropEnt(client, Prop_Send, "m_hMyWeapons", i);
+        if (weapon != -1)
+        {
+            index = GetEntProp(weapon,Prop_Send,"m_iItemDefinitionIndex");
+            if(FindInArray(WeaponConfig.BlockedWeapons_Ammo,sizeof(WeaponConfig.BlockedWeapons_Ammo),index)!= -1) AmmoWep = true;
+            else AmmoWep = false;
+            if(FindInArray(WeaponConfig.BlockedWeapons_Warday,sizeof(WeaponConfig.BlockedWeapons_Warday),index)!= -1) WardayWep = true;
+            else WardayWep = false;
+            if(FindInArray(WeaponConfig.BlockedWeapons_All,sizeof(WeaponConfig.BlockedWeapons_All),index)!= -1) AllWep = true;
+            else AllWep = false;
+            //all -> always remove
+            //warday -> remove on non warday
+            //ammo -> remove if red
+            if (AllWep || (WardayWep && !LRConfig.WardayActive))
+            {
+                //delete weapon
+                TF2_RemoveWeaponSlot(client, i);
+                HasBlocked = true;
+            }
+            else if (AmmoWep && GetClientTeam(client)==RED)
+            {
+                SetEntPropEnt(client,Prop_Send,"m_hMyWeapons",-1,i);
+                g_BlockedWeapons[client][i] = weapon;
+                HasBlocked = true;
+            }
+        }
+    }
+    if(HasBlocked) g_HasBlockedWeapons[client] = true;
+}
+
+stock void ReturnWeapons(int client)
+{
+    if (g_HasBlockedWeapons[client])
+    {
+        int weapon;
+        for(int i; i<6; i++)
+        {
+            weapon = g_BlockedWeapons[client][i];
+            if (weapon > 0)
+            {
+                SetEntPropEnt(client,Prop_Send,"m_hMyWeapons",weapon,i);
+            }
+        }
+        SetIntArray(g_BlockedWeapons[client],sizeof(g_BlockedWeapons[client]),0);
+        g_HasBlockedWeapons[client] = false;
+    }
+}

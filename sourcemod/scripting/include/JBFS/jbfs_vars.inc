@@ -113,6 +113,16 @@ enum struct JBLRConfig
 }
 public JBLRConfig LRConfig;
 
+enum struct JBWeaponConfig
+{
+    int BlockedWeapons_Ammo[128];
+    int BlockedWeapons_Warday[128];
+    int BlockedWeapons_All[128];
+}
+public JBWeaponConfig WeaponConfig;
+int g_BlockedWeapons[MAXPLAYERS+1][6];
+bool g_HasBlockedWeapons[MAXPLAYERS+1];
+
 //jb events for vscript
 enum 
 {
