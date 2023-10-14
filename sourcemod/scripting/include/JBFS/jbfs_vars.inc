@@ -22,6 +22,8 @@ enum
     MarkerTime,
     MarkerRadius,
     MarkerColor,
+    RemoveItem1,
+    RemoveItem2,
     Version
 }
 ConVar cvarJBFS[Version+1];
