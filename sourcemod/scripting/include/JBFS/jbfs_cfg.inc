@@ -235,10 +235,4 @@ public void LoadWeaponConfig()
         WeaponConfig.BlockedWeapons_All[count++] = wep;
     }
     while(kv.GotoNextKey(false))
-
-    PrintToServer("Banned Warday Weps:")
-    for(int i;i<sizeof(WeaponConfig.BlockedWeapons_Warday);i++)
-    {
-        PrintToServer("%d is a banned warday wep!",WeaponConfig.BlockedWeapons_Warday[i])
-    }
 }
