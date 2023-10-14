@@ -54,8 +54,8 @@ public void OnPluginStart()
     cvarJBFS[MarkerTime] = CreateConVar("sm_jbfs_markertime","10.0","Timed life of markers.\n0 disables marker system.",FCVAR_NOTIFY,true,0.0,true,20.0);
     cvarJBFS[MarkerRadius] = CreateConVar("sm_jbfs_markerradius","256","Radius of markers, in hammer units.",FCVAR_NOTIFY,true,32.0,true,512.0);
     cvarJBFS[MarkerColor] = CreateConVar("sm_jbfs_markercolor","FFFFFF","Hex color to use for markers.",FCVAR_NOTIFY);
-    cvarJBFS[RemoveItem1] = CreateConVar("sm_jbfs_removeitem1","1","Should Item1 be removed from all players?.\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0);
-    cvarJBFS[RemoveItem2] = CreateConVar("sm_jbfs_removeitem2","1","Should Item2 be removed from all players?.\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0);
+    cvarJBFS[RemoveItem1] = CreateConVar("sm_jbfs_removeitemone","1","Should Item1 be removed from all players?.\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0);
+    cvarJBFS[RemoveItem2] = CreateConVar("sm_jbfs_removeitemtwo","1","Should Item2 be removed from all players?.\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0);
     cvarJBFS[Version] = CreateConVar("jbfs_version",PLUGIN_VERSION,PLUGIN_NAME,FCVAR_REPLICATED | FCVAR_NOTIFY | FCVAR_SPONLY | FCVAR_DONTRECORD);
     //admincmd cvars
     cvarJBFS_ACMD[ACMD_WardenMenu] = CreateConVar("sm_jbfs_acmd_adminmenu","2","Admin command section. Requires setting admin flag bits.\nSee: https://wiki.alliedmods.net/Checking_Admin_Flags_(SourceMod_Scripting)\n\nAdmin flag(s) required to open the admin warden menu.",FCVAR_NOTIFY,true,0.0,true,2097151.0);
