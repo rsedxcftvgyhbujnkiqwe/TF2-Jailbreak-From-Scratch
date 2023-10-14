@@ -210,7 +210,7 @@ public void LoadWeaponConfig()
         kv.JumpToKey("0",true);
         kv.SetNum("0",0);
     }
-    int count;
+    count = 0;
     do
     {
         char sec[64];
@@ -227,7 +227,7 @@ public void LoadWeaponConfig()
         kv.JumpToKey("0",true);
         kv.SetNum("0",0);
     }
-    int count;
+    count = 0;
     do
     {
         char sec[64];

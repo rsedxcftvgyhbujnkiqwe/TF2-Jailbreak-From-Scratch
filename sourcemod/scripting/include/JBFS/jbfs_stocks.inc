@@ -576,7 +576,8 @@ stock void RemoveWeapons(int client)
     bool WardayWep;
     bool AllWep;
     bool HasBlocked;
-    SetIntArray(g_BlockedWeapons[client],sizeof(g_BlockedWeapons[client]),0);
+    SetIntArray(g_BlockedWeapons[client],6,0);
+    int length = GetEntPropArraySize(client, Prop_Send, "m_hMyWeapons");
     for (int i; i < length; ++i)
     {
         weapon = GetEntPropEnt(client, Prop_Send, "m_hMyWeapons", i);
@@ -622,7 +623,7 @@ stock void ReturnWeapons(int client)
                 SetEntPropEnt(client,Prop_Send,"m_hMyWeapons",weapon,i);
             }
         }
-        SetIntArray(g_BlockedWeapons[client],sizeof(g_BlockedWeapons[client]),0);
+        SetIntArray(g_BlockedWeapons[client],6,0);
         g_HasBlockedWeapons[client] = false;
     }
 }

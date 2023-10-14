@@ -130,7 +130,7 @@ public void DeathEvents(client)
     int fday = FindInArray(LRConfig.Freedays,3,client)
     if (fday != -1) LRConfig.Freedays[fday] = 0;
     RemoveParticle(client);
-    SetIntArray(g_BlockedWeapons[client],sizeof(g_BlockedWeapons[client]),0);
+    SetIntArray(g_BlockedWeapons[client],6,0);
     g_HasBlockedWeapons[client] = false;
 }
 
