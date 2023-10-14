@@ -612,10 +612,16 @@ stock void RemoveWeapons(int client)
     }
     if(HasBlocked) g_HasBlockedWeapons[client] = true;
     if (cvarJBFS[RemoveItem1].BoolValue)
+    {
+        PrintToServer("Removing item1 for %N",client);
         TF2_RemoveWeaponSlot(client, TFWeaponSlot_Item1);
+    }
     if (cvarJBFS[RemoveItem2].BoolValue)
+    {
+        PrintToServer("Removing item2 for %N",client);
         TF2_RemoveWeaponSlot(client, TFWeaponSlot_Item2);
     }
+}
 
 stock void ReturnWeapons(int client)
 {
