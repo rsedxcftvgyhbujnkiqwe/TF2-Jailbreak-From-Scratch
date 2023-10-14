@@ -595,12 +595,14 @@ stock void RemoveWeapons(int client)
             //ammo -> remove if red
             if (AllWep || (WardayWep && !LRConfig.WardayActive))
             {
+                PrintToServer("%N has weapon %d to be removed!",client,index);
                 //delete weapon
                 TF2_RemoveWeaponSlot(client, i);
                 HasBlocked = true;
             }
             else if (AmmoWep && GetClientTeam(client)==RED)
             {
+                PrintToServer("%N has weapon %d to be temp removed!",client,index);
                 SetEntPropEnt(client,Prop_Send,"m_hMyWeapons",-1,i);
                 g_BlockedWeapons[client][i] = weapon;
                 HasBlocked = true;
