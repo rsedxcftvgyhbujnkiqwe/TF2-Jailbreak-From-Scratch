@@ -94,6 +94,7 @@ public Action OnPlayerSpawn(Event event, const char[] name, bool dontBroadcast)
             LRSetFreeday(client);
         }
     }
+    RemoveWeapons(client);
     return Plugin_Handled;
 }
 
