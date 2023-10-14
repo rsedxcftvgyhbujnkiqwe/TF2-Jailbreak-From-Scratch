@@ -584,6 +584,7 @@ stock void RemoveWeapons(int client)
         if (weapon != -1)
         {
             index = GetEntProp(weapon,Prop_Send,"m_iItemDefinitionIndex");
+            PrintToServer("Found weapon %d for %N",index,client);
             if(FindInArray(WeaponConfig.BlockedWeapons_Ammo,sizeof(WeaponConfig.BlockedWeapons_Ammo),index)!= -1) AmmoWep = true;
             else AmmoWep = false;
             if(FindInArray(WeaponConfig.BlockedWeapons_Warday,sizeof(WeaponConfig.BlockedWeapons_Warday),index)!= -1) WardayWep = true;
