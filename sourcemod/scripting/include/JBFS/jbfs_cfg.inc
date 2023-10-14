@@ -198,7 +198,7 @@ public void LoadWeaponConfig()
     do
     {
         kv.GetSectionName(sec,sizeof(sec));
-        int wep = kv.GetNum(sec);
+        int wep = kv.GetNum(NULL_STRING);
         WeaponConfig.BlockedWeapons_Ammo[count++] = wep;
     }
     while(kv.GotoNextKey(false))
@@ -214,9 +214,9 @@ public void LoadWeaponConfig()
     do
     {
         kv.GetSectionName(sec,sizeof(sec));
-        int wep = kv.GetNum(sec);
+        int wep = kv.GetNum(NULL_STRING);
         WeaponConfig.BlockedWeapons_Warday[count++] = wep;
-        PrintToServer("Read wep %d from config",wep)
+        PrintToServer("Read wep %d from config, section %s",wep,sec)
     }
     while(kv.GotoNextKey(false))
     kv.Rewind()
@@ -231,7 +231,7 @@ public void LoadWeaponConfig()
     do
     {
         kv.GetSectionName(sec,sizeof(sec));
-        int wep = kv.GetNum(sec);
+        int wep = kv.GetNum(NULL_STRING);
         WeaponConfig.BlockedWeapons_All[count++] = wep;
     }
     while(kv.GotoNextKey(false))
