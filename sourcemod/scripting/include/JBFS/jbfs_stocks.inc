@@ -608,7 +608,10 @@ stock void RemoveWeapons(int client)
         }
     }
     if(HasBlocked) g_HasBlockedWeapons[client] = true;
-}
+    //lets see if this works?
+    TF2_RemoveWeaponSlot(client, TFWeaponSlot_Item1);
+    TF2_RemoveWeaponSlot(client, TFWeaponSlot_Item2);
+    }
 
 stock void ReturnWeapons(int client)
 {
