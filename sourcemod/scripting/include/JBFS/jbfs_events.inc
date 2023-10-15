@@ -229,14 +229,13 @@ stock void BuildingSpawn(int entity)
     }
     if (!(cvarJBFS[buildteam].IntValue & building) && !(cvarJBFS[buildteamwarday].BoolValue && LRConfig.WardayActive))
     {
-        SDKHook(builder,SDKHook_WeaponSwitch,BuildingSwitchHook)
+        SDKHook(builder, SDKHook_WeaponCanSwitchTo, PreventWeaponSwitchCallback)
     }
 }
 
-public void BuildingSwitchHook(int client)
+public Action PreventWeaponSwitchCallback(int weapon)
 {
-    SDKUnhook(client,SDKHook_WeaponSwitch,BuildingSwitchHook);
-    TF2Util_SetPlayerActiveWeapon(client,GetPlayerWeaponSlot(client, 3));
+    return Plugin_Stop;
 }
 
 public Action KillOnSpawn(int entity) {
