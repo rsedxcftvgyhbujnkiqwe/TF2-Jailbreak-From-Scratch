@@ -286,7 +286,7 @@ stock void RemoveAmmo(int client)
     //why? well I don't know why
     //what I do know is this is probably a fix
     int wep = GetPlayerWeaponSlot(client, TFWeaponSlot_Melee);
-    SetEntProp(client, Prop_Send, "m_hActiveWeapon",wep);
+    EquipPlayerWeapon(client,wep);
 }
 
 stock int SetWeaponAmmo(const int weapon, const int ammo)
@@ -658,7 +658,7 @@ stock void ReturnWeapons(int client)
                 SetEntPropEnt(client,Prop_Send,"m_hMyWeapons",weapon,i);
             }
         }
-        SetArray(g_BlockedWeapons[client],6,-1);
+        SetArray(g_BlockedWeapons[client],6 ,-1);
         g_HasBlockedWeapons[client] = false;
     }
 }
