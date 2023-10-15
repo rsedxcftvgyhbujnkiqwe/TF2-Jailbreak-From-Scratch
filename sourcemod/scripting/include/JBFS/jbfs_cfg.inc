@@ -190,6 +190,7 @@ public void LoadWeaponConfig()
     //ammo
     kv.JumpToKey("Ammo",true)
     if(!kv.GotoFirstSubKey()){
+        PrintToServer("No ammo configs set")
         kv.JumpToKey("0",true);
         kv.SetNum(NULL_STRING,-1);
     }
@@ -199,6 +200,7 @@ public void LoadWeaponConfig()
     {
         int wep = kv.GetNum(NULL_STRING);
         WeaponConfig.BlockedWeapons_Ammo[count++] = wep;
+        PrintToServer("Read in wep %d from ammo config",wep)
     }
     kv.Rewind()
 
@@ -206,6 +208,7 @@ public void LoadWeaponConfig()
     //warday
     kv.JumpToKey("Warday",true)
     if(!kv.GotoFirstSubKey()){
+        PrintToServer("No warday configs set")
         kv.JumpToKey("0",true);
         kv.SetNum(NULL_STRING,-1);
     }
@@ -215,6 +218,7 @@ public void LoadWeaponConfig()
     {
         int wep = kv.GetNum(NULL_STRING);
         WeaponConfig.BlockedWeapons_Warday[count++] = wep;
+        PrintToServer("Read in wep %d from warday config",wep)
     }
     kv.Rewind()
 
