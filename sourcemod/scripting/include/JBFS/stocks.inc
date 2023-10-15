@@ -163,7 +163,6 @@ stock int TF2_CreateEquipWeapon(int client, char weaponname[32],int weaponindex)
 {
     int weapon = CreateEntityByName(weaponname);
     if(weapon == -1) return -1;
-    //create weapon and init values
     SetEntProp(weapon,Prop_Send,"m_iItemDefinitionIndex",weaponindex);
     SetEntProp(weapon,Prop_Send,"m_bInitialized", 1);
     SetEntProp(weapon,Prop_Send,"m_bValidatedAttachedEntity", 1);
@@ -171,6 +170,7 @@ stock int TF2_CreateEquipWeapon(int client, char weaponname[32],int weaponindex)
     SetEntPropEnt(weapon,Prop_Send,"m_hOwner",client);
     SetEntPropEnt(weapon,Prop_Send,"m_hEffectEntity",client);
     SetEntProp(weapon,Prop_Send,"m_iTeamNum",GetClientTeam(client));
+    DispatchSpawn(weapon);
     EquipPlayerWeapon(client,weapon);
     return weapon;
 }
