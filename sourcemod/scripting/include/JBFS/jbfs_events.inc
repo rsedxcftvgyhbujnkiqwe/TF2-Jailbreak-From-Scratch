@@ -229,7 +229,7 @@ stock void BuildingSpawn(int entity)
     }
     if (!(cvarJBFS[buildteam].IntValue & building) && !(cvarJBFS[buildteamwarday].BoolValue && LRConfig.WardayActive))
     {
-        PrintToServer("%d & %d | %b && %b",cvarJBFS[buildteam].IntValue,building,cvarJBFS[buildteamwarday].BoolValue,LRConfig.WardayActive)
+        PrintToServer("%d %d | %d & %d | %b && %b",buildteam,buildteamwarday,cvarJBFS[buildteam].IntValue,building,cvarJBFS[buildteamwarday].BoolValue,LRConfig.WardayActive)
         RemoveEntity(entity);
         //this deletes the building but it has the player carrying a toolbox
         //must manually fix this
