@@ -266,7 +266,7 @@ stock void UnlockWarden(bool message = false)
 stock void RemoveAmmo(int client)
 {
     int mwep = GetPlayerWeaponSlot(client, TFWeaponSlot_Melee);
-    SetEntPropEnt(client, Prop_Send, "m_hActiveWeapon",mwep);
+    TF2Util_SetPlayerActiveWeapon(client,mwep);
 
     int weapon;
     int length = GetEntPropArraySize(client, Prop_Send, "m_hMyWeapons");

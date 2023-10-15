@@ -233,7 +233,7 @@ stock void BuildingSpawn(int entity)
         RemoveEntity(entity);
         //this deletes the building but it has the player carrying a toolbox
         //must manually fix this
-        SetEntPropEnt(builder,Prop_Send,"m_hActiveWeapon",GetPlayerWeaponSlot(builder, TFWeaponSlot_PDA));
+        TF2Util_SetPlayerActiveWeapon(builder,GetPlayerWeaponSlot(builder, TFWeaponSlot_PDA))
     }
 }
 

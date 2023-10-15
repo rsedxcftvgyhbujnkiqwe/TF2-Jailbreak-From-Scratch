@@ -31,6 +31,7 @@ public Plugin myinfo =
 
 //third party deps
 #include <morecolors>
+#include <tf2utils>
 #undef REQUIRE_PLUGIN
 #tryinclude <sourcecomms>
 #tryinclude <vscript>
