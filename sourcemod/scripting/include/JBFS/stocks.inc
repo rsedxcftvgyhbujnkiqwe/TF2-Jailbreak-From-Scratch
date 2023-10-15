@@ -170,7 +170,7 @@ stock int TF2_CreateEquipWeapon(int client, char weaponname[32],int weaponindex)
     SetEntPropEnt(weapon,Prop_Send,"m_hOwnerEntity",client);
     SetEntPropEnt(weapon,Prop_Send,"m_hOwner",client);
     SetEntPropEnt(weapon,Prop_Send,"m_hEffectEntity",client);
-    SetEntProp(weapon,Prop_Send,"m_iTeam",GetClientTeam(client));
+    SetEntProp(weapon,Prop_Send,"m_iTeamNum",GetClientTeam(client));
     EquipPlayerWeapon(client,weapon);
     return weapon;
 }
