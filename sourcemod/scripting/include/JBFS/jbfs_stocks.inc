@@ -265,6 +265,9 @@ stock void UnlockWarden(bool message = false)
 
 stock void RemoveAmmo(int client)
 {
+    int mwep = GetPlayerWeaponSlot(client, TFWeaponSlot_Melee);
+    SetEntPropEnt(client, Prop_Send, "m_hActiveWeapon",mwep);
+
     int weapon;
     int length = GetEntPropArraySize(client, Prop_Send, "m_hMyWeapons");
     for (int i;i < length; i++)
@@ -282,11 +285,6 @@ stock void RemoveAmmo(int client)
     }
     //remove metal
     SetEntProp(client,Prop_Send,"m_iAmmo",3);
-    //for whatever reason, players that get force respawned do not auto swap weapons immediately
-    //why? well I don't know why
-    //what I do know is this is probably a fix
-    int wep = GetPlayerWeaponSlot(client, TFWeaponSlot_Melee);
-    SetEntPropEnt(client, Prop_Send, "m_hActiveWeapon",wep);
 }
 
 stock int SetWeaponAmmo(const int weapon, const int ammo)
