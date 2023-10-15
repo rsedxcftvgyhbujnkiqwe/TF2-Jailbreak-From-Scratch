@@ -223,6 +223,11 @@ public void OnEntityCreated(int entity, const char[] classname) {
 
 stock void BuildingSpawnCheck(int entity, int building)
 {
+    PrintToServer("Building %d spawned!",building);
+    PrintToServer("m_bBuilding: %d",GetEntProp(entity,Prop_Send,"m_bBuilding"))
+    PrintToServer("m_bPlacing: %d",GetEntProp(entity,Prop_Send,"m_bPlacing"))
+    PrintToServer("m_bCarried: %d",GetEntProp(entity,Prop_Send,"m_bCarried"))
+    PrintToServer("m_bCarryDeploy: %d",GetEntProp(entity,Prop_Send,"m_bCarryDeploy"))
     if (GetEntPropEnt(entity, Prop_Send, "m_hOwnerEntity") == -1) return;
     int team = GetEntProp(entity,Prop_Send,"m_iTeamNum");
     if (team == RED)
