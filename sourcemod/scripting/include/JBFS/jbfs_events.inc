@@ -229,11 +229,12 @@ stock void BuildingSpawn(int entity)
     }
     if (!(cvarJBFS[buildteam].IntValue & building) && !(cvarJBFS[buildteamwarday].BoolValue && LRConfig.WardayActive))
     {
-        PrintToServer("%d %d | %d & %d | %b && %b",buildteam,buildteamwarday,cvarJBFS[buildteam].IntValue,building,cvarJBFS[buildteamwarday].BoolValue,LRConfig.WardayActive)
         RemoveEntity(entity);
         //this deletes the building but it has the player carrying a toolbox
         //must manually fix this
-        TF2Util_SetPlayerActiveWeapon(builder,GetPlayerWeaponSlot(builder, TFWeaponSlot_PDA))
+        int ret = TF2Util_SetPlayerActiveWeapon(builder,GetPlayerWeaponSlot(builder, TFWeaponSlot_PDA))
+        PrintToServer("%N %d | %d %d | %d & %d | %b && %b",builder,ret,buildteam,buildteamwarday,cvarJBFS[buildteam].IntValue,building,cvarJBFS[buildteamwarday].BoolValue,LRConfig.WardayActive)
+        //why doesn't this swap the weapon???
     }
 }
 
