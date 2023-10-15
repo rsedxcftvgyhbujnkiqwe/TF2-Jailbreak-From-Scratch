@@ -130,6 +130,11 @@ public void OnPluginStart()
     HookEvent("teamplay_round_stalemate",OnArenaRoundEnd);
     HookEvent("player_team",OnPlayerTeamChange);
 
+    HookEntityOutput("item_ammopack_full", "OnCacheInteraction", OnTakeAmmo);
+	HookEntityOutput("item_ammopack_medium", "OnCacheInteraction", OnTakeAmmo);
+	HookEntityOutput("item_ammopack_small", "OnCacheInteraction", OnTakeAmmo);
+	HookEntityOutput("tf_ammo_pack", "OnCacheInteraction", OnTakeAmmo);
+
     SetConVars(true);
 
     //add custom color(s) to morecolors

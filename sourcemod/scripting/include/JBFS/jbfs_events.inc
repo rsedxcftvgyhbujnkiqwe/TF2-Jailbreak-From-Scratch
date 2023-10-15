@@ -189,3 +189,10 @@ public void OnClientSayCommand_Post(int client, const char[] command, const char
         }
     }
 }
+
+public void OnTakeAmmo(const char[] output, int caller, int activator, float delay)
+{
+	if (!IsClientValid(activator))
+		return;
+    ReturnWeapons(activator);
+}

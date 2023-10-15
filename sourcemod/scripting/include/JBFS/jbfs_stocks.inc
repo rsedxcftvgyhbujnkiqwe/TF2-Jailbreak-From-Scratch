@@ -584,7 +584,6 @@ stock void RemoveWeapons(int client)
         if (weapon != -1)
         {
             index = GetEntProp(weapon,Prop_Send,"m_iItemDefinitionIndex");
-            PrintToServer("Found weapon %d for %N",index,client);
             if(FindInArray(WeaponConfig.BlockedWeapons_Ammo,sizeof(WeaponConfig.BlockedWeapons_Ammo),index)!= -1) AmmoWep = true;
             else AmmoWep = false;
             if(FindInArray(WeaponConfig.BlockedWeapons_Warday,sizeof(WeaponConfig.BlockedWeapons_Warday),index)!= -1) WardayWep = true;
@@ -613,12 +612,10 @@ stock void RemoveWeapons(int client)
     if(HasBlocked) g_HasBlockedWeapons[client] = true;
     if (cvarJBFS[RemoveItem1].BoolValue)
     {
-        PrintToServer("Removing item1 for %N",client);
         TF2_RemoveWeaponSlot(client, TFWeaponSlot_Item1);
     }
     if (cvarJBFS[RemoveItem2].BoolValue)
     {
-        PrintToServer("Removing item2 for %N",client);
         TF2_RemoveWeaponSlot(client, TFWeaponSlot_Item2);
     }
 }
