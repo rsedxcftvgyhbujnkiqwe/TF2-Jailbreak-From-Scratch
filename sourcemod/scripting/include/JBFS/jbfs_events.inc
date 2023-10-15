@@ -196,23 +196,8 @@ public void OnTakeAmmo(const char[] output, int caller, int activator, float del
 }
 
 public void OnEntityCreated(int entity, const char[] classname) {
-    //this building logic is redundant
-    //HOWEVER for what I am trying to achieve, I'd rather do this than have multiple string compares in a callback
-    //builder must be checked to prevent map-placed buildings from getting nuked
-    //builder is probably not what should be checked here - maybe owner?
-    if (StrEqual(classname, "obj_teleporter")) 
-    {
-        BuildingSpawnCheck(entity,Building_Teleporter);
-    }
-    else if (StrEqual(classname, "obj_dispenser")) 
-    {
-        BuildingSpawnCheck(entity,Building_Dispenser);
-    }
-    else if (StrEqual(classname, "obj_sentry")) 
-    {
-        BuildingSpawnCheck(entity,Building_Sentry);
-    }
-    //other logic
+    if (StrEqual(classname, "obj_teleporter") || StrEqual(classname, "obj_dispenser") || StrEqual(classname, "obj_sentrygun"))
+        SDKHook(entity,SDKHook_Spawn, BuildingSpawn);
     else if (cvarJBFS[DroppedWeapon].BoolValue && StrEqual(classname, "tf_dropped_weapon"))
         SDKHook(entity, SDKHook_Spawn, KillOnSpawn);
     else if (cvarJBFS[DroppedAmmo].BoolValue && StrEqual(classname, "tf_ammo_pack"))
@@ -221,28 +206,28 @@ public void OnEntityCreated(int entity, const char[] classname) {
         SDKHook(entity, SDKHook_Spawn, KillOnSpawn);
 }
 
-stock void BuildingSpawnCheck(int entity, int building)
+stock void BuildingSpawn(int entity)
 {
-    PrintToServer("Building %d spawned!",building);
-    PrintToServer("m_bBuilding: %d",GetEntProp(entity,Prop_Send,"m_bBuilding"))
-    PrintToServer("m_bPlacing: %d",GetEntProp(entity,Prop_Send,"m_bPlacing"))
-    PrintToServer("m_bCarried: %d",GetEntProp(entity,Prop_Send,"m_bCarried"))
-    PrintToServer("m_bCarryDeploy: %d",GetEntProp(entity,Prop_Send,"m_bCarryDeploy"))
-    PrintToServer("m_bWasMapPlaced: %d",GetEntProp(entity,Prop_Send,"m_bWasMapPlaced"))
-    PrintToServer("m_hBuilder: %d",GetEntPropEnt(entity,Prop_Send,"m_hBuilder"))
-    PrintToServer("m_hOwnerEntity: %d",GetEntPropEnt(entity,Prop_Send,"m_hOwnerEntity"))
-    if (GetEntPropEnt(entity, Prop_Send, "m_hOwnerEntity") == -1) return;
+    if (GetEntPropEnt(entity, Prop_Send, "m_hBuilder") == -1) return;
     int team = GetEntProp(entity,Prop_Send,"m_iTeamNum");
+    int building, buildteam, buildteamwarday;
+    char classname[32];
+    GetEdictClassname(entity,classname,sizeof(classname));
+    if (StrEqual(classname, "obj_teleporter")) building = Building_Teleporter;
+    else if(StrEqual(classname, "obj_dispenser")) building = Building_Dispenser;
+    else if(StrEqual(classname, "obj_sentrygun")) building = Building_Sentry;
     if (team == RED)
     {
-        if (!(cvarJBFS[RedBuild].IntValue & building) && !(cvarJBFS[RedBuildWarday].BoolValue && LRConfig.WardayActive))
-            SDKHook(entity, SDKHook_Spawn, KillOnSpawn);
+        buildteam = RedBuild;
+        buildteamwarday = RedBuildWarday;
     }
     else if (team == BLU)
     {
-        if (!(cvarJBFS[BlueBuild].IntValue & building) && !(cvarJBFS[BlueBuildWarday].BoolValue && LRConfig.WardayActive))
-            SDKHook(entity, SDKHook_Spawn, KillOnSpawn);
+        buildteam = BlueBuild;
+        buildteamwarday = BlueBuildWarday;
     }
+    if (!(cvarJBFS[buildteam].IntValue & building) && !(cvarJBFS[buildteamwarday].BoolValue && LRConfig.WardayActive))
+        SDKHook(entity, SDKHook_Spawn, KillOnSpawn);
 }
 
 public Action KillOnSpawn(int entity) {
