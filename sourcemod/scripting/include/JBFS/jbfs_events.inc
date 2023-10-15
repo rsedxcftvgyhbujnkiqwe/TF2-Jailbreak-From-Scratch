@@ -233,9 +233,10 @@ stock void BuildingSpawn(int entity)
     }
 }
 
-public void BuildingSwitchHook(int client)
+public Action BuildingSwitchHook(int client)
 {
-    TF2Util_SetPlayerActiveWeapon(client,GetPlayerWeaponSlot(client, 3))
+    TF2Util_SetPlayerActiveWeapon(client,GetPlayerWeaponSlot(client, 3));
+    return Plugin_Stop;
 }
 
 public Action KillOnSpawn(int entity) {
