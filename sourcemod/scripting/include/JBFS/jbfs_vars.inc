@@ -154,3 +154,84 @@ typedef ClientRunFunc = function bool(int client,int target);
 ClientRunFunc g_RunFn[MAXPLAYERS+1];
 ClientFilterFunc g_filterFn[MAXPLAYERS+1];
 Menu g_ClientMenu[MAXPLAYERS+1];
+
+//weapon defs
+//this is for replacing removed weapons on a player
+
+char g_WepName[3][10][32] = {
+    {
+        "tf_weapon_flamethrower",
+        "tf_weapon_scattergun",
+        "tf_weapon_sniperrifle",
+        "tf_weapon_rocketlauncher",
+        "tf_weapon_grenadelauncher",
+        "tf_weapon_minigun",
+        "tf_weapon_syringegun_medic",
+        "tf_weapon_flamethrower",
+        "tf_weapon_revolver",
+        "tf_weapon_shotgun_primary"
+    },
+    {
+        "tf_weapon_shotgun_pyro",
+        "tf_weapon_pistol",
+        "tf_weapon_smg",
+        "tf_weapon_shotgun_soldier",
+        "tf_weapon_pipebomblauncher",
+        "tf_weapon_medigun",
+        "tf_weapon_shotgun_hwg",
+        "tf_weapon_shotgun_pyro",
+        "tf_weapon_builder",
+        "tf_weapon_pistol"
+    },
+    {
+        "tf_weapon_fireaxe",
+        "tf_weapon_bat",
+        "tf_weapon_club",
+        "tf_weapon_shovel",
+        "tf_weapon_bottle",
+        "tf_weapon_bonesaw",
+        "tf_weapon_fists",
+        "tf_weapon_fireaxe",
+        "tf_weapon_knife",
+        "tf_weapon_wrench"
+    }
+};
+
+int g_WepIndex[3][10] = {
+    {
+        21,
+        13,
+        14,
+        18,
+        19,
+        15,
+        17,
+        21,
+        24,
+        9
+    },
+    {
+        12,
+        23,
+        16,
+        10,
+        20,
+        29,
+        11,
+        12,
+        735,
+        22
+    },
+    {
+        2,
+        0,
+        3,
+        6,
+        1,
+        8,
+        5,
+        2,
+        4,
+        7
+    }
+};

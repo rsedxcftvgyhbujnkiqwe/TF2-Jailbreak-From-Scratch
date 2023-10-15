@@ -6,7 +6,7 @@ public void OnPreRoundStart(Event event, const char[] name, bool dontBroadcast)
     //warden stuff
     RemoveWarden(UW_Silent);
     LockWarden(false);
-    SetBoolArray(JBFS.FireStatus,MAXPLAYERS+1,false);
+    SetArray(JBFS.FireStatus,sizeof(JBFS.FireStatus),false);
     ResetActiveLR();
     //send warden set 0
     JBGameEvent(JBEvent_SetWarden);
@@ -85,6 +85,7 @@ public Action OnPlayerSpawn(Event event, const char[] name, bool dontBroadcast)
     int client = GetClientOfUserId(event.GetInt("userid"));
     if (!IsClientInGame(client))
         return Plugin_Continue;
+    RemoveWeapons(client);
     if (GetClientTeam(client)==RED)
     {
         if (!LRConfig.WardayActive)
@@ -94,7 +95,6 @@ public Action OnPlayerSpawn(Event event, const char[] name, bool dontBroadcast)
             LRSetFreeday(client);
         }
     }
-    RemoveWeapons(client);
     return Plugin_Handled;
 }
 
@@ -131,7 +131,7 @@ public void DeathEvents(client)
     int fday = FindInArray(LRConfig.Freedays,3,client)
     if (fday != -1) LRConfig.Freedays[fday] = 0;
     RemoveParticle(client);
-    SetIntArray(g_BlockedWeapons[client],6,0);
+    SetArray(g_BlockedWeapons[client],6,-1);
     g_HasBlockedWeapons[client] = false;
 }
 

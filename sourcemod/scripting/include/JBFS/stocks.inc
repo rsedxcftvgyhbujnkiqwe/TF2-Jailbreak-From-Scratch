@@ -93,21 +93,6 @@ stock int FindEntityByName(int e, const char[] classname, const char[] targetnam
     return -1;
 }
 
-stock void SetBoolArray(bool[] array, int length, bool value)
-{
-    for(int i;i<length;i++)
-    {
-        array[i]=value;
-    }
-}
-stock void SetIntArray(int[] array, int length, int value)
-{
-    for(int i;i<length;i++)
-    {
-        array[i]=value;
-    }
-}
-
 stock bool TraceRayFilterPlayers(int entity, int mask, any data)
 {
     return !(0 < entity <= MaxClients);
@@ -157,11 +142,35 @@ stock void RemoveParticle(int client)
     }
 }
 
-stock int FindInArray(any[] array, int maxlength, value)
+stock int FindInArray(any[] array, int maxlength, any value)
 {
     for(int i;i<maxlength;i++)
     {
         if (array[i]==value) return i;
     }
     return -1;
+}
+
+stock void SetArray(any[] array, int maxlength, any value)
+{
+    for(int i; i<maxlength;i++)
+    {
+        array[i] = value;
+    }
+}
+
+stock int TF2_CreateEquipWeapon(int client, char weaponname[32],int weaponindex)
+{
+    int weapon = CreateEntityByName(weaponname);
+    if(weapon == -1) return -1;
+    //create weapon and init values
+    SetEntProp(weapon,Prop_Send,"m_AttributeManager.m_Item.m_iItemDefinitionIndex",weaponindex);
+    SetEntProp(weapon,Prop_Send,"m_AttributeManager.m_Item.m_bInitialized", 1);
+    SetEntProp(weapon,Prop_Send,"m_bValidatedAttachedEntity", 1);
+    SetEntPropEnt(weapon,Prop_Send,"m_hOwnerEntity",client);
+    SetEntPropEnt(weapon,Prop_Send,"m_hOwner",client);
+    SetEntPropEnt(weapon,Prop_Send,"m_hEffectEntity",client);
+    SetEntProp(weapon,Prop_Send,"m_iTeam",GetClientTeam(client));
+    EquipPlayerWeapon(client,weapon);
+    return weapon;
 }

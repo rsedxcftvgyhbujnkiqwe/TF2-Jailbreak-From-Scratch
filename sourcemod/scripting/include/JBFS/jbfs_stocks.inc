@@ -154,7 +154,7 @@ stock void RemoveWarden(int reason)
     if (g_WMenu[currentwarden]!= null) delete g_WMenu[currentwarden];
     g_WMenu[currentwarden] = null;
     //reset fire votes
-    SetBoolArray(JBFS.FireStatus,MAXPLAYERS+1,false);
+    SetArray(JBFS.FireStatus,sizeof(JBFS.FireStatus),false);
     JBFS.FireVoteCount = 0;
     switch (reason)
     {
@@ -280,6 +280,13 @@ stock void RemoveAmmo(int client)
             SetWeaponAmmo(weapon,0);
         }
     }
+    //remove metal
+    SetEntProp(client,Prop_Send,"m_iAmmo",3);
+    //for whatever reason, players that get force respawned do not auto swap weapons immediately
+    //why? well I don't know why
+    //what I do know is this is probably a fix
+    int wep = GetPlayerWeaponSlot(client, TFWeaponSlot_Melee);
+    SetEntProp(client, Prop_Send, "m_hActiveWeapon",wep);
 }
 
 stock int SetWeaponAmmo(const int weapon, const int ammo)
@@ -485,7 +492,7 @@ stock void ResetLR()
 stock void ResetActiveLR()
 {
     LRConfig.WardayActive = false;
-    SetBoolArray(LRConfig.FreedaysActive,MAXPLAYERS+1,false)
+    SetArray(LRConfig.FreedaysActive,sizeof(LRConfig.FreedaysActive),false);
     LRConfig.CustomChatWait = false;
 }
 
@@ -576,12 +583,13 @@ stock void RemoveWeapons(int client)
     bool WardayWep;
     bool AllWep;
     bool HasBlocked;
-    SetIntArray(g_BlockedWeapons[client],6,0);
-    int length = GetEntPropArraySize(client, Prop_Send, "m_hMyWeapons");
-    for (int i; i < length; ++i)
+    SetArray(g_BlockedWeapons[client],6,-1);
+    //loop over all 6 slots
+    //this is so each can be chcked and verified
+    for (int i; i < 6; i++)
     {
-        weapon = GetEntPropEnt(client, Prop_Send, "m_hMyWeapons", i);
-        if (weapon > 0)
+        weapon = GetPlayerWeaponSlot(client, i);
+        if (weapon != -1)
         {
             index = GetEntProp(weapon,Prop_Send,"m_iItemDefinitionIndex");
             if(FindInArray(WeaponConfig.BlockedWeapons_Ammo,sizeof(WeaponConfig.BlockedWeapons_Ammo),index)!= -1) AmmoWep = true;
@@ -593,15 +601,22 @@ stock void RemoveWeapons(int client)
             //all -> always remove
             //warday -> remove on non warday
             //ammo -> remove if red
+            if (((AmmoWep && GetClientTeam(client)==RED) || (AllWep || (WardayWep && !LRConfig.WardayActive))) && (GetPlayerWeaponSlot(client, TFWeaponSlot_Melee) == weapon))
+            {
+                //everyone needs SOME melee weapon, so if it's banned then give a default one
+                PrintToServer("%N has melee weapon %d to be removed, granting default",client,index);
+                RemoveWeapon(client,i);
+                HasBlocked = true;
+            }
             if (AllWep || (WardayWep && !LRConfig.WardayActive))
             {
                 PrintToServer("%N has weapon %d to be removed!",client,index);
-                //delete weapon
-                TF2_RemoveWeaponSlot(client, i);
+                RemoveWeapon(client,i);
                 HasBlocked = true;
             }
             else if (AmmoWep && GetClientTeam(client)==RED)
             {
+                //DANGER! If you put a melee weapon here, prisoner will A-pose!
                 PrintToServer("%N has weapon %d to be temp removed!",client,index);
                 SetEntPropEnt(client,Prop_Send,"m_hMyWeapons",-1,i);
                 g_BlockedWeapons[client][i] = weapon;
@@ -610,13 +625,23 @@ stock void RemoveWeapons(int client)
         }
     }
     if(HasBlocked) g_HasBlockedWeapons[client] = true;
-    if (cvarJBFS[RemoveItem1].BoolValue)
+    if (cvarJBFS[RemoveItem1].BoolValue) TF2_RemoveWeaponSlot(client, TFWeaponSlot_Item1);
+    if (cvarJBFS[RemoveItem2].BoolValue) TF2_RemoveWeaponSlot(client, TFWeaponSlot_Item2);
+}
+
+stock void RemoveWeapon(int client, int slot)
+{
+    switch (slot) 
     {
-        TF2_RemoveWeaponSlot(client, TFWeaponSlot_Item1);
-    }
-    if (cvarJBFS[RemoveItem2].BoolValue)
-    {
-        TF2_RemoveWeaponSlot(client, TFWeaponSlot_Item2);
+        case TFWeaponSlot_Primary,TFWeaponSlot_Secondary, TFWeaponSlot_Melee:
+        {
+            TF2_RemoveWeaponSlot(client, slot);
+            TF2_CreateEquipWeapon(client, g_WepName[slot][TF2_GetPlayerClass(client)],g_WepIndex[slot][TF2_GetPlayerClass(client)]);
+        }
+        case TFWeaponSlot_Grenade, TFWeaponSlot_Building, TFWeaponSlot_PDA:
+        {
+            TF2_RemoveWeaponSlot(client, slot);
+        }
     }
 }
 
@@ -633,7 +658,7 @@ stock void ReturnWeapons(int client)
                 SetEntPropEnt(client,Prop_Send,"m_hMyWeapons",weapon,i);
             }
         }
-        SetIntArray(g_BlockedWeapons[client],6,0);
+        SetArray(g_BlockedWeapons[client],6,-1);
         g_HasBlockedWeapons[client] = false;
     }
 }
