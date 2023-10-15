@@ -24,9 +24,24 @@ enum
     MarkerColor,
     RemoveItem1,
     RemoveItem2,
+    ReplaceWeapon,
+    RedBuild,
+    BlueBuild,
+    RedBuildWarday,
+    BlueBuildWarday,
+    DroppedWeapon,
+    DroppedAmmo,
+    PointServerCMD,
     Version
 }
 ConVar cvarJBFS[Version+1];
+
+enum 
+{
+    Building_Teleporter= (1<<0),
+    Building_Dispenser= (1<<1),
+    Building_Sentry= (1<<2)
+}
 
 //command cvars
 //always leave ACMDWmenu at the bottom

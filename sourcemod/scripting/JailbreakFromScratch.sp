@@ -56,6 +56,14 @@ public void OnPluginStart()
     cvarJBFS[MarkerColor] = CreateConVar("sm_jbfs_markercolor","FFFFFF","Hex color to use for markers.",FCVAR_NOTIFY);
     cvarJBFS[RemoveItem1] = CreateConVar("sm_jbfs_removeitemone","1","Should Item1 be removed from all players?.\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0);
     cvarJBFS[RemoveItem2] = CreateConVar("sm_jbfs_removeitemtwo","1","Should Item2 be removed from all players?.\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0);
+    cvarJBFS[ReplaceWeapon] = CreateConVar("sm_jbfs_replaceweapon","1","For warday/all banned weapons, should they be replaced with stock when removed?\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0);
+    cvarJBFS[RedBuild] = CreateConVar("sm_jbfs_buildred","0","Buildings that Red engineers can build (with ammo + PDA) on non-warday.\nBit counter\n0=None\n1=Teleporter\n2=Dispenser\n4=Sentry\nExample: 0 = Nothing, 3 = Teleporters and Dispensers, 6 = Dispensers and Sentries",FCVAR_NOTIFY,true,0.0,true,7.0);
+    cvarJBFS[BlueBuild] = CreateConVar("sm_jbfs_buildblue","0","Buildings that Blue engineers can build (with ammo + PDA) on non-warday.\nBit counter\n0=None\n1=Teleporter\n2=Dispenser\n4=Sentry\nExample: 0 = Nothing, 3 = Teleporters and Dispensers, 6 = Dispensers and Sentries",FCVAR_NOTIFY,true,0.0,true,7.0);
+    cvarJBFS[RedBuildWarday] = CreateConVar("sm_jbfs_wardaybuildred","1","Can Red Engineers build all buildings on Warday?\n0 = No, use sm_jbfs_buildred build list\n1 = Yes",FCVAR_NOTIFY,true,0.1,true,1.0);
+    cvarJBFS[BlueBuildWarday] = CreateConVar("sm_jbfs_wardaybuildblue","1","Can Blue Engineers build all buildings on Warday?\n0 = No, use sm_jbfs_buildblue build list\n1 = Yes",FCVAR_NOTIFY,true,0.1,true,1.0);
+    cvarJBFS[DroppedWeapon] = CreateConVar("sm_jbfs_killdroppedweapons","1","Kill dropped weapons?\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0);
+    cvarJBFS[DroppedAmmo] = CreateConVar("sm_jbfs_killdroppedammo","1","Kill dropped ammo boxes?\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0);
+    cvarJBFS[PointServerCMD] = CreateConVar("sm_jbfs_killpointservercmd","1","Kill point_servercommand entities?\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0);
     cvarJBFS[Version] = CreateConVar("jbfs_version",PLUGIN_VERSION,PLUGIN_NAME,FCVAR_REPLICATED | FCVAR_NOTIFY | FCVAR_SPONLY | FCVAR_DONTRECORD);
     //admincmd cvars
     cvarJBFS_ACMD[ACMD_WardenMenu] = CreateConVar("sm_jbfs_acmd_adminmenu","2","Admin command section. Requires setting admin flag bits.\nSee: https://wiki.alliedmods.net/Checking_Admin_Flags_(SourceMod_Scripting)\n\nAdmin flag(s) required to open the admin warden menu.",FCVAR_NOTIFY,true,0.0,true,2097151.0);

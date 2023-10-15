@@ -194,3 +194,66 @@ public void OnTakeAmmo(const char[] output, int caller, int activator, float del
 {
     ReturnWeapons(activator);
 }
+
+public void OnEntityCreated(int entity, const char[] classname) {
+    //this building logic is redundant
+    //HOWEVER for what I am trying to achieve, I'd rather do this than have multiple string compares in a callback
+    //builder must be checked to prevent map-placed buildings from getting nuked
+    if (StrEqual(classname, "obj_teleporter")) 
+    {
+        if (GetEntPropEnt(entity, Prop_Send, "m_hBuilder") == -1) return;
+        int team = GetEntProp(entity,Prop_Send,"m_iTeamNum");
+        if (team == RED)
+        {
+            if (!(cvarJBFS[RedBuild].IntValue & Building_Teleporter) && !(cvarJBFS[RedBuildWarday].BoolValue && LRConfig.WardayActive))
+                SDKHook(entity, SDKHook_Spawn, KillOnSpawn);
+        }
+        else if (team == BLU)
+        {
+            if (!(cvarJBFS[BlueBuild].IntValue & Building_Teleporter) && !(cvarJBFS[BlueBuildWarday].BoolValue && LRConfig.WardayActive))
+                SDKHook(entity, SDKHook_Spawn, KillOnSpawn);
+        }
+    }
+    else if (StrEqual(classname, "obj_dispenser")) 
+    {
+        if (GetEntPropEnt(entity, Prop_Send, "m_hBuilder") == -1) return;
+        int team = GetEntProp(entity,Prop_Send,"m_iTeamNum");
+        if (team == RED)
+        {
+            if (!(cvarJBFS[RedBuild].IntValue & Building_Dispenser) && !(cvarJBFS[RedBuildWarday].BoolValue && LRConfig.WardayActive))
+                SDKHook(entity, SDKHook_Spawn, KillOnSpawn);
+        }
+        else if (team == BLU)
+        {
+            if (!(cvarJBFS[BlueBuild].IntValue & Building_Dispenser) && !(cvarJBFS[BlueBuildWarday].BoolValue && LRConfig.WardayActive))
+                SDKHook(entity, SDKHook_Spawn, KillOnSpawn);
+        }
+    }
+    else if (StrEqual(classname, "obj_sentry")) 
+    {
+        if (GetEntPropEnt(entity, Prop_Send, "m_hBuilder") == -1) return;
+        int team = GetEntProp(entity,Prop_Send,"m_iTeamNum");
+        if (team == RED)
+        {
+            if (!(cvarJBFS[RedBuild].IntValue & Building_Sentry) && !(cvarJBFS[RedBuildWarday].BoolValue && LRConfig.WardayActive))
+                SDKHook(entity, SDKHook_Spawn, KillOnSpawn);
+        }
+        else if (team == BLU)
+        {
+            if (!(cvarJBFS[BlueBuild].IntValue & Building_Sentry) && !(cvarJBFS[BlueBuildWarday].BoolValue && LRConfig.WardayActive))
+                SDKHook(entity, SDKHook_Spawn, KillOnSpawn);
+        }
+    }
+    //other logic
+    else if (cvarJBFS[DroppedWeapon].BoolValue && StrEqual(classname, "tf_dropped_weapon"))
+        SDKHook(entity, SDKHook_Spawn, KillOnSpawn);
+    else if (cvarJBFS[DroppedAmmo].BoolValue && StrEqual(classname, "tf_ammo_pack"))
+        SDKHook(entity, SDKHook_Spawn, KillOnSpawn);
+    else if (cvarJBFS[PointServerCMD].BoolValue && StrEqual(classname, "point_servercommand"))
+        SDKHook(entity, SDKHook_Spawn, KillOnSpawn);
+}
+
+public Action KillOnSpawn(int entity) {
+	AcceptEntityInput(entity, "Kill");
+	return Plugin_Handled;
+}

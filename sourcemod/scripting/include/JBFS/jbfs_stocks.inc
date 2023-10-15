@@ -634,7 +634,10 @@ stock void RemoveWeapon(int client, int slot)
         case TFWeaponSlot_Primary,TFWeaponSlot_Secondary, TFWeaponSlot_Melee:
         {
             TF2_RemoveWeaponSlot(client, slot);
-            TF2_CreateEquipWeapon(client, g_WepName[slot][TF2_GetPlayerClass(client)],g_WepIndex[slot][TF2_GetPlayerClass(client)]);
+            //melee is always replaced regardless of cvar
+            //prisoners need to have some weapon
+            if (slot != TFWeaponSlot_Melee && cvarJBFS[ReplaceWeapon].BoolValue)
+                TF2_CreateEquipWeapon(client, g_WepName[slot][TF2_GetPlayerClass(client)],g_WepIndex[slot][TF2_GetPlayerClass(client)]);
         }
         case TFWeaponSlot_Grenade, TFWeaponSlot_Building, TFWeaponSlot_PDA:
         {
