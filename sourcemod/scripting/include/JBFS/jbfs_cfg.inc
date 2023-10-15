@@ -196,7 +196,7 @@ stock void AddWepSec(KeyValues kv, char[] sectionname,any sectionarray[128])
 {
     kv.Rewind()
     kv.JumpToKey(sectionname,true)
-    if(!kv.GotoFirstSubKey()){
+    if(!kv.GotoFirstSubKey(false)){
         PrintToServer("Section %s has no config set!",sectionname)
         kv.JumpToKey("0",true);
         kv.SetNum(NULL_STRING,-1);
