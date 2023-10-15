@@ -203,10 +203,11 @@ stock void AddWepSec(KeyValues kv, char[] sectionname,any sectionarray[128])
     }
     int count;
     SetArray(sectionarray,sizeof(sectionarray),-1);
-    while(kv.GotoNextKey(false))
+    do
     {
         int wep = kv.GetNum(NULL_STRING);
         sectionarray[count++] = wep;
         PrintToServer("Adding blocked wep %d to section %s",wep,sectionname)
     }
+    while(kv.GotoNextKey(false))
 }
