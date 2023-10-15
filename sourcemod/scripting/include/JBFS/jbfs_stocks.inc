@@ -581,7 +581,7 @@ stock void RemoveWeapons(int client)
     for (int i; i < length; ++i)
     {
         weapon = GetEntPropEnt(client, Prop_Send, "m_hMyWeapons", i);
-        if (weapon != -1)
+        if (weapon > 0)
         {
             index = GetEntProp(weapon,Prop_Send,"m_iItemDefinitionIndex");
             if(FindInArray(WeaponConfig.BlockedWeapons_Ammo,sizeof(WeaponConfig.BlockedWeapons_Ammo),index)!= -1) AmmoWep = true;
