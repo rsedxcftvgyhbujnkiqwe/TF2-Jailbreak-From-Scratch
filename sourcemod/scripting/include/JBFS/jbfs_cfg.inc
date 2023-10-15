@@ -191,7 +191,7 @@ public void LoadWeaponConfig()
     kv.JumpToKey("Ammo",true)
     if(!kv.GotoFirstSubKey()){
         kv.JumpToKey("0",true);
-        kv.SetNum("0",-1);
+        kv.SetNum(NULL_STRING,-1);
     }
     int count;
     SetArray(WeaponConfig.BlockedWeapons_Ammo,sizeof(WeaponConfig.BlockedWeapons_Ammo),-1);
@@ -203,11 +203,12 @@ public void LoadWeaponConfig()
     while(kv.GotoNextKey(false))
     kv.Rewind()
 
+
     //warday
     kv.JumpToKey("Warday",true)
     if(!kv.GotoFirstSubKey()){
         kv.JumpToKey("0",true);
-        kv.SetNum("0",-1);
+        kv.SetNum(NULL_STRING,-1);
     }
     count = 0;
     SetArray(WeaponConfig.BlockedWeapons_Warday,sizeof(WeaponConfig.BlockedWeapons_Warday),-1);
@@ -219,11 +220,12 @@ public void LoadWeaponConfig()
     while(kv.GotoNextKey(false))
     kv.Rewind()
 
+
     //all
     kv.JumpToKey("All",true)
     if(!kv.GotoFirstSubKey()){
         kv.JumpToKey("0",true);
-        kv.SetNum("0",-1);
+        kv.SetNum(NULL_STRING,-1);
     }
     count = 0;
     SetArray(WeaponConfig.BlockedWeapons_All,sizeof(WeaponConfig.BlockedWeapons_All),-1);
@@ -233,4 +235,6 @@ public void LoadWeaponConfig()
         WeaponConfig.BlockedWeapons_All[count++] = wep;
     }
     while(kv.GotoNextKey(false))
+
+
 }
