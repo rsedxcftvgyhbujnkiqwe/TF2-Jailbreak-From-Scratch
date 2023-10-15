@@ -228,6 +228,9 @@ stock void BuildingSpawnCheck(int entity, int building)
     PrintToServer("m_bPlacing: %d",GetEntProp(entity,Prop_Send,"m_bPlacing"))
     PrintToServer("m_bCarried: %d",GetEntProp(entity,Prop_Send,"m_bCarried"))
     PrintToServer("m_bCarryDeploy: %d",GetEntProp(entity,Prop_Send,"m_bCarryDeploy"))
+    PrintToServer("m_bWasMapPlaced: %d",GetEntProp(entity,Prop_Send,"m_bWasMapPlaced"))
+    PrintToServer("m_hBuilder: %d",GetEntPropEnt(entity,Prop_Send,"m_hBuilder"))
+    PrintToServer("m_hOwnerEntity: %d",GetEntPropEnt(entity,Prop_Send,"m_hOwnerEntity"))
     if (GetEntPropEnt(entity, Prop_Send, "m_hOwnerEntity") == -1) return;
     int team = GetEntProp(entity,Prop_Send,"m_iTeamNum");
     if (team == RED)
