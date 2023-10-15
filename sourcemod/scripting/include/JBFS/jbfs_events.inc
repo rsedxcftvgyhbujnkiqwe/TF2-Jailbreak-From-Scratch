@@ -229,7 +229,7 @@ stock void BuildingSpawn(int entity)
     }
     if (!(cvarJBFS[buildteam].IntValue & building) && !(cvarJBFS[buildteamwarday].BoolValue && LRConfig.WardayActive))
     {
-        TF2Util_SetPlayerActiveWeapon(builder,GetPlayerWeaponSlot(builder, TFWeaponSlot_Melee))
+        //TF2Util_SetPlayerActiveWeapon(builder,GetPlayerWeaponSlot(builder, TFWeaponSlot_Melee))
     }
 }
 
