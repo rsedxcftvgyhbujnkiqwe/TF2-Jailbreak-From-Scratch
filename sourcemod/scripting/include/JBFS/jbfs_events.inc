@@ -229,8 +229,13 @@ stock void BuildingSpawn(int entity)
     }
     if (!(cvarJBFS[buildteam].IntValue & building) && !(cvarJBFS[buildteamwarday].BoolValue && LRConfig.WardayActive))
     {
-        //TF2Util_SetPlayerActiveWeapon(builder,GetPlayerWeaponSlot(builder, TFWeaponSlot_Melee))
+        SDKHook(builder,SDKHook_WeaponSwitchPost,BuildingSwitchHook)
     }
+}
+
+public void BuildingSwitchHook(int client)
+{
+    TF2Util_SetPlayerActiveWeapon(client,GetPlayerWeaponSlot(client, 3))
 }
 
 public Action KillOnSpawn(int entity) {
