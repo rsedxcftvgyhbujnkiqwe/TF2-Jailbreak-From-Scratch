@@ -164,8 +164,8 @@ stock int TF2_CreateEquipWeapon(int client, char weaponname[32],int weaponindex)
     int weapon = CreateEntityByName(weaponname);
     if(weapon == -1) return -1;
     //create weapon and init values
-    SetEntProp(weapon,Prop_Send,"m_AttributeManager.m_Item.m_iItemDefinitionIndex",weaponindex);
-    SetEntProp(weapon,Prop_Send,"m_AttributeManager.m_Item.m_bInitialized", 1);
+    SetEntProp(weapon,Prop_Send,"m_iItemDefinitionIndex",weaponindex);
+    SetEntProp(weapon,Prop_Send,"m_bInitialized", 1);
     SetEntProp(weapon,Prop_Send,"m_bValidatedAttachedEntity", 1);
     SetEntPropEnt(weapon,Prop_Send,"m_hOwnerEntity",client);
     SetEntPropEnt(weapon,Prop_Send,"m_hOwner",client);
