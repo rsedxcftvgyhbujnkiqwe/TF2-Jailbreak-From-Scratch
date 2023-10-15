@@ -227,7 +227,7 @@ stock void BuildingSpawn(int entity)
         buildteamwarday = BlueBuildWarday;
     }
     if (!(cvarJBFS[buildteam].IntValue & building) && !(cvarJBFS[buildteamwarday].BoolValue && LRConfig.WardayActive))
-        SDKHook(entity, SDKHook_Spawn, KillOnSpawn);
+        RemoveEntity(entity);
 }
 
 public Action KillOnSpawn(int entity) {
