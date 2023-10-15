@@ -186,56 +186,27 @@ public void LoadWeaponConfig()
         }
     }
     */
-    
-    //ammo
-    kv.JumpToKey("Ammo",true)
+    //all
+    AddWepSec(kv,"Ammo",WeaponConfig.BlockedWeapons_Ammo)
+    AddWepSec(kv,"Warday",WeaponConfig.BlockedWeapons_Warday)
+    AddWepSec(kv,"All",WeaponConfig.BlockedWeapons_All)
+}
+
+stock void AddWepSec(KeyValues kv, char[] sectionname,any sectionarray[128])
+{
+    kv.Rewind()
+    kv.JumpToKey(sectionname,true)
     if(!kv.GotoFirstSubKey()){
-        PrintToServer("No ammo configs set")
+        PrintToServer("Section %s has no config set!",sectionname)
         kv.JumpToKey("0",true);
         kv.SetNum(NULL_STRING,-1);
     }
     int count;
-    SetArray(WeaponConfig.BlockedWeapons_Ammo,sizeof(WeaponConfig.BlockedWeapons_Ammo),-1);
+    SetArray(sectionarray,sizeof(sectionarray),-1);
     while(kv.GotoNextKey(false))
     {
         int wep = kv.GetNum(NULL_STRING);
-        WeaponConfig.BlockedWeapons_Ammo[count++] = wep;
-        PrintToServer("Read in wep %d from ammo config",wep)
+        sectionarray[count++] = wep;
+        PrintToServer("Adding blocked wep %d to section %s",wep,sectionname)
     }
-    kv.Rewind()
-
-
-    //warday
-    kv.JumpToKey("Warday",true)
-    if(!kv.GotoFirstSubKey()){
-        PrintToServer("No warday configs set")
-        kv.JumpToKey("0",true);
-        kv.SetNum(NULL_STRING,-1);
-    }
-    count = 0;
-    SetArray(WeaponConfig.BlockedWeapons_Warday,sizeof(WeaponConfig.BlockedWeapons_Warday),-1);
-    while(kv.GotoNextKey(false))
-    {
-        int wep = kv.GetNum(NULL_STRING);
-        WeaponConfig.BlockedWeapons_Warday[count++] = wep;
-        PrintToServer("Read in wep %d from warday config",wep)
-    }
-    kv.Rewind()
-
-
-    //all
-    kv.JumpToKey("All",true)
-    if(!kv.GotoFirstSubKey()){
-        kv.JumpToKey("0",true);
-        kv.SetNum(NULL_STRING,-1);
-    }
-    count = 0;
-    SetArray(WeaponConfig.BlockedWeapons_All,sizeof(WeaponConfig.BlockedWeapons_All),-1);
-    while(kv.GotoNextKey(false))
-    {
-        int wep = kv.GetNum(NULL_STRING);
-        WeaponConfig.BlockedWeapons_All[count++] = wep;
-    }
-
-
 }
