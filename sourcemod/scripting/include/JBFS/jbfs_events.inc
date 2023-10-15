@@ -210,7 +210,7 @@ stock void BuildingSpawn(int entity)
 {
     int builder = GetEntPropEnt(entity, Prop_Send, "m_hBuilder")
     if (builder == -1) return;
-    int team = GetEntProp(entity,Prop_Send,"m_iTeamNum");
+    int team = GetEntProp(builder,Prop_Send,"m_iTeamNum");
     int building, buildteam, buildteamwarday;
     char classname[32];
     GetEdictClassname(entity,classname,sizeof(classname));
@@ -232,8 +232,7 @@ stock void BuildingSpawn(int entity)
         RemoveEntity(entity);
         //this deletes the building but it has the player carrying a toolbox
         //must manually fix this
-        int ret = TF2Util_SetPlayerActiveWeapon(builder,GetPlayerWeaponSlot(builder, TFWeaponSlot_PDA))
-        PrintToServer("%N %d | %d %d | %d & %d | %b && %b",builder,ret,buildteam,buildteamwarday,cvarJBFS[buildteam].IntValue,building,cvarJBFS[buildteamwarday].BoolValue,LRConfig.WardayActive)
+        TF2Util_SetPlayerActiveWeapon(builder,GetPlayerWeaponSlot(builder, TFWeaponSlot_Melee))
         //why doesn't this swap the weapon???
     }
 }
