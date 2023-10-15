@@ -286,7 +286,7 @@ stock void RemoveAmmo(int client)
     //why? well I don't know why
     //what I do know is this is probably a fix
     int wep = GetPlayerWeaponSlot(client, TFWeaponSlot_Melee);
-    EquipPlayerWeapon(client,wep);
+    SetEntPropEnt(client, Prop_Send, "m_hActiveWeapon",wep);
 }
 
 stock int SetWeaponAmmo(const int weapon, const int ammo)
