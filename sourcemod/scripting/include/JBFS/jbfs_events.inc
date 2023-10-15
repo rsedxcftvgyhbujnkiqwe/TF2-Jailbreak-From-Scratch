@@ -208,7 +208,8 @@ public void OnEntityCreated(int entity, const char[] classname) {
 
 stock void BuildingSpawn(int entity)
 {
-    if (GetEntPropEnt(entity, Prop_Send, "m_hBuilder") == -1) return;
+    int builder = GetEntPropEnt(entity, Prop_Send, "m_hBuilder")
+    if (builder == -1) return;
     int team = GetEntProp(entity,Prop_Send,"m_iTeamNum");
     int building, buildteam, buildteamwarday;
     char classname[32];
@@ -227,7 +228,13 @@ stock void BuildingSpawn(int entity)
         buildteamwarday = BlueBuildWarday;
     }
     if (!(cvarJBFS[buildteam].IntValue & building) && !(cvarJBFS[buildteamwarday].BoolValue && LRConfig.WardayActive))
+    {
+        PrintToServer("%d & %d | %b && %b",cvarJBFS[buildteam].IntValue,building,cvarJBFS[buildteamwarday].BoolValue,LRConfig.WardayActive)
         RemoveEntity(entity);
+        //this deletes the building but it has the player carrying a toolbox
+        //must manually fix this
+        SetEntPropEnt(builder,Prop_Send,"m_hActiveWeapon",GetPlayerWeaponSlot(builder, TFWeaponSlot_PDA));
+    }
 }
 
 public Action KillOnSpawn(int entity) {
