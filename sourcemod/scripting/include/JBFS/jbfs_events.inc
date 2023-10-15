@@ -233,7 +233,7 @@ stock void BuildingSpawn(int entity)
     }
 }
 
-public Action PreventWeaponSwitchCallback(int weapon)
+public Action PreventWeaponSwitchCallback(int client, int weapon)
 {
     return Plugin_Stop;
 }
