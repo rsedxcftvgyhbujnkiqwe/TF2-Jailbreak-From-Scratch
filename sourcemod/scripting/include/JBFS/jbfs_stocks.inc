@@ -284,7 +284,7 @@ stock void RemoveAmmo(int client)
         }
     }
     //remove metal
-    SetEntProp(client,Prop_Send,"m_iAmmo",3);
+    SetEntProp(client,Prop_Send,"m_iAmmo",0,_,3);
 }
 
 stock int SetWeaponAmmo(const int weapon, const int ammo)

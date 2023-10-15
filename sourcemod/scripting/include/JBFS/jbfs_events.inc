@@ -201,6 +201,7 @@ public void OnEntityCreated(int entity, const char[] classname) {
     //builder must be checked to prevent map-placed buildings from getting nuked
     if (StrEqual(classname, "obj_teleporter")) 
     {
+        PrintToServer("Teleporter built!")
         if (GetEntPropEnt(entity, Prop_Send, "m_hBuilder") == -1) return;
         int team = GetEntProp(entity,Prop_Send,"m_iTeamNum");
         if (team == RED)
@@ -216,10 +217,12 @@ public void OnEntityCreated(int entity, const char[] classname) {
     }
     else if (StrEqual(classname, "obj_dispenser")) 
     {
+        PrintToServer("Dispenser built!")
         if (GetEntPropEnt(entity, Prop_Send, "m_hBuilder") == -1) return;
         int team = GetEntProp(entity,Prop_Send,"m_iTeamNum");
         if (team == RED)
         {
+            PrintToServer("Build check: %b %b",!(cvarJBFS[RedBuild].IntValue & Building_Dispenser),!(cvarJBFS[RedBuildWarday].BoolValue && LRConfig.WardayActive))
             if (!(cvarJBFS[RedBuild].IntValue & Building_Dispenser) && !(cvarJBFS[RedBuildWarday].BoolValue && LRConfig.WardayActive))
                 SDKHook(entity, SDKHook_Spawn, KillOnSpawn);
         }
@@ -231,6 +234,7 @@ public void OnEntityCreated(int entity, const char[] classname) {
     }
     else if (StrEqual(classname, "obj_sentry")) 
     {
+        PrintToServer("Sentry built!")
         if (GetEntPropEnt(entity, Prop_Send, "m_hBuilder") == -1) return;
         int team = GetEntProp(entity,Prop_Send,"m_iTeamNum");
         if (team == RED)
