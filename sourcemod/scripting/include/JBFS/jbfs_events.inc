@@ -212,7 +212,8 @@ public Action BuildCmdCallback(int client, const char[] command, int argc)
     building = (1<<building);
     int slot = TF2Util_GetWeaponSlot(GetEntPropEnt(client,Prop_Send,"m_hActiveWeapon"));
     if (slot!=3) return Plugin_Continue;
-    //at this point, a player has selected a building and they have the toolbox out
+    //at this point, a player has selected a building and they have the toolbox out i think
+    PrintToServer("%N selected building %d with slot %d out.",client,building,slot)
     int team = GetEntProp(client,Prop_Send,"m_iTeamNum");
 
     if (team == RED)
