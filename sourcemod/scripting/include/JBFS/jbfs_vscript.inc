@@ -52,21 +52,21 @@ stock void JBGameEvent(int eventType)
         {
             case JBEvent_Warday:
             {
-                script = "FireGameEvent(\"JB_OnWarday\",{})";
+                script = "FireScriptEvent(\"JB_OnWarday\",{})";
             }
             case JBEvent_SetWarden:
             {
                 int clientid;
                 if (JBFS.Warden > 0) clientid = GetClientUserId(JBFS.Warden);
                 else clientid = 0;
-                Format(script,sizeof(script),"FireGameEvent(\"JB_OnSetWarden\",{warden=%d})",clientid);
+                Format(script,sizeof(script),"FireScriptEvent(\"JB_OnSetWarden\",{warden=%d})",clientid);
             }
             case JBEvent_RemoveWarden:
             {
                 int clientid;
                 if (JBFS.Warden > 0) clientid = GetClientUserId(JBFS.Warden);
                 else clientid = 0;
-                Format(script,sizeof(script),"FireGameEvent(\"JB_OnRemoveWarden\",{warden=%d})",clientid);
+                Format(script,sizeof(script),"FireScriptEvent(\"JB_OnRemoveWarden\",{warden=%d})",clientid);
             }
             default:
             {
