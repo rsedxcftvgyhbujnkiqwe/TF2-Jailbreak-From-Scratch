@@ -149,7 +149,7 @@ stock void RemoveWarden(int reason)
 {
     int currentwarden = JBFS.Warden;
     JBGameEvent(JBEvent_RemoveWarden);
-    JBFS.Warden = -1;
+    JBFS.Warden = 0;
     //close warden menu if it's open
     if (g_WMenu[currentwarden]!= null) delete g_WMenu[currentwarden];
     g_WMenu[currentwarden] = null;
