@@ -27,7 +27,7 @@ stock MRESReturn Detour_GetWarden(DHookReturn hReturn)
     return MRES_Ignored;
 }
 
-any RunScript(const char[] sScript, HSCRIPT pScope = HSCRIPT_RootTable)
+stock any RunScript(const char[] sScript, HSCRIPT pScope = HSCRIPT_RootTable)
 {
 	HSCRIPT pCompile = VScript_CompileScript(sScript);
 	VScriptExecute hExecute = new VScriptExecute(pCompile, pScope);
@@ -47,41 +47,33 @@ stock void JBGameEvent(int eventType)
     if(vscript)
     {
 #if defined _vscript_included
-        HSCRIPT script;
+        char script[255];
         switch (eventType)
         {
             case JBEvent_Warday:
             {
-                script = VScript_CompileScript("FireGameEvent(\"JB_OnWarday\",{})");
+                script = "FireGameEvent(\"JB_OnWarday\",{})";
             }
             case JBEvent_SetWarden:
             {
-                char scriptstring[64];
                 int clientid;
                 if (JBFS.Warden > 0) clientid = GetClientUserId(JBFS.Warden);
                 else clientid = 0;
-                Format(scriptstring,sizeof(scriptstring),"FireGameEvent(\"JB_OnSetWarden\",{warden=%d})",clientid);
-                script = VScript_CompileScript(scriptstring);
+                Format(script,sizeof(script),"FireGameEvent(\"JB_OnSetWarden\",{warden=%d})",clientid);
             }
             case JBEvent_RemoveWarden:
             {
-                char scriptstring[64];
                 int clientid;
                 if (JBFS.Warden > 0) clientid = GetClientUserId(JBFS.Warden);
                 else clientid = 0;
-                Format(scriptstring,sizeof(scriptstring),"FireGameEvent(\"JB_OnRemoveWarden\",{warden=%d})",clientid);
-                script = VScript_CompileScript(scriptstring);
+                Format(script,sizeof(script),"FireGameEvent(\"JB_OnRemoveWarden\",{warden=%d})",clientid);
             }
             default:
             {
-                script.ReleaseScript();
                 return;
             }
         }
-        VScriptExecute execute = new VScriptExecute(script);
-        execute.Execute();
-        delete execute;
-        script.ReleaseScript();
+        RunScript(script);
 #endif
     }
 }
