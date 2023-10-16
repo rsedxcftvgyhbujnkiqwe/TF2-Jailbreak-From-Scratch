@@ -210,8 +210,10 @@ public Action BuildCmdCallback(int client, const char[] command, int argc)
     int building,buildteam,buildteamwarday;
     if (!GetCmdArgIntEx(1,building)) return Plugin_Continue;
     building = (1<<building);
-    PrintToServer("Build command issued for %d",building);
-    if (TF2Util_GetWeaponSlot(GetEntPropEnt(client,Prop_Send,"m_hActiveWeapon"))!=TFWeaponSlot_PDA) return Plugin_Continue;
+    int slot = TF2Util_GetWeaponSlot(GetEntPropEnt(client,Prop_Send,"m_hActiveWeapon"));
+    PrintToServer("Build command issued for %d, slot %d",building,slot);
+
+    if (slot!=TFWeaponSlot_PDA) return Plugin_Continue;
     //at this point, a player has selected a building and they have the toolbox out
     int team = GetEntProp(client,Prop_Send,"m_iTeamNum");
 
