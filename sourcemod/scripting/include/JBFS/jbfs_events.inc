@@ -111,7 +111,7 @@ public Action OnPlayerSpawn(Event event, const char[] name, bool dontBroadcast)
             }
         }
     }
-    if (cvarJBFS[AirblastImmunity].BoolValue) TF2Attrib_SetByDefIndex(client, 326, 0.0);
+    if (cvarJBFS[AirblastImmunity].BoolValue) TF2Attrib_SetByDefIndex(client, 329, 0.0);
     return Plugin_Handled;
 }
 
@@ -297,30 +297,32 @@ public Action KillOnSpawn(int entity) {
 public void TF2_OnConditionAdded(int client, TFCond cond)
 {
     switch (cond)
-	{
-		case TFCond_Cloaked:
-		{
+    {
+        case TFCond_Cloaked:
+        {
             if (IsValidEntity(JBFS.AttachedParticle[client]))
                 AcceptEntityInput(JBFS.AttachedParticle[client], "Stop");
-		}
-		case TFCond_Disguising, TFCond_Disguised:
-		{
-			switch (cvarJBFS[Disguising].IntValue)
-			{
-				case 0:TF2_RemoveCondition(client, cond);
-				case 1:if (!JBFS.HasAmmo[client]) TF2_RemoveCondition(client, cond);
-				case 2:if (GetClientTeam(client) == RED) TF2_RemoveCondition(client, cond);
-			}
-		}
-		case TFCond_Charging:
-		{
-			switch (cvarJBFS[DemoCharge].IntValue)
-			{
-				case 0:TF2_RemoveCondition(client, cond);
-				case 1:if (!JBFS.HasAmmo[client]) TF2_RemoveCondition(client, cond);
-				case 2:if (GetClientTeam(client) == RED) TF2_RemoveCondition(client, cond);
-			}
-		}
+        }
+        case TFCond_Disguising, TFCond_Disguised:
+        {
+            switch (cvarJBFS[Disguising].IntValue)
+            {
+                case 0:TF2_RemoveCondition(client, cond);
+                case 1:if (!JBFS.HasAmmo[client]) TF2_RemoveCondition(client, cond);
+                case 2:if (GetClientTeam(client) == RED) TF2_RemoveCondition(client, cond);
+            }
+            if (IsValidEntity(JBFS.AttachedParticle[client]))
+                AcceptEntityInput(JBFS.AttachedParticle[client], "Stop");
+        }
+        case TFCond_Charging:
+        {
+            switch (cvarJBFS[DemoCharge].IntValue)
+            {
+                case 0:TF2_RemoveCondition(client, cond);
+                case 1:if (!JBFS.HasAmmo[client]) TF2_RemoveCondition(client, cond);
+                case 2:if (GetClientTeam(client) == RED) TF2_RemoveCondition(client, cond);
+            }
+        }
 
     }
 }
@@ -329,11 +331,11 @@ public void TF2_OnConditionAdded(int client, TFCond cond)
 public void TF2_OnConditionRemoved(int client, TFCond cond)
 {
     switch (cond)
-	{
-		case TFCond_Cloaked:
-		{
+    {
+        case TFCond_Cloaked, TFCond_Disguising, TFCond_Disguised:
+        {
             if (IsValidEntity(JBFS.AttachedParticle[client]))
                 AcceptEntityInput(JBFS.AttachedParticle[client], "Start");
-		}
+        }
     }
 }
