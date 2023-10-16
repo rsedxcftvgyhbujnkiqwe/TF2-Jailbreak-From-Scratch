@@ -55,6 +55,11 @@ public void OnArenaRoundStart(Event event, const char[] name, bool dontBroadcast
             CPrintToChatAll("%t %t","PluginTag","LRWardayActive");
         }
         case LR_Custom: CPrintToChatAll("%t %t","PluginTag","LRCustomActive",LRConfig.CustomLR);
+        case LR_Map:
+        {
+            int relay = FindEntityByName(-1, "logic_relay", g_MapLRRelays[LRConfig.MapLRChosen])
+            AcceptEntityInput(relay,"Trigger");
+        }
     }
     CreateTimer(5.0,Timer_AllowLRQuery);
     JBFS.RoundTimer = CreateTimer(1.0,RoundTimer,_,TIMER_REPEAT);
@@ -259,36 +264,6 @@ stock void BuildingSpawn(int entity)
     }
 }
 
-// //purpose: prevent buildings from being placed conditionally
-// public Action BuildCmdCallback(int client, const char[] command, int argc)
-// {
-//     int building,buildteam,buildteamwarday;
-//     if (!GetCmdArgIntEx(1,building)) return Plugin_Continue;
-//     building = (1<<building);
-//     int slot = TF2Util_GetWeaponSlot(GetEntPropEnt(client,Prop_Send,"m_hActiveWeapon"));
-//     if (slot!=3) return Plugin_Continue;
-//     //at this point, a player has selected a building and they have the toolbox out i think
-//     PrintToServer("%N selected building %d with slot %d out.",client,building,slot)
-//     int team = GetEntProp(client,Prop_Send,"m_iTeamNum");
-
-//     if (team == RED)
-//     {
-//         buildteam = RedBuild;
-//         buildteamwarday = RedBuildWarday;
-//     }
-//     else if (team == BLU)
-//     {
-//         buildteam = BlueBuild;
-//         buildteamwarday = BlueBuildWarday;
-//     }
-//     if (!(cvarJBFS[buildteam].IntValue & building) && !(cvarJBFS[buildteamwarday].BoolValue && LRConfig.WardayActive))
-//     {
-//         bool success = TF2Util_SetPlayerActiveWeapon(client,GetPlayerWeaponSlot(client, 2));
-//         PrintToServer("Weapon swap for %N success: %d",client,success)
-//     }
-//     return Plugin_Continue;
-// }
-
 public Action KillOnSpawn(int entity) {
 	AcceptEntityInput(entity, "Kill");
 	return Plugin_Handled;
@@ -326,7 +301,6 @@ public void TF2_OnConditionAdded(int client, TFCond cond)
 
     }
 }
-
 
 public void TF2_OnConditionRemoved(int client, TFCond cond)
 {

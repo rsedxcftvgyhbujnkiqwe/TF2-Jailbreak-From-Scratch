@@ -346,6 +346,10 @@ public int LRMenuHandler(Menu menu, MenuAction action, int param1, int param2)
             {
                 ChooseLR(param1,LR_Custom);
             }
+            else if (strncmp("jblr_",info,5,false))
+            {
+                ChooseMapLR(param1,info);
+            }
         }
         case MenuAction_Cancel:
         {
@@ -406,6 +410,15 @@ public void CreateLRMenu(int client)
     menu.AddItem(LRCHOICE3,"Freeday for all");
     menu.AddItem(LRCHOICE4,"Warday");
     menu.AddItem(LRCHOICE5,"Custom");
+    if (LRConfig.maplrcount > 0)
+    {
+        for(int i;i<LRConfig.maplrcount;i++)
+        {
+            char key[4];
+            FormatEx(key, sizeof(key), "%d", i);
+            menu.AddItem(key,g_MapLRNames[i])
+        }
+    }
     menu.Display(client,MENU_TIME_FOREVER);
 }
 
@@ -446,10 +459,10 @@ public void CreateClientSelectMenu(int client, ClientFilterFunc filterFn, Client
     Menu menu = new Menu(ClientMenuHandler);
     g_ClientMenu[client] = menu;
     int clients;
-    for (int i = 1; i <= MaxClients; i++) 
+    for (int i = 1; i <= MaxClients; i++)
     {
         if (!IsClientInGame(i)) continue;
-        
+
         // Check whether we should add this client to the menu
         Call_StartFunction(null, filterFn);
         Call_PushCell(i);

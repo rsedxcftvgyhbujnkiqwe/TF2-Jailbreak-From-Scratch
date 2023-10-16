@@ -150,9 +150,6 @@ public void OnPluginStart()
     HookEntityOutput("item_ammopack_small", "OnCacheInteraction", OnTakeAmmo);
     HookEntityOutput("tf_ammo_pack", "OnCacheInteraction", OnTakeAmmo);
 
-    //hook player commands
-    //AddCommandListener(BuildCmdCallback,"build");
-
     SetConVars(true);
 
     //add custom color(s) to morecolors

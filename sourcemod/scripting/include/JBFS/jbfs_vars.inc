@@ -125,8 +125,8 @@ enum struct JBLRConfig
     int LRWinner;
     Handle menu;
     int Freedays[3];
-    char maplrs[32];
     int maplrcount;
+    int MapLRChosen;
     bool WardayActive;
     bool FreedaysActive[MAXPLAYERS+1];
     bool CustomChatWait;
@@ -134,6 +134,9 @@ enum struct JBLRConfig
     bool LRPrinted;
 }
 public JBLRConfig LRConfig;
+
+char g_MapLRRelays[32][64];
+char g_MapLRNames[32][64];
 
 enum struct JBWeaponConfig
 {

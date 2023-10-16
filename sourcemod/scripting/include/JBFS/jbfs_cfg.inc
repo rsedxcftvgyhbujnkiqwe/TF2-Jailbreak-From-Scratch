@@ -147,10 +147,18 @@ public void LoadLRConfig()
     this relay will be called on round START, the following round.
     */
     int e = -1;
+    char name[64];
+    int count;
     while((e = FindEntityByClassname(e,"logic_relay"))!=-1)
     {
-        //
+        GetEntPropString(e, Prop_Data, "m_iName", name, sizeof(name));
+        if (strncmp("jblr_",name,5,false))
+        {
+            strcopy(g_MapLRNames[count],64,name[5]);
+            g_MapLRRelays[count++] = name;
+        }
     }
+    LRConfig.maplrcount = count;
 }
 
 public void LoadWeaponConfig()

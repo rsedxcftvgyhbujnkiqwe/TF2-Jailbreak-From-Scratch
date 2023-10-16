@@ -234,11 +234,11 @@
     }
     "LRFreedaySelfActive"
     {
-        "en"        "Last Request: {strange}Freeday for self."      
+        "en"        "Last Request: {strange}Freeday for self."
     }
     "LRFreedayOthersActive"
     {
-        "en"        "Last Request: {strange}Freeday for others."      
+        "en"        "Last Request: {strange}Freeday for others."
     }
     "LRFreedayAllActive"
     {
@@ -252,5 +252,10 @@
     {
         "#format"   "{1:s}"
         "en"        "Custom Last Request: {selfmade}{1}."
+    }
+    "LRMapActive"
+    {
+        "#format"   "{1:s}"
+        "en"        "Custom Last Request: {vintage}{1}."
     }
 }
