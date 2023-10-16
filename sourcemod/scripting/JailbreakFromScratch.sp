@@ -112,6 +112,7 @@ public void OnPluginStart()
     RegAdminCmd("sm_lockwarden",Command_Admin_LockWarden,cvarJBFS_ACMD[ACMD_LockWarden].IntValue,"Lock Warden");
     RegAdminCmd("sm_ulw",Command_Admin_UnlockWarden,cvarJBFS_ACMD[ACMD_LockWarden].IntValue,"Unlock Warden");
     RegAdminCmd("sm_unlockwarden",Command_Admin_UnlockWarden,cvarJBFS_ACMD[ACMD_LockWarden].IntValue,"Unlock Warden");
+    RegAdminCmd("sm_jt",Command_Admin_JailTime,cvarJBFS_ACMD[ACMD_JailTime].IntValue,"Set time left in round, in seconds");
     RegAdminCmd("sm_jtime",Command_Admin_JailTime,cvarJBFS_ACMD[ACMD_JailTime].IntValue,"Set time left in round, in seconds");
     RegAdminCmd("sm_jailtime",Command_Admin_JailTime,cvarJBFS_ACMD[ACMD_JailTime].IntValue,"Set time left in round, in seconds");
     RegAdminCmd("sm_foc",Command_Admin_OpenCells,cvarJBFS_ACMD[ACMD_Cells].IntValue,"Force open the cell doors");
