@@ -229,7 +229,7 @@ public Action BuildCmdCallback(int client, const char[] command, int argc)
     if (!(cvarJBFS[buildteam].IntValue & building) && !(cvarJBFS[buildteamwarday].BoolValue && LRConfig.WardayActive))
     {
         bool success = TF2Util_SetPlayerActiveWeapon(client,GetPlayerWeaponSlot(client, 2));
-        PrintToServer("Weapon swap for %N success: %b",client,success)
+        PrintToServer("Weapon swap for %N success: %d",client,success)
     }
     return Plugin_Continue;
 }
