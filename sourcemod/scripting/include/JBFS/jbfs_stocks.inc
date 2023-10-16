@@ -149,7 +149,7 @@ stock void RemoveWarden(int reason)
 {
     int currentwarden = JBFS.Warden;
     JBGameEvent(JBEvent_RemoveWarden);
-    JBFS.Warden = 0;
+    JBFS.Warden = -1;
     //close warden menu if it's open
     if (g_WMenu[currentwarden]!= null) delete g_WMenu[currentwarden];
     g_WMenu[currentwarden] = null;
@@ -419,8 +419,9 @@ stock void CreateMarker(int client)
 
         delete trace;
         float radius = cvarJBFS[MarkerRadius].FloatValue;
-        PrintToServer("%f radius",radius)
-        TE_SetupBeamRingPoint(endpoint,radius,radius + 0.1,JBMarker.BeamSprite,JBMarker.HaloSprite,0,10,time,2.0,0.0,JBMarker.MarkerColorRGBA,10,0);
+        PrintToServer("{ %d, %d, %d, %d}",JBMarker.MarkerColorRGBA[0],JBMarker.MarkerColorRGBA[1],JBMarker.MarkerColorRGBA[2],JBMarker.MarkerColorRGBA[3])
+        TE_SetupBeamRingPoint(endpoint,radius,radius + 0.1,JBMarker.BeamSprite,JBMarker.HaloSprite,0,10,time,2.0,0.0,{255, 255, 255, 255},10,0);
+        //TE_SetupBeamRingPoint(endpoint,radius,radius + 0.1,JBMarker.BeamSprite,JBMarker.HaloSprite,0,10,time,2.0,0.0,JBMarker.MarkerColorRGBA,10,0);
         //TE_SetupBeamRingPoint(endpoint, 300.0, 300.1, JBMarker.BeamSprite, JBMarker.HaloSprite, 0, 10, time, 2.0, 0.0, {255, 255, 255, 255}, 10, 0);
         TE_SendToAll();
     }

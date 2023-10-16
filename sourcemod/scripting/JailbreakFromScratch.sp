@@ -173,6 +173,9 @@ public void OnMapStart()
     ResetActiveLR();
     LRConfig.LRChosen = LR_None;
 
+    //reset warden
+    JBFS.Warden = -1
+
     //vscript
 #if defined _vscript_included
     RegisterVScriptFunctions();

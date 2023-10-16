@@ -8,7 +8,7 @@ public void OnPreRoundStart(Event event, const char[] name, bool dontBroadcast)
     LockWarden(false);
     SetArray(JBFS.FireStatus,sizeof(JBFS.FireStatus),false);
     ResetActiveLR();
-    //send warden set 0
+    //send warden set -1
     JBGameEvent(JBEvent_SetWarden);
     //reset convars
     FindConVar("mp_friendlyfire").SetBool(false);
