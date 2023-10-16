@@ -18,6 +18,16 @@ stock bool HasMic(int client,bool ignore = false)
 
 stock void AutoBalanceTeams()
 {
+    //move guard banned players first before any other math
+    for(int i=1;i<=MaxClients;i++)
+    {
+        if(IsClientInGame(i) && GetPlayerTeam(i)==BLU && JBFS.GuardBanned[i])
+        {
+            ForceTeamChange(i,RED,true);
+            PrintToServer("%N (guardbanned) autobalanced!",i);
+        }
+    }
+
     float flBalanceRatio = cvarJBFS[BalanceRatio].FloatValue;
     int iNumBlue = GetNumPlayers(BLU,true);
     int iNumRed = GetNumPlayers(RED,true);
@@ -705,4 +715,17 @@ stock void ReturnWeapons(int client)
         SetArray(g_BlockedWeapons[client],6 ,-1);
         g_HasBlockedWeapons[client] = false;
     }
+}
+
+stock bool AddGuardBan(int client)
+{
+    if (JBFS.GuardBanned[client]) return false;
+    JBFS.GuardBanned[client] = true;
+    return true;
+}
+stock bool RemoveGuardBan(int client)
+{
+    if (!JBFS.GuardBanned[client]) return false;
+    JBFS.GuardBanned[client] = false;
+    return true;
 }

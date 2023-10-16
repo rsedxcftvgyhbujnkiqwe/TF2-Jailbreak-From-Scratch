@@ -164,7 +164,6 @@ public void OnPluginStart()
     LoadTranslations("common.phrases");
     LoadTranslations("jbfs/jbfs.phrases");
     LoadTranslations("jbfs/jbfs.menu");
-
 }
 
 public void OnMapStart()
@@ -238,6 +237,12 @@ public void OnLibraryRemoved(const char[] name)
         sourcecommspp = false;
     }
 #endif
+#if defined _vscript_included
+    if (StrEqual(name, "vscript"));
+    {
+        vscript = false;
+    }
+#endif
 }
 
 public void OnLibraryAdded(const char[] name)
@@ -248,4 +253,19 @@ public void OnLibraryAdded(const char[] name)
         sourcecommspp = true;
     }
 #endif
+#if defined _vscript_included
+    if (StrEqual(name, "vscript"));
+    {
+        vscript = true;
+    }
+#endif
+}
+
+public APLRes ASkPluginLoad2(Handle myself, bool late, char[] error, int err_max)
+{
+    CreateNative("JBFS_AddGuardBan",Native_AddGuardBan);
+    CreateNative("JBFS_RemoveGuardBan",Native_RemoveGuardBan);
+
+	RegPluginLibrary("JailbreakFromScratch");
+    return APLRes_Success;
 }

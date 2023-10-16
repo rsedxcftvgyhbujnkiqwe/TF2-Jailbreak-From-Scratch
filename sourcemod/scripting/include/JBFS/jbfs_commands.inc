@@ -92,7 +92,7 @@ public Action Command_FireWarden(int client, int args)
     //check if this was the tipping point
     float cvarRatio = cvarJBFS[FireRatio].FloatValue;
     int validclients;
-    for(int i=1;i<MaxClients;i++)
+    for(int i=1;i<=MaxClients;i++)
     {
         if (!IsClientInGame(i)) continue;
         int team = GetClientTeam(i);

@@ -140,6 +140,7 @@ public void OnPlayerDisconnect(Event event, const char[] name, bool dontBroadcas
     if(JBFS.FireVotes[client]) JBFS.FireVoteCount--;
     JBFS.FireVotes[client] = false;
     JBFS.FireStatus[client] = false;
+    JBFS.GuardBanned[client] = false;
 }
 
 public void DeathEvents(client)

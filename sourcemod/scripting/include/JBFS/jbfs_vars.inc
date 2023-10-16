@@ -93,6 +93,7 @@ enum struct gamemode
     bool RoundActive;
     int AttachedParticle[MAXPLAYERS+1];
     bool HasAmmo[MAXPLAYERS+1];
+    bool GuardBanned[MAXPLAYERS+1];
 }
 public gamemode JBFS;
 

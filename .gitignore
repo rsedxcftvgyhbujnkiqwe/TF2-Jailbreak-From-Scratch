@@ -15,6 +15,7 @@
 
 !/sourcemod/scripting/include/
 /sourcemod/scripting/include/*
+!/sourcemod/scripting/include/jbfs.inc
 !/sourcemod/scripting/include/JBFS/
 !/sourcemod/scripting/include/JBFS/*
 
