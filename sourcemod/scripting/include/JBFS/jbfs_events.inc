@@ -227,7 +227,7 @@ public Action BuildCmdCallback(int client, const char[] command, int argc)
     }
     if (!(cvarJBFS[buildteam].IntValue & building) && !(cvarJBFS[buildteamwarday].BoolValue && LRConfig.WardayActive))
     {
-        TF2Util_SetPlayerActiveWeapon(client,GetPlayerWeaponSlot(client, 3));
+        TF2Util_SetPlayerActiveWeapon(client,GetPlayerWeaponSlot(client, TFWeaponSlot_PDA));
     }
     return Plugin_Continue;
 }
