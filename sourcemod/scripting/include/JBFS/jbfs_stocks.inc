@@ -141,7 +141,7 @@ stock void SetWarden(int client,int reason)
             CPrintToChatAll("%t %t","PluginTag","WardenWRandom",client);
         }
     }
-    AttachParticle(client,"eyeboss_vortex_blue")
+    AttachParticle(client,"teleporter_blue_exit")
     CreateWardenMenu(client,0);
 }
 
@@ -285,6 +285,18 @@ stock void RemoveAmmo(int client)
     }
     //remove metal
     SetEntProp(client,Prop_Send,"m_iAmmo",0,_,3);
+
+    //cvar stuff
+    switch (TF2_GetPlayerClass(client))
+    {
+        case TFClass_Scout:
+        {
+            if(cvarJBFS[DoubleJump].IntValue==1)
+            {
+                TF2Attrib_SetByDefIndex(client, 49, 1.0);
+            }
+        }
+    }
 }
 
 stock int SetWeaponAmmo(const int weapon, const int ammo)
@@ -419,11 +431,10 @@ stock void CreateMarker(int client)
 
         delete trace;
         float radius = cvarJBFS[MarkerRadius].FloatValue;
-        PrintToServer("{ %d, %d, %d, %d}",JBMarker.MarkerColorRGBA[0],JBMarker.MarkerColorRGBA[1],JBMarker.MarkerColorRGBA[2],JBMarker.MarkerColorRGBA[3])
-        TE_SetupBeamRingPoint(endpoint,radius,radius + 0.1,JBMarker.BeamSprite,JBMarker.HaloSprite,0,10,time,2.0,0.0,{255, 255, 255, 255},10,0);
-        //TE_SetupBeamRingPoint(endpoint,radius,radius + 0.1,JBMarker.BeamSprite,JBMarker.HaloSprite,0,10,time,2.0,0.0,JBMarker.MarkerColorRGBA,10,0);
-        //TE_SetupBeamRingPoint(endpoint, 300.0, 300.1, JBMarker.BeamSprite, JBMarker.HaloSprite, 0, 10, time, 2.0, 0.0, {255, 255, 255, 255}, 10, 0);
+        TE_SetupBeamRingPoint(endpoint,radius,radius + 0.1,JBMarker.BeamSprite,JBMarker.HaloSprite,0,10,time,2.0,0.0,JBMarker.MarkerColorRGBA,10,0);
         TE_SendToAll();
+        EmitAmbientSound("misc/rd_finale_beep01.wav", endpoint);
+        EmitAmbientSound("misc/rd_finale_beep01.wav", endpoint);
     }
     JBFS.MarkerPlaced = true;
     CreateTimer(1.0,Timer_AllowMarkerPlacement);
@@ -529,7 +540,7 @@ stock void LRSetFreeday(int client)
     //by being in the freeday array, a client has invuln, so no setting it up here
     //invuln done on a per-damage basis to only apply to player attacks
     //spawn particles
-    AttachParticle(client,"eyeboss_vortex_red")
+    AttachParticle(client,"teleporter_red_exit")
     //teleport them
     if (MapConfig.hasfspawn)
     {

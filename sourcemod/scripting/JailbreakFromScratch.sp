@@ -32,6 +32,7 @@ public Plugin myinfo =
 //third party deps
 #include <morecolors>
 #include <tf2utils>
+#include <tf2attributes>
 #undef REQUIRE_PLUGIN
 #tryinclude <sourcecomms>
 #tryinclude <vscript>
@@ -65,6 +66,7 @@ public void OnPluginStart()
     cvarJBFS[DroppedWeapon] = CreateConVar("sm_jbfs_killdroppedweapons","1","Kill dropped weapons?\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0);
     cvarJBFS[DroppedAmmo] = CreateConVar("sm_jbfs_killdroppedammo","1","Kill dropped ammo boxes?\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0);
     cvarJBFS[PointServerCMD] = CreateConVar("sm_jbfs_killpointservercmd","1","Kill point_servercommand entities?\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0);
+    cvarJBFS[DoubleJump] = CreateConVar("sm_jbfs_doublejump","1","Can scouts double jump?\n0 = No\n1 = With ammo (blues by default)\n2 = Blues only\n3 = Yes (all)",FCVAR_NOTIFY,true,0.0,true,3.0)
     cvarJBFS[Version] = CreateConVar("jbfs_version",PLUGIN_VERSION,PLUGIN_NAME,FCVAR_REPLICATED | FCVAR_NOTIFY | FCVAR_SPONLY | FCVAR_DONTRECORD);
     //admincmd cvars
     cvarJBFS_ACMD[ACMD_WardenMenu] = CreateConVar("sm_jbfs_acmd_adminmenu","2","Admin command section. Requires setting admin flag bits.\nSee: https://wiki.alliedmods.net/Checking_Admin_Flags_(SourceMod_Scripting)\n\nAdmin flag(s) required to open the admin warden menu.",FCVAR_NOTIFY,true,0.0,true,2097151.0);
@@ -173,9 +175,6 @@ public void OnMapStart()
     ResetActiveLR();
     LRConfig.LRChosen = LR_None;
 
-    //reset warden
-    JBFS.Warden = -1
-
     //vscript
 #if defined _vscript_included
     RegisterVScriptFunctions();
@@ -188,7 +187,7 @@ public void OnPluginEnd()
 }
 
 public void ManagePrecache()
-{
+    {
     PrecacheSound("vo/announcer_ends_60sec.mp3", true);
     PrecacheSound("vo/announcer_ends_30sec.mp3", true);
     PrecacheSound("vo/announcer_ends_10sec.mp3", true);
@@ -198,6 +197,8 @@ public void ManagePrecache()
         FormatEx(sound,PLATFORM_MAX_PATH,"vo/announcer_ends_%dsec.mp3",i);
         PrecacheSound(sound,true);
     }
+    PrecacheSound("misc/rd_finale_beep01.wav", true);
+
 
     JBMarker.BeamSprite = PrecacheModel("materials/sprites/laserbeam.vmt", true);
     JBMarker.HaloSprite = PrecacheModel("materials/sprites/halo01.vmt", true);
@@ -207,6 +208,7 @@ public void ManagePrecache()
     for(int i;i<3;i++){
         JBMarker.MarkerColorRGBA[i] = rgb[i];
     }
+    JBMarker.MarkerColorRGBA[3] = 255;
 }
 
 public void OnAllPluginsLoaded()

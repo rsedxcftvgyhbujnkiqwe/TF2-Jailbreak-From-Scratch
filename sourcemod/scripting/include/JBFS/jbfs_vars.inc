@@ -32,11 +32,12 @@ enum
     DroppedWeapon,
     DroppedAmmo,
     PointServerCMD,
+    DoubleJump,
     Version
 }
 ConVar cvarJBFS[Version+1];
 
-enum 
+enum
 {
     Building_Dispenser= (1<<0),
     Building_Teleporter= (1<<1),
@@ -141,7 +142,7 @@ int g_BlockedWeapons[MAXPLAYERS+1][6];
 bool g_HasBlockedWeapons[MAXPLAYERS+1];
 
 //jb events for vscript
-enum 
+enum
 {
     JBEvent_Warday,
     JBEvent_SetWarden,

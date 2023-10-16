@@ -95,6 +95,21 @@ public Action OnPlayerSpawn(Event event, const char[] name, bool dontBroadcast)
             LRSetFreeday(client);
         }
     }
+    switch (TF2_GetPlayerClass(client))
+    {
+        case TFClass_Scout:
+        {
+            switch (cvarJBFS[DoubleJump].IntValue)
+            {
+                case 0: TF2Attrib_SetByDefIndex(client, 49, 1.0);
+                case 2:
+                {
+                    if (GetClientTeam(client)==RED)
+                        TF2Attrib_SetByDefIndex(client, 49, 1.0);
+                }
+            }
+        }
+    }
     return Plugin_Handled;
 }
 
@@ -193,6 +208,14 @@ public void OnClientSayCommand_Post(int client, const char[] command, const char
 public void OnTakeAmmo(const char[] output, int caller, int activator, float delay)
 {
     ReturnWeapons(activator);
+    switch (TF2_GetPlayerClass(activator))
+    {
+        case TFClass_Scout:
+        {
+            if (cvarJBFS[DoubleJump].IntValue==1)
+                TF2Attrib_RemoveByDefIndex(activator,49)
+        }
+    }
 }
 
 public void OnEntityCreated(int entity, const char[] classname) {
