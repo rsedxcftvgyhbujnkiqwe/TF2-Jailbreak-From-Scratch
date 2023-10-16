@@ -145,7 +145,7 @@ public void OnPluginStart()
     HookEntityOutput("tf_ammo_pack", "OnCacheInteraction", OnTakeAmmo);
 
     //hook player commands
-    AddCommandListener(BuildCmdCallback,"build");
+    //AddCommandListener(BuildCmdCallback,"build");
 
     SetConVars(true);
 
@@ -194,7 +194,7 @@ public void ManagePrecache()
         FormatEx(sound,PLATFORM_MAX_PATH,"vo/announcer_ends_%dsec.mp3",i);
         PrecacheSound(sound,true);
     }
-    
+
     JBMarker.BeamSprite = PrecacheModel("materials/sprites/laserbeam.vmt", true);
     JBMarker.HaloSprite = PrecacheModel("materials/sprites/halo01.vmt", true);
     cvarJBFS[MarkerColor].GetString(JBMarker.MarkerColorHex,sizeof(JBMarker.MarkerColorHex))
@@ -217,7 +217,7 @@ public void OnAllPluginsLoaded()
         CreateVScriptFunctions()
 #endif
 }
- 
+
 public void OnLibraryRemoved(const char[] name)
 {
 #if defined _sourcecomms_included
@@ -227,7 +227,7 @@ public void OnLibraryRemoved(const char[] name)
     }
 #endif
 }
- 
+
 public void OnLibraryAdded(const char[] name)
 {
 #if defined _sourcecomms_included

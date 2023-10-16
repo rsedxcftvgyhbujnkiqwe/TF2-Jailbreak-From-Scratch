@@ -1,7 +1,7 @@
 stock bool HasMic(int client,bool ignore = false)
 {
     //this bool will just force the check to succeed
-    //useful if this check is disabled in the cvars 
+    //useful if this check is disabled in the cvars
     if(ignore) return true;
     if(JBFS.MicStatus[client])
     {
@@ -9,7 +9,7 @@ stock bool HasMic(int client,bool ignore = false)
         {
 #if defined _sourcecomms_included
         if (SourceComms_GetClientMuteType(client)) return false;
-#endif 
+#endif
         }
         return true;
     }
@@ -411,6 +411,7 @@ stock void CreateMarker(int client)
     Handle trace = TR_TraceRayFilterEx(eyepos,eyeangles,MASK_SHOT,RayType_Infinite,TraceRayFilterPlayers)
     if (TR_DidHit(trace))
     {
+        PrintToServer("Spawning marker!")
         float endpoint[3];
         TR_GetEndPosition(endpoint,trace);
         float radius = cvarJBFS[MarkerRadius].FloatValue;
@@ -623,13 +624,21 @@ stock void RemoveWeapons(int client)
         }
     }
     if(HasBlocked) g_HasBlockedWeapons[client] = true;
-    if (cvarJBFS[RemoveItem1].BoolValue) TF2_RemoveWeaponSlot(client, TFWeaponSlot_Item1);
-    if (cvarJBFS[RemoveItem2].BoolValue) TF2_RemoveWeaponSlot(client, TFWeaponSlot_Item2);
+    if (cvarJBFS[RemoveItem1].BoolValue)
+    {
+        PrintToServer("Removing slot 1 for %N",client);
+        TF2_RemoveWeaponSlot(client, TFWeaponSlot_Item1);
+    }
+    if (cvarJBFS[RemoveItem2].BoolValue)
+    {
+        PrintToServer("Removing slot 2 for %N",client);
+        TF2_RemoveWeaponSlot(client, TFWeaponSlot_Item2);
+    }
 }
 
 stock void RemoveWeapon(int client, int slot)
 {
-    switch (slot) 
+    switch (slot)
     {
         case TFWeaponSlot_Primary,TFWeaponSlot_Secondary, TFWeaponSlot_Melee:
         {

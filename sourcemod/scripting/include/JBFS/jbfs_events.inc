@@ -196,6 +196,8 @@ public void OnTakeAmmo(const char[] output, int caller, int activator, float del
 }
 
 public void OnEntityCreated(int entity, const char[] classname) {
+    if (StrEqual(classname, "obj_teleporter") || StrEqual(classname, "obj_dispenser") || StrEqual(classname, "obj_sentrygun"))
+        SDKHook(entity,SDKHook_Spawn, BuildingSpawn);
     if (cvarJBFS[DroppedWeapon].BoolValue && StrEqual(classname, "tf_dropped_weapon"))
         SDKHook(entity, SDKHook_Spawn, KillOnSpawn);
     else if (cvarJBFS[DroppedAmmo].BoolValue && StrEqual(classname, "tf_ammo_pack"))
@@ -204,18 +206,17 @@ public void OnEntityCreated(int entity, const char[] classname) {
         SDKHook(entity, SDKHook_Spawn, KillOnSpawn);
 }
 
-//purpose: prevent buildings from being placed conditionally
-public Action BuildCmdCallback(int client, const char[] command, int argc)
+stock void BuildingSpawn(int entity)
 {
-    int building,buildteam,buildteamwarday;
-    if (!GetCmdArgIntEx(1,building)) return Plugin_Continue;
-    building = (1<<building);
-    int slot = TF2Util_GetWeaponSlot(GetEntPropEnt(client,Prop_Send,"m_hActiveWeapon"));
-    if (slot!=3) return Plugin_Continue;
-    //at this point, a player has selected a building and they have the toolbox out i think
-    PrintToServer("%N selected building %d with slot %d out.",client,building,slot)
-    int team = GetEntProp(client,Prop_Send,"m_iTeamNum");
-
+    int builder = GetEntPropEnt(entity, Prop_Send, "m_hBuilder")
+    if (builder == -1) return;
+    int team = GetEntProp(builder,Prop_Send,"m_iTeamNum");
+    int building, buildteam, buildteamwarday;
+    char classname[32];
+    GetEdictClassname(entity,classname,sizeof(classname));
+    if (StrEqual(classname, "obj_teleporter")) building = Building_Teleporter;
+    else if(StrEqual(classname, "obj_dispenser")) building = Building_Dispenser;
+    else if(StrEqual(classname, "obj_sentrygun")) building = Building_Sentry;
     if (team == RED)
     {
         buildteam = RedBuild;
@@ -228,11 +229,39 @@ public Action BuildCmdCallback(int client, const char[] command, int argc)
     }
     if (!(cvarJBFS[buildteam].IntValue & building) && !(cvarJBFS[buildteamwarday].BoolValue && LRConfig.WardayActive))
     {
-        bool success = TF2Util_SetPlayerActiveWeapon(client,GetPlayerWeaponSlot(client, 2));
-        PrintToServer("Weapon swap for %N success: %d",client,success)
+        RemoveEntity(entity);
     }
-    return Plugin_Continue;
 }
+
+// //purpose: prevent buildings from being placed conditionally
+// public Action BuildCmdCallback(int client, const char[] command, int argc)
+// {
+//     int building,buildteam,buildteamwarday;
+//     if (!GetCmdArgIntEx(1,building)) return Plugin_Continue;
+//     building = (1<<building);
+//     int slot = TF2Util_GetWeaponSlot(GetEntPropEnt(client,Prop_Send,"m_hActiveWeapon"));
+//     if (slot!=3) return Plugin_Continue;
+//     //at this point, a player has selected a building and they have the toolbox out i think
+//     PrintToServer("%N selected building %d with slot %d out.",client,building,slot)
+//     int team = GetEntProp(client,Prop_Send,"m_iTeamNum");
+
+//     if (team == RED)
+//     {
+//         buildteam = RedBuild;
+//         buildteamwarday = RedBuildWarday;
+//     }
+//     else if (team == BLU)
+//     {
+//         buildteam = BlueBuild;
+//         buildteamwarday = BlueBuildWarday;
+//     }
+//     if (!(cvarJBFS[buildteam].IntValue & building) && !(cvarJBFS[buildteamwarday].BoolValue && LRConfig.WardayActive))
+//     {
+//         bool success = TF2Util_SetPlayerActiveWeapon(client,GetPlayerWeaponSlot(client, 2));
+//         PrintToServer("Weapon swap for %N success: %d",client,success)
+//     }
+//     return Plugin_Continue;
+// }
 
 public Action KillOnSpawn(int entity) {
 	AcceptEntityInput(entity, "Kill");
