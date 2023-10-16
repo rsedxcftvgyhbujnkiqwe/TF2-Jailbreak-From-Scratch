@@ -33,6 +33,9 @@ enum
     DroppedAmmo,
     PointServerCMD,
     DoubleJump,
+    AirblastImmunity,
+    Disguising,
+    DemoCharge,
     Version
 }
 ConVar cvarJBFS[Version+1];
@@ -87,6 +90,7 @@ enum struct gamemode
     bool MarkerPlaced;
     bool RoundActive;
     int AttachedParticle[MAXPLAYERS+1];
+    bool HasAmmo[MAXPLAYERS+1];
 }
 public gamemode JBFS;
 

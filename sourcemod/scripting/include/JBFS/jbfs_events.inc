@@ -86,6 +86,7 @@ public Action OnPlayerSpawn(Event event, const char[] name, bool dontBroadcast)
     if (!IsClientInGame(client) || (GetClientTeam(client)!=RED && GetClientTeam(client)!=BLU))
         return Plugin_Continue;
     RemoveWeapons(client);
+    JBFS.HasAmmo[client] = true;
     if (GetClientTeam(client)==RED)
     {
         if (!LRConfig.WardayActive)
@@ -110,6 +111,7 @@ public Action OnPlayerSpawn(Event event, const char[] name, bool dontBroadcast)
             }
         }
     }
+    if (cvarJBFS[AirblastImmunity].BoolValue) TF2Attrib_SetByDefIndex(client, 326, 0.0);
     return Plugin_Handled;
 }
 
@@ -207,6 +209,7 @@ public void OnClientSayCommand_Post(int client, const char[] command, const char
 
 public void OnTakeAmmo(const char[] output, int caller, int activator, float delay)
 {
+    JBFS.HasAmmo[activator] = true;
     ReturnWeapons(activator);
     switch (TF2_GetPlayerClass(activator))
     {
@@ -289,4 +292,48 @@ stock void BuildingSpawn(int entity)
 public Action KillOnSpawn(int entity) {
 	AcceptEntityInput(entity, "Kill");
 	return Plugin_Handled;
+}
+
+public void TF2_OnConditionAdded(int client, TFCond cond)
+{
+    switch (cond)
+	{
+		case TFCond_Cloaked:
+		{
+            if (IsValidEntity(JBFS.AttachedParticle[client]))
+                AcceptEntityInput(JBFS.AttachedParticle[client], "Stop");
+		}
+		case TFCond_Disguising, TFCond_Disguised:
+		{
+			switch (cvarJBFS[Disguising].IntValue)
+			{
+				case 0:TF2_RemoveCondition(client, cond);
+				case 1:if (!JBFS.HasAmmo[client]) TF2_RemoveCondition(client, cond);
+				case 2:if (GetClientTeam(client) == RED) TF2_RemoveCondition(client, cond);
+			}
+		}
+		case TFCond_Charging:
+		{
+			switch (cvarJBFS[DemoCharge].IntValue)
+			{
+				case 0:TF2_RemoveCondition(client, cond);
+				case 1:if (!JBFS.HasAmmo[client]) TF2_RemoveCondition(client, cond);
+				case 2:if (GetClientTeam(client) == RED) TF2_RemoveCondition(client, cond);
+			}
+		}
+
+    }
+}
+
+
+public void TF2_OnConditionRemoved(int client, TFCond cond)
+{
+    switch (cond)
+	{
+		case TFCond_Cloaked:
+		{
+            if (IsValidEntity(JBFS.AttachedParticle[client]))
+                AcceptEntityInput(JBFS.AttachedParticle[client], "Start");
+		}
+    }
 }

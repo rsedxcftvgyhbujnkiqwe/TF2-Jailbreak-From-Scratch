@@ -141,7 +141,7 @@ stock void SetWarden(int client,int reason)
             CPrintToChatAll("%t %t","PluginTag","WardenWRandom",client);
         }
     }
-    AttachParticle(client,"teleporter_blue_exit")
+    AttachParticle(client,"teleporter_blue_exit_level3")
     CreateWardenMenu(client,0);
 }
 
@@ -267,7 +267,7 @@ stock void RemoveAmmo(int client)
 {
     int mwep = GetPlayerWeaponSlot(client, TFWeaponSlot_Melee);
     TF2Util_SetPlayerActiveWeapon(client,mwep);
-
+    JBFS.HasAmmo[client] = false;
     int weapon;
     int length = GetEntPropArraySize(client, Prop_Send, "m_hMyWeapons");
     for (int i;i < length; i++)
@@ -540,7 +540,7 @@ stock void LRSetFreeday(int client)
     //by being in the freeday array, a client has invuln, so no setting it up here
     //invuln done on a per-damage basis to only apply to player attacks
     //spawn particles
-    AttachParticle(client,"teleporter_red_exit")
+    AttachParticle(client,"teleporter_red_exit_level3")
     //teleport them
     if (MapConfig.hasfspawn)
     {

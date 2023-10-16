@@ -67,6 +67,9 @@ public void OnPluginStart()
     cvarJBFS[DroppedAmmo] = CreateConVar("sm_jbfs_killdroppedammo","1","Kill dropped ammo boxes?\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0);
     cvarJBFS[PointServerCMD] = CreateConVar("sm_jbfs_killpointservercmd","1","Kill point_servercommand entities?\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0);
     cvarJBFS[DoubleJump] = CreateConVar("sm_jbfs_doublejump","1","Can scouts double jump?\n0 = No\n1 = With ammo (blues by default)\n2 = Blues only\n3 = Yes (all)",FCVAR_NOTIFY,true,0.0,true,3.0)
+    cvarJBFS[AirblastImmunity] = CreateConVar("sm_jbfs_airblastimmunity","1","Should players have airblast push immunity?\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0)
+    cvarJBFS[Disguising] = CreateConVar("sm_jbfs_disguising","1","Can spies disguise?\nRequires disguise kit\n0 = No\n1 = With ammo (blues by default)\n2 = Blues only\n3 = Yes (all)",FCVAR_NOTIFY,true,0.0,true,3.0)
+    cvarJBFS[DemoCharge] = CreateConVar("sm_jbfs_democharge","1","Can demomen charge?\n0 = No\n1 = With ammo (blues by default)\n2 = Blues only\n3 = Yes (all)",FCVAR_NOTIFY,true,0.0,true,3.0)
     cvarJBFS[Version] = CreateConVar("jbfs_version",PLUGIN_VERSION,PLUGIN_NAME,FCVAR_REPLICATED | FCVAR_NOTIFY | FCVAR_SPONLY | FCVAR_DONTRECORD);
     //admincmd cvars
     cvarJBFS_ACMD[ACMD_WardenMenu] = CreateConVar("sm_jbfs_acmd_adminmenu","2","Admin command section. Requires setting admin flag bits.\nSee: https://wiki.alliedmods.net/Checking_Admin_Flags_(SourceMod_Scripting)\n\nAdmin flag(s) required to open the admin warden menu.",FCVAR_NOTIFY,true,0.0,true,2097151.0);
