@@ -209,6 +209,11 @@
     {
         "en"        "Placing markers too fast, slow down and try again."
     }
+    "CommandAdminFreedayWarn"
+    {
+        "#format"   "{1:N}"
+        "en"        "{unique}{1}{wheat} is ineligible for Freeday"
+    }
     "SlowDown"
     {
         "en"        "Slow down!"

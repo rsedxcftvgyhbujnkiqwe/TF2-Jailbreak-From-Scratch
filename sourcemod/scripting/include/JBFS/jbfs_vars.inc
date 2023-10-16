@@ -36,6 +36,7 @@ enum
     AirblastImmunity,
     Disguising,
     DemoCharge,
+    LRSetTime,
     Version
 }
 ConVar cvarJBFS[Version+1];
@@ -58,7 +59,8 @@ enum
     ACMD_FF,
     ACMD_CC,
     ACMD_ForceLR,
-    ACMD_WardenMenu
+    ACMD_WardenMenu,
+    ACMD_ForceFreeday
 }
 ConVar cvarJBFS_ACMD[ACMD_WardenMenu+1];
 

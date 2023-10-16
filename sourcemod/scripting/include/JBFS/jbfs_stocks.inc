@@ -457,6 +457,8 @@ stock bool SetLRWinner(int client, int warden, bool adminforce = false)
     CreateLRMenu(client);
     if (!adminforce) CPrintToChatAll("%t %t","PluginTag","LRMenuWinner",client);
     else CPrintToChatAll("%t %t","PluginTag","LRMenuWinnerAdmin",client);
+    int timeleft = cvarJBFS[LRSetTime].IntValue;
+    if(timeleft > 0) JBFS.TimeLeft = timeleft;
     return false;
 }
 
@@ -543,6 +545,15 @@ stock void LRWarday()
 }
 
 stock void LRSetFreeday(int client)
+{
+    if(client == 0 || !IsClientInGame(client)) continue;
+    LRConfig.FreedaysActive[client] = true;
+    CPrintToChatAll("%t %t","PluginTag","LRFreedayActive",client);
+    if(GetClientTeam(client)!=RED) continue;
+    TF2_RespawnPlayer(client);
+}
+
+stock void LRSetFreedayPost(int client)
 {
     //by being in the freeday array, a client has invuln, so no setting it up here
     //invuln done on a per-damage basis to only apply to player attacks
@@ -651,12 +662,10 @@ stock void RemoveWeapons(int client)
     if(HasBlocked) g_HasBlockedWeapons[client] = true;
     if (cvarJBFS[RemoveItem1].BoolValue)
     {
-        PrintToServer("Removing slot 1 for %N",client);
         TF2_RemoveWeaponSlot(client, TFWeaponSlot_Item1);
     }
     if (cvarJBFS[RemoveItem2].BoolValue)
     {
-        PrintToServer("Removing slot 2 for %N",client);
         TF2_RemoveWeaponSlot(client, TFWeaponSlot_Item2);
     }
 }

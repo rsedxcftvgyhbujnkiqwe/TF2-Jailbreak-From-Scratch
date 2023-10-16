@@ -67,13 +67,14 @@ public void OnPluginStart()
     cvarJBFS[DroppedWeapon] = CreateConVar("sm_jbfs_killdroppedweapons","1","Kill dropped weapons?\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0);
     cvarJBFS[DroppedAmmo] = CreateConVar("sm_jbfs_killdroppedammo","1","Kill dropped ammo boxes?\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0);
     cvarJBFS[PointServerCMD] = CreateConVar("sm_jbfs_killpointservercmd","1","Kill point_servercommand entities?\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0);
-    cvarJBFS[DoubleJump] = CreateConVar("sm_jbfs_doublejump","1","Can scouts double jump?\n0 = No\n1 = With ammo (blues by default)\n2 = Blues only\n3 = Yes (all)",FCVAR_NOTIFY,true,0.0,true,3.0)
-    cvarJBFS[AirblastImmunity] = CreateConVar("sm_jbfs_airblastimmunity","1","Should players have airblast push immunity?\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0)
-    cvarJBFS[Disguising] = CreateConVar("sm_jbfs_disguising","0","Can spies disguise?\nRequires disguise kit\n0 = No\n1 = With ammo (blues by default)\n2 = Blues only\n3 = Yes (all)",FCVAR_NOTIFY,true,0.0,true,3.0)
-    cvarJBFS[DemoCharge] = CreateConVar("sm_jbfs_democharge","1","Can demomen charge?\n0 = No\n1 = With ammo (blues by default)\n2 = Blues only\n3 = Yes (all)",FCVAR_NOTIFY,true,0.0,true,3.0)
+    cvarJBFS[DoubleJump] = CreateConVar("sm_jbfs_doublejump","1","Can scouts double jump?\n0 = No\n1 = With ammo (blues by default)\n2 = Blues only\n3 = Yes (all)",FCVAR_NOTIFY,true,0.0,true,3.0);
+    cvarJBFS[AirblastImmunity] = CreateConVar("sm_jbfs_airblastimmunity","1","Should players have airblast push immunity?\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0);
+    cvarJBFS[Disguising] = CreateConVar("sm_jbfs_disguising","0","Can spies disguise?\nRequires disguise kit\n0 = No\n1 = With ammo (blues by default)\n2 = Blues only\n3 = Yes (all)",FCVAR_NOTIFY,true,0.0,true,3.0);
+    cvarJBFS[DemoCharge] = CreateConVar("sm_jbfs_democharge","1","Can demomen charge?\n0 = No\n1 = With ammo (blues by default)\n2 = Blues only\n3 = Yes (all)",FCVAR_NOTIFY,true,0.0,true,3.0);
+    cvarJBFS[LRSetTime] = CreateConVar("sm_jbfs_lrtime","0","Round timer will be set to this many seconds once LR is given.\n0 disables the check",FCVAR_NOTIFY,true,0.0,true,300.0);
     cvarJBFS[Version] = CreateConVar("jbfs_version",PLUGIN_VERSION,PLUGIN_NAME,FCVAR_REPLICATED | FCVAR_NOTIFY | FCVAR_SPONLY | FCVAR_DONTRECORD);
     //admincmd cvars
-    cvarJBFS_ACMD[ACMD_WardenMenu] = CreateConVar("sm_jbfs_acmd_adminmenu","2","Admin command section. Requires setting admin flag bits.\nSee: https://wiki.alliedmods.net/Checking_Admin_Flags_(SourceMod_Scripting)\n\nAdmin flag(s) required to open the admin warden menu.",FCVAR_NOTIFY,true,0.0,true,2097151.0);
+    cvarJBFS_ACMD[ACMD_WardenMenu] = CreateConVar("sm_jbfs_acmd_adminmenu","2","Admin commands (sm_jbfs_acmd_*) requires setting admin flag bits.\nSee: https://wiki.alliedmods.net/Checking_Admin_Flags_(SourceMod_Scripting)\n\nAdmin flag(s) required to open the admin warden menu.",FCVAR_NOTIFY,true,0.0,true,2097151.0);
     cvarJBFS_ACMD[ACMD_ForceWarden] = CreateConVar("sm_jbfs_acmd_forcewarden","2","Admin flag(s) required to force warden/unwarden.",FCVAR_NOTIFY,true,0.0,true,2097151.0);
     cvarJBFS_ACMD[ACMD_LockWarden] = CreateConVar("sm_jbfs_acmd_lockwarden","2","Admin flag(s) required to lock/unlock warden.",FCVAR_NOTIFY,true,0.0,true,2097151.0);
     cvarJBFS_ACMD[ACMD_JailTime] = CreateConVar("sm_jbfs_acmd_jailtime","2","Admin flag(s) required to change jail time.",FCVAR_NOTIFY,true,0.0,true,2097151.0);
@@ -81,6 +82,7 @@ public void OnPluginStart()
     cvarJBFS_ACMD[ACMD_FF] = CreateConVar("sm_jbfs_acmd_ff","2","Admin flag(s) required to toggle friendly fire.",FCVAR_NOTIFY,true,0.0,true,2097151.0);
     cvarJBFS_ACMD[ACMD_CC] = CreateConVar("sm_jbfs_acmd_cc","2","Admin flag(s) required to toggle collisions.",FCVAR_NOTIFY,true,0.0,true,2097151.0);
     cvarJBFS_ACMD[ACMD_ForceLR] = CreateConVar("sm_jbfs_acmd_forcelr","2","Admin flag(s) required to force last request.",FCVAR_NOTIFY,true,0.0,true,2097151.0);
+    cvarJBFS_ACMD[ACMD_ForceFreeday] = CreateConVar("sm_jbfs_acmd_forcefreeday","2","Admin flag(s) required to force freeday.",FCVAR_NOTIFY,true,0.0,true,2097151.0)
     AutoExecConfig(true,"JBFS");
 
     //regular commands for players
@@ -132,6 +134,7 @@ public void OnPluginStart()
     RegAdminCmd("sm_admincol",Command_Admin_ToggleCollisions,cvarJBFS_ACMD[ACMD_CC].IntValue,"Toggle Collisions");
     RegAdminCmd("sm_flr",Command_Admin_ForceLastRequest,cvarJBFS_ACMD[ACMD_ForceLR].IntValue,"Force give a prisoner LR");
     RegAdminCmd("sm_forcelr",Command_Admin_ForceLastRequest,cvarJBFS_ACMD[ACMD_ForceLR].IntValue,"Force give a prisoner LR");
+    RegAdminCmd("sm_freeday",Command_Admin_ForceFreeday,cvarJBFS_ACMD[ACMD_ForceFreeday].IntValue,"Force give a prisoner a freeday")
 
     RegAdminCmd("sm_awm",Command_Admin_WardenMenu,cvarJBFS_ACMD[ACMD_WardenMenu].IntValue,"Open the Admin Warden menu");
     RegAdminCmd("sm_awmenu",Command_Admin_WardenMenu,cvarJBFS_ACMD[ACMD_WardenMenu].IntValue,"Open the Admin Warden menu");

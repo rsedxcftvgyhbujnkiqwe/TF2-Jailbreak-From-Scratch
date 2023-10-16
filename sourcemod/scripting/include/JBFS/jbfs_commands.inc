@@ -318,3 +318,24 @@ public Action Command_Admin_ToggleCollisions(int client, int args)
     ToggleCC(true);
     return Plugin_Handled;
 }
+
+public Action Command_Admin_ForceFreeday(int client, int args)
+{
+    char arg[32];
+    GetCmdArg(1, arg, sizeof(arg));
+    int target = FindTarget(client, arg);
+    if (target == -1) return Plugin_Handled;
+    if (GetClientTeam(target)!=RED || LRConfig.FreedaysActive[target])
+    {
+        CPrintToChat(client,"%t %t","PluginTag","CommandAdminFreedayWarn",target);
+        return Plugin_Handled;
+    }
+
+    float clientpos[3];
+    float clientangles[3];
+    GetEntPropVector(target,Prop_Send,"m_vecOrigin",clientpos);
+    GetClientEyeAngles(client,clientangles);
+    LRSetFreeday(target);
+    TeleportEntity(target,clientpos,clientangles,NULL_VECTOR);
+    return Plugin_Handled;
+}

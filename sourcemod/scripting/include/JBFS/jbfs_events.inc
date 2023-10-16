@@ -17,12 +17,7 @@ public void OnPreRoundStart(Event event, const char[] name, bool dontBroadcast)
     {
         for (int i;i<3;i++)
         {
-            int client = LRConfig.Freedays[i]
-            if(client == 0 || !IsClientInGame(client)) continue;
-            LRConfig.FreedaysActive[client] = true;
-            CPrintToChatAll("%t %t","PluginTag","LRFreedayActive",client);
-            if(GetClientTeam(client)!=RED) continue;
-            TF2_RespawnPlayer(client);
+            LRSetFreeday(LRConfig.Freedays[i])
         }
     }
 }
@@ -98,7 +93,7 @@ public Action OnPlayerSpawn(Event event, const char[] name, bool dontBroadcast)
             RemoveAmmo(client);
         if (LRConfig.FreedaysActive[client])
         {
-            LRSetFreeday(client);
+            LRSetFreedayPost(client);
         }
     }
     switch (TF2_GetPlayerClass(client))
