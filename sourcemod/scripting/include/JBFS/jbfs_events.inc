@@ -196,9 +196,7 @@ public void OnTakeAmmo(const char[] output, int caller, int activator, float del
 }
 
 public void OnEntityCreated(int entity, const char[] classname) {
-    if (StrEqual(classname, "obj_teleporter") || StrEqual(classname, "obj_dispenser") || StrEqual(classname, "obj_sentrygun"))
-        SDKHook(entity,SDKHook_Spawn, BuildingSpawn);
-    else if (cvarJBFS[DroppedWeapon].BoolValue && StrEqual(classname, "tf_dropped_weapon"))
+    if (cvarJBFS[DroppedWeapon].BoolValue && StrEqual(classname, "tf_dropped_weapon"))
         SDKHook(entity, SDKHook_Spawn, KillOnSpawn);
     else if (cvarJBFS[DroppedAmmo].BoolValue && StrEqual(classname, "tf_ammo_pack"))
         SDKHook(entity, SDKHook_Spawn, KillOnSpawn);
@@ -206,17 +204,17 @@ public void OnEntityCreated(int entity, const char[] classname) {
         SDKHook(entity, SDKHook_Spawn, KillOnSpawn);
 }
 
-stock void BuildingSpawn(int entity)
+//purpose: prevent buildings from being placed conditionally
+public Action BuildCmdCallback(int client, const char[] command, int argc)
 {
-    int builder = GetEntPropEnt(entity, Prop_Send, "m_hBuilder")
-    if (builder == -1) return;
-    int team = GetEntProp(builder,Prop_Send,"m_iTeamNum");
-    int building, buildteam, buildteamwarday;
-    char classname[32];
-    GetEdictClassname(entity,classname,sizeof(classname));
-    if (StrEqual(classname, "obj_teleporter")) building = Building_Teleporter;
-    else if(StrEqual(classname, "obj_dispenser")) building = Building_Dispenser;
-    else if(StrEqual(classname, "obj_sentrygun")) building = Building_Sentry;
+    int building,buildteam,buildteamwarday;
+    if (!GetCmdArgIntEx(1,building)) return Plugin_Continue;
+    building = (1<<building);
+    PrintToServer("Build command issued for %d",building);
+    if (TF2Util_GetWeaponSlot(GetEntPropEnt(client,Prop_Send,"m_hActiveWeapon"))!=TFWeaponSlot_PDA) return Plugin_Continue;
+    //at this point, a player has selected a building and they have the toolbox out
+    int team = GetEntProp(client,Prop_Send,"m_iTeamNum");
+
     if (team == RED)
     {
         buildteam = RedBuild;
@@ -229,13 +227,9 @@ stock void BuildingSpawn(int entity)
     }
     if (!(cvarJBFS[buildteam].IntValue & building) && !(cvarJBFS[buildteamwarday].BoolValue && LRConfig.WardayActive))
     {
-        SDKHook(builder, SDKHook_WeaponCanSwitchTo, PreventWeaponSwitchCallback)
+        TF2Util_SetPlayerActiveWeapon(client,GetPlayerWeaponSlot(client, 3));
     }
-}
-
-public Action PreventWeaponSwitchCallback(int client, int weapon)
-{
-    return Plugin_Stop;
+    return Plugin_Continue;
 }
 
 public Action KillOnSpawn(int entity) {

@@ -38,8 +38,8 @@ ConVar cvarJBFS[Version+1];
 
 enum 
 {
-    Building_Teleporter= (1<<0),
-    Building_Dispenser= (1<<1),
+    Building_Dispenser= (1<<0),
+    Building_Teleporter= (1<<1),
     Building_Sentry= (1<<2)
 }
 
