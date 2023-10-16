@@ -83,7 +83,7 @@ public OnClientPutInServer(client)
 public Action OnPlayerSpawn(Event event, const char[] name, bool dontBroadcast)
 {
     int client = GetClientOfUserId(event.GetInt("userid"));
-    if (!IsClientInGame(client))
+    if (!IsClientInGame(client) || (GetClientTeam(client)!=RED && GetClientTeam(client)!=BLU))
         return Plugin_Continue;
     RemoveWeapons(client);
     if (GetClientTeam(client)==RED)
