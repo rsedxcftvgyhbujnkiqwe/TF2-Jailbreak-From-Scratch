@@ -11,7 +11,7 @@ stock void CreateVScriptFunctions()
 
 stock void RegisterVScriptFunctions()
 {
-    RunScript("::jbplugin<-JBFS");
+    RunScript("::jbplugin<-\"JBFS\"");
     //GetWarden function
     g_GetWarden.Register();
     g_GetWarden.CreateDetour().Enable(Hook_Pre,Detour_GetWarden)
