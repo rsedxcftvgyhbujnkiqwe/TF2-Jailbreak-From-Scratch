@@ -414,10 +414,14 @@ stock void CreateMarker(int client)
         PrintToServer("Spawning marker!")
         float endpoint[3];
         TR_GetEndPosition(endpoint,trace);
+
+        endpoint[2] += 5.0;
+
         delete trace;
         TeleportEntity(client,endpoint,NULL_VECTOR,{0.0,0.0,0.0})
         float radius = cvarJBFS[MarkerRadius].FloatValue;
-        TE_SetupBeamRingPoint(endpoint,radius,radius + 0.1,JBMarker.BeamSprite,JBMarker.HaloSprite,0,10,time,2.0,0.0,JBMarker.MarkerColorRGBA,10,0);
+        //TE_SetupBeamRingPoint(endpoint,radius,radius + 0.1,JBMarker.BeamSprite,JBMarker.HaloSprite,0,10,time,2.0,0.0,JBMarker.MarkerColorRGBA,10,0);
+        TE_SetupBeamRingPoint(endpoint, 300.0, 300.1, JBMarker.BeamSprite, JBMarker.HaloSprite, 0, 10, time, 2.0, 0.0, {255, 255, 255, 255}, 10, 0);
         TE_SendToAll();
     }
     JBFS.MarkerPlaced = true;

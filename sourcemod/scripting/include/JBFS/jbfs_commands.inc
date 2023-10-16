@@ -201,7 +201,7 @@ public Action Command_WardenMarker(int client, int args)
 {
     if (client == JBFS.Warden)
     {
-        if (JBFS.MarkerPlaced) CPrintToChat(client,"%t %t","CommandMarkerSlow");
+        if (JBFS.MarkerPlaced) CPrintToChat(client,"%t %t","PluginTag","CommandMarkerSlow");
         else CreateMarker(client);
     }
     else
