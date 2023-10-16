@@ -154,6 +154,7 @@ public void LoadLRConfig()
         GetEntPropString(e, Prop_Data, "m_iName", name, sizeof(name));
         if (strncmp("jblr_",name,5,false))
         {
+            PrintToServer("Custom LR found: %s",name)
             strcopy(g_MapLRNames[count],64,name[5]);
             g_MapLRRelays[count++] = name;
         }
@@ -205,7 +206,6 @@ stock void AddWepSec(KeyValues kv, char[] sectionname,any sectionarray[128])
     kv.Rewind()
     kv.JumpToKey(sectionname,true)
     if(!kv.GotoFirstSubKey(false)){
-        PrintToServer("Section %s has no config set!",sectionname)
         kv.JumpToKey("0",true);
         kv.SetNum(NULL_STRING,-1);
     }
@@ -215,7 +215,6 @@ stock void AddWepSec(KeyValues kv, char[] sectionname,any sectionarray[128])
     {
         int wep = kv.GetNum(NULL_STRING);
         sectionarray[count++] = wep;
-        PrintToServer("Adding blocked wep %d to section %s",wep,sectionname)
     }
     while(kv.GotoNextKey(false))
 }

@@ -21,10 +21,25 @@ stock MRESReturn Detour_GetWarden(DHookReturn hReturn)
 {
     if (vscript)
     {
-        hReturn.SetInt(GetClientUserId(JBFS.Warden));
+        hReturn.Value = GetClientUserId(JBFS.Warden);
         return MRES_Supercede;
     }
+    return MRES_Ignored;
 }
+
+any RunScript(const char[] sScript, HSCRIPT pScope = HSCRIPT_RootTable)
+{
+	HSCRIPT pCompile = VScript_CompileScript(sScript);
+	VScriptExecute hExecute = new VScriptExecute(pCompile, pScope);
+	hExecute.Execute();
+	any nReturn = hExecute.ReturnValue;
+
+	delete hExecute;
+
+	pCompile.ReleaseScript();
+	return nReturn;
+}
+
 #endif
 
 stock void JBGameEvent(int eventType)
@@ -57,7 +72,7 @@ stock void JBGameEvent(int eventType)
                 Format(scriptstring,sizeof(scriptstring),"FireGameEvent(\"JB_OnRemoveWarden\",{warden=%d})",clientid);
                 script = VScript_CompileScript(scriptstring);
             }
-            default
+            default:
             {
                 script.ReleaseScript();
                 return;
