@@ -507,7 +507,7 @@ stock void ChooseMapLR(int client, char selection[32])
 {
     LRConfig.LRChosen = LR_Map;
     LRConfig.MapLRChosen = StringToInt(selection)
-    CPrintToChatAll("%t %t","PluginTag","LRMenuPickedMap",client,LRConfig.MapLRChosen);
+    CPrintToChatAll("%t %t","PluginTag","LRMenuPickedMap",client,g_MapLRNames[LRConfig.MapLRChosen]);
 }
 
 stock void ResetLR()
