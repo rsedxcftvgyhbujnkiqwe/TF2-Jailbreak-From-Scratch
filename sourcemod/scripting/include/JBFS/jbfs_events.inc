@@ -193,8 +193,7 @@ public Action:OnTakeDamage(victim,&attacker,&inflictor,&Float:damage,&damagetype
         //freedays take no player-player damage
         if(LRConfig.FreedaysActive[victim]) damage = 0.0;
         //dealing damage removes your freeday
-        if(LRConfig.FreedaysActive[attacker]) LRRemoveFreeday(attacker);
-        PrintToServer("%N damaged %N!",attacker,victim);
+        if(LRConfig.FreedaysActive[attacker] && damage > 0) LRRemoveFreeday(attacker);
     }
     return action
 }
