@@ -194,6 +194,7 @@ public Action:OnTakeDamage(victim,&attacker,&inflictor,&Float:damage,&damagetype
         if(LRConfig.FreedaysActive[victim]) damage = 0.0;
         //dealing damage removes your freeday
         if(LRConfig.FreedaysActive[attacker]) LRRemoveFreeday(attacker);
+        PrintToServer("%N damaged %N!",attacker,victim);
     }
     return action
 }
