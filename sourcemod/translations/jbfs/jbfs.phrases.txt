@@ -263,4 +263,9 @@
         "#format"   "{1:s}"
         "en"        "Custom Last Request: {vintage}{1}."
     }
+    "FreedayLost"
+    {
+        "#format"   "{1:N}"
+        "en"        "{unique}{1}{wheat} has rebelled and lost their freeday!"
+    }
 }

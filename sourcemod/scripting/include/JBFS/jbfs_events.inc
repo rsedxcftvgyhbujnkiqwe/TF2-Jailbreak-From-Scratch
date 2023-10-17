@@ -111,15 +111,16 @@ public Action OnPlayerSpawn(Event event, const char[] name, bool dontBroadcast)
     }
     if (cvarJBFS[AirblastImmunity].BoolValue) TF2Attrib_SetByDefIndex(client, 329, 0.0);
 
-    char classname[64];
-    for (int i; i<=TFWeaponSlot_Item2;i++)
+    RemoveWeapons(client);
+    JBFS.HasAmmo[client] = true;
+    if (GetClientTeam(client)==RED)
     {
-        int wep = GetPlayerWeaponSlot(client,i);
-        if (wep > 0) GetEdictClassname(wep,classname,sizeof(classname));
-        PrintToServer("%d (%s) found in slot %d for %N",wep,classname,i,client)
+        if (!LRConfig.WardayActive)
+            RemoveAmmo(client);
     }
 
-    CreateTimer(0.1, PreparePlayer, client);
+    TF2_RemoveWeaponSlot(client,TFWeaponSlot_Item1);
+    TF2_RemoveWeaponSlot(client,TFWeaponSlot_Item2);
 
     return Plugin_Handled;
 }
@@ -210,6 +211,7 @@ public Action:OnTakeDamage(victim,&attacker,&inflictor,&Float:damage,&damagetype
         if(LRConfig.FreedaysActive[attacker] && damage > 0)
         {
             LRRemoveFreeday(attacker);
+            CPrintToChatAll("%t %t","PluginTag","FreedayLost",attacker)
         }
     }
     return action
@@ -236,6 +238,11 @@ public void OnTakeAmmo(const char[] output, int caller, int activator, float del
             if (cvarJBFS[DoubleJump].IntValue==1)
                 TF2Attrib_RemoveByDefIndex(activator,49)
         }
+    }
+    if (LRConfig.FreedaysActive[activator])
+    {
+        LRRemoveFreeday(activator);
+        CPrintToChatAll("%t %t","PluginTag","FreedayLost",activator)
     }
 }
 

@@ -718,16 +718,3 @@ stock void ReturnWeapons(int client)
         g_HasBlockedWeapons[client] = false;
     }
 }
-
-stock Action PreparePlayer(Handle timer, int client)
-{
-    RemoveWeapons(client);
-    JBFS.HasAmmo[client] = true;
-    if (GetClientTeam(client)==RED)
-    {
-        if (!LRConfig.WardayActive)
-            RemoveAmmo(client);
-    }
-
-    return Plugin_Stop;
-}
