@@ -1,14 +1,20 @@
 public any Native_AddGuardBan(Handle plugin, int numParams)
 {
-    return AddGuardBan(GetNativeCell(1));
+    int client = GetNativeCell(1);
+    if (JBFS.GuardBanned[client]) return false;
+    JBFS.GuardBanned[client] = true;
+    return true;
 }
 
 public any Native_RemoveGuardBan(Handle plugin, int numParams)
 {
-    return RemoveGuardBan(GetNativeCell(1));
+    int client = GetNativeCell(1);
+    if (!JBFS.GuardBanned[client]) return false;
+    JBFS.GuardBanned[client] = false;
+    return true;
 }
 
 public any Native_IsGuardBanned(Handle plugin, int numParams)
 {
-    return IsGuardBanned(GetNativeCell(1));
+    return JBFS.GuardBanned[GetNativeCell(1)];
 }

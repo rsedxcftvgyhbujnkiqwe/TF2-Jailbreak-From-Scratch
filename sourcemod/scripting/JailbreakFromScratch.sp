@@ -267,6 +267,7 @@ public APLRes ASkPluginLoad2(Handle myself, bool late, char[] error, int err_max
 {
     CreateNative("JBFS_AddGuardBan",Native_AddGuardBan);
     CreateNative("JBFS_RemoveGuardBan",Native_RemoveGuardBan);
+    CreateNative("JBFS_IsGuardBanned",Native_IsGuardBanned);
 
     RegPluginLibrary("JailbreakFromScratch");
     return APLRes_Success;

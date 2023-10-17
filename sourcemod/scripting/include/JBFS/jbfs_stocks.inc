@@ -718,20 +718,3 @@ stock void ReturnWeapons(int client)
         g_HasBlockedWeapons[client] = false;
     }
 }
-
-stock bool AddGuardBan(int client)
-{
-    if (JBFS.GuardBanned[client]) return false;
-    JBFS.GuardBanned[client] = true;
-    return true;
-}
-stock bool RemoveGuardBan(int client)
-{
-    if (!JBFS.GuardBanned[client]) return false;
-    JBFS.GuardBanned[client] = false;
-    return true;
-}
-stock bool IsGuardBanned(int client)
-{
-    return JBFS.GuardBanned[client];
-}
