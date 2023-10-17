@@ -176,9 +176,8 @@ public void OnMapStart()
     //sounds to precache
     ManagePrecache();
 
-    //make sure LRs dont carry-over
+    //make sure stuff doesn't carry over
     ResetLR();
-    ResetActiveLR();
     LRConfig.LRChosen = LR_None;
 
     //vscript

@@ -3,6 +3,8 @@ public void OnPreRoundStart(Event event, const char[] name, bool dontBroadcast)
     LRConfig.LRActive = LRConfig.LRChosen;
     LRConfig.LRChosen = LR_None;
     JBFS.RoundActive = false;
+    if (IsValidHandle(JBFS.RoundTimer)) KillTimer(JBFS.RoundTimer);
+    
     //warden stuff
     RemoveWarden(UW_Silent);
     LockWarden(false);
