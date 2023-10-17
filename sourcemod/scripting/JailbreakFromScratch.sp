@@ -54,7 +54,7 @@ public void OnPluginStart()
     cvarJBFS[MicBalance] = CreateConVar("sm_jbfs_micblanace","1","Whether to check for guard mics when autobalancing.\nGuards without a mic are autobalanced first.\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.1,true,1.0)
     cvarJBFS[MicWarden] = CreateConVar("sm_jbfs_micwarden","1","Whether to check for guard mics when assigning warden.\nGuards without a mic are not allowed to be warden.\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.1,true,1.0)
     cvarJBFS[FireVote] = CreateConVar("sm_jbfs_firevote","1","Enable the firing system, allowing prisoners to fire the warden by popular vote.\n0 = Disabled\n1 = Enabled",FCVAR_NOTIFY,true,0.0,true,1.0);
-    cvarJBFS[GuardFire] = CreateConVar("sm_jbfs_guardfire","1","If the firing system is enalbed, allow guards to participate in fire votes\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0);
+    cvarJBFS[GuardFire] = CreateConVar("sm_jbfs_guardfire","1","If the firing system is enabled, allow guards to participate in fire votes\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0);
     cvarJBFS[FireRatio] = CreateConVar("sm_jbfs_fireratio","0.7","Ratio of eligible players required to fire the Warden.\nIf guard firing is enabled, guards are included in the ratio.",FCVAR_NOTIFY,true,0.1,true,1.0)
     cvarJBFS[MarkerTime] = CreateConVar("sm_jbfs_markertime","10.0","Timed life of markers.\n0 disables marker system.",FCVAR_NOTIFY,true,0.0,true,20.0);
     cvarJBFS[MarkerRadius] = CreateConVar("sm_jbfs_markerradius","256","Radius of markers, in hammer units.",FCVAR_NOTIFY,true,32.0,true,512.0);

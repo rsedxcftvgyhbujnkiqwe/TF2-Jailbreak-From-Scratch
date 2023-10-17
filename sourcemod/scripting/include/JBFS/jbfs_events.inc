@@ -121,9 +121,6 @@ public Action OnPlayerSpawn(Event event, const char[] name, bool dontBroadcast)
             RemoveAmmo(client);
     }
 
-    TF2_RemoveWeaponSlot(client,TFWeaponSlot_Item1);
-    TF2_RemoveWeaponSlot(client,TFWeaponSlot_Item2);
-
     return Plugin_Handled;
 }
 
