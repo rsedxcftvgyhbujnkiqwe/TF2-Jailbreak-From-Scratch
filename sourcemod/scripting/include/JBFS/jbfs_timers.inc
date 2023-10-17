@@ -54,3 +54,4 @@ public Action Timer_KillCells(Handle timer)
     AcceptEntityInput(cells,"Kill")
     return Plugin_Stop;
 }
+

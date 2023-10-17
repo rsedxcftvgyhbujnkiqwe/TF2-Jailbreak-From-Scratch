@@ -85,33 +85,9 @@ public Action OnPlayerSpawn(Event event, const char[] name, bool dontBroadcast)
     int client = GetClientOfUserId(event.GetInt("userid"));
     if (!IsClientInGame(client) || (GetClientTeam(client)!=RED && GetClientTeam(client)!=BLU))
         return Plugin_Continue;
-    RemoveWeapons(client);
-    JBFS.HasAmmo[client] = true;
-    if (GetClientTeam(client)==RED)
-    {
-        if (!LRConfig.WardayActive)
-            RemoveAmmo(client);
-        if (LRConfig.FreedaysActive[client])
-        {
-            LRSetFreedayPost(client);
-        }
-    }
-    switch (TF2_GetPlayerClass(client))
-    {
-        case TFClass_Scout:
-        {
-            switch (cvarJBFS[DoubleJump].IntValue)
-            {
-                case 0: TF2Attrib_SetByDefIndex(client, 49, 1.0);
-                case 2:
-                {
-                    if (GetClientTeam(client)==RED)
-                        TF2Attrib_SetByDefIndex(client, 49, 1.0);
-                }
-            }
-        }
-    }
-    if (cvarJBFS[AirblastImmunity].BoolValue) TF2Attrib_SetByDefIndex(client, 329, 0.0);
+
+    CreateTimer(0.1, PreparePlayer, client);
+
     return Plugin_Handled;
 }
 

@@ -718,3 +718,36 @@ stock void ReturnWeapons(int client)
         g_HasBlockedWeapons[client] = false;
     }
 }
+
+stock Action PreparePlayer(Handle timer, int client)
+{
+    RemoveWeapons(client);
+    JBFS.HasAmmo[client] = true;
+    if (GetClientTeam(client)==RED)
+    {
+        if (!LRConfig.WardayActive)
+            RemoveAmmo(client);
+        if (LRConfig.FreedaysActive[client])
+        {
+            LRSetFreedayPost(client);
+        }
+    }
+    switch (TF2_GetPlayerClass(client))
+    {
+        case TFClass_Scout:
+        {
+            switch (cvarJBFS[DoubleJump].IntValue)
+            {
+                case 0: TF2Attrib_SetByDefIndex(client, 49, 1.0);
+                case 2:
+                {
+                    if (GetClientTeam(client)==RED)
+                        TF2Attrib_SetByDefIndex(client, 49, 1.0);
+                }
+            }
+        }
+    }
+    if (cvarJBFS[AirblastImmunity].BoolValue) TF2Attrib_SetByDefIndex(client, 329, 0.0);
+
+    return Plugin_Stop;
+}
