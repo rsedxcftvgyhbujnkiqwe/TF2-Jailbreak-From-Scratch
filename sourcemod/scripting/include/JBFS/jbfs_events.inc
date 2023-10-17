@@ -111,8 +111,10 @@ public Action OnPlayerSpawn(Event event, const char[] name, bool dontBroadcast)
     }
     if (cvarJBFS[AirblastImmunity].BoolValue) TF2Attrib_SetByDefIndex(client, 329, 0.0);
 
-    PrintToServer("%d item1 slot for %N",GetPlayerWeaponSlot(client,TFWeaponSlot_Item1),client)
-    PrintToServer("%d item2 slot for %N",GetPlayerWeaponSlot(client,TFWeaponSlot_Item2),client)
+    for (int i; i<=TFWeaponSlot_Item2;i++)
+    {
+        PrintToServer("%d found in slot %d for %N",GetPlayerWeaponSlot(client,i),i,client)
+    }
 
     CreateTimer(0.1, PreparePlayer, client);
 
