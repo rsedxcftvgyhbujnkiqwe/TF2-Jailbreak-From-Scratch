@@ -111,9 +111,12 @@ public Action OnPlayerSpawn(Event event, const char[] name, bool dontBroadcast)
     }
     if (cvarJBFS[AirblastImmunity].BoolValue) TF2Attrib_SetByDefIndex(client, 329, 0.0);
 
+    char classname[64];
     for (int i; i<=TFWeaponSlot_Item2;i++)
     {
-        PrintToServer("%d found in slot %d for %N",GetPlayerWeaponSlot(client,i),i,client)
+        int wep = GetPlayerWeaponSlot(client,i);
+        if (wep > 0) GetEdictClassname(wep,classname,sizeof(classname));
+        PrintToServer("%d (%s) found in slot %d for %N",wep,classname,i,client)
     }
 
     CreateTimer(0.1, PreparePlayer, client);
