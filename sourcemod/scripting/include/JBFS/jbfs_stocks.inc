@@ -579,6 +579,7 @@ stock void LRSetFreedayPost(int client)
 stock void LRRemoveFreeday(int client)
 {
     LRConfig.FreedaysActive[client] = false;
+    CPrintToChatAll("Freeday removed for %N",client)
 }
 
 stock bool ClientEligibleForFreeday(int client)
