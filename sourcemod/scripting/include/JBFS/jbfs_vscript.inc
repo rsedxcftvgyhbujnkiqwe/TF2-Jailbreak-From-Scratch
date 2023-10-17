@@ -21,7 +21,8 @@ stock MRESReturn Detour_GetWarden(DHookReturn hReturn)
 {
     if (vscript)
     {
-        hReturn.Value = GetClientUserId(JBFS.Warden);
+        if (JBFS.Warden > 0) hReturn.Value = GetClientUserId(JBFS.Warden);
+        else hReturn.Value = 0;
         return MRES_Supercede;
     }
     return MRES_Ignored;
