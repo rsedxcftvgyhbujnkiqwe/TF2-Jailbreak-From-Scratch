@@ -1,0 +1,115 @@
+"Phrases"
+{
+    "WardenMenuTitle"
+    {
+        "en"        "Warden Menu"
+    }
+    "WardenMenuReOpen"
+    {
+        "en"        "Warden menu closed. Type !wm to reopen it."
+    }
+    "WardenMenuOpenCells"
+    {
+        "en"        "Open Cells"
+    }
+    "WardenMenuCloseCells"
+    {
+        "en"        "Close Cells"
+    }
+    "WardenMenuToggleFF"
+    {
+        "en"        "Toggle Friendly Fire"
+    }
+    "WardenMenuToggleCC"
+    {
+        "en"        "Toggle Collisions"
+    }
+    "WardenMenuMarker"
+    {
+        "en"        "Marker"
+    }
+    "AdminWardenMenuForceWarden"
+    {
+        "en"        "Force Random Warden"
+    }
+    "AdminWardenMenuRetireWarden"
+    {
+        "en"        "Fire Warden"
+    }
+    "AdminWardenMenuLockWarden"
+    {
+        "en"        "Lock Warden"
+    }
+    "AdminWardenMenuUnlockWarden"
+    {
+        "en"        "Unlock Warden"
+    }
+    "LRMenuTitle"
+    {
+        "en"        "Last Request"
+    }
+    "LRMenuClose"
+    {
+        "en"        "Last Request menu has been closed. Give LR again to reopen it."
+    }
+    "LRMenuOptionFreeday"
+    {
+        "en"        "Freeday for yourself"
+    }
+    "LRMenuOptionFreedayOthers"
+    {
+        "en"        "Freeday for others"
+    }
+    "LRMenuOptionFreedayAll"
+    {
+        "en"        "Freeday for all"
+    }
+    "LRMenuOptionWarday"
+    {
+        "en"        "Warday"
+    }
+    "LRMenuOptionCustom"
+    {
+        "en"        "Custom"
+    }
+    "LRMenuPickedFreeday"
+    {
+        "#format"   "{1:N}"
+        "en"        "{unique}{1}{wheat} has chosen to give themself a {strange}Freeday."
+    }
+    "LRMenuPickedFreedayOthers"
+    {
+        "#format"   "{1:N}"
+        "en"        "{unique}{1}{wheat} is choosing others for a {strange}Freeday..."
+    }
+    "LRMenuPickedFreedayAll"
+    {
+        "#format"   "{1:N}"
+        "en"        "{unique}{1}{wheat} has chosen to give all prisoners a {strange}Freeday."
+    }
+    "LRMenuPickedWarday"
+    {
+        "#format"   "{1:N}"
+        "en"        "{unique}{1}{wheat} has chosen to have a {collectors}Warday."
+    }
+    "LRMenuPickedCustom"
+    {
+        "#format"   "{1:N}"
+        "en"        "{unique}{1}{wheat} is typing out a custom last request."
+    }
+    "LRMenuPickedMap"
+    {
+        "#format"   "{1:N}{2:s}"
+        "en"        "{unique}{1}{wheat} has chosen a Map LR: {vintage}{2}."
+    }
+    "LRMenuWinner"
+    {
+        "#format"   "{1:N}"
+        "en"        "{unique}{1}{wheat} has been given a {unusual}last request."
+    }
+    "LRMenuWinnerAdmin"
+    {
+        "#format"   "{1:N}"
+        "en"        "{unique}{1}{wheat} was forcibly given a {unusual}last request{wheat} by an admin."
+    }
+}

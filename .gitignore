@@ -1,18 +1,30 @@
 *
 !.gitignore
+!LICENSE
+!README.md
 
 !/sourcemod/
 /sourcemod/*
 
 !/sourcemod/plugins/
 /sourcemod/plugins/*
-
+!/sourcemod/plugins/JailbreakFromScratch*
 
 !/sourcemod/scripting/
 /sourcemod/scripting/*
+!/sourcemod/scripting/JailbreakFromScratch*
 
+!/sourcemod/scripting/include/
+/sourcemod/scripting/include/*
+!/sourcemod/scripting/include/jbfs.inc
+!/sourcemod/scripting/include/JBFS/
+!/sourcemod/scripting/include/JBFS/*
 
 !/sourcemod/configs/
 /sourcemod/configs/*
+!/sourcemod/configs/jbfs
+!/sourcemod/configs/jbfs/*
 
-
+!/sourcemod/translations/
+/sourcemod/translations/*
+!/sourcemod/translations/jbfs.phrases.txt

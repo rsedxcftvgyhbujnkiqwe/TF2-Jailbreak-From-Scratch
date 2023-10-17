@@ -1,0 +1,271 @@
+"Phrases"
+{
+    "PluginTag"
+    {
+        "en"        "{day9}[JBFS]{wheat}"
+    }
+    "WardenWarnLocked"
+    {
+        "en"        "Warden is locked."
+    }
+    "WardenWarnTaken"
+    {
+        "#format"   "{1:N}"
+        "en"        "{unique}{1}{wheat} is currently the Warden."
+    }
+    "WardenWarnNoMic"
+    {
+        "en"        "You must have a microphone to become Warden. Use it at least once."
+    }
+    "WardenWarnDead"
+    {
+        "en"        "Must be alive to become Warden."
+    }
+    "WardenWarnNotBlue"
+    {
+        "en"        "Must be on BLU to become Warden."
+    }
+    "WardenWarnNotWarden"
+    {
+        "en"        "You are not the Warden."
+    }
+    "WardenWarnFired"
+    {
+        "en"        "You were fired from Warden, and cannot become warden again this round."
+    }
+    "WardenWarnAdminInvalid"
+    {
+        "#format"   "{1:N}"
+        "en"        "{unique}{1}{wheat} is ineligible to become Warden."
+    }
+    "WardenWarnAdminRedundant"
+    {
+        "#format"   "{1:N}"
+        "en"        "{unique}{1}{wheat} is already the Warden."
+    }
+    "WardenWarnAdminNone"
+    {
+        "en"        "There is no Warden."
+    }
+    "WardenWChose"
+    {
+        "#format"   "{1:N}"
+        "en"        "{unique}{1}{wheat} has chosen to become Warden."
+    }
+    "WardenWForce"
+    {
+        "#format"   "{1:N}"
+        "en"        "{unique}{1}{wheat} was forced to become Warden by an admin."
+    }
+    "WardenWRandom"
+    {
+        "#format"   "{1:N}"
+        "en"        "{unique}{1}{wheat} was randomly selected to become Warden."
+    }
+    "WardenUWRetire"
+    {
+        "#format"   "{1:N}"
+        "en"        "{unique}{1}{wheat} has retired from Warden."
+    }
+    "WardenUWForce"
+    {
+        "#format"   "{1:N}"
+        "en"        "{unique}{1}{wheat} was forced to step down from Warden by an admin."
+    }
+    "WardenUWDeath"
+    {
+        "#format"   "{1:N}"
+        "en"        "{unique}{1}{wheat} has died as Warden!"
+    }
+    "WardenUWDisconnect"
+    {
+        "#format"   "{1:N}"
+        "en"        "{unique}{1}{wheat} has disconnected as Warden."
+    }
+    "WardenUWFire"
+    {
+        "#format"   "{1:N}"
+        "en"        "{unique}{1}{wheat} has been fired from Warden."
+    }
+    "WardenUWTeamChange"
+    {
+        "#format"   "{1:N}"
+        "en"        "{unique}{1}{wheat} changed teams as Warden."
+    }
+    "WardenChooseNone"
+    {
+        "en"        "No players eligible to become warden. Guards must have a microphone to become the Warden."
+    }
+    "WardenLock"
+    {
+        "en"        "Warden has been locked."
+    }
+    "WardenUnlock"
+    {
+        "en"        "Warden has been unlocked."
+    }
+    "CommandUsageJTime"
+    {
+        "en"        "Usage: sm_jailtime <seconds>"
+    }
+    "CellsOpen"
+    {
+        "en"        "The cell doors have been opened."
+    }
+    "CellsClose"
+    {
+        "en"        "The cell doors have been closed."
+    }
+    "CellsWarnNone"
+    {
+        "en"        "Cell door config for map not set properly by server."
+    }
+    "CellsWarnBadClass"
+    {
+        "en"        "Cell door config set by server is not a cell door."
+    }
+    "CellsWarnCantClose"
+    {
+        "en"        "Cell doors can't be closed."
+    }
+    "CellsWarnLR"
+    {
+        "en"        "Cells can't be modified during this LR.
+    }
+    "FFNotifyOn"
+    {
+        "en"        "Warden has enabled Friendly-Fire!"
+    }
+    "FFNotifyOff"
+    {
+        "en"        "Warden has disabled Friendly-Fire!"
+    }
+    "FFNotifyOnAdmin"
+    {
+        "en"        "An admin has enabled Friendly-Fire!"
+    }
+    "FFNotifyOffAdmin"
+    {
+        "en"        "An admin has disabled Friendly-Fire!"
+    }
+    "FFStatusOn"
+    {
+        "en"        "Friendly fire is on."
+    }
+    "FFStatusOff"
+    {
+        "en"        "Friendly fire is off."
+    }
+    "CCNotifyOn"
+    {
+        "en"        "Warden has enabled collisions."
+    }
+    "CCNotifyOff"
+    {
+        "en"        "Warden has disabled collisions."
+    }
+    "CCNotifyOnAdmin"
+    {
+        "en"        "An admin has enabled collisions."
+    }
+    "CCNotifyOffAdmin"
+    {
+        "en"        "An admin has disabled collisions."
+    }
+    "CommandFireWarnDisabled"
+    {
+        "en"        "Firing is not enabled on this server."
+    }
+    "CommandFireWarnNone"
+    {
+        "en"        "There is no Warden to fire."
+    }
+    "CommandFireWarnSelf"
+    {
+        "en"        "You can't fire yourself!"
+    }
+    "CommandFireWarnDead"
+    {
+        "en"        "Must be alive to participate in a fire vote."
+    }
+    "CommandFireWarnDone"
+    {
+        "en"        "You have already voted to fire the Warden"
+    }
+    "CommandFireWarnGuard"
+    {
+        "en"        "Guard firing is not enabled on this server."
+    }
+    "CommandFireNotifyVote"
+    {
+        "#format"   "{1:N}{2:d}{3:d}"
+        "en"        "{unique}{1}{wheat} has voted to fire the Warden ({2}/{3})."
+    }
+    "CommandMarkerDisabled"
+    {
+        "en"        "Markers are not enabled on this server"
+    }
+    "CommandMarkerSlow"
+    {
+        "en"        "Placing markers too fast, slow down and try again."
+    }
+    "CommandAdminFreedayWarn"
+    {
+        "#format"   "{1:N}"
+        "en"        "{unique}{1}{wheat} is ineligible for Freeday"
+    }
+    "SlowDown"
+    {
+        "en"        "Slow down!"
+    }
+    "LRChooseFreedayOthers"
+    {
+        "#format"   "{1:N}{2:N}{3:d}"
+        "en"        "{unique}{1}{wheat} has chosen {unique}{2}{wheat} for a {strange}Freeday {wheat}({3}/3)."
+    }
+    "LRChooseCustom"
+    {
+        "#format"   "{1:N}{2:s}"
+        "en"        "{unique}{1}{wheat} has chosen: {selfmade}{2}"
+    }
+    "LRFreedayActive"
+    {
+        "#format"   "{1:N}"
+        "en"        "{strange}Freeday{wheat} activated for {unique}{1}{wheat}."
+    }
+    "LRNoneActive"
+    {
+        "en"        "Last Request: None"
+    }
+    "LRFreedaySelfActive"
+    {
+        "en"        "Last Request: {strange}Freeday for self."
+    }
+    "LRFreedayOthersActive"
+    {
+        "en"        "Last Request: {strange}Freeday for others."
+    }
+    "LRFreedayAllActive"
+    {
+        "en"        "Last Request: {strange}Freeday for all."
+    }
+    "LRWardayActive"
+    {
+        "en"        "Last Request: {collectors}Warday."
+    }
+    "LRCustomActive"
+    {
+        "#format"   "{1:s}"
+        "en"        "Custom Last Request: {selfmade}{1}."
+    }
+    "LRMapActive"
+    {
+        "#format"   "{1:s}"
+        "en"        "Custom Last Request: {vintage}{1}."
+    }
+    "FreedayLost"
+    {
+        "#format"   "{1:N}"
+        "en"        "{unique}{1}{wheat} has rebelled and lost their freeday!"
+    }
+}
