@@ -346,7 +346,7 @@ public int LRMenuHandler(Menu menu, MenuAction action, int param1, int param2)
             {
                 ChooseLR(param1,LR_Custom);
             }
-            else if (strncmp("jblr_",info,5,false)==0)
+            else
             {
                 ChooseMapLR(param1,info);
             }
