@@ -237,7 +237,7 @@ stock void BuildingSpawn(int entity)
 {
     int builder = GetEntPropEnt(entity, Prop_Send, "m_hBuilder")
     if (builder == -1) return;
-    int team = GetEntProp(builder,Prop_Send,"m_iTeamNum");
+    int team = GetClientTeam(builder);
     int building, buildteam, buildteamwarday;
     char classname[32];
     GetEdictClassname(entity,classname,sizeof(classname));

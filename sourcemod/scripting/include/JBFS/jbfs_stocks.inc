@@ -21,7 +21,7 @@ stock void AutoBalanceTeams()
     //move guard banned players first before any other math
     for(int i=1;i<=MaxClients;i++)
     {
-        if(IsClientInGame(i) && GetPlayerTeam(i)==BLU && JBFS.GuardBanned[i])
+        if(IsClientInGame(i) && GetClientTeam(i)==BLU && JBFS.GuardBanned[i])
         {
             ForceTeamChange(i,RED,true);
             PrintToServer("%N (guardbanned) autobalanced!",i);
@@ -556,10 +556,10 @@ stock void LRWarday()
 
 stock void LRSetFreeday(int client)
 {
-    if(client == 0 || !IsClientInGame(client)) continue;
+    if(client == 0 || !IsClientInGame(client)) return;
     LRConfig.FreedaysActive[client] = true;
     CPrintToChatAll("%t %t","PluginTag","LRFreedayActive",client);
-    if(GetClientTeam(client)!=RED) continue;
+    if(GetClientTeam(client)!=RED) return;
     TF2_RespawnPlayer(client);
 }
 

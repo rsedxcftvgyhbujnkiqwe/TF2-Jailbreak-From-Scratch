@@ -26,6 +26,7 @@ public Plugin myinfo =
 #include <JBFS/jbfs_timers>
 #include <JBFS/jbfs_cfg>
 #include <JBFS/jbfs_menu>
+#include <JBFS/jbfs_natives>
 #include <JBFS/stocks>
 
 //third party deps
@@ -38,6 +39,7 @@ public Plugin myinfo =
 #define REQUIRE_PLUGIN
 
 #include <JBFS/jbfs_vscript>
+#include <jbfs>
 
 public void OnPluginStart()
 {
@@ -238,7 +240,7 @@ public void OnLibraryRemoved(const char[] name)
     }
 #endif
 #if defined _vscript_included
-    if (StrEqual(name, "vscript"));
+    if (StrEqual(name, "vscript"))
     {
         vscript = false;
     }
@@ -254,7 +256,7 @@ public void OnLibraryAdded(const char[] name)
     }
 #endif
 #if defined _vscript_included
-    if (StrEqual(name, "vscript"));
+    if (StrEqual(name, "vscript"))
     {
         vscript = true;
     }
@@ -266,6 +268,6 @@ public APLRes ASkPluginLoad2(Handle myself, bool late, char[] error, int err_max
     CreateNative("JBFS_AddGuardBan",Native_AddGuardBan);
     CreateNative("JBFS_RemoveGuardBan",Native_RemoveGuardBan);
 
-	RegPluginLibrary("JailbreakFromScratch");
+    RegPluginLibrary("JailbreakFromScratch");
     return APLRes_Success;
 }

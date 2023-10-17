@@ -59,8 +59,9 @@ enum
     ACMD_FF,
     ACMD_CC,
     ACMD_ForceLR,
-    ACMD_WardenMenu,
-    ACMD_ForceFreeday
+    ACMD_ForceFreeday,
+    ACMD_WardenMenu
+    
 }
 ConVar cvarJBFS_ACMD[ACMD_WardenMenu+1];
 
