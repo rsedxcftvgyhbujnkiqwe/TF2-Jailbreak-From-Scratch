@@ -151,7 +151,7 @@ stock void SetWarden(int client,int reason)
             CPrintToChatAll("%t %t","PluginTag","WardenWRandom",client);
         }
     }
-    AttachParticle(client,"teleporter_blue_entrance_level3")
+    AttachParticle(client,"teleporter_blue_charged_level3")
     CreateWardenMenu(client,0);
 }
 
@@ -568,7 +568,7 @@ stock void LRSetFreedayPost(int client)
     //by being in the freeday array, a client has invuln, so no setting it up here
     //invuln done on a per-damage basis to only apply to player attacks
     //spawn particles
-    AttachParticle(client,"teleporter_red_entrance_level3")
+    AttachParticle(client,"teleporter_red_charged_level3")
     //teleport them
     if (MapConfig.hasfspawn)
     {

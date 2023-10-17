@@ -152,10 +152,10 @@ public void LoadLRConfig()
     while((e = FindEntityByClassname(e,"logic_relay"))!=-1)
     {
         GetEntPropString(e, Prop_Data, "m_iName", name, sizeof(name));
-        PrintToServer("Found relay %s at index %d",name,e);
+        PrintToServer("---Found relay %s at index %d",name,e);
         if (strncmp("jblr_",name,5,false))
         {
-            PrintToServer("Custom LR found: %s",name)
+            PrintToServer("---Custom LR found: %s",name)
             strcopy(g_MapLRNames[count],64,name[5]);
             g_MapLRRelays[count++] = name;
         }
