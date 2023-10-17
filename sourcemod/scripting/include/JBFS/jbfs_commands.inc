@@ -284,7 +284,7 @@ public Action Command_Admin_UnlockWarden(int client, int args)
 public Action Command_Admin_JailTime(int client, int args)
 {
     int seconds;
-    if (args > 1 && GetCmdArgIntEx(1,seconds) && seconds >= 0)
+    if (args == 1 && GetCmdArgIntEx(1,seconds) && seconds >= 0)
     {
         JBFS.TimeLeft = seconds;
     }

@@ -145,8 +145,8 @@ public void OnPlayerDisconnect(Event event, const char[] name, bool dontBroadcas
 
 public void DeathEvents(int client)
 {
-    PrintToServer("Running death events for %N",client)
     if (LRConfig.FreedaysActive[client]) LRRemoveFreeday(client);
+    PrintToServer("Resetting freeday death")
     int fday = FindInArray(LRConfig.Freedays,3,client)
     if (fday != -1) LRConfig.Freedays[fday] = 0;
     RemoveParticle(client);
@@ -192,12 +192,16 @@ public Action:OnTakeDamage(victim,&attacker,&inflictor,&Float:damage,&damagetype
             }
         }
         //freedays take no player-player damage
-        if(LRConfig.FreedaysActive[victim]) damage = 0.0;
+        if(LRConfig.FreedaysActive[victim])
+        {
+            damage = 0.0;
+            action = Plugin_Changed;
+        }
         //dealing damage removes your freeday
         if(LRConfig.FreedaysActive[attacker] && damage > 0)
         {
-            PrintToServer("Dealt damage!")
             LRRemoveFreeday(attacker);
+            PrintToServer("Resetting freeday damage")
         }
     }
     return action

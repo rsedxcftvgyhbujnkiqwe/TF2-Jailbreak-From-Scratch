@@ -529,6 +529,7 @@ stock void ResetActiveLR()
 {
     LRConfig.WardayActive = false;
     SetArray(LRConfig.FreedaysActive,sizeof(LRConfig.FreedaysActive),false);
+    PrintToServer("Resetting freedays activelr")
     LRConfig.CustomChatWait = false;
 }
 
@@ -580,7 +581,6 @@ stock void LRRemoveFreeday(int client)
 {
     LRConfig.FreedaysActive[client] = false;
     RemoveParticle(client);
-    CPrintToChatAll("Freeday removed for %N",client)
 }
 
 stock bool ClientEligibleForFreeday(int client)
