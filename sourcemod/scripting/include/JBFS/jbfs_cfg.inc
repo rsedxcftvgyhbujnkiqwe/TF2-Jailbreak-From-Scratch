@@ -155,7 +155,6 @@ public void LoadLRConfig()
         GetEntPropString(e, Prop_Data, "m_iName", name, sizeof(name));
         if (strncmp("jblr_",name,5,false)==0)
         {
-            PrintToServer("---Custom LR found: %s",name)
             strcopy(g_MapLRNames[count],64,name[5]);
             g_MapLRRelays[count++] = name;
         }

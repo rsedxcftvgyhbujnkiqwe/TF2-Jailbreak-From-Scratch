@@ -95,6 +95,13 @@ public Action OnPlayerSpawn(Event event, const char[] name, bool dontBroadcast)
             LRSetFreedayPost(client);
         }
     }
+    else if (GetClientTeam(client)==BLU)
+    {
+        if (JBFS.GuardBanned[client])
+        {
+            ForceTeamChange(client,RED);
+        }
+    }
 
     switch (TF2_GetPlayerClass(client))
     {
@@ -155,7 +162,6 @@ public void OnPlayerDisconnect(Event event, const char[] name, bool dontBroadcas
 public void DeathEvents(int client)
 {
     if (LRConfig.FreedaysActive[client]) LRRemoveFreeday(client);
-    PrintToServer("Resetting freeday death")
     int fday = FindInArray(LRConfig.Freedays,3,client)
     if (fday != -1) LRConfig.Freedays[fday] = 0;
     RemoveParticle(client);

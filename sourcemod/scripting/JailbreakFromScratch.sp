@@ -1,5 +1,5 @@
 #define PLUGIN_NAME         "Jailbreak From Scratch"
-#define PLUGIN_VERSION      "1.0"
+#define PLUGIN_VERSION      "1.1"
 #define PLUGIN_AUTHOR       "blank"
 #define PLUGIN_DESCRIPTION  "Minimal TF2 Jailbreak plugin"
 
@@ -43,7 +43,7 @@ public Plugin myinfo =
 
 public void OnPluginStart()
 {
-    PrintToServer("Starting %s, version %s",PLUGIN_NAME,PLUGIN_VERSION);
+    PrintToServer("===Starting %s, version %s===",PLUGIN_NAME,PLUGIN_VERSION);
     //register cvars
     cvarJBFS[BalanceRatio] = CreateConVar("sm_jbfs_balanceratio","0.5","Default balance ratio of blues to reds.",FCVAR_NOTIFY,true,0.1,true,1.0);
     cvarJBFS[TextChannel] = CreateConVar("sm_jbfs_textchannel","4","Default text channel for JBFS Hud text.",FCVAR_NOTIFY,true,0.0,true,5.0);
@@ -56,7 +56,7 @@ public void OnPluginStart()
     cvarJBFS[FireVote] = CreateConVar("sm_jbfs_firevote","1","Enable the firing system, allowing prisoners to fire the warden by popular vote.\n0 = Disabled\n1 = Enabled",FCVAR_NOTIFY,true,0.0,true,1.0);
     cvarJBFS[GuardFire] = CreateConVar("sm_jbfs_guardfire","1","If the firing system is enabled, allow guards to participate in fire votes\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0);
     cvarJBFS[FireRatio] = CreateConVar("sm_jbfs_fireratio","0.7","Ratio of eligible players required to fire the Warden.\nIf guard firing is enabled, guards are included in the ratio.",FCVAR_NOTIFY,true,0.1,true,1.0)
-    cvarJBFS[MarkerTime] = CreateConVar("sm_jbfs_markertime","10.0","Timed life of markers.\n0 disables marker system.",FCVAR_NOTIFY,true,0.0,true,20.0);
+    cvarJBFS[MarkerTime] = CreateConVar("sm_jbfs_markertime","10.0","Timed life of markers.",FCVAR_NOTIFY,true,1.0,true,20.0);
     cvarJBFS[MarkerRadius] = CreateConVar("sm_jbfs_markerradius","256","Radius of markers, in hammer units.",FCVAR_NOTIFY,true,32.0,true,512.0);
     cvarJBFS[MarkerColor] = CreateConVar("sm_jbfs_markercolor","FFFFFF","Hex color to use for markers.",FCVAR_NOTIFY);
     cvarJBFS[RemoveItem1] = CreateConVar("sm_jbfs_removeitemone","1","Should Item1 be removed from all players?.\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0);
@@ -74,17 +74,23 @@ public void OnPluginStart()
     cvarJBFS[Disguising] = CreateConVar("sm_jbfs_disguising","0","Can spies disguise?\nRequires disguise kit\n0 = No\n1 = With ammo (blues by default)\n2 = Blues only\n3 = Yes (all)",FCVAR_NOTIFY,true,0.0,true,3.0);
     cvarJBFS[DemoCharge] = CreateConVar("sm_jbfs_democharge","1","Can demomen charge?\n0 = No\n1 = With ammo (blues by default)\n2 = Blues only\n3 = Yes (all)",FCVAR_NOTIFY,true,0.0,true,3.0);
     cvarJBFS[LRSetTime] = CreateConVar("sm_jbfs_lrtime","0","Round timer will be set to this many seconds once LR is given.\n0 disables the check",FCVAR_NOTIFY,true,0.0,true,300.0);
+    cvarJBFS[LastRequest] = CreateConVar("sm_jbfs_lastrequest","1","Enable the Last Request system.\nDisabling it will prevent wardens and admins from giving out last request to prisoners.\n0 = Disabled\n1 = Enabled",FCVAR_NOTIFY,true,0.0,true,1.0)
     cvarJBFS[Version] = CreateConVar("jbfs_version",PLUGIN_VERSION,PLUGIN_NAME,FCVAR_REPLICATED | FCVAR_NOTIFY | FCVAR_SPONLY | FCVAR_DONTRECORD);
     //admincmd cvars
-    cvarJBFS_ACMD[ACMD_WardenMenu] = CreateConVar("sm_jbfs_acmd_adminmenu","2","Admin commands (sm_jbfs_acmd_*) requires setting admin flag bits.\nSee: https://wiki.alliedmods.net/Checking_Admin_Flags_(SourceMod_Scripting)\n\nAdmin flag(s) required to open the admin warden menu.",FCVAR_NOTIFY,true,0.0,true,2097151.0);
-    cvarJBFS_ACMD[ACMD_ForceWarden] = CreateConVar("sm_jbfs_acmd_forcewarden","2","Admin flag(s) required to force warden/unwarden.",FCVAR_NOTIFY,true,0.0,true,2097151.0);
-    cvarJBFS_ACMD[ACMD_LockWarden] = CreateConVar("sm_jbfs_acmd_lockwarden","2","Admin flag(s) required to lock/unlock warden.",FCVAR_NOTIFY,true,0.0,true,2097151.0);
-    cvarJBFS_ACMD[ACMD_JailTime] = CreateConVar("sm_jbfs_acmd_jailtime","2","Admin flag(s) required to change jail time.",FCVAR_NOTIFY,true,0.0,true,2097151.0);
-    cvarJBFS_ACMD[ACMD_Cells] = CreateConVar("sm_jbfs_acmd_cells","2","Admin flag(s) required to open/close cells.",FCVAR_NOTIFY,true,0.0,true,2097151.0);
-    cvarJBFS_ACMD[ACMD_FF] = CreateConVar("sm_jbfs_acmd_ff","2","Admin flag(s) required to toggle friendly fire.",FCVAR_NOTIFY,true,0.0,true,2097151.0);
-    cvarJBFS_ACMD[ACMD_CC] = CreateConVar("sm_jbfs_acmd_cc","2","Admin flag(s) required to toggle collisions.",FCVAR_NOTIFY,true,0.0,true,2097151.0);
-    cvarJBFS_ACMD[ACMD_ForceLR] = CreateConVar("sm_jbfs_acmd_forcelr","2","Admin flag(s) required to force last request.",FCVAR_NOTIFY,true,0.0,true,2097151.0);
-    cvarJBFS_ACMD[ACMD_ForceFreeday] = CreateConVar("sm_jbfs_acmd_forcefreeday","2","Admin flag(s) required to force freeday.",FCVAR_NOTIFY,true,0.0,true,2097151.0)
+    cvarJBFS_CMD[ACMD_WardenMenu] = CreateConVar("sm_jbfs_acmd_adminmenu","2","Admin commands (sm_jbfs_acmd_*) requires setting admin flag bits.\nSee: https://wiki.alliedmods.net/Checking_Admin_Flags_(SourceMod_Scripting)\n\nAdmin flag(s) required to open the admin warden menu.",FCVAR_NOTIFY,true,0.0,true,2097151.0);
+    cvarJBFS_CMD[ACMD_ForceWarden] = CreateConVar("sm_jbfs_acmd_forcewarden","2","Admin flag(s) required to force warden/unwarden.",FCVAR_NOTIFY,true,0.0,true,2097151.0);
+    cvarJBFS_CMD[ACMD_LockWarden] = CreateConVar("sm_jbfs_acmd_lockwarden","2","Admin flag(s) required to lock/unlock warden.",FCVAR_NOTIFY,true,0.0,true,2097151.0);
+    cvarJBFS_CMD[ACMD_JailTime] = CreateConVar("sm_jbfs_acmd_jailtime","2","Admin flag(s) required to change jail time.",FCVAR_NOTIFY,true,0.0,true,2097151.0);
+    cvarJBFS_CMD[ACMD_Cells] = CreateConVar("sm_jbfs_acmd_cells","2","Admin flag(s) required to open/close cells.",FCVAR_NOTIFY,true,0.0,true,2097151.0);
+    cvarJBFS_CMD[ACMD_FF] = CreateConVar("sm_jbfs_acmd_ff","2","Admin flag(s) required to toggle friendly fire.",FCVAR_NOTIFY,true,0.0,true,2097151.0);
+    cvarJBFS_CMD[ACMD_CC] = CreateConVar("sm_jbfs_acmd_cc","2","Admin flag(s) required to toggle collisions.",FCVAR_NOTIFY,true,0.0,true,2097151.0);
+    cvarJBFS_CMD[ACMD_ForceLR] = CreateConVar("sm_jbfs_acmd_forcelr","2","Admin flag(s) required to force last request.",FCVAR_NOTIFY,true,0.0,true,2097151.0);
+    cvarJBFS_CMD[ACMD_ForceFreeday] = CreateConVar("sm_jbfs_acmd_forcefreeday","2","Admin flag(s) required to force freeday.",FCVAR_NOTIFY,true,0.0,true,2097151.0)
+    //wmenu cvars
+    cvarJBFS_CMD[WCMD_Cells] = CreateConVar("sm_jbfs_wcmd_cells","1","Allow the Warden to open/close the cell doors\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0)
+    cvarJBFS_CMD[WCMD_FriendlyFire] = CreateConVar("sm_jbfs_wcmd_ff","1","Allow the Warden to toggle friendly-fire\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0)
+    cvarJBFS_CMD[WCMD_Collisions] = CreateConVar("sm_jbfs_wcmd_cc","1","Allow the Warden to toggle collisions\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0)
+    cvarJBFS_CMD[WCMD_Marker] = CreateConVar("sm_jbfs_wcmd_marker","1","Allow the Warden to create markers\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0)
     AutoExecConfig(true,"JBFS");
 
     //regular commands for players
@@ -113,33 +119,33 @@ public void OnPluginStart()
     RegConsoleCmd("sm_glr",Command_GiveLastRequest,"Give a prisoner LR");
     RegConsoleCmd("sm_givelr",Command_GiveLastRequest,"Give a prisoner LR");
     //admin commands
-    RegAdminCmd("sm_fw",Command_Admin_ForceWarden,cvarJBFS_ACMD[ACMD_ForceWarden].IntValue,"Force a player to become Warden");
-    RegAdminCmd("sm_forcewarden",Command_Admin_ForceWarden,cvarJBFS_ACMD[ACMD_ForceWarden].IntValue,"Force a player to become Warden");
-    RegAdminCmd("sm_fuw",Command_Admin_ForceUnWarden,cvarJBFS_ACMD[ACMD_ForceWarden].IntValue,"Force the current Warden to retire");
-    RegAdminCmd("sm_forceretire",Command_Admin_ForceUnWarden,cvarJBFS_ACMD[ACMD_ForceWarden].IntValue,"Force the current Warden to retire");
-    RegAdminCmd("sm_forceunwarden",Command_Admin_ForceUnWarden,cvarJBFS_ACMD[ACMD_ForceWarden].IntValue,"Force the current Warden to retire");
-    RegAdminCmd("sm_lw",Command_Admin_LockWarden,cvarJBFS_ACMD[ACMD_LockWarden].IntValue,"Lock Warden");
-    RegAdminCmd("sm_lockwarden",Command_Admin_LockWarden,cvarJBFS_ACMD[ACMD_LockWarden].IntValue,"Lock Warden");
-    RegAdminCmd("sm_ulw",Command_Admin_UnlockWarden,cvarJBFS_ACMD[ACMD_LockWarden].IntValue,"Unlock Warden");
-    RegAdminCmd("sm_unlockwarden",Command_Admin_UnlockWarden,cvarJBFS_ACMD[ACMD_LockWarden].IntValue,"Unlock Warden");
-    RegAdminCmd("sm_jt",Command_Admin_JailTime,cvarJBFS_ACMD[ACMD_JailTime].IntValue,"Set time left in round, in seconds");
-    RegAdminCmd("sm_jtime",Command_Admin_JailTime,cvarJBFS_ACMD[ACMD_JailTime].IntValue,"Set time left in round, in seconds");
-    RegAdminCmd("sm_jailtime",Command_Admin_JailTime,cvarJBFS_ACMD[ACMD_JailTime].IntValue,"Set time left in round, in seconds");
-    RegAdminCmd("sm_foc",Command_Admin_OpenCells,cvarJBFS_ACMD[ACMD_Cells].IntValue,"Force open the cell doors");
-    RegAdminCmd("sm_forceopencells",Command_Admin_OpenCells,cvarJBFS_ACMD[ACMD_Cells].IntValue,"Force open the cell doors");
-    RegAdminCmd("sm_fcc",Command_Admin_CloseCells,cvarJBFS_ACMD[ACMD_Cells].IntValue,"Force close the cell doors");
-    RegAdminCmd("sm_forceclosecells",Command_Admin_CloseCells,cvarJBFS_ACMD[ACMD_Cells].IntValue,"Force close the cell doors");
-    RegAdminCmd("sm_aff",Command_Admin_ToggleFriendlyFire,cvarJBFS_ACMD[ACMD_FF].IntValue,"Toggle Friendly Fire");
-    RegAdminCmd("sm_adminff",Command_Admin_ToggleFriendlyFire,cvarJBFS_ACMD[ACMD_FF].IntValue,"Toggle Friendly Fire");
-    RegAdminCmd("sm_acc",Command_Admin_ToggleCollisions,cvarJBFS_ACMD[ACMD_CC].IntValue,"Toggle Collisions");
-    RegAdminCmd("sm_acol",Command_Admin_ToggleCollisions,cvarJBFS_ACMD[ACMD_CC].IntValue,"Toggle Collisions");
-    RegAdminCmd("sm_admincol",Command_Admin_ToggleCollisions,cvarJBFS_ACMD[ACMD_CC].IntValue,"Toggle Collisions");
-    RegAdminCmd("sm_flr",Command_Admin_ForceLastRequest,cvarJBFS_ACMD[ACMD_ForceLR].IntValue,"Force give a prisoner LR");
-    RegAdminCmd("sm_forcelr",Command_Admin_ForceLastRequest,cvarJBFS_ACMD[ACMD_ForceLR].IntValue,"Force give a prisoner LR");
-    RegAdminCmd("sm_freeday",Command_Admin_ForceFreeday,cvarJBFS_ACMD[ACMD_ForceFreeday].IntValue,"Force give a prisoner a freeday")
+    RegAdminCmd("sm_fw",Command_Admin_ForceWarden,cvarJBFS_CMD[ACMD_ForceWarden].IntValue,"Force a player to become Warden");
+    RegAdminCmd("sm_forcewarden",Command_Admin_ForceWarden,cvarJBFS_CMD[ACMD_ForceWarden].IntValue,"Force a player to become Warden");
+    RegAdminCmd("sm_fuw",Command_Admin_ForceUnWarden,cvarJBFS_CMD[ACMD_ForceWarden].IntValue,"Force the current Warden to retire");
+    RegAdminCmd("sm_forceretire",Command_Admin_ForceUnWarden,cvarJBFS_CMD[ACMD_ForceWarden].IntValue,"Force the current Warden to retire");
+    RegAdminCmd("sm_forceunwarden",Command_Admin_ForceUnWarden,cvarJBFS_CMD[ACMD_ForceWarden].IntValue,"Force the current Warden to retire");
+    RegAdminCmd("sm_lw",Command_Admin_LockWarden,cvarJBFS_CMD[ACMD_LockWarden].IntValue,"Lock Warden");
+    RegAdminCmd("sm_lockwarden",Command_Admin_LockWarden,cvarJBFS_CMD[ACMD_LockWarden].IntValue,"Lock Warden");
+    RegAdminCmd("sm_ulw",Command_Admin_UnlockWarden,cvarJBFS_CMD[ACMD_LockWarden].IntValue,"Unlock Warden");
+    RegAdminCmd("sm_unlockwarden",Command_Admin_UnlockWarden,cvarJBFS_CMD[ACMD_LockWarden].IntValue,"Unlock Warden");
+    RegAdminCmd("sm_jt",Command_Admin_JailTime,cvarJBFS_CMD[ACMD_JailTime].IntValue,"Set time left in round, in seconds");
+    RegAdminCmd("sm_jtime",Command_Admin_JailTime,cvarJBFS_CMD[ACMD_JailTime].IntValue,"Set time left in round, in seconds");
+    RegAdminCmd("sm_jailtime",Command_Admin_JailTime,cvarJBFS_CMD[ACMD_JailTime].IntValue,"Set time left in round, in seconds");
+    RegAdminCmd("sm_foc",Command_Admin_OpenCells,cvarJBFS_CMD[ACMD_Cells].IntValue,"Force open the cell doors");
+    RegAdminCmd("sm_forceopencells",Command_Admin_OpenCells,cvarJBFS_CMD[ACMD_Cells].IntValue,"Force open the cell doors");
+    RegAdminCmd("sm_fcc",Command_Admin_CloseCells,cvarJBFS_CMD[ACMD_Cells].IntValue,"Force close the cell doors");
+    RegAdminCmd("sm_forceclosecells",Command_Admin_CloseCells,cvarJBFS_CMD[ACMD_Cells].IntValue,"Force close the cell doors");
+    RegAdminCmd("sm_aff",Command_Admin_ToggleFriendlyFire,cvarJBFS_CMD[ACMD_FF].IntValue,"Toggle Friendly Fire");
+    RegAdminCmd("sm_adminff",Command_Admin_ToggleFriendlyFire,cvarJBFS_CMD[ACMD_FF].IntValue,"Toggle Friendly Fire");
+    RegAdminCmd("sm_acc",Command_Admin_ToggleCollisions,cvarJBFS_CMD[ACMD_CC].IntValue,"Toggle Collisions");
+    RegAdminCmd("sm_acol",Command_Admin_ToggleCollisions,cvarJBFS_CMD[ACMD_CC].IntValue,"Toggle Collisions");
+    RegAdminCmd("sm_admincol",Command_Admin_ToggleCollisions,cvarJBFS_CMD[ACMD_CC].IntValue,"Toggle Collisions");
+    RegAdminCmd("sm_flr",Command_Admin_ForceLastRequest,cvarJBFS_CMD[ACMD_ForceLR].IntValue,"Force give a prisoner LR");
+    RegAdminCmd("sm_forcelr",Command_Admin_ForceLastRequest,cvarJBFS_CMD[ACMD_ForceLR].IntValue,"Force give a prisoner LR");
+    RegAdminCmd("sm_freeday",Command_Admin_ForceFreeday,cvarJBFS_CMD[ACMD_ForceFreeday].IntValue,"Force give a prisoner a freeday")
 
-    RegAdminCmd("sm_awm",Command_Admin_WardenMenu,cvarJBFS_ACMD[ACMD_WardenMenu].IntValue,"Open the Admin Warden menu");
-    RegAdminCmd("sm_awmenu",Command_Admin_WardenMenu,cvarJBFS_ACMD[ACMD_WardenMenu].IntValue,"Open the Admin Warden menu");
+    RegAdminCmd("sm_awm",Command_Admin_WardenMenu,cvarJBFS_CMD[ACMD_WardenMenu].IntValue,"Open the Admin Warden menu");
+    RegAdminCmd("sm_awmenu",Command_Admin_WardenMenu,cvarJBFS_CMD[ACMD_WardenMenu].IntValue,"Open the Admin Warden menu");
 
     //hook gameevents for use as functions
     HookEvent("teamplay_round_start",OnPreRoundStart);

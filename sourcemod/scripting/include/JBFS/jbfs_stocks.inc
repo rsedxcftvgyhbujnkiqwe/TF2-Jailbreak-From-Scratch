@@ -18,16 +18,6 @@ stock bool HasMic(int client,bool ignore = false)
 
 stock void AutoBalanceTeams()
 {
-    //move guard banned players first before any other math
-    for(int i=1;i<=MaxClients;i++)
-    {
-        if(IsClientInGame(i) && GetClientTeam(i)==BLU && JBFS.GuardBanned[i])
-        {
-            ForceTeamChange(i,RED,true);
-            PrintToServer("%N (guardbanned) autobalanced!",i);
-        }
-    }
-
     float flBalanceRatio = cvarJBFS[BalanceRatio].FloatValue;
     int iNumBlue = GetNumPlayers(BLU,true);
     int iNumRed = GetNumPlayers(RED,true);
@@ -419,11 +409,6 @@ stock void ToggleCC(bool admin = false)
 stock void CreateMarker(int client)
 {
     float time = cvarJBFS[MarkerTime].FloatValue;
-    if (time == 0.0)
-    {
-        CPrintToChat(client,"%t %t","PluginTag","CommandMarkerDisabled")
-        return;
-    }
     float eyepos[3];
     float eyeangles[3];
 
@@ -433,7 +418,6 @@ stock void CreateMarker(int client)
     Handle trace = TR_TraceRayFilterEx(eyepos,eyeangles,MASK_SHOT,RayType_Infinite,TraceRayFilterPlayers)
     if (TR_DidHit(trace))
     {
-        PrintToServer("Spawning marker!")
         float endpoint[3];
         TR_GetEndPosition(endpoint,trace);
 
@@ -529,7 +513,6 @@ stock void ResetActiveLR()
 {
     LRConfig.WardayActive = false;
     SetArray(LRConfig.FreedaysActive,sizeof(LRConfig.FreedaysActive),false);
-    PrintToServer("Resetting freedays activelr")
     LRConfig.CustomChatWait = false;
 }
 
@@ -651,20 +634,17 @@ stock void RemoveWeapons(int client)
             if (((AmmoWep && GetClientTeam(client)==RED) || (AllWep || (WardayWep && !LRConfig.WardayActive))) && (GetPlayerWeaponSlot(client, TFWeaponSlot_Melee) == weapon))
             {
                 //everyone needs SOME melee weapon, so if it's banned then give a default one
-                PrintToServer("%N has melee weapon %d to be removed, granting default",client,index);
                 RemoveWeapon(client,i);
                 HasBlocked = true;
             }
             if (AllWep || (WardayWep && !LRConfig.WardayActive))
             {
-                PrintToServer("%N has weapon %d to be removed!",client,index);
                 RemoveWeapon(client,i);
                 HasBlocked = true;
             }
             else if (AmmoWep && GetClientTeam(client)==RED)
             {
                 //DANGER! If you put a melee weapon here, prisoner will A-pose!
-                PrintToServer("%N has weapon %d to be temp removed!",client,index);
                 SetEntPropEnt(client,Prop_Send,"m_hMyWeapons",-1,i);
                 g_BlockedWeapons[client][i] = weapon;
                 HasBlocked = true;

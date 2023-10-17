@@ -37,6 +37,7 @@ enum
     Disguising,
     DemoCharge,
     LRSetTime,
+    LastRequest,
     Version
 }
 ConVar cvarJBFS[Version+1];
@@ -52,6 +53,10 @@ enum
 //always leave ACMDWmenu at the bottom
 enum
 {
+    WCMD_Cells,
+    WCMD_FriendlyFire,
+    WCMD_Collisions,
+    WCMD_Marker,
     ACMD_ForceWarden,
     ACMD_LockWarden,
     ACMD_JailTime,
@@ -63,7 +68,7 @@ enum
     ACMD_WardenMenu
     
 }
-ConVar cvarJBFS_ACMD[ACMD_WardenMenu+1];
+ConVar cvarJBFS_CMD[ACMD_WardenMenu+1];
 
 enum
 {

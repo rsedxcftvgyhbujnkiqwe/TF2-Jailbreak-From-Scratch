@@ -150,6 +150,11 @@ public Action Command_OpenCells(int client, int args)
 {
     if (client == JBFS.Warden)
     {
+        if (!cvarJBFS_CMD[WCMD_Cells].BoolValue)
+        {
+            CPrintToChat(client,"%t %t","PluginTag","CommandDisabled");
+            return Plugin_Handled;
+        }
         ModifyCells(true,client);
     }
     else
@@ -163,6 +168,11 @@ public Action Command_CloseCells(int client, int args)
 {
     if (client == JBFS.Warden)
     {
+        if (!cvarJBFS_CMD[WCMD_Cells].BoolValue)
+        {
+            CPrintToChat(client,"%t %t","PluginTag","CommandDisabled");
+            return Plugin_Handled;
+        }
         ModifyCells(false,client);
     }
     else
@@ -176,6 +186,11 @@ public Action Command_ToggleFriendlyFire(int client, int args)
 {
     if (client == JBFS.Warden)
     {
+        if (!cvarJBFS_CMD[WCMD_FriendlyFire].BoolValue)
+        {
+            CPrintToChat(client,"%t %t","PluginTag","CommandDisabled");
+            return Plugin_Handled;
+        }
         ToggleFF(false);
     }
     else
@@ -189,6 +204,11 @@ public Action Command_ToggleCollisions(int client, int args)
 {
     if (client == JBFS.Warden)
     {
+        if (!cvarJBFS_CMD[WCMD_Collisions].BoolValue)
+        {
+            CPrintToChat(client,"%t %t","PluginTag","CommandDisabled");
+            return Plugin_Handled;
+        }
         ToggleCC(false);
     }
     else
@@ -202,6 +222,11 @@ public Action Command_WardenMarker(int client, int args)
 {
     if (client == JBFS.Warden)
     {
+        if (!cvarJBFS_CMD[WCMD_Marker].BoolValue)
+        {
+            CPrintToChat(client,"%t %t","PluginTag","CommandDisabled");
+            return Plugin_Handled;
+        }
         if (JBFS.MarkerPlaced) CPrintToChat(client,"%t %t","PluginTag","CommandMarkerSlow");
         else CreateMarker(client);
     }

@@ -201,10 +201,6 @@
         "#format"   "{1:N}{2:d}{3:d}"
         "en"        "{unique}{1}{wheat} has voted to fire the Warden ({2}/{3})."
     }
-    "CommandMarkerDisabled"
-    {
-        "en"        "Markers are not enabled on this server"
-    }
     "CommandMarkerSlow"
     {
         "en"        "Placing markers too fast, slow down and try again."
@@ -267,5 +263,13 @@
     {
         "#format"   "{1:N}"
         "en"        "{unique}{1}{wheat} has rebelled and lost their freeday!"
+    }
+    "LastRequestsDisabled"
+    {
+        "en"        "Last Requests are disabled on this server."
+    }
+    "CommandDisabled"
+    {
+        "en"        "Command not enabled on this server."
     }
 }
