@@ -201,7 +201,6 @@ public Action:OnTakeDamage(victim,&attacker,&inflictor,&Float:damage,&damagetype
         if(LRConfig.FreedaysActive[attacker] && damage > 0)
         {
             LRRemoveFreeday(attacker);
-            PrintToServer("Resetting freeday damage")
         }
     }
     return action

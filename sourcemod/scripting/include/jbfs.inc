@@ -24,6 +24,14 @@ native bool JBFS_AddGuardBan(int client);
  */
 native bool JBFS_RemoveGuardBan(int client);
 
+/**
+ * Return whether a player is currently guard banned or not
+ * @param client		Client to check
+ *
+ * @return				true if guard banned, false if not
+ */
+native bool JBFS_IsGuardBanned(int client);
+
 public SharedPlugin __pl_jailbreakfromscratch = {
 	name = "JailbreakFromScratch",
 	file = "JailbreakFromScratch.smx",
@@ -39,5 +47,6 @@ public void __pl_jailbreakfromscratch_SetNTVOptional()
 {
 	MarkNativeAsOptional("JBFS_AddGuardBan");
 	MarkNativeAsOptional("JBFS_RemoveGuardBan");
+	MarkNativeAsOptional("JBFS_IsGuardBanned");
 }
 #endif

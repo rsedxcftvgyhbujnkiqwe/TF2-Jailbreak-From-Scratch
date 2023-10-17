@@ -731,3 +731,7 @@ stock bool RemoveGuardBan(int client)
     JBFS.GuardBanned[client] = false;
     return true;
 }
+stock bool IsGuardBanned(int client)
+{
+    return JBFS.GuardBanned[client];
+}
