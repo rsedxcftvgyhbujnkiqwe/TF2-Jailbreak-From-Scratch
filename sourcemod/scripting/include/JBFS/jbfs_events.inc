@@ -143,8 +143,9 @@ public void OnPlayerDisconnect(Event event, const char[] name, bool dontBroadcas
     JBFS.GuardBanned[client] = false;
 }
 
-public void DeathEvents(client)
+public void DeathEvents(int client)
 {
+    PrintToServer("Running death events for %N",client)
     if (LRConfig.FreedaysActive[client]) LRRemoveFreeday(client);
     int fday = FindInArray(LRConfig.Freedays,3,client)
     if (fday != -1) LRConfig.Freedays[fday] = 0;
@@ -193,7 +194,11 @@ public Action:OnTakeDamage(victim,&attacker,&inflictor,&Float:damage,&damagetype
         //freedays take no player-player damage
         if(LRConfig.FreedaysActive[victim]) damage = 0.0;
         //dealing damage removes your freeday
-        if(LRConfig.FreedaysActive[attacker] && damage > 0) LRRemoveFreeday(attacker);
+        if(LRConfig.FreedaysActive[attacker] && damage > 0)
+        {
+            PrintToServer("Dealt damage!")
+            LRRemoveFreeday(attacker);
+        }
     }
     return action
 }
