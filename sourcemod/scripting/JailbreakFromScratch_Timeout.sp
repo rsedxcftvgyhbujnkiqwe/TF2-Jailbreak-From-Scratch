@@ -188,6 +188,7 @@ public int DB_GetGuardBanLeft(int client)
 
 public void DB_UpdateBanLength(char[] ID, int duration)
 {
+    PrintToServer("Updating ban length to %d for %s",duration,ID)
     char query[256];
     Format(query,sizeof(query),
             "UPDATE %s "
