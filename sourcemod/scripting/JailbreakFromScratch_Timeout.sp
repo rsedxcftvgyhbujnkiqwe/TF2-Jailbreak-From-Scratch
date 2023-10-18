@@ -307,7 +307,7 @@ public Action Command_Admin_Timeout(int client, int args)
     for (int i = 3; i <= args; i++)
     {
         GetCmdArg(i, s, sizeof(s));
-        if (StrEqual(s,"\0")) Format(reason,sizeof(reason),"%s%s",reason,s)
+        if (StrEqual(reason,"\0")) Format(reason,sizeof(reason),"%s%s",reason,s)
         else Format(reason, sizeof(reason), "%s %s", reason, s);
     }
 
