@@ -253,7 +253,7 @@ public Action Command_TimeoutStatus(int client, int args)
     {
         char arg1[32];
         GetCmdArg(1, arg1, sizeof(arg1));
-        int target = FindTarget(client, arg1);
+        int target = FindTarget(client, arg1,true);
         if (target == -1) return Plugin_Handled;
         tclient = target;
         isTarget = true;
@@ -291,7 +291,7 @@ public Action Command_Admin_Timeout(int client, int args)
     }
     char arg1[32],arg2[32];
     GetCmdArg(1, arg1, sizeof(arg1));
-    int target = FindTarget(client, arg1);
+    int target = FindTarget(client, arg1,true);
     if (target == -1) return Plugin_Handled;
 
     GetCmdArg(2, arg2, sizeof(arg2));
@@ -337,7 +337,7 @@ public Action Command_Admin_RemoveTimeout(int client, int args)
     }
     char arg1[32];
     GetCmdArg(1, arg1, sizeof(arg1));
-    int target = FindTarget(client, arg1);
+    int target = FindTarget(client, arg1,true);
     if (target == -1) return Plugin_Handled;
 
     if (DB_IsGuardBanned(target))
