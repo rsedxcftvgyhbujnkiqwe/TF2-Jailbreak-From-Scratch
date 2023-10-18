@@ -134,8 +134,11 @@ public void DB_AddGuardBan(int client, int BanType, int duration, int admin, cha
 {
     int ban_left = DB_GetGuardBanLeft(client);
     char ID[32]; GetClientAuthId(client,AuthId_Steam2,ID,sizeof(ID));
-    char IDAdmin[32]; GetClientAuthId(admin,AuthId_Steam2,IDAdmin,sizeof(IDAdmin));
-
+    char IDAdmin[32];
+    {
+        if (admin == 0) ID = "CONSOLE";
+        else GetClientAuthId(admin,AuthId_Steam2,IDAdmin,sizeof(IDAdmin));
+    }
     if (ban_left > 0)
     {
         DB_UpdateBanLength(ID,0);
