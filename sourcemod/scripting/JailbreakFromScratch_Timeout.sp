@@ -276,7 +276,7 @@ public Action Command_TimeoutStatus(int client, int args)
         else
         {
             if (isTarget) CPrintToChat(client,"%t %t","PluginTag","TargetTimeoutStatusReason",tclient,length,reason);
-            CPrintToChat(tclient,"%t %t","PluginTag","TimeoutStatusReason",length,reason);
+            else CPrintToChat(tclient,"%t %t","PluginTag","TimeoutStatusReason",length,reason);
         }
     }
     return Plugin_Handled;
@@ -307,7 +307,8 @@ public Action Command_Admin_Timeout(int client, int args)
     for (int i = 3; i <= args; i++)
     {
         GetCmdArg(i, s, sizeof(s));
-        Format(reason, sizeof(reason), "%s %s", reason, s);
+        if (StrEqual(s,"\0")) Format(reason,sizeof(reason),"%s%s",reason,s)
+        else Format(reason, sizeof(reason), "%s %s", reason, s);
     }
 
     DB_AddGuardBan(target,Ban_Round,rounds,client,reason)
