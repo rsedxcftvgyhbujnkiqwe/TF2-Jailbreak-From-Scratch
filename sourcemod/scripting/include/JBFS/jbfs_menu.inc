@@ -522,5 +522,5 @@ public Action Command_Admin_ForceLastRequest(int client, int args)
 
 public bool AdminGiveLR(int admin, int target)
 {
-    return SetLRWinner(target,admin,true)
+    return SetLRWinner(target,admin,true,admin)
 }

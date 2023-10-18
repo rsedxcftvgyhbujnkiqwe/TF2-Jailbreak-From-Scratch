@@ -324,10 +324,17 @@ public Action Command_Admin_Timeout(int client, int args)
             if(GetClientTeam(target) == BLU) ForcePlayerSuicide(target);
         }
     }
+    char tag[64],msg[256]; Format(tag,sizeof(tag),"%t","PluginTagAdmin");
     if(StrEqual(reason,"\0"))
-        CShowActivity2(client, "{day9}[JBFS]", " {unique}%N{wheat} has been timed out from guard for %d rounds!",target,rounds);
+    {
+        Format(msg,sizeof(msg)," %t","TimeoutIssued",target,rounds)
+    }
     else
-        CShowActivity2(client, "{day9}[JBFS]", " {unique}%N{wheat} has been timed out from guard for %d rounds, for {strange}%s.",target,rounds,reason);
+    {
+        Format(msg,sizeof(msg)," %t","TimeoutIssuedReason",target,rounds,reason)
+    }
+    CShowActivity2(client, tag, msg);
+    LogAction(client,target,"\"%L\" timed out \"%L\" for %d rounds (reason: %s)",client,target,rounds,reason);
     return Plugin_Handled;
 }
 
@@ -351,6 +358,7 @@ public Action Command_Admin_RemoveTimeout(int client, int args)
         CPrintToChat(client,"%t %t","PluginTag","AdminTimeoutRemoved",target);
     }
     else CPrintToChat(client,"%t %t","PluginTag","AdminTimeoutNone",target);
+    LogAction(client,target,"\"%L\" removed time out for \"%L\"",client,target);
     return Plugin_Handled;
 }
 

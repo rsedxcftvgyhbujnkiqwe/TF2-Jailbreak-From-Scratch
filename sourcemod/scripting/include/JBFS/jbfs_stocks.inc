@@ -120,7 +120,7 @@ stock void SetConVars(const bool side)
     }
 }
 
-stock void SetWarden(int client,int reason)
+stock void SetWarden(int client,int reason, int admin)
 {
     JBFS.Warden = client;
     JBGameEvent(JBEvent_SetWarden);
@@ -134,7 +134,11 @@ stock void SetWarden(int client,int reason)
         }
         case W_Force:
         {
-            CPrintToChatAll("%t %t","PluginTag","WardenWForce",client);
+            char tag[64],msg[256]; 
+            Format(tag,sizeof(tag),"%t","PluginTagAdmin");
+            Format(msg,sizeof(msg)," %t","WardenWForce",client)
+            CShowActivity2(admin, tag, msg);
+            LogAction(admin,client,"\"%L\" forced \"%L\" to become Warden.",admin,client);
         }
         case W_Random:
         {
@@ -374,34 +378,59 @@ stock bool ModifyCells(bool open,int client = 0,bool message = true)
     return true;
 }
 
-stock void ToggleFF(bool admin = false)
+stock void ToggleFF(bool adminforce = false, int admin = 0)
 {
+    
     if (FindConVar("mp_friendlyfire").BoolValue)
     {
         FindConVar("mp_friendlyfire").SetBool(false);
-        if (admin) CPrintToChatAll("%t %t","PluginTag","FFNotifyOffAdmin");
+        if (adminforce){
+            char tag[64],msg[256]; 
+            Format(tag,sizeof(tag),"%t","PluginTagAdmin");
+            Format(msg,sizeof(msg)," %t","FFNotifyOffAdmin");
+            CShowActivity2(admin, tag, msg);
+            LogAction(admin,-1,"\"%L\" turned friendly-fire on.",admin);
+        }
         else CPrintToChatAll("%t %t","PluginTag","FFNotifyOff");
     }
     else
     {
         FindConVar("mp_friendlyfire").SetBool(true);
-        if (admin) CPrintToChatAll("%t %t","PluginTag","FFNotifyOnAdmin");
+        if (adminforce){
+            char tag[64],msg[256]; 
+            Format(tag,sizeof(tag),"%t","PluginTagAdmin");
+            Format(msg,sizeof(msg)," %t","FFNotifyOnAdmin");
+            CShowActivity2(admin, tag, msg);
+            LogAction(admin,-1,"\"%L\" turned friendly-fire off.",admin);
+        }
         else CPrintToChatAll("%t %t","PluginTag","FFNotifyOn");
     }
 }
 
-stock void ToggleCC(bool admin = false)
+stock void ToggleCC(bool admin = false, int admin = 0)
 {
     if (FindConVar("tf_avoidteammates_pushaway").BoolValue)
     {
         FindConVar("tf_avoidteammates_pushaway").SetBool(false);
-        if (admin) CPrintToChatAll("%t %t","PluginTag","CCNotifyOffAdmin");
+        if (admin){
+            char tag[64],msg[256]; 
+            Format(tag,sizeof(tag),"%t","PluginTagAdmin");
+            Format(msg,sizeof(msg)," %t","CCNotifyOffAdmin");
+            CShowActivity2(admin, tag, msg); 
+            LogAction(admin,-1,"\"%L\" turned collisions off.",admin);
+        }
         else CPrintToChatAll("%t %t","PluginTag","CCNotifyOff");
     }
     else
     {
         FindConVar("tf_avoidteammates_pushaway").SetBool(true);
-        if (admin) CPrintToChatAll("%t %t","PluginTag","CCNotifyOnAdmin");
+        if (admin){
+            char tag[64],msg[256]; 
+            Format(tag,sizeof(tag),"%t","PluginTagAdmin");
+            Format(msg,sizeof(msg)," %t","CCNotifyOnAdmin");
+            CShowActivity2(admin, tag, msg); 
+            LogAction(admin,-1,"\"%L\" turned collisions on.",admin);
+        }
         else CPrintToChatAll("%t %t","PluginTag","CCNotifyOn");
     }
 }
@@ -440,7 +469,7 @@ public bool ClientEligibleForLR(int client)
     return false;
 }
 
-stock bool SetLRWinner(int client, int warden, bool adminforce = false)
+stock bool SetLRWinner(int client, int warden, bool adminforce = false, int admin = 0)
 {
     if((!IsClientInGame(client) || !IsPlayerAlive(client) || !(GetClientTeam(client)==RED) || (warden != JBFS.Warden)) && !adminforce)
     {
@@ -450,7 +479,13 @@ stock bool SetLRWinner(int client, int warden, bool adminforce = false)
     LRConfig.LRWinner = client;
     CreateLRMenu(client);
     if (!adminforce) CPrintToChatAll("%t %t","PluginTag","LRMenuWinner",client);
-    else CPrintToChatAll("%t %t","PluginTag","LRMenuWinnerAdmin",client);
+    else{
+        char tag[64],msg[256]; 
+        Format(tag,sizeof(tag),"%t","PluginTagAdmin");
+        Format(msg,sizeof(msg)," %t","LRMenuWinnerAdmin",client);
+        CShowActivity2(admin, tag, msg);
+        LogAction(admin,client,"\"%L\" forcibly gave \"%L\" last request.",admin,client);
+    }
     int timeleft = cvarJBFS[LRSetTime].IntValue;
     if(timeleft > 0) JBFS.TimeLeft = timeleft;
     return false;

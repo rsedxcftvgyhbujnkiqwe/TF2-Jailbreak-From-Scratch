@@ -22,6 +22,16 @@
         "#format"   "{1:N}"
         "en"        "{unique}{1}{wheat} is not currently timed out."
     }
+    "TimeoutIssued"
+    {
+        "#format"   "{1:N}{2:d}"
+        "en"        "{unique}{1}}{wheat} has been timed out from guard for {2} rounds!"
+    }
+    "TimeoutIssuedReason"
+    {
+        "#format"   "{1:N}{2:d}{3:s}"
+        "en"        "{unique}{1}{wheat} has been timed out from guard for {2} rounds, for {strange}{3}."
+    }
     "ClientTimeoutExpired"
     {
         "en"        "Your timeout has expired! You may now become a guard."
