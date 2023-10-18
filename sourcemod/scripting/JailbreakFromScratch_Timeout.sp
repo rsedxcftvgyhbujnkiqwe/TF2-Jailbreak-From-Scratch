@@ -161,7 +161,8 @@ public int DB_GetGuardBanLeft(int client)
     char ID[32]; GetClientAuthId(client,AuthId_Steam2,ID,sizeof(ID));
 
     char query[128];
-    Format(query,sizeof(query), "SELECT ban_left "
+    Format(query,sizeof(query),
+            "SELECT ban_left "
         ... "FROM %s "
         ... "WHERE "
         ... "offender_steamid = '%s' "
@@ -178,7 +179,7 @@ public int DB_GetGuardBanLeft(int client)
     int ban_left;
     while (SQL_FetchRow(hQuery))
     {
-        ban_left = SQL_FetchInt(hQuery, 7)
+        ban_left = SQL_FetchInt(hQuery, 6)
     }
 
     delete hQuery;
