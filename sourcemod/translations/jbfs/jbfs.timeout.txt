@@ -35,4 +35,24 @@
         "#format"   "{1:d}"
         "en"        "You are timed out for {1} more round(s)."
     }
+    "TimeoutStatusReason"
+    {
+        "#format"   "{1:d}{2:s}"
+        "en"        "You are timed out for {1} more round(s), for {strange}{2}."
+    }
+    "TargetTimeoutStatusNone"
+    {
+        "#format"   "{1:N}"
+        "en"        "{unique}{1}{wheat} is not currently timed out"
+    }
+    "TargetTimeoutStatus"
+    {
+        "#format"   "{1:N}{2:d}"
+        "en"        "{unique}{1}{wheat} is timed out for {2} more round(s)."
+    }
+    "TargetTimeoutStatusReason"
+    {
+        "#format"   "{1:N}{2:d}{3:s}"
+        "en"        "{unique}{1}{wheat} is timed out for {2} more round(s), for {strange}{3}."
+    }
 }

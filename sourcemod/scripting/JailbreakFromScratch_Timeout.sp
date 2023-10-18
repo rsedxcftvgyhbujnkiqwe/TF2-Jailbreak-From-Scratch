@@ -80,6 +80,8 @@ public void OnPluginStart()
 public void OnConfigsExecuted()
 {
     RegAdminCmd("sm_timeout",Command_Admin_Timeout,cvarJBFS[ACMD_Timeout].IntValue,"Timeout a player from guard for a specified number of rounds");
+    RegAdminCmd("sm_untimeout",Command_Admin_RemoveTimeout,cvarJBFS[ACMD_Timeout].IntValue,"Remove active timeout for a player");
+    RegAdminCmd("sm_rtimeout",Command_Admin_RemoveTimeout,cvarJBFS[ACMD_Timeout].IntValue,"Remove active timeout for a player");
 
     //connect to DB
     DBConnect();
@@ -120,6 +122,7 @@ public void GotDatabase(Database db, const char[] error, any data)
         char qerror[255];
         SQL_GetError(hDatabase, qerror, sizeof(qerror));
         PrintToServer("Failed to query (error: %s)", qerror);
+        return;
     }
 }
 
@@ -150,6 +153,7 @@ public void DB_AddGuardBan(int client, int BanType, int duration, int admin, cha
         char qerror[255];
         SQL_GetError(hDatabase, qerror, sizeof(qerror));
         PrintToServer("Failed to query (error: %s)", qerror);
+        return;
     }
 
     JBFS_AddGuardBan(client);
@@ -173,6 +177,7 @@ public int DB_GetGuardBanLeft(int client)
         char qerror[255];
         SQL_GetError(hDatabase, qerror, sizeof(qerror));
         PrintToServer("Failed to query (error: %s)", qerror);
+        return -1;
     } 
 
     int ban_left;
@@ -184,6 +189,33 @@ public int DB_GetGuardBanLeft(int client)
     if (ban_left == 0) return -1;
 
     return ban_left;
+}
+
+public void DB_GetGuardBanReason(int client, char[] buffer, int maxlength)
+{
+    char ID[32]; GetClientAuthId(client,AuthId_Steam2,ID,sizeof(ID));
+
+    char query[128];
+    Format(query,sizeof(query),
+            "SELECT reason "
+        ... "FROM %s "
+        ... "WHERE offender_steamid = '%s' "
+        ... "AND ban_left > 0",TableName,ID);
+
+    DBResultSet hQuery = SQL_Query(hDatabase,query);
+    if (hQuery == null)
+    {
+        char qerror[255];
+        SQL_GetError(hDatabase, qerror, sizeof(qerror));
+        PrintToServer("Failed to query (error: %s)", qerror);
+        return
+    } 
+
+    while (SQL_FetchRow(hQuery))
+    {
+        SQL_FetchString(hQuery, 0, buffer, maxlength)
+    }
+    delete hQuery;
 }
 
 public void DB_UpdateBanLength(char[] ID, int duration)
@@ -202,6 +234,7 @@ public void DB_UpdateBanLength(char[] ID, int duration)
         char qerror[255];
         SQL_GetError(hDatabase, qerror, sizeof(qerror));
         PrintToServer("Failed to query (error: %s)", qerror);
+        return;
     }
 }
 
@@ -214,9 +247,38 @@ public bool DB_IsGuardBanned(int client)
 
 public Action Command_TimeoutStatus(int client, int args)
 {
-    int length = DB_GetGuardBanLeft(client);
-    if (length == -1) CPrintToChat(client,"%t %t","PluginTag","TimeoutStatusNone");
-    else CPrintToChat(client,"%t %t","PluginTag","TimeoutStatus",length);
+    int tclient = client;
+    bool isTarget;
+    if(args >= 1 && CheckCommandAccess(client,"foo",cvarJBFS[ACMD_Timeout].IntValue,true))
+    {
+        char arg1[32];
+        GetCmdArg(1, arg1, sizeof(arg1));
+        int target = FindTarget(client, arg1);
+        if (target == -1) return Plugin_Handled;
+        tclient = target;
+        isTarget = true;
+    }
+    int length = DB_GetGuardBanLeft(tclient);
+    if (length == -1) 
+    {
+        if (isTarget) CPrintToChat(client,"%t %t","PluginTag","TargetTimeoutStatusNone",tclient);
+        else CPrintToChat(tclient,"%t %t","PluginTag","TimeoutStatusNone");
+    }
+    else
+    {
+        char reason[128];
+        DB_GetGuardBanReason(tclient,reason,sizeof(reason));
+        if(StrEqual(reason,"\0"))
+        {
+            if (isTarget) CPrintToChat(client,"%t %t","PluginTag","TargetTimeoutStatus",tclient,length);
+            else CPrintToChat(tclient,"%t %t","PluginTag","TimeoutStatus",length);
+        }
+        else
+        {
+            if (isTarget) CPrintToChat(client,"%t %t","PluginTag","TargetTimeoutStatusReason",tclient,length,reason);
+            CPrintToChat(tclient,"%t %t","PluginTag","TimeoutStatusReason",length,reason);
+        }
+    }
     return Plugin_Handled;
 }
 
@@ -258,7 +320,10 @@ public Action Command_Admin_Timeout(int client, int args)
             if(GetClientTeam(target) == BLU) ForcePlayerSuicide(target);
         }
     }
-    CShowActivity2(client, "{day9}[JBFS]", " {unique}%N{wheat} has been timed out from guard for %d rounds!",target,rounds);
+    if(StrEqual(reason,"\0"))
+        CShowActivity2(client, "{day9}[JBFS]", " {unique}%N{wheat} has been timed out from guard for %d rounds!",target,rounds);
+    else
+        CShowActivity2(client, "{day9}[JBFS]", " {unique}%N{wheat} has been timed out from guard for %d rounds, for {strange}%s.",target,rounds,reason);
     return Plugin_Handled;
 }
 
