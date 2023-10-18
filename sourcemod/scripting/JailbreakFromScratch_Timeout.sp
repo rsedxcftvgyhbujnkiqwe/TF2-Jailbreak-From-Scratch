@@ -307,7 +307,7 @@ public void OnArenaRoundEnd(Event event, const char[] name, bool dontBroadcast)
         if (length > 0)
         {
             char ID[32]; GetClientAuthId(i,AuthId_Steam2,ID,sizeof(ID));
-            DB_UpdateBanLength(ID,length--)
+            DB_UpdateBanLength(ID,--length)
             //ban just ran out
             if (length == 0){
                 JBFS_RemoveGuardBan(i);
