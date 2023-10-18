@@ -190,7 +190,7 @@ public void DB_UpdateBanLength(char[] ID, int duration)
 {
     char query[256];
     Format(query,sizeof(query),
-            "UPDATE %s"
+            "UPDATE %s "
         ... "SET ban_left = 0 "
         ... "WHERE offender_steamid = '%s' "
         ... "AND ban_left > 0 ",
