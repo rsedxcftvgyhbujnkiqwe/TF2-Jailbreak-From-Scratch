@@ -51,12 +51,13 @@ enum
 
 Database hDatabase;
 
-char DBName[] = "JBFSTimeouts"
+char TableName[] = "JBFSTimeouts"
 
 public void OnPluginStart()
 {
     cvarJBFS[DatabaseName] = CreateConVar("sm_jbfst_database","jbfstimeouts","Name of SQL database to use. Configured in databases.cfg",FCVAR_NOTIFY)
     cvarJBFS[ACMD_Timeout] = CreateConVar("sm_jbfst_timeout","2","Admin flag(s) required to timeout a player.",FCVAR_NOTIFY,true,0.0,true,2097151.0)
+    cvarJBFS[Version] = CreateConVar("jbfst_version",PLUGIN_VERSION,PLUGIN_NAME,FCVAR_REPLICATED | FCVAR_NOTIFY | FCVAR_SPONLY | FCVAR_DONTRECORD);
     AutoExecConfig(true,"jbfstimeout");
 
     RegConsoleCmd("sm_timeoutstatus",Command_TimeoutStatus,"Check current timeout");
@@ -83,6 +84,7 @@ public void DBConnect()
 {
     char dbname[255];
     cvarJBFS[DatabaseName].GetString(dbname,sizeof(dbname))
+    PrintToServer("Database: %s",dbname)
     Database.Connect(GotDatabase,dbname)
 }
 
@@ -108,7 +110,7 @@ public void GotDatabase(Database db, const char[] error, any data)
 		... "ban_length INT(16), "
 		... "ban_left INT(16), "
 		... "reason VARCHAR(200), "
-		... "PRIMARY KEY (timestamp));",DBName);
+		... "PRIMARY KEY (timestamp));",TableName);
     
     Transaction txn = new Transaction();
 
@@ -137,7 +139,7 @@ public void DB_AddGuardBan(int client, int BanType, int duration, int admin, cha
             "INSERT INTO %s "
 		... "(timestamp, offender_steamid, offender_name, admin_steamid, admin_name, ban_type, ban_length, ban_left) "
 		... "VALUES (%d, '%s', '%N', '%s', '%N', %d, %d, '%s')",
-			DBName, timestamp, ID, client, IDAdmin, admin, duration, duration, reason);
+			TableName, timestamp, ID, client, IDAdmin, admin, duration, duration, reason);
     
     hDatabase.Query(DB_QueryCB,query);
 
@@ -154,7 +156,7 @@ public int DB_GetGuardBanLeft(int client)
         ... "FROM %s "
         ... "WHERE "
         ... "offender_steamid = '%s' "
-        ... "AND ban_left > 0",DBName,ID);
+        ... "AND ban_left > 0",TableName,ID);
 
     DBResultSet hQuery = SQL_Query(hDatabase,query);
     if (hQuery == null) return -1;
@@ -180,7 +182,7 @@ public void DB_UpdateBanLength(char[] ID, int duration)
         ... "SET ban_left = 0 "
         ... "WHERE offender_steamid = '%s' "
         ... "AND ban_left > 0 ",
-        DBName,ID)
+        TableName,ID)
     hDatabase.Query(DB_QueryCB,query);
 }
 
