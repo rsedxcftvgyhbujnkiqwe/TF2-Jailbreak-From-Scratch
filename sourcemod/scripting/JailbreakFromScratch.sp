@@ -91,7 +91,7 @@ public void OnPluginStart()
     cvarJBFS_CMD[WCMD_FriendlyFire] = CreateConVar("sm_jbfs_wcmd_ff","1","Allow the Warden to toggle friendly-fire\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0)
     cvarJBFS_CMD[WCMD_Collisions] = CreateConVar("sm_jbfs_wcmd_cc","1","Allow the Warden to toggle collisions\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0)
     cvarJBFS_CMD[WCMD_Marker] = CreateConVar("sm_jbfs_wcmd_marker","1","Allow the Warden to create markers\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0)
-    AutoExecConfig(true,"JBFS");
+    AutoExecConfig(true,"jbfs");
 
     //regular commands for players
     RegConsoleCmd("sm_w",Command_Warden,"Become the Warden");

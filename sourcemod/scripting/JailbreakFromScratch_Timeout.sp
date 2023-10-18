@@ -57,7 +57,7 @@ public void OnPluginStart()
 {
     cvarJBFS[DatabaseName] = CreateConVar("sm_jbfst_database","jbfstimeouts","Name of SQL database to use. Configured in databases.cfg",FCVAR_NOTIFY)
     cvarJBFS[ACMD_Timeout] = CreateConVar("sm_jbfst_timeout","2","Admin flag(s) required to timeout a player.",FCVAR_NOTIFY,true,0.0,true,2097151.0)
-    AutoExecConfig(true,"JBFSTimeout");
+    AutoExecConfig(true,"jbfstimeout");
 
     RegConsoleCmd("sm_timeoutstatus",Command_TimeoutStatus,"Check current timeout");
     RegAdminCmd("sm_timeout",Command_Admin_Timeout,cvarJBFS[ACMD_Timeout].IntValue,"Timeout a player from guard for a specified number of rounds");
