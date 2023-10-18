@@ -89,7 +89,6 @@ public void DBConnect()
 {
     char dbname[255];
     cvarJBFS[DatabaseName].GetString(dbname,sizeof(dbname))
-    PrintToServer("Database: %s",dbname)
     Database.Connect(GotDatabase,dbname)
 }
 
@@ -117,11 +116,7 @@ public void GotDatabase(Database db, const char[] error, any data)
 		... "reason VARCHAR(200), "
 		... "PRIMARY KEY (timestamp));",TableName);
     
-    Transaction txn = new Transaction();
-
-    txn.AddQuery(query);
-
-    hDatabase.Execute(txn);
+    hDatabase.Query(DB_QueryCB,query);
 }
 
 public void DB_QueryCB(Database db, DBResultSet results, const char[] error, any data)
@@ -244,7 +239,7 @@ public Action Command_Admin_Timeout(int client, int args)
             if(GetClientTeam(target) == BLU) ForcePlayerSuicide(target);
         }
     }
-    CShowActivity2(client, "{day9}[JBFS]", "{unique}%N{wheat} has been timed out from guard for %d rounds!",target,rounds);
+    CShowActivity2(client, "{day9}[JBFS]", " {unique}%N{wheat} has been timed out from guard for %d rounds!",target,rounds);
     return Plugin_Handled;
 }
 
