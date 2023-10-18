@@ -61,7 +61,6 @@ public void OnPluginStart()
     AutoExecConfig(true,"jbfstimeout");
 
     RegConsoleCmd("sm_timeoutstatus",Command_TimeoutStatus,"Check current timeout");
-    RegAdminCmd("sm_timeout",Command_Admin_Timeout,cvarJBFS[ACMD_Timeout].IntValue,"Timeout a player from guard for a specified number of rounds");
 
     LoadTranslations("common.phrases");
     LoadTranslations("jbfs/jbfs.phrases");
@@ -75,6 +74,12 @@ public void OnPluginStart()
     //add custom color(s) to morecolors
     CCheckTrie();
     SetTrieValue(CTrie,"day9",0xFFA71A);
+
+}
+
+public void OnConfigsExecuted()
+{
+    RegAdminCmd("sm_timeout",Command_Admin_Timeout,cvarJBFS[ACMD_Timeout].IntValue,"Timeout a player from guard for a specified number of rounds");
 
     //connect to DB
     DBConnect();
