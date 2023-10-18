@@ -268,7 +268,7 @@ public void OnLibraryAdded(const char[] name)
 #endif
 }
 
-public APLRes ASkPluginLoad2(Handle myself, bool late, char[] error, int err_max)
+public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
     CreateNative("JBFS_AddGuardBan",Native_AddGuardBan);
     CreateNative("JBFS_RemoveGuardBan",Native_RemoveGuardBan);
