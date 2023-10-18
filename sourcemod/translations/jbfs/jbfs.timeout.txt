@@ -1,0 +1,38 @@
+"Phrases"
+{
+    "CommandTimeoutUsage"
+    {
+        "en"        "Usage: sm_timeout <#userid|name> <number of rounds>"
+    }
+    "CommandRemoveTimeoutUsage"
+    {
+        "en"        "Usage: sm_untimeout <#userid|name>"
+    }
+    "ClientTimeoutRemoved"
+    {
+        "en"        "Your timeout has been removed by an admin!"
+    }
+    "AdminTimeoutRemoved"
+    {
+        "#format"   "{1:N}"
+        "en"        "Removed timeout for {unique}{1}."
+    }
+    "AdminTimeoutNone"
+    {
+        "#format"   "{1:N}"
+        "en"        "{unique}{1}{wheat} is not currently timed out."
+    }
+    "ClientTimeoutExpired"
+    {
+        "en"        "Your timeout has expired!"
+    }
+    "TimeoutStatusNone"
+    {
+        "en"        "You are not currently timed out"
+    }
+    "TimeoutStatus"
+    {
+        "#format"   "{1:d}"
+        "en"        "You are timed out for {1} more round(s)."
+    }
+}
