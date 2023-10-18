@@ -145,7 +145,12 @@ public void DB_AddGuardBan(int client, int BanType, int duration, int admin, cha
 		... "VALUES (%d, '%s', '%N', '%s', '%N', %d, %d, '%s')",
 			TableName, timestamp, ID, client, IDAdmin, admin, duration, duration, reason);
     
-    hDatabase.Query(DB_QueryCB,query);
+    if (!SQL_FastQuery(hDatabase, query))
+    {
+        char qerror[255];
+        SQL_GetError(hDatabase, qerror, sizeof(qerror));
+        PrintToServer("Failed to query (error: %s)", qerror);
+    }
 
     JBFS_AddGuardBan(client);
 }
@@ -187,7 +192,13 @@ public void DB_UpdateBanLength(char[] ID, int duration)
         ... "WHERE offender_steamid = '%s' "
         ... "AND ban_left > 0 ",
         TableName,ID)
-    hDatabase.Query(DB_QueryCB,query);
+    
+    if (!SQL_FastQuery(hDatabase, query))
+    {
+        char qerror[255];
+        SQL_GetError(hDatabase, qerror, sizeof(qerror));
+        PrintToServer("Failed to query (error: %s)", qerror);
+    }
 }
 
 public bool DB_IsGuardBanned(int client)
