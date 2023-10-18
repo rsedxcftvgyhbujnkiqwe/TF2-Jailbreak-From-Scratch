@@ -110,7 +110,7 @@ public void GotDatabase(Database db, const char[] error, any data)
 		... "offender_name VARCHAR(32), "
 		... "admin_steamid VARCHAR(22), "
 		... "admin_name VARCHAR(32), "
-        ... "ban_type INT(16),"
+        ... "ban_type INT(16), "
 		... "ban_length INT(16), "
 		... "ban_left INT(16), "
 		... "reason VARCHAR(200), "
