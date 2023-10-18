@@ -164,8 +164,7 @@ public int DB_GetGuardBanLeft(int client)
     Format(query,sizeof(query),
             "SELECT ban_left "
         ... "FROM %s "
-        ... "WHERE "
-        ... "offender_steamid = '%s' "
+        ... "WHERE offender_steamid = '%s' "
         ... "AND ban_left > 0",TableName,ID);
 
     DBResultSet hQuery = SQL_Query(hDatabase,query);
@@ -179,11 +178,9 @@ public int DB_GetGuardBanLeft(int client)
     int ban_left;
     while (SQL_FetchRow(hQuery))
     {
-        ban_left = SQL_FetchInt(hQuery, 6)
+        ban_left = SQL_FetchInt(hQuery, 0)
     }
-
     delete hQuery;
-
     if (ban_left == 0) return -1;
 
     return ban_left;
