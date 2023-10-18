@@ -120,7 +120,7 @@ stock void SetConVars(const bool side)
     }
 }
 
-stock void SetWarden(int client,int reason, int admin)
+stock void SetWarden(int client,int reason, int admin=0)
 {
     JBFS.Warden = client;
     JBGameEvent(JBEvent_SetWarden);
@@ -407,12 +407,12 @@ stock void ToggleFF(bool adminforce = false, int admin = 0)
     }
 }
 
-stock void ToggleCC(bool admin = false, int admin = 0)
+stock void ToggleCC(bool adminforce = false, int admin = 0)
 {
     if (FindConVar("tf_avoidteammates_pushaway").BoolValue)
     {
         FindConVar("tf_avoidteammates_pushaway").SetBool(false);
-        if (admin){
+        if (adminforce){
             char tag[64],msg[256]; 
             Format(tag,sizeof(tag),"%t","PluginTagAdmin");
             Format(msg,sizeof(msg)," %t","CCNotifyOffAdmin");
@@ -424,7 +424,7 @@ stock void ToggleCC(bool admin = false, int admin = 0)
     else
     {
         FindConVar("tf_avoidteammates_pushaway").SetBool(true);
-        if (admin){
+        if (adminforce){
             char tag[64],msg[256]; 
             Format(tag,sizeof(tag),"%t","PluginTagAdmin");
             Format(msg,sizeof(msg)," %t","CCNotifyOnAdmin");
