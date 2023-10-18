@@ -58,7 +58,6 @@ public void OnArenaRoundStart(Event event, const char[] name, bool dontBroadcast
             AcceptEntityInput(relay,"Trigger");
         }
     }
-    CreateTimer(5.0,Timer_AllowLRQuery);
     JBFS.RoundTimer = CreateTimer(1.0,RoundTimer,_,TIMER_REPEAT);
     CreateTimer(3.0,Timer_ChooseWarden);
 }

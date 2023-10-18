@@ -10,7 +10,7 @@
     }
     "ClientTimeoutRemoved"
     {
-        "en"        "Your timeout has been removed by an admin!"
+        "en"        "Your timeout has been removed by an admin! You may now become a guard."
     }
     "AdminTimeoutRemoved"
     {
@@ -24,7 +24,7 @@
     }
     "ClientTimeoutExpired"
     {
-        "en"        "Your timeout has expired!"
+        "en"        "Your timeout has expired! You may now become a guard."
     }
     "TimeoutStatusNone"
     {
