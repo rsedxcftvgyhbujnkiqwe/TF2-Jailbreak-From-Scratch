@@ -142,7 +142,7 @@ public void DB_AddGuardBan(int client, int BanType, int duration, int admin, cha
     Format(query,sizeof(query),
             "INSERT INTO %s "
 		... "(timestamp, offender_steamid, offender_name, admin_steamid, admin_name, ban_type, ban_length, ban_left) "
-		... "VALUES (%d, '%s', '%N', '%s', '%N', %d, %d, '%s')",
+		... "VALUES (%d, '%s', '%N', '%s', '%N', %d, %d, %d, '%s')",
 			TableName, timestamp, ID, client, IDAdmin, admin, duration, duration, reason);
     
     if (!SQL_FastQuery(hDatabase, query))
