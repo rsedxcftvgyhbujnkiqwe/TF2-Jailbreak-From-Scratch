@@ -161,14 +161,19 @@ public int DB_GetGuardBanLeft(int client)
     char ID[32]; GetClientAuthId(client,AuthId_Steam2,ID,sizeof(ID));
 
     char query[128];
-    Format(query,sizeof(query), "SELECT ban_left"
+    Format(query,sizeof(query), "SELECT ban_left "
         ... "FROM %s "
         ... "WHERE "
         ... "offender_steamid = '%s' "
         ... "AND ban_left > 0",TableName,ID);
 
     DBResultSet hQuery = SQL_Query(hDatabase,query);
-    if (hQuery == null) return -1;
+    if (hQuery == null)
+    {
+        char qerror[255];
+        SQL_GetError(hDatabase, qerror, sizeof(qerror));
+        PrintToServer("Failed to query (error: %s)", qerror);
+    } 
 
     int ban_left;
     while (SQL_FetchRow(hQuery))
