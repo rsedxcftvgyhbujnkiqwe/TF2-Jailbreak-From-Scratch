@@ -301,6 +301,7 @@ public void OnArenaRoundEnd(Event event, const char[] name, bool dontBroadcast)
     //ban is not reduced unless client is present!!
     for (int i=1;i<=MaxClients;i++)
     {
+        if (!IsClientInGame(i)) continue;
         int length = DB_GetGuardBanLeft(i);
         if (length > 0)
         {
