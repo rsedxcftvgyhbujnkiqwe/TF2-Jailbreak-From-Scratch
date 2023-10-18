@@ -191,10 +191,10 @@ public void DB_UpdateBanLength(char[] ID, int duration)
     char query[256];
     Format(query,sizeof(query),
             "UPDATE %s "
-        ... "SET ban_left = 0 "
+        ... "SET ban_left = %d "
         ... "WHERE offender_steamid = '%s' "
         ... "AND ban_left > 0 ",
-        TableName,ID)
+        TableName,duration,ID)
     
     if (!SQL_FastQuery(hDatabase, query))
     {
