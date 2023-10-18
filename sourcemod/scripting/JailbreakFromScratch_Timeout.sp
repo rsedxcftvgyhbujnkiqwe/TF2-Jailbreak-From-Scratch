@@ -106,7 +106,7 @@ public void GotDatabase(Database db, const char[] error, any data)
     }
 
     char query[512];
-    Format(query,sizeof(query), "CREATE TABLE IF NOT EXISTS %s"
+    SQL_FormatQuery(hDatabase,query,sizeof(query), "CREATE TABLE IF NOT EXISTS %s"
         ... "(timestamp INT, "
 		...	"offender_steamid VARCHAR(22), "
 		... "offender_name VARCHAR(32), "
@@ -142,7 +142,7 @@ public void DB_AddGuardBan(int client, int BanType, int duration, int admin, cha
     }
     int timestamp = GetTime();
     char query[256];
-    Format(query,sizeof(query),
+    SQL_FormatQuery(hDatabase,query,sizeof(query),
             "INSERT INTO %s "
 		... "(timestamp, offender_steamid, offender_name, admin_steamid, admin_name, ban_type, ban_length, ban_left, reason) "
 		... "VALUES (%d, '%s', '%N', '%s', '%N', %d, %d, %d, '%s')",
@@ -165,7 +165,7 @@ public int DB_GetGuardBanLeft(int client)
     char ID[32]; GetClientAuthId(client,AuthId_Steam2,ID,sizeof(ID));
 
     char query[128];
-    Format(query,sizeof(query),
+    SQL_FormatQuery(hDatabase,query,sizeof(query),
             "SELECT ban_left "
         ... "FROM %s "
         ... "WHERE offender_steamid = '%s' "
@@ -196,7 +196,7 @@ public void DB_GetGuardBanReason(int client, char[] buffer, int maxlength)
     char ID[32]; GetClientAuthId(client,AuthId_Steam2,ID,sizeof(ID));
 
     char query[128];
-    Format(query,sizeof(query),
+    SQL_FormatQuery(hDatabase,query,sizeof(query),
             "SELECT reason "
         ... "FROM %s "
         ... "WHERE offender_steamid = '%s' "
@@ -222,7 +222,7 @@ public void DB_UpdateBanLength(char[] ID, int duration)
 {
     PrintToServer("Updating ban length to %d for %s",duration,ID)
     char query[256];
-    Format(query,sizeof(query),
+    SQL_FormatQuery(hDatabase,query,sizeof(query),
             "UPDATE %s "
         ... "SET ban_left = %d "
         ... "WHERE offender_steamid = '%s' "
