@@ -115,8 +115,12 @@ public void GotDatabase(Database db, const char[] error, any data)
 		... "ban_left INT(16), "
 		... "reason VARCHAR(200), "
 		... "PRIMARY KEY (timestamp));",TableName);
-    
-    hDatabase.Query(DB_QueryCB,query);
+    if (!SQL_FastQuery(hDatabase, query))
+    {
+        char qerror[255];
+        SQL_GetError(hDatabase, qerror, sizeof(qerror));
+        PrintToServer("Failed to query (error: %s)", qerror);
+    }
 }
 
 public void DB_QueryCB(Database db, DBResultSet results, const char[] error, any data)
