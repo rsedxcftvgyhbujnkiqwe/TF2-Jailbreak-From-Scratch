@@ -19,15 +19,15 @@ public Plugin myinfo =
 };
 
 #include <jbfs>
+#include <morecolors>
 
 enum
 {
     ACMD_Timeout,
+    DatabaseName,
     Version
 }
 ConVar cvarJBFS[Version+1];
-
-int g_GuardBanRounds[MAXPLAYERS+1];
 
 enum
 {
@@ -71,6 +71,10 @@ public void OnPluginStart()
     HookEvent("teamplay_round_win",OnArenaRoundEnd);
     HookEvent("teamplay_round_stalemate",OnArenaRoundEnd);
 
+    //add custom color(s) to morecolors
+    CCheckTrie();
+    SetTrieValue(CTrie,"day9",0xFFA71A);
+
     //connect to DB
     DBConnect();
 }
@@ -108,28 +112,20 @@ public void GotDatabase(Database db, const char[] error, any data)
     
     Transaction txn = new Transaction();
 
-    tx.AddQuery(query);
+    txn.AddQuery(query);
 
-    hDatabase.Execute(txn,TXN_OnSuccess,TXN_OnFailure);
+    hDatabase.Execute(txn);
 }
 
 public void DB_QueryCB(Database db, DBResultSet results, const char[] error, any data)
 {
 }
 
-public void TXN_OnSuccess(Database db, any data, int numQueries, DBResultSet[] results, any[] queryData)
-{
-}
-
-public void TXN_OnFailure(Database db, any data, int numQueries, DBResultSet[] results, any[] queryData)
-{
-}
-
 public void DB_AddGuardBan(int client, int BanType, int duration, int admin, char[] reason)
 {
     int ban_left = DB_GetGuardBanLeft(client);
-    char ID[32]; GetClientAuthID(client,AuthId_Steam2,ID,sizeof(ID));
-    char IDAdmin[32]; GetClientAuthID(admin,AuthId_Steam2,IDAdmin,sizeof(IDAdmin));
+    char ID[32]; GetClientAuthId(client,AuthId_Steam2,ID,sizeof(ID));
+    char IDAdmin[32]; GetClientAuthId(admin,AuthId_Steam2,IDAdmin,sizeof(IDAdmin));
 
     if (ban_left > 0)
     {
@@ -151,7 +147,7 @@ public void DB_AddGuardBan(int client, int BanType, int duration, int admin, cha
 public int DB_GetGuardBanLeft(int client)
 {
 
-    char ID[32]; GetClientAuthID(client,AuthId_Steam2,ID,sizeof(ID));
+    char ID[32]; GetClientAuthId(client,AuthId_Steam2,ID,sizeof(ID));
 
     char query[128];
     Format(query,sizeof(query), "SELECT ban_left"
@@ -164,7 +160,7 @@ public int DB_GetGuardBanLeft(int client)
     if (hQuery == null) return -1;
 
     int ban_left;
-    while (SQL_FetchRow(query))
+    while (SQL_FetchRow(hQuery))
     {
         ban_left = SQL_FetchInt(hQuery, 7)
     }
@@ -195,6 +191,14 @@ public bool DB_IsGuardBanned(int client)
     else return false;
 }
 
+public Action Command_TimeoutStatus(int client, int args)
+{
+    int length = DB_GetGuardBanLeft(client);
+    if (length == -1) CPrintToChat(client,"%t %t","PluginTag","TimeoutStatusNone");
+    else CPrintToChat(client,"%t %t","PluginTag","TimeoutStatus",length);
+    return Plugin_Handled;
+}
+
 public Action Command_Admin_Timeout(int client, int args)
 {
     if (args < 2)
@@ -215,13 +219,13 @@ public Action Command_Admin_Timeout(int client, int args)
         return Plugin_Handled;
     }
 
-	char reason[256];
+    char reason[256], s[32];
 
-	for (int i = 3; i <= args; i++)
-	{
-		GetCmdArg(i, s, sizeof(s));
-		Format(reason, sizeof(reason), "%s %s", reason, s);
-	}
+    for (int i = 3; i <= args; i++)
+    {
+        GetCmdArg(i, s, sizeof(s));
+        Format(reason, sizeof(reason), "%s %s", reason, s);
+    }
 
     DB_AddGuardBan(target,Ban_Round,rounds,client,reason)
 
@@ -251,9 +255,12 @@ public Action Command_Admin_RemoveTimeout(int client, int args)
 
     if (DB_IsGuardBanned(target))
     {
-        char ID[32]; GetClientAuthID(i,AuthId_Steam2,ID,sizeof(ID));
+        char ID[32]; GetClientAuthId(target,AuthId_Steam2,ID,sizeof(ID));
         DB_UpdateBanLength(ID,0);
+        CPrintToChat(target,"%t %t","PluginTag","ClientTimeoutRemoved");
+        CPrintToChat(client,"%t %t","PluginTag","AdminTimeoutRemoved",target);
     }
+    else CPrintToChat(client,"%t %t","PluginTag","AdminTimeoutNone",target);
     return Plugin_Handled;
 }
 
@@ -267,7 +274,7 @@ public void OnArenaRoundStart(Event event, const char[] name, bool dontBroadcast
     RoundStatus = Round_Active;
 }
 
-public Action OnArenaRoundEnd(Event event, const char[] name, bool dontBroadcast)
+public void OnArenaRoundEnd(Event event, const char[] name, bool dontBroadcast)
 {
     RoundStatus = Round_Post;
     //end of round - lower ban length by 1 for clients in server
@@ -277,10 +284,13 @@ public Action OnArenaRoundEnd(Event event, const char[] name, bool dontBroadcast
         int length = DB_GetGuardBanLeft(i);
         if (length > 0)
         {
-            char ID[32]; GetClientAuthID(i,AuthId_Steam2,ID,sizeof(ID));
+            char ID[32]; GetClientAuthId(i,AuthId_Steam2,ID,sizeof(ID));
             DB_UpdateBanLength(ID,length--)
             //ban just ran out
-            if (length == 0) JBFS_RemoveGuardBan(i);
+            if (length == 0){
+                JBFS_RemoveGuardBan(i);
+                CPrintToChat(i,"%t %t","PluginTag","ClientTimeoutExpired")
+            }
         }
     }
 }

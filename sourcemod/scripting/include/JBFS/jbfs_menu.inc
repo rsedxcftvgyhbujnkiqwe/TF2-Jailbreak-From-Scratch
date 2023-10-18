@@ -495,7 +495,7 @@ public Action Command_GiveLastRequest(int client, int args)
         CPrintToChat(client,"%t %t","PluginTag","WardenWarnNotWarden");
         return Plugin_Handled;
     }
-    if (!cvarJBFS[LastRequestsDisabled].BoolValue)
+    if (!cvarJBFS[LastRequest].BoolValue)
     {
         CPrintToChat(client,"%t %t","PluginTag","LastRequestsDisabled");
         return Plugin_Handled;
@@ -511,7 +511,7 @@ public bool WardenGiveLR(int warden, int target)
 
 public Action Command_Admin_ForceLastRequest(int client, int args)
 {
-    if (!cvarJBFS[LastRequestsDisabled].BoolValue)
+    if (!cvarJBFS[LastRequest].BoolValue)
     {
         CPrintToChat(client,"%t %t","PluginTag","LastRequestsDisabled");
         return Plugin_Handled;
