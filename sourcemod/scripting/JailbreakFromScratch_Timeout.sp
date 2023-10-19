@@ -136,7 +136,7 @@ public void DB_AddGuardBan(int client, int BanType, int duration, int admin, cha
     char ID[32]; GetClientAuthId(client,AuthId_Steam2,ID,sizeof(ID));
     char IDAdmin[32];
     
-    if (admin == 0) IDAdmin = "CONSOLE";
+    if (admin == 0) IDAdmin = "Console";
     else GetClientAuthId(admin,AuthId_Steam2,IDAdmin,sizeof(IDAdmin));
 
     if (ban_left > 0)
