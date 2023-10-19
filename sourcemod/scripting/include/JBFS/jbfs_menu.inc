@@ -139,11 +139,14 @@ public void CreateWardenMenu(int client,int selection)
     Menu menu = new Menu(WardenMenuHandler, MENU_ACTIONS_ALL);
     g_WMenu[client] = menu;
     menu.SetTitle("%T","WardenMenuTitle",LANG_SERVER);
-    menu.AddItem(WMENU_CHOICE1,"Open Cells");
-    menu.AddItem(WMENU_CHOICE2,"Close Cells");
-    menu.AddItem(WMENU_CHOICE3,"Toggle Friendly-Fire");
-    menu.AddItem(WMENU_CHOICE4,"Toggle Collisions");
-    menu.AddItem(WMENU_CHOICE5,"Marker");
+    if (cvarJBFS_CMD[WCMD_Cells].BoolValue)
+    {
+        menu.AddItem(WMENU_CHOICE1,"Open Cells");
+        menu.AddItem(WMENU_CHOICE2,"Close Cells");
+    }
+    if (cvarJBFS_CMD[WCMD_FriendlyFire].BoolValue) menu.AddItem(WMENU_CHOICE3,"Toggle Friendly-Fire");
+    if (cvarJBFS_CMD[WCMD_Collisions].BoolValue) menu.AddItem(WMENU_CHOICE4,"Toggle Collisions");
+    if (cvarJBFS_CMD[WCMD_Marker].BoolValue) menu.AddItem(WMENU_CHOICE5,"Marker");
     menu.DisplayAt(client,selection,MENU_TIME_FOREVER);
 }
 
@@ -492,6 +495,11 @@ public Action Command_GiveLastRequest(int client, int args)
         CPrintToChat(client,"%t %t","PluginTag","WardenWarnNotWarden");
         return Plugin_Handled;
     }
+    if (!cvarJBFS[LastRequest].BoolValue)
+    {
+        CPrintToChat(client,"%t %t","PluginTag","LastRequestsDisabled");
+        return Plugin_Handled;
+    }
     if(client) CreateClientSelectMenu(client, ClientEligibleForLR, WardenGiveLR);
     return Plugin_Handled;
 }
@@ -503,11 +511,16 @@ public bool WardenGiveLR(int warden, int target)
 
 public Action Command_Admin_ForceLastRequest(int client, int args)
 {
+    if (!cvarJBFS[LastRequest].BoolValue)
+    {
+        CPrintToChat(client,"%t %t","PluginTag","LastRequestsDisabled");
+        return Plugin_Handled;
+    }
     if (client) CreateClientSelectMenu(client, ClientEligibleForLR, AdminGiveLR);
     return Plugin_Handled;
 }
 
 public bool AdminGiveLR(int admin, int target)
 {
-    return SetLRWinner(target,admin,true)
+    return SetLRWinner(target,admin,true,admin)
 }

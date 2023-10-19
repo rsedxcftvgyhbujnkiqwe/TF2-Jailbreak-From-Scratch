@@ -150,6 +150,11 @@ public Action Command_OpenCells(int client, int args)
 {
     if (client == JBFS.Warden)
     {
+        if (!cvarJBFS_CMD[WCMD_Cells].BoolValue)
+        {
+            CPrintToChat(client,"%t %t","PluginTag","CommandDisabled");
+            return Plugin_Handled;
+        }
         ModifyCells(true,client);
     }
     else
@@ -163,6 +168,11 @@ public Action Command_CloseCells(int client, int args)
 {
     if (client == JBFS.Warden)
     {
+        if (!cvarJBFS_CMD[WCMD_Cells].BoolValue)
+        {
+            CPrintToChat(client,"%t %t","PluginTag","CommandDisabled");
+            return Plugin_Handled;
+        }
         ModifyCells(false,client);
     }
     else
@@ -176,6 +186,11 @@ public Action Command_ToggleFriendlyFire(int client, int args)
 {
     if (client == JBFS.Warden)
     {
+        if (!cvarJBFS_CMD[WCMD_FriendlyFire].BoolValue)
+        {
+            CPrintToChat(client,"%t %t","PluginTag","CommandDisabled");
+            return Plugin_Handled;
+        }
         ToggleFF(false);
     }
     else
@@ -189,6 +204,11 @@ public Action Command_ToggleCollisions(int client, int args)
 {
     if (client == JBFS.Warden)
     {
+        if (!cvarJBFS_CMD[WCMD_Collisions].BoolValue)
+        {
+            CPrintToChat(client,"%t %t","PluginTag","CommandDisabled");
+            return Plugin_Handled;
+        }
         ToggleCC(false);
     }
     else
@@ -202,6 +222,11 @@ public Action Command_WardenMarker(int client, int args)
 {
     if (client == JBFS.Warden)
     {
+        if (!cvarJBFS_CMD[WCMD_Marker].BoolValue)
+        {
+            CPrintToChat(client,"%t %t","PluginTag","CommandDisabled");
+            return Plugin_Handled;
+        }
         if (JBFS.MarkerPlaced) CPrintToChat(client,"%t %t","PluginTag","CommandMarkerSlow");
         else CreateMarker(client);
     }
@@ -219,6 +244,11 @@ public Action Command_Admin_ForceWarden(int client, int args)
     //if none, select random
     if (args == 0)
     {
+        char tag[64],msg[256]; 
+        Format(tag,sizeof(tag),"%t","PluginTagAdmin");
+        Format(msg,sizeof(msg)," %t","WardenWForceRandom");
+        CShowActivity2(client, tag, msg);
+        LogAction(client,-1,"\"%L\" forced a random warden to be selected.",client);
         ChooseWarden(true);
         return Plugin_Handled;
     }
@@ -231,7 +261,7 @@ public Action Command_Admin_ForceWarden(int client, int args)
         if (target != JBFS.Warden)
         {
             RemoveWarden(UW_Force);
-            SetWarden(target,W_Force);
+            SetWarden(target,W_Force,client);
         }
         else
         {
@@ -249,6 +279,11 @@ public Action Command_Admin_ForceUnWarden(int client, int args)
 {
     if (JBFS.Warden)
     {
+        char tag[64],msg[256]; 
+        Format(tag,sizeof(tag),"%t","PluginTagAdmin");
+        Format(msg,sizeof(msg)," %t","WardenUWForce",JBFS.Warden);
+        CShowActivity2(client, tag, msg);
+        LogAction(client,JBFS.Warden,"\"%L\" forced \"%L\" to retire from Warden.",client,JBFS.Warden);
         RemoveWarden(UW_Force);
     }
     else
@@ -262,7 +297,7 @@ public Action Command_Admin_LockWarden(int client, int args)
 {
     if(JBFS.WardenLocked)
     {
-        CPrintToChat(client,"%t %t","PluginTag","WardenLock")
+        CPrintToChat(client,"%t %t","PluginTag","WardenLockWarn")
         return Plugin_Handled;
     }
     LockWarden(true);
@@ -273,7 +308,7 @@ public Action Command_Admin_UnlockWarden(int client, int args)
 {
     if(!JBFS.WardenLocked)
     {
-        CPrintToChat(client,"%t %t","PluginTag","WardenUnlock")
+        CPrintToChat(client,"%t %t","PluginTag","WardenUnlockWarn")
         return Plugin_Handled;
     }
     UnlockWarden(true);
@@ -287,6 +322,11 @@ public Action Command_Admin_JailTime(int client, int args)
     if (args == 1 && GetCmdArgIntEx(1,seconds) && seconds >= 0)
     {
         JBFS.TimeLeft = seconds;
+        char tag[64],msg[256]; 
+        Format(tag,sizeof(tag),"%t","PluginTagAdmin");
+        Format(msg,sizeof(msg)," %t","AdminJailTime",seconds);
+        CShowActivity2(client, tag, msg);
+        LogAction(client,-1,"\"%L\" set jail time to %d.",client,seconds);
     }
     else
     {
@@ -309,13 +349,13 @@ public Action Command_Admin_CloseCells(int client, int args)
 
 public Action Command_Admin_ToggleFriendlyFire(int client, int args)
 {
-    ToggleFF(true);
+    ToggleFF(true,client);
     return Plugin_Handled;
 }
 
 public Action Command_Admin_ToggleCollisions(int client, int args)
 {
-    ToggleCC(true);
+    ToggleCC(true,client);
     return Plugin_Handled;
 }
 
@@ -330,6 +370,12 @@ public Action Command_Admin_ForceFreeday(int client, int args)
         CPrintToChat(client,"%t %t","PluginTag","CommandAdminFreedayWarn",target);
         return Plugin_Handled;
     }
+
+    char tag[64],msg[256]; 
+    Format(tag,sizeof(tag),"%t","PluginTagAdmin");
+    Format(msg,sizeof(msg)," %t","CommandAdminForceFreeday",target);
+    CShowActivity2(client, tag, msg);
+    LogAction(client,target,"\"%L\" forced freeday for \"%L\".",client,target);
 
     float clientpos[3];
     float clientangles[3];

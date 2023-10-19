@@ -4,9 +4,13 @@
     {
         "en"        "{day9}[JBFS]{wheat}"
     }
+    "PluginTagAdmin"
+    {
+        "en"        "{day9}[JBFS]{valve} "
+    }
     "WardenWarnLocked"
     {
-        "en"        "Warden is locked."
+        "en"        "{wheat}Warden is locked."
     }
     "WardenWarnTaken"
     {
@@ -15,23 +19,23 @@
     }
     "WardenWarnNoMic"
     {
-        "en"        "You must have a microphone to become Warden. Use it at least once."
+        "en"        "{wheat}You must have a microphone to become Warden. Use it at least once."
     }
     "WardenWarnDead"
     {
-        "en"        "Must be alive to become Warden."
+        "en"        "{wheat}Must be alive to become Warden."
     }
     "WardenWarnNotBlue"
     {
-        "en"        "Must be on BLU to become Warden."
+        "en"        "{wheat}Must be on BLU to become Warden."
     }
     "WardenWarnNotWarden"
     {
-        "en"        "You are not the Warden."
+        "en"        "{wheat}You are not the Warden."
     }
     "WardenWarnFired"
     {
-        "en"        "You were fired from Warden, and cannot become warden again this round."
+        "en"        "{wheat}You were fired from Warden, and cannot become warden again this round."
     }
     "WardenWarnAdminInvalid"
     {
@@ -45,7 +49,7 @@
     }
     "WardenWarnAdminNone"
     {
-        "en"        "There is no Warden."
+        "en"        "{wheat}There is no Warden."
     }
     "WardenWChose"
     {
@@ -55,7 +59,11 @@
     "WardenWForce"
     {
         "#format"   "{1:N}"
-        "en"        "{unique}{1}{wheat} was forced to become Warden by an admin."
+        "en"        "{unique}{1}{wheat} was forced to become Warden."
+    }
+    "WardenWForceRandom"
+    {
+        "en"        "{wheat}Forcibly selecting a random warden."
     }
     "WardenWRandom"
     {
@@ -70,7 +78,7 @@
     "WardenUWForce"
     {
         "#format"   "{1:N}"
-        "en"        "{unique}{1}{wheat} was forced to step down from Warden by an admin."
+        "en"        "{unique}{1}{wheat} was forced to step down from Warden."
     }
     "WardenUWDeath"
     {
@@ -94,120 +102,129 @@
     }
     "WardenChooseNone"
     {
-        "en"        "No players eligible to become warden. Guards must have a microphone to become the Warden."
+        "en"        "{wheat}No players eligible to become warden. Guards must have a microphone to become the Warden."
     }
     "WardenLock"
     {
-        "en"        "Warden has been locked."
+        "en"        "{wheat}Warden has been locked."
+    }
+    "WardenLockWarn"
+    {
+        "en"        "{wheat}Warden is already locked."
     }
     "WardenUnlock"
     {
-        "en"        "Warden has been unlocked."
+        "en"        "{wheat}Warden has been unlocked."
+    }
+    "WardenUnlockWarn"
+    {
+        "en"        "{wheat}Warden is already unlocked."
     }
     "CommandUsageJTime"
     {
-        "en"        "Usage: sm_jailtime <seconds>"
+        "en"        "{wheat}Usage: sm_jailtime <seconds>"
+    }
+    "AdminJailTime"
+    {
+        "#format"   "{1:d}"
+        "en"        "{wheat}Remaining round time set to {1} second(s)."
     }
     "CellsOpen"
     {
-        "en"        "The cell doors have been opened."
+        "en"        "{wheat}The cell doors have been opened."
     }
     "CellsClose"
     {
-        "en"        "The cell doors have been closed."
+        "en"        "{wheat}The cell doors have been closed."
     }
     "CellsWarnNone"
     {
-        "en"        "Cell door config for map not set properly by server."
+        "en"        "{wheat}Cell door config for map not set properly by server."
     }
     "CellsWarnBadClass"
     {
-        "en"        "Cell door config set by server is not a cell door."
+        "en"        "{wheat}Cell door config set by server is not a cell door."
     }
     "CellsWarnCantClose"
     {
-        "en"        "Cell doors can't be closed."
+        "en"        "{wheat}Cell doors can't be closed."
     }
     "CellsWarnLR"
     {
-        "en"        "Cells can't be modified during this LR.
+        "en"        "{wheat}Cells can't be modified during this LR.
     }
     "FFNotifyOn"
     {
-        "en"        "Warden has enabled Friendly-Fire!"
+        "en"        "{wheat}Warden has enabled Friendly-Fire!"
     }
     "FFNotifyOff"
     {
-        "en"        "Warden has disabled Friendly-Fire!"
+        "en"        "{wheat}Warden has disabled Friendly-Fire!"
     }
     "FFNotifyOnAdmin"
     {
-        "en"        "An admin has enabled Friendly-Fire!"
+        "en"        "{wheat}Friendly-Fire has been enabled!"
     }
     "FFNotifyOffAdmin"
     {
-        "en"        "An admin has disabled Friendly-Fire!"
+        "en"        "{wheat}Friendly-Fire has been disabled!"
     }
     "FFStatusOn"
     {
-        "en"        "Friendly fire is on."
+        "en"        "{wheat}Friendly fire is on."
     }
     "FFStatusOff"
     {
-        "en"        "Friendly fire is off."
+        "en"        "{wheat}Friendly fire is off."
     }
     "CCNotifyOn"
     {
-        "en"        "Warden has enabled collisions."
+        "en"        "{wheat}Warden has enabled collisions."
     }
     "CCNotifyOff"
     {
-        "en"        "Warden has disabled collisions."
+        "en"        "{wheat}Warden has disabled collisions."
     }
     "CCNotifyOnAdmin"
     {
-        "en"        "An admin has enabled collisions."
+        "en"        "{wheat}Collisions have been enabled."
     }
     "CCNotifyOffAdmin"
     {
-        "en"        "An admin has disabled collisions."
+        "en"        "{wheat}Collisions have been disabled."
     }
     "CommandFireWarnDisabled"
     {
-        "en"        "Firing is not enabled on this server."
+        "en"        "{wheat}Firing is not enabled on this server."
     }
     "CommandFireWarnNone"
     {
-        "en"        "There is no Warden to fire."
+        "en"        "{wheat}There is no Warden to fire."
     }
     "CommandFireWarnSelf"
     {
-        "en"        "You can't fire yourself!"
+        "en"        "{wheat}You can't fire yourself!"
     }
     "CommandFireWarnDead"
     {
-        "en"        "Must be alive to participate in a fire vote."
+        "en"        "{wheat}Must be alive to participate in a fire vote."
     }
     "CommandFireWarnDone"
     {
-        "en"        "You have already voted to fire the Warden"
+        "en"        "{wheat}You have already voted to fire the Warden"
     }
     "CommandFireWarnGuard"
     {
-        "en"        "Guard firing is not enabled on this server."
+        "en"        "{wheat}Guard firing is not enabled on this server."
     }
     "CommandFireNotifyVote"
     {
         "#format"   "{1:N}{2:d}{3:d}"
         "en"        "{unique}{1}{wheat} has voted to fire the Warden ({2}/{3})."
     }
-    "CommandMarkerDisabled"
-    {
-        "en"        "Markers are not enabled on this server"
-    }
     "CommandMarkerSlow"
     {
-        "en"        "Placing markers too fast, slow down and try again."
+        "en"        "{wheat}Placing markers too fast, slow down and try again."
     }
     "CommandAdminFreedayWarn"
     {
@@ -216,7 +233,7 @@
     }
     "SlowDown"
     {
-        "en"        "Slow down!"
+        "en"        "{wheat}Slow down!"
     }
     "LRChooseFreedayOthers"
     {
@@ -235,37 +252,50 @@
     }
     "LRNoneActive"
     {
-        "en"        "Last Request: None"
+        "en"        "{wheat}Last Request: None"
     }
     "LRFreedaySelfActive"
     {
-        "en"        "Last Request: {strange}Freeday for self."
+        "en"        "{wheat}Last Request: {strange}Freeday for self."
     }
     "LRFreedayOthersActive"
     {
-        "en"        "Last Request: {strange}Freeday for others."
+        "en"        "{wheat}Last Request: {strange}Freeday for others."
     }
     "LRFreedayAllActive"
     {
-        "en"        "Last Request: {strange}Freeday for all."
+        "en"        "{wheat}Last Request: {strange}Freeday for all."
     }
     "LRWardayActive"
     {
-        "en"        "Last Request: {collectors}Warday."
+        "en"        "{wheat}Last Request: {collectors}Warday."
     }
     "LRCustomActive"
     {
         "#format"   "{1:s}"
-        "en"        "Custom Last Request: {selfmade}{1}."
+        "en"        "{wheat}Custom Last Request: {selfmade}{1}."
     }
     "LRMapActive"
     {
         "#format"   "{1:s}"
-        "en"        "Custom Last Request: {vintage}{1}."
+        "en"        "{wheat}Custom Last Request: {vintage}{1}."
     }
     "FreedayLost"
     {
         "#format"   "{1:N}"
         "en"        "{unique}{1}{wheat} has rebelled and lost their freeday!"
+    }
+    "LastRequestsDisabled"
+    {
+        "en"        "{wheat}Last Requests are disabled on this server."
+    }
+    "CommandDisabled"
+    {
+        "en"        "{wheat}Command not enabled on this server."
+    }
+    "CommandAdminForceFreeday"
+    {
+        "#format"   "{1:N}"
+        "en"        "{wheat}Forcibly activated freeday for {unique}{1}{wheat}"
     }
 }

@@ -18,16 +18,6 @@ stock bool HasMic(int client,bool ignore = false)
 
 stock void AutoBalanceTeams()
 {
-    //move guard banned players first before any other math
-    for(int i=1;i<=MaxClients;i++)
-    {
-        if(IsClientInGame(i) && GetClientTeam(i)==BLU && JBFS.GuardBanned[i])
-        {
-            ForceTeamChange(i,RED,true);
-            PrintToServer("%N (guardbanned) autobalanced!",i);
-        }
-    }
-
     float flBalanceRatio = cvarJBFS[BalanceRatio].FloatValue;
     int iNumBlue = GetNumPlayers(BLU,true);
     int iNumRed = GetNumPlayers(RED,true);
@@ -130,7 +120,7 @@ stock void SetConVars(const bool side)
     }
 }
 
-stock void SetWarden(int client,int reason)
+stock void SetWarden(int client,int reason, int admin=0)
 {
     JBFS.Warden = client;
     JBGameEvent(JBEvent_SetWarden);
@@ -144,7 +134,11 @@ stock void SetWarden(int client,int reason)
         }
         case W_Force:
         {
-            CPrintToChatAll("%t %t","PluginTag","WardenWForce",client);
+            char tag[64],msg[256]; 
+            Format(tag,sizeof(tag),"%t","PluginTagAdmin");
+            Format(msg,sizeof(msg)," %t","WardenWForce",client)
+            CShowActivity2(admin, tag, msg);
+            LogAction(admin,client,"\"%L\" forced \"%L\" to become Warden.",admin,client);
         }
         case W_Random:
         {
@@ -384,34 +378,59 @@ stock bool ModifyCells(bool open,int client = 0,bool message = true)
     return true;
 }
 
-stock void ToggleFF(bool admin = false)
+stock void ToggleFF(bool adminforce = false, int admin = 0)
 {
+    
     if (FindConVar("mp_friendlyfire").BoolValue)
     {
         FindConVar("mp_friendlyfire").SetBool(false);
-        if (admin) CPrintToChatAll("%t %t","PluginTag","FFNotifyOffAdmin");
+        if (adminforce){
+            char tag[64],msg[256]; 
+            Format(tag,sizeof(tag),"%t","PluginTagAdmin");
+            Format(msg,sizeof(msg)," %t","FFNotifyOffAdmin");
+            CShowActivity2(admin, tag, msg);
+            LogAction(admin,-1,"\"%L\" turned friendly-fire on.",admin);
+        }
         else CPrintToChatAll("%t %t","PluginTag","FFNotifyOff");
     }
     else
     {
         FindConVar("mp_friendlyfire").SetBool(true);
-        if (admin) CPrintToChatAll("%t %t","PluginTag","FFNotifyOnAdmin");
+        if (adminforce){
+            char tag[64],msg[256]; 
+            Format(tag,sizeof(tag),"%t","PluginTagAdmin");
+            Format(msg,sizeof(msg)," %t","FFNotifyOnAdmin");
+            CShowActivity2(admin, tag, msg);
+            LogAction(admin,-1,"\"%L\" turned friendly-fire off.",admin);
+        }
         else CPrintToChatAll("%t %t","PluginTag","FFNotifyOn");
     }
 }
 
-stock void ToggleCC(bool admin = false)
+stock void ToggleCC(bool adminforce = false, int admin = 0)
 {
     if (FindConVar("tf_avoidteammates_pushaway").BoolValue)
     {
         FindConVar("tf_avoidteammates_pushaway").SetBool(false);
-        if (admin) CPrintToChatAll("%t %t","PluginTag","CCNotifyOffAdmin");
+        if (adminforce){
+            char tag[64],msg[256]; 
+            Format(tag,sizeof(tag),"%t","PluginTagAdmin");
+            Format(msg,sizeof(msg)," %t","CCNotifyOffAdmin");
+            CShowActivity2(admin, tag, msg); 
+            LogAction(admin,-1,"\"%L\" turned collisions off.",admin);
+        }
         else CPrintToChatAll("%t %t","PluginTag","CCNotifyOff");
     }
     else
     {
         FindConVar("tf_avoidteammates_pushaway").SetBool(true);
-        if (admin) CPrintToChatAll("%t %t","PluginTag","CCNotifyOnAdmin");
+        if (adminforce){
+            char tag[64],msg[256]; 
+            Format(tag,sizeof(tag),"%t","PluginTagAdmin");
+            Format(msg,sizeof(msg)," %t","CCNotifyOnAdmin");
+            CShowActivity2(admin, tag, msg); 
+            LogAction(admin,-1,"\"%L\" turned collisions on.",admin);
+        }
         else CPrintToChatAll("%t %t","PluginTag","CCNotifyOn");
     }
 }
@@ -419,11 +438,6 @@ stock void ToggleCC(bool admin = false)
 stock void CreateMarker(int client)
 {
     float time = cvarJBFS[MarkerTime].FloatValue;
-    if (time == 0.0)
-    {
-        CPrintToChat(client,"%t %t","PluginTag","CommandMarkerDisabled")
-        return;
-    }
     float eyepos[3];
     float eyeangles[3];
 
@@ -433,7 +447,6 @@ stock void CreateMarker(int client)
     Handle trace = TR_TraceRayFilterEx(eyepos,eyeangles,MASK_SHOT,RayType_Infinite,TraceRayFilterPlayers)
     if (TR_DidHit(trace))
     {
-        PrintToServer("Spawning marker!")
         float endpoint[3];
         TR_GetEndPosition(endpoint,trace);
 
@@ -456,7 +469,7 @@ public bool ClientEligibleForLR(int client)
     return false;
 }
 
-stock bool SetLRWinner(int client, int warden, bool adminforce = false)
+stock bool SetLRWinner(int client, int warden, bool adminforce = false, int admin = 0)
 {
     if((!IsClientInGame(client) || !IsPlayerAlive(client) || !(GetClientTeam(client)==RED) || (warden != JBFS.Warden)) && !adminforce)
     {
@@ -466,7 +479,13 @@ stock bool SetLRWinner(int client, int warden, bool adminforce = false)
     LRConfig.LRWinner = client;
     CreateLRMenu(client);
     if (!adminforce) CPrintToChatAll("%t %t","PluginTag","LRMenuWinner",client);
-    else CPrintToChatAll("%t %t","PluginTag","LRMenuWinnerAdmin",client);
+    else{
+        char tag[64],msg[256]; 
+        Format(tag,sizeof(tag),"%t","PluginTagAdmin");
+        Format(msg,sizeof(msg)," %t","LRMenuWinnerAdmin",client);
+        CShowActivity2(admin, tag, msg);
+        LogAction(admin,client,"\"%L\" forcibly gave \"%L\" last request.",admin,client);
+    }
     int timeleft = cvarJBFS[LRSetTime].IntValue;
     if(timeleft > 0) JBFS.TimeLeft = timeleft;
     return false;
@@ -529,7 +548,6 @@ stock void ResetActiveLR()
 {
     LRConfig.WardayActive = false;
     SetArray(LRConfig.FreedaysActive,sizeof(LRConfig.FreedaysActive),false);
-    PrintToServer("Resetting freedays activelr")
     LRConfig.CustomChatWait = false;
 }
 
@@ -651,20 +669,17 @@ stock void RemoveWeapons(int client)
             if (((AmmoWep && GetClientTeam(client)==RED) || (AllWep || (WardayWep && !LRConfig.WardayActive))) && (GetPlayerWeaponSlot(client, TFWeaponSlot_Melee) == weapon))
             {
                 //everyone needs SOME melee weapon, so if it's banned then give a default one
-                PrintToServer("%N has melee weapon %d to be removed, granting default",client,index);
                 RemoveWeapon(client,i);
                 HasBlocked = true;
             }
             if (AllWep || (WardayWep && !LRConfig.WardayActive))
             {
-                PrintToServer("%N has weapon %d to be removed!",client,index);
                 RemoveWeapon(client,i);
                 HasBlocked = true;
             }
             else if (AmmoWep && GetClientTeam(client)==RED)
             {
                 //DANGER! If you put a melee weapon here, prisoner will A-pose!
-                PrintToServer("%N has weapon %d to be temp removed!",client,index);
                 SetEntPropEnt(client,Prop_Send,"m_hMyWeapons",-1,i);
                 g_BlockedWeapons[client][i] = weapon;
                 HasBlocked = true;

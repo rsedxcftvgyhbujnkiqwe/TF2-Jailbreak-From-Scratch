@@ -58,7 +58,6 @@ public void OnArenaRoundStart(Event event, const char[] name, bool dontBroadcast
             AcceptEntityInput(relay,"Trigger");
         }
     }
-    CreateTimer(5.0,Timer_AllowLRQuery);
     JBFS.RoundTimer = CreateTimer(1.0,RoundTimer,_,TIMER_REPEAT);
     CreateTimer(3.0,Timer_ChooseWarden);
 }
@@ -93,6 +92,13 @@ public Action OnPlayerSpawn(Event event, const char[] name, bool dontBroadcast)
         if (LRConfig.FreedaysActive[client])
         {
             LRSetFreedayPost(client);
+        }
+    }
+    else if (GetClientTeam(client)==BLU)
+    {
+        if (JBFS.GuardBanned[client])
+        {
+            ForceTeamChange(client,RED);
         }
     }
 
@@ -155,7 +161,6 @@ public void OnPlayerDisconnect(Event event, const char[] name, bool dontBroadcas
 public void DeathEvents(int client)
 {
     if (LRConfig.FreedaysActive[client]) LRRemoveFreeday(client);
-    PrintToServer("Resetting freeday death")
     int fday = FindInArray(LRConfig.Freedays,3,client)
     if (fday != -1) LRConfig.Freedays[fday] = 0;
     RemoveParticle(client);

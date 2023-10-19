@@ -50,7 +50,7 @@
     }
     "LRMenuClose"
     {
-        "en"        "Last Request menu has been closed. Give LR again to reopen it."
+        "en"        "{wheat}ast Request menu has been closed. Give LR again to reopen it."
     }
     "LRMenuOptionFreeday"
     {
@@ -110,6 +110,6 @@
     "LRMenuWinnerAdmin"
     {
         "#format"   "{1:N}"
-        "en"        "{unique}{1}{wheat} was forcibly given a {unusual}last request{wheat} by an admin."
+        "en"        "{unique}{1}{wheat} was forcibly given a {unusual}last request."
     }
 }

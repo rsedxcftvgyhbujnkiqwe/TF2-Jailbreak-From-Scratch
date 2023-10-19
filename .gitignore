@@ -2,6 +2,7 @@
 !.gitignore
 !LICENSE
 !README.md
+!changelog.md
 
 !/sourcemod/
 /sourcemod/*
@@ -27,4 +28,5 @@
 
 !/sourcemod/translations/
 /sourcemod/translations/*
-!/sourcemod/translations/jbfs.phrases.txt
+!/sourcemod/translations/jbfs
+!/sourcemod/translations/jbfs/*
