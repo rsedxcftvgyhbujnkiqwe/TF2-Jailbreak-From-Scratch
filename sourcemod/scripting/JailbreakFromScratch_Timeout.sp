@@ -2,7 +2,7 @@
 //maybe in another version...
 
 #define PLUGIN_NAME         "[JBFS] Timeout"
-#define PLUGIN_VERSION      "0.1"
+#define PLUGIN_VERSION      "1.0"
 #define PLUGIN_AUTHOR       "blank"
 #define PLUGIN_DESCRIPTION  "Minimal teamban plugin for JBFS"
 
