@@ -1,6 +1,3 @@
-//This is too much work right now
-//maybe in another version...
-
 #define PLUGIN_NAME         "[JBFS] Timeout"
 #define PLUGIN_VERSION      "1.0"
 #define PLUGIN_AUTHOR       "blank"
@@ -89,7 +86,7 @@ public void OnConfigsExecuted()
 
 public void DBConnect()
 {
-    char dbname[255];
+    char dbname[256];
     cvarJBFS[DatabaseName].GetString(dbname,sizeof(dbname))
     Database.Connect(GotDatabase,dbname)
 }
