@@ -11,114 +11,139 @@
     "WardenWarnLocked"
     {
         "en"        "{wheat}Warden is locked."
+        "chi"       "{wheat}监狱长已锁定"
     }
     "WardenWarnTaken"
     {
         "#format"   "{1:N}"
         "en"        "{unique}{1}{wheat} is currently the Warden."
+        "chi"       "{unique}{1}{wheat} 是现任监狱长!"
     }
     "WardenWarnNoMic"
     {
         "en"        "{wheat}You must have a microphone to become Warden. Use it at least once."
+        "chi"       "{wheat}你必须有麦克风才能成为典狱长。至少使用一次。"
     }
     "WardenWarnDead"
     {
         "en"        "{wheat}Must be alive to become Warden."
+        "chi"       "{wheat}你必须活着才能成为监狱长!"
     }
     "WardenWarnNotBlue"
     {
         "en"        "{wheat}Must be on BLU to become Warden."
+        "chi"       "{wheat}你必须是蓝队成员才能成为监狱长!"
     }
     "WardenWarnNotWarden"
     {
         "en"        "{wheat}You are not the Warden."
+        "chi"       "{wheat}你不是监狱长!"
     }
     "WardenWarnFired"
     {
         "en"        "{wheat}You were fired from Warden, and cannot become warden again this round."
+        "chi"       "{wheat}你被炒鱿鱼了!这一回合你将无法成为监狱长！"
     }
     "WardenWarnAdminInvalid"
     {
         "#format"   "{1:N}"
         "en"        "{unique}{1}{wheat} is ineligible to become Warden."
+        "chi"       "{unique}{1}{wheat} 没有资格成为监狱长！"
     }
     "WardenWarnAdminRedundant"
     {
         "#format"   "{1:N}"
         "en"        "{unique}{1}{wheat} is already the Warden."
+        "chi"       "{unique}{1}{wheat} 已经是监狱长了！"
     }
     "WardenWarnAdminNone"
     {
         "en"        "{wheat}There is no Warden."
+        "chi"       "{wheat}现在没有监狱长"
     }
     "WardenWChose"
     {
         "#format"   "{1:N}"
         "en"        "{unique}{1}{wheat} has chosen to become Warden."
+        "chi"        "{unique}{1}{wheat} 被选择成为监狱长"
     }
     "WardenWForce"
     {
         "#format"   "{1:N}"
         "en"        "{unique}{1}{wheat} was forced to become Warden."
+        "chi"       "{unique}{1}{wheat} 被迫成为监狱长"
     }
     "WardenWForceRandom"
     {
         "en"        "{wheat}Forcibly selecting a random warden."
+        "chi"       "{wheat}随机选择一个玩家成为监狱长."
     }
     "WardenWRandom"
     {
         "#format"   "{1:N}"
         "en"        "{unique}{1}{wheat} was randomly selected to become Warden."
+        "chi"       "{unique}{1}{wheat} 被随机选到成为监狱长"
     }
     "WardenUWRetire"
     {
         "#format"   "{1:N}"
         "en"        "{unique}{1}{wheat} has retired from Warden."
+        "chi"       "{unique}{1}{wheat} 是已退休的监狱长"
     }
     "WardenUWForce"
     {
         "#format"   "{1:N}"
         "en"        "{unique}{1}{wheat} was forced to step down from Warden."
+        "chi"       "{unique}{1}{wheat} 监狱长被炒鱿鱼了!"
     }
     "WardenUWDeath"
     {
         "#format"   "{1:N}"
         "en"        "{unique}{1}{wheat} has died as Warden!"
+        "chi"       "{unique}{1}{wheat} 监狱长死了！"
     }
     "WardenUWDisconnect"
     {
         "#format"   "{1:N}"
         "en"        "{unique}{1}{wheat} has disconnected as Warden."
+        "chi"       "{unique}{1}{wheat} 监狱长已退出服务器！"
     }
     "WardenUWFire"
     {
         "#format"   "{1:N}"
         "en"        "{unique}{1}{wheat} has been fired from Warden."
+        "chi"       "{unique}{1}{wheat} 监狱长被炒鱿鱼了!"
     }
     "WardenUWTeamChange"
     {
         "#format"   "{1:N}"
         "en"        "{unique}{1}{wheat} changed teams as Warden."
+        "chi"       "{unique}{1}{wheat} 监狱长已换队伍!"
     }
     "WardenChooseNone"
     {
         "en"        "{wheat}No players eligible to become warden. Guards must have a microphone to become the Warden."
+        "chi"       "{wheat}没有玩家有资格成为典狱长。警队必须有麦克风才能成为典狱长"
     }
     "WardenLock"
     {
         "en"        "{wheat}Warden has been locked."
+        "chi"       "{wheat}监狱长被锁定"
     }
     "WardenLockWarn"
     {
         "en"        "{wheat}Warden is already locked."
+        "chi"       "{wheat}监狱长已锁定"
     }
     "WardenUnlock"
     {
         "en"        "{wheat}Warden has been unlocked."
+        "chi"       "{wheat}监狱长被解锁"
     }
     "WardenUnlockWarn"
     {
         "en"        "{wheat}Warden is already unlocked."
+        "chi"       "{wheat}监狱长已解锁"
     }
     "CommandUsageJTime"
     {
@@ -128,174 +153,215 @@
     {
         "#format"   "{1:d}"
         "en"        "{wheat}Remaining round time set to {1} second(s)."
+        "chi"       "{wheat}回合时间已被设置为 {1} 喵~"
     }
     "CellsOpen"
     {
         "en"        "{wheat}The cell doors have been opened."
+        "chi"       "{wheat}牢门已解锁"
     }
     "CellsClose"
     {
         "en"        "{wheat}The cell doors have been closed."
+        "chi"       "{wheat}监狱长已关闭"
     }
     "CellsWarnNone"
     {
         "en"        "{wheat}Cell door config for map not set properly by server."
+        "chi"       "{wheat}服务器没有正确设置地图牢房门的配置"
     }
     "CellsWarnBadClass"
     {
         "en"        "{wheat}Cell door config set by server is not a cell door."
+        "chi"       "{wheat}服务器已有的牢房门配置不对应"
     }
     "CellsWarnCantClose"
     {
         "en"        "{wheat}Cell doors can't be closed."
+        "chi"       "{wheat}牢房门无法关闭!"
     }
     "CellsWarnLR"
     {
-        "en"        "{wheat}Cells can't be modified during this LR.
+        "en"        "{wheat}Cells can't be modified during this LR."
+        "chi"       "{wheat}在此最终回合中，牢房不能控制!"
     }
     "FFNotifyOn"
     {
         "en"        "{wheat}Warden has enabled Friendly-Fire!"
+        "chi"       "{wheat}监狱长开启了友伤!"
     }
     "FFNotifyOff"
     {
         "en"        "{wheat}Warden has disabled Friendly-Fire!"
+        "chi"       "{wheat}监狱长关闭了友伤!"
     }
     "FFNotifyOnAdmin"
     {
         "en"        "{wheat}Friendly-Fire has been enabled!"
+        "chi"       "{wheat}友伤已开启!"
     }
     "FFNotifyOffAdmin"
     {
         "en"        "{wheat}Friendly-Fire has been disabled!"
+        "chi"       "{wheat}友伤已关闭!"
     }
     "FFStatusOn"
     {
         "en"        "{wheat}Friendly fire is on."
+        "chi"       "{wheat}友伤已开启!"
     }
     "FFStatusOff"
     {
         "en"        "{wheat}Friendly fire is off."
+        "chi"       "{wheat}友伤已关闭!"
     }
     "CCNotifyOn"
     {
         "en"        "{wheat}Warden has enabled collisions."
+        "chi"       "{wheat}监狱长开启了碰撞!"
     }
     "CCNotifyOff"
     {
         "en"        "{wheat}Warden has disabled collisions."
+        "chi"       "{wheat}监狱长关闭了碰撞!"
     }
     "CCNotifyOnAdmin"
     {
         "en"        "{wheat}Collisions have been enabled."
+        "chi"       "{wheat}碰撞已开启!"
     }
     "CCNotifyOffAdmin"
     {
         "en"        "{wheat}Collisions have been disabled."
+        "chi"       "{wheat}碰撞已关闭!"
     }
     "CommandFireWarnDisabled"
     {
         "en"        "{wheat}Firing is not enabled on this server."
+        "chi"       "{wheat}该指令在服务器中未启用!"
     }
     "CommandFireWarnNone"
     {
         "en"        "{wheat}There is no Warden to fire."
+        "chi"       "{wheat}当前没有监狱长可以炒鱿鱼!"
     }
     "CommandFireWarnSelf"
     {
         "en"        "{wheat}You can't fire yourself!"
+        "chi"       "{wheat}你不能炒你自己!"
     }
     "CommandFireWarnDead"
     {
         "en"        "{wheat}Must be alive to participate in a fire vote."
+        "chi"       "{wheat}需要你活着才能投票!"
     }
     "CommandFireWarnDone"
     {
         "en"        "{wheat}You have already voted to fire the Warden"
+        "chi"       "{wheat}你已经投过票了!"
     }
     "CommandFireWarnGuard"
     {
         "en"        "{wheat}Guard firing is not enabled on this server."
+        "chi"       "{wheat}该指令在服务器中未启用!"
     }
     "CommandFireNotifyVote"
     {
         "#format"   "{1:N}{2:d}{3:d}"
         "en"        "{unique}{1}{wheat} has voted to fire the Warden ({2}/{3})."
+        "chi"       "{unique}{1}{wheat} 投票决定解雇监狱长 ({2}/{3})."
     }
     "CommandMarkerSlow"
     {
         "en"        "{wheat}Placing markers too fast, slow down and try again."
+        "chi"       "{wheat}小子！慢一点!"
     }
     "CommandAdminFreedayWarn"
     {
         "#format"   "{1:N}"
         "en"        "{unique}{1}{wheat} is ineligible for Freeday"
+        "chi"       "{unique}{1}{wheat} 没有资格成为自由日"
     }
     "SlowDown"
     {
         "en"        "{wheat}Slow down!"
+        "chi"       "{wheat}慢一点！"
     }
     "LRChooseFreedayOthers"
     {
         "#format"   "{1:N}{2:N}{3:d}"
         "en"        "{unique}{1}{wheat} has chosen {unique}{2}{wheat} for a {strange}Freeday {wheat}({3}/3)."
+        "chi"       "{unique}{1}{wheat} 选择了 {unique}{2}{wheat} 为投票 {strange}自由日 {wheat}({3}/3)"
     }
     "LRChooseCustom"
     {
         "#format"   "{1:N}{2:s}"
         "en"        "{unique}{1}{wheat} has chosen: {selfmade}{2}"
+        "chi"       "{unique}{1}{wheat} 选择了: {selfmade}{2}"
     }
     "LRFreedayActive"
     {
         "#format"   "{1:N}"
         "en"        "{strange}Freeday{wheat} activated for {unique}{1}{wheat}."
+        "chi"       "{strange}自由日{wheat} 激活于 {unique}{1}{wheat}."
     }
     "LRNoneActive"
     {
         "en"        "{wheat}Last Request: None"
+        "chi"       "{wheat}最终要求: 无"
     }
     "LRFreedaySelfActive"
     {
         "en"        "{wheat}Last Request: {strange}Freeday for self."
+        "chi"       "{wheat}最终要求: {strange}给自己自由日"
     }
     "LRFreedayOthersActive"
     {
         "en"        "{wheat}Last Request: {strange}Freeday for others."
+        "chi"       "{wheat}最终要求: {strange}给其他人自由日"
     }
     "LRFreedayAllActive"
     {
         "en"        "{wheat}Last Request: {strange}Freeday for all."
+        "chi"       "{wheat}最终要求: {strange}给所有人自由日"
     }
     "LRWardayActive"
     {
         "en"        "{wheat}Last Request: {collectors}Warday."
+        "chi"       "{wheat}最终要求: {strange}战争之日"
     }
     "LRCustomActive"
     {
         "#format"   "{1:s}"
         "en"        "{wheat}Custom Last Request: {selfmade}{1}."
+        "chi"       "{wheat}自定义要求: {selfmade}{1}"
     }
     "LRMapActive"
     {
         "#format"   "{1:s}"
         "en"        "{wheat}Custom Last Request: {vintage}{1}."
+        "chi"       "{wheat}自定义要求: {vintage}{1}."
     }
     "FreedayLost"
     {
         "#format"   "{1:N}"
         "en"        "{unique}{1}{wheat} has rebelled and lost their freeday!"
+        "chi"       "已反叛！失去了自由日！"
     }
     "LastRequestsDisabled"
     {
         "en"        "{wheat}Last Requests are disabled on this server."
+        "chi"       "{wheat}自由日已被服务器关闭!"
     }
     "CommandDisabled"
     {
         "en"        "{wheat}Command not enabled on this server."
+        "chi"       "{wheat}该指令已被服务器关闭!"
     }
     "CommandAdminForceFreeday"
     {
         "#format"   "{1:N}"
         "en"        "{wheat}Forcibly activated freeday for {unique}{1}{wheat}"
+        "chi"       "{wheat}强制激活 {unique}{1}{wheat} 的自由日!"
     }
 }
