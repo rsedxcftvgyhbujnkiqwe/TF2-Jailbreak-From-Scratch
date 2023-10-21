@@ -158,12 +158,12 @@
     "CellsOpen"
     {
         "en"        "{wheat}The cell doors have been opened."
-        "chi"       "{wheat}牢门已解锁"
+        "chi"       "{wheat}监狱长打开了牢门"
     }
     "CellsClose"
     {
         "en"        "{wheat}The cell doors have been closed."
-        "chi"       "{wheat}监狱长已关闭"
+        "chi"       "{wheat}监狱长已关闭牢门"
     }
     "CellsWarnNone"
     {
