@@ -11,58 +11,70 @@
     "ClientTimeoutRemoved"
     {
         "en"        "Your timeout has been removed by an admin! You may now become a guard."
+        "chi"       "您的团队禁令已被管理员删除!你现在可以成为一名狱警。"
     }
     "AdminTimeoutRemoved"
     {
         "#format"   "{1:N}"
         "en"        "Removed timeout for {unique}{1}."
+        "chi"       "删除 {unique}{1} 的禁令"
     }
     "AdminTimeoutNone"
     {
         "#format"   "{1:N}"
         "en"        "{unique}{1}{wheat} is not currently timed out."
+        "chi"       "{unique}{1}{wheat} 当前没有禁令！"
     }
     "TimeoutIssued"
     {
         "#format"   "{1:N}{2:d}"
         "en"        "{unique}{1}}{wheat} has been timed out from guard for {2} rounds!"
+        "chi"       "{unique}{1}}{wheat} 被禁止加入警队 {2} 回合!"
     }
     "TimeoutIssuedReason"
     {
         "#format"   "{1:N}{2:d}{3:s}"
         "en"        "{unique}{1}{wheat} has been timed out from guard for {2} rounds, for {strange}{3}."
+        "chi"       "{unique}{1}{wheat} 已被禁止加入警队 {2} 回合, 来自 {strange}{3}"
     }
     "ClientTimeoutExpired"
     {
         "en"        "Your timeout has expired! You may now become a guard."
+        "chi"       "您的禁令已结束！现在你可以加入警队了！"
     }
     "TimeoutStatusNone"
     {
         "en"        "You are not currently timed out"
+        "chi"       "您目前没有禁令！"
     }
     "TimeoutStatus"
     {
         "#format"   "{1:d}"
         "en"        "You are timed out for {1} more round(s)."
+        "chi"       "你还有 {1} 回合的禁令未解除"
     }
     "TimeoutStatusReason"
     {
         "#format"   "{1:d}{2:s}"
         "en"        "You are timed out for {1} more round(s), for {strange}{2}."
+        "chi"       "你还有 {1} 回合的禁令未解除,来自 {strange}{2}."
     }
     "TargetTimeoutStatusNone"
     {
         "#format"   "{1:N}"
         "en"        "{unique}{1}{wheat} is not currently timed out"
+        "chi"       "{unique}{1}{wheat} 当前没有禁令"
     }
     "TargetTimeoutStatus"
     {
         "#format"   "{1:N}{2:d}"
         "en"        "{unique}{1}{wheat} is timed out for {2} more round(s)."
+        "chi"       "{unique}{1}{wheat} 当前拥有 {2} 回合禁令"
     }
     "TargetTimeoutStatusReason"
     {
         "#format"   "{1:N}{2:d}{3:s}"
         "en"        "{unique}{1}{wheat} is timed out for {2} more round(s), for {strange}{3}."
+        "chi"       "{unique}{1}{wheat} 当前拥有 {2} 回合禁令,来自 {strange}{3}"
     }
 }
