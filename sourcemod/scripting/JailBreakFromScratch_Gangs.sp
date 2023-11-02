@@ -299,5 +299,29 @@ public bool DB_CreateGang(char name[32])
 
 public bool DB_GangExists(char name[32])
 {
+    char query[512];
+    SQL_FormatQuery(hDatabase,query,sizeof(query),
+                "SELECT exists("
+            ... "SELECT * FROM %s "
+            ... "WHERE name = '%s') "
+            ... "AS \"GangExists\"",GangTable,name);
     
+    DBResultSet hQuery = SQL_Query(hDatabase,query);
+    if (hQuery == null)
+    {
+        char qerror[255];
+        SQL_GetError(hDatabase, qerror, sizeof(qerror));
+        PrintToServer("Failed to query (error: %s)", qerror);
+        return -1;
+    } 
+
+    bool GangExists;
+    while (SQL_FetchRow(hQuery))
+    {
+        GangExists = SQL_FetchInt(hQuery, 0);
+        if (GangExists) break;
+    }
+    delete hQuery;
+
+    return GangExists;
 }
