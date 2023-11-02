@@ -346,7 +346,7 @@
     {
         "#format"   "{1:N}"
         "en"        "{unique}{1}{wheat} has rebelled and lost their freeday!"
-        "chi"       "已反叛！失去了自由日！"
+        "chi"       "{wheat}已反叛！失去了自由日！"
     }
     "LastRequestsDisabled"
     {

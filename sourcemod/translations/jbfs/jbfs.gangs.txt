@@ -1,0 +1,84 @@
+"Phrases"
+{
+    "GangTag"
+    {
+        "en"        "{genuine}(Gang){wheat}"
+    }
+    "CommandCreateGangUsage"
+    {
+        "en"        "{wheat}Usage: sm_creategang <Name Of Gang>"
+    }
+    "CommandSetNameUsage"
+    {
+        "en"        "{wheat}Usage: sm_gangname <Name of Gang>"
+    }
+    "CommandSetTagUsage"
+    {
+        "en"        "{wheat} Usage: sm_gangtag <TAG>"
+    }
+    "CommandCreateGangWarnInGang"
+    {
+        "en"        "{wheat}You are already in a gang!"
+    }
+    "CommandCreateGangWarnExists"
+    {
+        "en"        "{wheat}A gang with that name already exists."
+    }
+    "CommandCreateGangWarnError"
+    {
+        "en"        "{wheat}There was an error creating the gang. Please check server console for more information."
+    }
+    "GangNameFormat"
+    {
+        "en"        "{wheat}Gang names can contain any character, but letters in the gang name must be unique."
+    }
+    "GangNameExample"
+    {
+        "en"        "{wheat}Example: MyGang1 and MyGang2 would be considered the same, but MyGang1 and GangMy1 would be considered different."
+    }
+    "GangTagFormat"
+    {
+        "en"        "{wheat}Gang Tags are 2-4 letters long and must only contain letters."
+    }
+    "GangTagExample"
+    {
+        "en"        "{wheat}Example: TAG, GanG, Dx"
+    }
+    "GangCreated"
+    {
+        "#format"   "{1:N}{2:s}"
+        "en"        "{unique}{1}{wheat} has formed the gang {genuine}{2}."
+    }
+    "GangCreatedSilent"
+    {
+        "#format"   "{1:s}"
+        "en"        "{wheat}You have formed the gang {genuine}{1}."
+    }
+    "GangCreatedHelp"
+    {
+        "en"        "{wheat}Use sm_ganghelp for a list of gang related commands."
+    }
+    "CommandWarnNotInGang"
+    {
+        "en"        "{wheat}You are not in a gang!"
+    }
+    "CommandWarnGangRank"
+    {
+        "en"        "{wheat}You are not a high enough rank in the gang to do this!"
+    }
+    "GangNameChange"
+    {
+        "#format"   "{1:s}{2:s}"
+        "en"        "{wheat}Gang {genuine}{1}{wheat} has changed their name to {genuine}{2}."
+    }
+    "GangNameChangeSilent"
+    {
+        "#format"   "{1:s}"
+        "en"        "{wheat}Gang leader has changed the gang name to {genuine}{1}."
+    }
+    "GangTagChange"
+    {
+        "#format"   "{1:s}"
+        "en"        "{wheat}Gang leader has changed the gang tag to {genuine}{1}."
+    }
+}
