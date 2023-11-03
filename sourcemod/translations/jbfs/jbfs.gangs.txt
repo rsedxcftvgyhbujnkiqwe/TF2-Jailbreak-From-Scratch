@@ -81,4 +81,8 @@
         "#format"   "{1:s}"
         "en"        "{wheat}Gang leader has changed the gang tag to {genuine}{1}."
     }
+    "GangChatDisabled"
+    {
+        "en"        "{wheat}Gang chat is disabled on this server."
+    }
 }

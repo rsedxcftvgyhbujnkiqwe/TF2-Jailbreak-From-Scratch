@@ -28,6 +28,7 @@ enum
     DatabaseName,
     AnnounceGangCreate,
     AnnounceGangName,
+    GangChat,
     Version
 }
 
@@ -43,6 +44,13 @@ enum
     GangRank_Boss = 0,
     GangRank_Officer,
     GangRank_Muscle
+}
+//match rank enum
+g_RankColors = {
+        "default",
+        "axis",
+        "darkslateblue",
+        "darkslategray"
 }
 
 //temporary variables which mimic the sql tables
@@ -66,6 +74,7 @@ public void OnPluginStart()
     cvarJBFS[DatabaseName] = CreateConVar("sm_jbfsg_database","jbfsgangs","Name of SQL database to use. Configured in databases.cfg",FCVAR_NOTIFY)
     cvarJBFS[AnnounceGangCreate] = CreateConVar("sm_jbfsg_announcegangcreate","1","Whether to announce to all players when gangs are created.\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0)
     cvarJBFS[AnnounceGangName] = CreateConVar("sm_jbfsg_announcegangname","1","Whether to announce to all players when gangs change their names.\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0)
+    cvarJBFS[GangChat] = CreateConVar("sm_jbfsg_gangchat","1","Enable the Gang chat feature, which allows gang members to send messages only other gang members can see.\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0)
     cvarJBFS[Version] = CreateConVar("jbfst_version",PLUGIN_VERSION,PLUGIN_NAME,FCVAR_REPLICATED | FCVAR_NOTIFY | FCVAR_SPONLY | FCVAR_DONTRECORD);
 
     //add custom color(s) to morecolors
@@ -708,6 +717,30 @@ public Action Command_SetGangName(int client, int args)
         else
             CPrintToChatGang(gang_uid,"%t %t","GangTag","GangNameChangeSilent");
     }
+}
+
+public Action Command_GangChat(int client, int args)
+{
+    if (!cvarJBFS[GangChat].BoolValue)
+    {
+        CPrintToChat(client,"%t %t","PluginTag","GangChatDisabled");
+        return Plugin_Handled;
+    }
+    if(g_GangData[client].uid == -1)
+    {
+        CPrintToChat(client,"%t %t","PluginTag","CommandWarnNotInGang");
+        return Plugin_Handled;
+    }
+
+    char message[255], s[32];
+    for (int i = 1; i <= args; i++)
+    {
+        GetCmdArg(i, s, sizeof(s));
+        if (StrEqual(message,"\0")) Format(message,sizeof(message),"%s",s)
+        else Format(message, sizeof(message), "%s %s", message, s);
+    }
+
+    CPrintToChatGang(g_GangData[client].uid,"%t {%s}%N{default}: %s","GangTag",g_RankColors[client],client,message);
 }
 
 public void OnClientPutInServer(int client)
