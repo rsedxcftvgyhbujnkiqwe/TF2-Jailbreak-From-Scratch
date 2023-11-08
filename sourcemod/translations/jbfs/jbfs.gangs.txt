@@ -20,9 +20,13 @@
     {
         "en"        "{wheat}You are already in a gang!"
     }
-    "CommandCreateGangWarnExists"
+    "CommandGangNameExists"
     {
         "en"        "{wheat}A gang with that name already exists."
+    }
+    "CommandGangTagExists"
+    {
+        "en"        "{wheat}An existing gang has taken that tag."
     }
     "CommandCreateGangWarnError"
     {
