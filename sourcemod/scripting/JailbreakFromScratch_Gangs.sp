@@ -879,15 +879,16 @@ void ResetClientGangData(int client)
 }
 
 stock CPrintToChatGang(int gang_uid, const String:message[], any:...) {
-	CCheckTrie();
-	decl String:buffer[MAX_BUFFER_LENGTH], String:buffer2[MAX_BUFFER_LENGTH];
-	for(int i = 1; i <= MaxClients; i++) {
-		if(!IsClientInGame(i) || g_GangID[i] != gang_uid) {
-			continue;
-		}
-		Format(buffer, sizeof(buffer), "\x01%s", message);
-		VFormat(buffer2, sizeof(buffer2), buffer, 2);
-		CReplaceColorCodes(buffer2);
-		CSendMessage(i, buffer2);
-	}
+    CCheckTrie();
+    decl String:buffer[MAX_BUFFER_LENGTH], String:buffer2[MAX_BUFFER_LENGTH];
+    for(int i = 1; i <= MaxClients; i++) {
+        if(!IsClientInGame(i) || g_GangID[i] != gang_uid) {
+            continue;
+        }
+        SetGlobalTransTarget(i);
+        Format(buffer, sizeof(buffer), "\x01%s", message);
+        VFormat(buffer2, sizeof(buffer2), buffer, 3);
+        CReplaceColorCodes(buffer2);
+        CSendMessage(i, buffer2);
+    }
 }
