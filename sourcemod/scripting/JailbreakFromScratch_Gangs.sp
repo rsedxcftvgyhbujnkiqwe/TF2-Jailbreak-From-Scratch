@@ -467,7 +467,7 @@ int DB_CreateGang(char name[32])
     SQL_FormatQuery(hDatabase,query,sizeof(query),
             "INSERT INTO %s "
         ... "(name, tag, uid, nid, members, status) "
-        ... "VALUES ('%s', '%s', %d, %d, %d)",
+        ... "VALUES ('%s', '%s', %d, %d, %d, %d)",
             GangTable, name, "\0", uid, nid, 0, 0);
     if (!SQL_FastQuery(hDatabase, query))
     {
