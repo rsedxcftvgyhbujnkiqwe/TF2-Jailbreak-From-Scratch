@@ -80,8 +80,8 @@ public void OnPluginStart()
     cvarJBFS[AnnounceGangName] = CreateConVar("sm_jbfsg_announcegangname","1","Whether to announce to all players when gangs change their names.\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0)
     cvarJBFS[GangChat] = CreateConVar("sm_jbfsg_gangchat","1","Enable the Gang chat feature, which allows gang members to send messages only other gang members can see.\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0)
     cvarJBFS[Version] = CreateConVar("jbfst_version",PLUGIN_VERSION,PLUGIN_NAME,FCVAR_REPLICATED | FCVAR_NOTIFY | FCVAR_SPONLY | FCVAR_DONTRECORD);
-    AutoExecConfig(true,"jbfs_gangs");
-    
+    AutoExecConfig(true,"jbfsgangs");
+
     //add custom color(s) to morecolors
     CCheckTrie();
     SetTrieValue(CTrie,"day9",0xFFA71A);
