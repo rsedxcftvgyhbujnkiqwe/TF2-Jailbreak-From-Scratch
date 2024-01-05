@@ -436,7 +436,7 @@ int DB_CreateGang(char name[32])
     //get current largest uid
     char query[512];
     SQL_FormatQuery(hDatabase,query,sizeof(query),
-                "SELECT MAX(gang_uid) "
+                "SELECT MAX(uid) "
             ... "AS largest_uid "
             ... "FROM %s",GangTable);
 
