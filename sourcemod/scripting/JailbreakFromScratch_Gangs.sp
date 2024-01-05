@@ -86,6 +86,10 @@ public void OnPluginStart()
     CCheckTrie();
     SetTrieValue(CTrie,"day9",0xFFA71A);
 
+    LoadTranslations("common.phrases");
+    LoadTranslations("jbfs/jbfs.phrases");
+    LoadTranslations("jbfs/jbfs.gangs");
+
     //generic cmds
     //RegConsoleCmd("sm_ganghelp",Command_GangHelp,"Help menu for Gang related commands")
     RegConsoleCmd("sm_creategang",Command_CreateGang,"Create a gang with the specified name.");
