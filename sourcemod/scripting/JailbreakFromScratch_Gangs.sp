@@ -128,7 +128,7 @@ void GotDatabase(Database db, const char[] error, any data)
         ... "nid VARCHAR(32), " //name ID - string that represents simplified gang name.
 		... "members INT, " //# of members
         ... "status INT, " //status - 1 = active, 0 = disbanded
-		... "PRIMARY KEY (gang_id));",GangTable);
+		... "PRIMARY KEY (uid));",GangTable);
     if (!SQL_FastQuery(hDatabase, query))
     {
         char qerror[255];
