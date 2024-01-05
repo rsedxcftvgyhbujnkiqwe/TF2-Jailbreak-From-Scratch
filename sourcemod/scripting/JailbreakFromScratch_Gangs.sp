@@ -142,7 +142,7 @@ void GotDatabase(Database db, const char[] error, any data)
 		...	"steamid VARCHAR(22), "
 		... "gang_uid INT, "
 		... "rank INT, "
-		... "PRIMARY KEY (player_steamid));",PlayerTable);
+		... "PRIMARY KEY (steamid));",PlayerTable);
     if (!SQL_FastQuery(hDatabase, query))
     {
         char qerror[255];
