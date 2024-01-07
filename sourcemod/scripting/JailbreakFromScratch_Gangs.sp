@@ -886,7 +886,9 @@ stock CPrintToChatGang(int gang_uid, const String:message[], any:...) {
             continue;
         }
         SetGlobalTransTarget(i);
+        PrintToServer("%s %s %s",buffer,buffer2,message);
         Format(buffer, sizeof(buffer), "\x01%s", message);
+        PrintToServer("%s %s %s",buffer,buffer2,message);
         VFormat(buffer2, sizeof(buffer2), buffer, 3);
         CReplaceColorCodes(buffer2);
         CSendMessage(i, buffer2);
