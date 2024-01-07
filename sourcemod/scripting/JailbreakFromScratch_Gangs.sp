@@ -132,6 +132,7 @@ void GotDatabase(Database db, const char[] error, any data)
         ... "nid VARCHAR(32), " //name ID - string that represents simplified gang name.
 		... "members INT, " //# of members
         ... "status INT, " //status - 1 = active, 0 = disbanded
+        ... "creation_date INT, " //unix timestamp
 		... "PRIMARY KEY (uid));",GangTable);
     if (!SQL_FastQuery(hDatabase, query))
     {
@@ -466,9 +467,9 @@ int DB_CreateGang(char name[32])
     //create the new gang
     SQL_FormatQuery(hDatabase,query,sizeof(query),
             "INSERT INTO %s "
-        ... "(name, tag, uid, nid, members, status) "
-        ... "VALUES ('%s', '%s', %d, %d, %d, %d)",
-            GangTable, name, "\0", uid, nid, 0, 0);
+        ... "(name, tag, uid, nid, members, status, creation_date) "
+        ... "VALUES ('%s', '%s', %d, %d, %d, %d, %d)",
+            GangTable, name, "\0", uid, nid, 0, 0, GetTime());
     if (!SQL_FastQuery(hDatabase, query))
     {
         char qerror[255];
@@ -796,8 +797,12 @@ Action Command_GangChat(int client, int args)
         if (StrEqual(message,"\0")) Format(message,sizeof(message),"%s",s)
         else Format(message, sizeof(message), "%s %s", message, s);
     }
-
-    CPrintToChatGang(g_GangID[client],"%t {%s}%N{default}: %s","GangTag",g_RankColors[client],client,message);
+    if (StrEqual(message,"\0"))
+    {
+        CPrintToChat(client,"%t %t","PluginTag","CommandGangChatUsage");
+        return Plugin_Handled;
+    }
+    CPrintToChatGang(g_GangID[client],"%t {%s}%N{default}: %s","GangTag",g_RankColors[g_GangRank[client]+1],client,message);
     PrintToServer("(Gang Chat) %N: %s",client,message)
     return Plugin_Handled;
 }
