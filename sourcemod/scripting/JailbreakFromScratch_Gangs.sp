@@ -520,7 +520,8 @@ bool DB_GangNameExists(char name[32])
     SQL_FormatQuery(hDatabase,query,sizeof(query),
                 "SELECT exists("
             ... "SELECT * FROM %s "
-            ... "WHERE nid = '%s') "
+            ... "WHERE nid = '%s' "
+            ... "AND status = 1 "
             ... "AS \"GangExists\"",GangTable,nid);
 
     DBResultSet hQuery = SQL_Query(hDatabase,query);
