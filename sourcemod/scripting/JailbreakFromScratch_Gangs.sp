@@ -691,7 +691,7 @@ Action Command_SetGangTag(int client, int args)
     }
     if (args != 1)
     {
-        CPrintToChat(client,"%t %t","PluginTag","CommandSetNameUsage");
+        CPrintToChat(client,"%t %t","PluginTag","CommandSetTagUsage");
         CPrintToChat(client,"%t %t","PluginTag","GangTagFormat");
         CPrintToChat(client,"%t %t","PluginTag","GangTagExample");
         return Plugin_Handled;

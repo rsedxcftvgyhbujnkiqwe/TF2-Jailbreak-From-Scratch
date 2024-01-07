@@ -106,6 +106,7 @@ public Action OnPlayerSpawn(Event event, const char[] name, bool dontBroadcast)
     {
         case TFClass_Scout:
         {
+            TF2Attrib_RemoveByDefIndex(client, 49);
             switch (cvarJBFS[DoubleJump].IntValue)
             {
                 case 0: TF2Attrib_SetByDefIndex(client, 49, 1.0);

@@ -52,6 +52,7 @@ char TableName[] = "JBFSTimeouts"
 
 public void OnPluginStart()
 {
+    PrintToServer("[JBFS] Loading JBFS Timeouts")
     cvarJBFS[DatabaseName] = CreateConVar("sm_jbfst_database","jbfstimeouts","Name of SQL database to use. Configured in databases.cfg",FCVAR_NOTIFY)
     cvarJBFS[ACMD_Timeout] = CreateConVar("sm_jbfst_timeout","2","Admin flag(s) required to timeout a player.",FCVAR_NOTIFY,true,0.0,true,2097151.0)
     cvarJBFS[Version] = CreateConVar("jbfst_version",PLUGIN_VERSION,PLUGIN_NAME,FCVAR_REPLICATED | FCVAR_NOTIFY | FCVAR_SPONLY | FCVAR_DONTRECORD);

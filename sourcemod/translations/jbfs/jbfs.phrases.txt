@@ -6,7 +6,7 @@
     }
     "PluginTagAdmin"
     {
-        "en"        "{day9}[JBFS]{valve} "
+        "en"        "{day9}[JBFS]{valve}"
     }
     "WardenWarnLocked"
     {
