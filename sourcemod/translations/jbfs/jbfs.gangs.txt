@@ -20,6 +20,10 @@
     {
         "en"        "{wheat} Usage: sm_gangchat <message>"
     }
+    "CommandGangInviteUsage"
+    {
+        "en"        "{wheat} Usage: sm_ganginvite <player>"
+    }
     "CommandCreateGangWarnInGang"
     {
         "en"        "{wheat}You are already in a gang!"

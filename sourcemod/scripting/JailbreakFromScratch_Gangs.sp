@@ -70,7 +70,7 @@ enum struct GangData
 GangData g_GangData[MAXPLAYERS+1];
 g_GangID[MAXPLAYERS+1] = {-1, ... };
 g_GangRank[MAXPLAYERS+1] = {GangRank_None, ... };
-
+int g_GangInvite[MAXPLAYERS+1];
 
 
 public void OnPluginStart()
@@ -99,11 +99,26 @@ public void OnPluginStart()
     RegConsoleCmd("sm_gangtag",Command_SetGangTag,"Change your gang's tag.");
     RegConsoleCmd("sm_gangchat",Command_GangChat,"Send a message to your gang.");
     RegConsoleCmd("sm_gc",Command_GangChat,"Send a message to your gang.");
+
+    //boss cmds
+    RegConsoleCmd("sm_ganginvite",Command_GangInvite,"Invite a player to your gang.");
 }
 
 public void OnConfigsExecuted()
 {
     DBConnect();
+}
+
+stock void SanitizeString(char[] buffer, int maxlength,const char[] input)
+{
+    //assume your buffer and input are the same size!
+    int pos = 0;
+    for(int i;i<maxlength;i++)
+    {
+        if (input[i] == '%' || input[i] == '\\') continue;
+        buffer[pos++] = input[i]
+        if(input[i] == '\0') break;
+    }
 }
 
 void DBConnect()
@@ -639,7 +654,10 @@ Action Command_CreateGang(int client, int args)
         else Format(gangname, sizeof(gangname), "%s %s", gangname, s);
     }
 
-    if (DB_GangNameExists(gangname))
+    char sanitized_gangname[32];
+    SanitizeString(sanitized_gangname,sizeof(gangname),gangname);
+
+    if (DB_GangNameExists(sanitized_gangname))
     {
         CPrintToChat(client,"%t %t","PluginTag","CommandGangNameExists");
         CPrintToChat(client,"%t %t","PluginTag","GangNameFormat");
@@ -655,7 +673,7 @@ Action Command_CreateGang(int client, int args)
      * 4. a gang by the name doesn't exist already
      * so we should be able to safely create the gang
     */
-    int gang_uid = DB_CreateGang(gangname);
+    int gang_uid = DB_CreateGang(sanitized_gangname);
     if (gang_uid == -1)
     {
         CPrintToChat(client,"%t %t","PluginTag","CommandCreateGangError")
@@ -667,11 +685,11 @@ Action Command_CreateGang(int client, int args)
 
     if(cvarJBFS[AnnounceGangCreate].BoolValue)
     {
-        CPrintToChatAll("%t %t","PluginTag","GangCreated",client,gangname);
+        CPrintToChatAll("%t %t","PluginTag","GangCreated",client,sanitized_gangname);
     }
     else
     {
-        CPrintToChat(client,"%t %t","GangTag","GangCreatedSilent",gangname);
+        CPrintToChat(client,"%t %t","GangTag","GangCreatedSilent",sanitized_gangname);
     }
     CPrintToChat(client,"%t %t","PluginTag","GangCreatedHelp");
     return Plugin_Handled;
@@ -757,23 +775,26 @@ Action Command_SetGangName(int client, int args)
         else Format(gangname, sizeof(gangname), "%s %s", gangname, s);
     }
 
+    char sanitized_gangname[32];
+    SanitizeString(sanitized_gangname,sizeof(gangname),gangname);
+
     int gang_uid = g_GangID[client];
     char current_name[32];
     DB_GetGangName(gang_uid,current_name,sizeof(current_name))
-    if (strcmp(current_name,gangname)==0) return Plugin_Handled;
+    if (strcmp(current_name,sanitized_gangname)==0) return Plugin_Handled;
 
-    if (DB_GangNameExists(gangname))
+    if (DB_GangNameExists(sanitized_gangname))
     {
         CPrintToChat(client,"%t %t","PluginTag","CommandGangNameTaken")
         return Plugin_Handled;
     }
 
-    if(SetGangName(gang_uid,gangname,true))
+    if(SetGangName(gang_uid,sanitized_gangname,true))
     {
         if(cvarJBFS[AnnounceGangName].BoolValue)
-            CPrintToChatAll("%t %t","PluginTag","GangNameChange",current_name,gangname);
+            CPrintToChatAll("%t %t","PluginTag","GangNameChange",current_name,sanitized_gangname);
         else
-            CPrintToChatGang(gang_uid,"%t %t","GangTag","GangNameChangeSilent",gangname);
+            CPrintToChatGang(gang_uid,"%t %t","GangTag","GangNameChangeSilent",sanitized_gangname);
     }
     return Plugin_Handled;
 }
@@ -803,8 +824,28 @@ Action Command_GangChat(int client, int args)
         CPrintToChat(client,"%t %t","PluginTag","CommandGangChatUsage");
         return Plugin_Handled;
     }
-    CPrintToChatGang(g_GangID[client],"%t {%s}%N{default}: %s","GangTag",g_RankColors[g_GangRank[client]+1],client,message);
-    PrintToServer("(Gang Chat) %N: %s",client,message)
+
+    char sanitized_message[32];
+    SanitizeString(sanitized_message,sizeof(message),message);
+    CPrintToChatGang(g_GangID[client],"%t {%s}%N{default}: %s","GangTag",g_RankColors[g_GangRank[client]+1],client,sanitized_message);
+    PrintToServer("(Gang Chat) %N: %s",client,sanitized_message)
+    return Plugin_Handled;
+}
+
+Action Command_GangInvite(int client,int args)
+{
+    if (args < 1)
+    {
+        CPrintToChat(client,"%t %t","PluginTag","CommandGangInviteUsage")
+        return Plugin_Handled;
+    }
+    char arg1[32];
+    GetCmdArg(1, arg1, sizeof(arg1));
+    int target = FindTarget(client, arg1,true);
+    if (target == -1) return Plugin_Handled;
+
+
+
     return Plugin_Handled;
 }
 

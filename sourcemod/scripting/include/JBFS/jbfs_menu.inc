@@ -356,6 +356,7 @@ public int LRMenuHandler(Menu menu, MenuAction action, int param1, int param2)
         }
         case MenuAction_Cancel:
         {
+            CPrintToChatAll("%t %t","PluginTag","LRMenuClose")
             //do nothing
         }
         case MenuAction_End:
@@ -422,6 +423,7 @@ public void CreateLRMenu(int client)
             menu.AddItem(key,g_MapLRNames[i])
         }
     }
+    menu.ExitButton = false;
     menu.Display(client,MENU_TIME_FOREVER);
 }
 

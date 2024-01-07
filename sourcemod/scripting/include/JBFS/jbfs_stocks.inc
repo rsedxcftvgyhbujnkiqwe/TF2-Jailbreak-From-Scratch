@@ -677,7 +677,7 @@ stock void RemoveWeapons(int client)
                 RemoveWeapon(client,i);
                 HasBlocked = true;
             }
-            else if (AmmoWep && GetClientTeam(client)==RED)
+            else if (AmmoWep && GetClientTeam(client)==RED && !LRConfig.WardayActive)
             {
                 //DANGER! If you put a melee weapon here, prisoner will A-pose!
                 SetEntPropEnt(client,Prop_Send,"m_hMyWeapons",-1,i);
