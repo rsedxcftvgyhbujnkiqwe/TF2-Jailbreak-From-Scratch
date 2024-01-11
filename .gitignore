@@ -30,3 +30,7 @@
 /sourcemod/translations/*
 !/sourcemod/translations/jbfs
 !/sourcemod/translations/jbfs/*
+
+!/sourcemod/gamedata/
+/sourcemod/gamedata/*
+!/sourcemod/gamedata/jbfs*

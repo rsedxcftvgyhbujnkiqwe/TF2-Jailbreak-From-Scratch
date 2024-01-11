@@ -361,7 +361,28 @@
     "CommandAdminForceFreeday"
     {
         "#format"   "{1:N}"
-        "en"        "{wheat}Forcibly activated freeday for {unique}{1}{wheat}"
+        "en"        "{wheat}Forcibly activated freeday for {unique}{1}{wheat}."
         "chi"       "{wheat}强制激活 {unique}{1}{wheat} 的自由日!"
+    }
+    "CommandSurrenderWarnBlue"
+    {
+        "en"        "{wheat}Only prisoners can surrender."
+    }
+    "CommandSurrenderWarnDead"
+    {
+        "en"        "{wheat}You must be alive to do that."
+    }
+    "CommandSurrenderWarnAmmo"
+    {
+        "en"        "{wheat}You must have picked up a weapon to surrender."
+    }
+    "CommandSurrenderWarnWarday"
+    {
+        "en"        "{wheat}You cannot surrender on a Warday"
+    }
+    "PlayerSurrender"
+    {
+        "#format"   "{1:N}"
+        "en"        "{unique}{1}{wheat} has surrendered their ammo and weapons!"
     }
 }

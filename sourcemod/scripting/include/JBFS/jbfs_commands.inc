@@ -1,48 +1,38 @@
 //Client Commands
 public Action Command_Warden(int client, int args)
 {
-    if (GetClientTeam(client)==BLU)
-    {
-        if(IsPlayerAlive(client))
-        {
-            if(HasMic(client,!cvarJBFS[MicWarden].BoolValue))
-            {
-                if (!JBFS.Warden)
-                {
-                    if (!JBFS.WardenLocked){
-                        if (!JBFS.FireStatus[client])
-                        {
-                            SetWarden(client,W_Chose);
-                        }
-                        else
-                        {
-                            CPrintToChat(client,"%t %t","PluginTag","WardenWarnFired");
-                        }
-                    }
-                    else
-                    {
-                        CPrintToChat(client,"%t %t","PluginTag","WardenWarnLocked");
-                    }
-                }
-                else
-                {
-                    CPrintToChat(client,"%t %t","PluginTag","WardenWarnTaken",JBFS.Warden);
-                }
-            }
-            else
-            {
-                CPrintToChat(client,"%t %t","PluginTag","WardenWarnNoMic");
-            }
-        }
-        else
-        {
-            CPrintToChat(client,"%t %t","PluginTag","WardenWarnDead");
-        }
-    }
-    else
+    if (GetClientTeam(client)!=BLU)
     {
         CPrintToChat(client,"%t %t","PluginTag","WardenWarnNotBlue");
+        return Plugin_Handled;
     }
+    if(!IsPlayerAlive(client))
+    {
+        CPrintToChat(client,"%t %t","PluginTag","WardenWarnDead");
+        return Plugin_Handled;
+    }
+    if(!HasMic(client,!cvarJBFS[MicWarden].BoolValue))
+    {
+        CPrintToChat(client,"%t %t","PluginTag","WardenWarnNoMic");
+        return Plugin_Handled;
+    }
+    if (JBFS.Warden)
+    {
+        CPrintToChat(client,"%t %t","PluginTag","WardenWarnTaken",JBFS.Warden);
+        return Plugin_Handled;
+    }
+    if (JBFS.WardenLocked)
+    {
+        CPrintToChat(client,"%t %t","PluginTag","WardenWarnLocked");
+        return Plugin_Handled;
+    }
+    if (JBFS.FireStatus[client])
+    {
+        CPrintToChat(client,"%t %t","PluginTag","WardenWarnFired");
+        return Plugin_Handled;
+    }
+    
+    SetWarden(client,W_Chose);
     return Plugin_Handled;
 }
 
@@ -129,6 +119,43 @@ public Action Command_CheckLastRequest(int client, int args)
         CreateTimer(5.0,Timer_AllowLRQuery);
     }
     else CPrintToChat(client,"%t %t","PluginTag","SlowDown")
+    return Plugin_Handled;
+}
+
+public Action Command_Surrender(int client, int args)
+{
+    if (!cvarJBFS[AllowSurrender].BoolValue)
+    {
+        CPrintToChat(client,"%t %t","PluginTag","CommandDisabled")
+        return Plugin_Handled;
+    }
+    if (GetPlayerTeam(client) != RED)
+    {
+        CPrintToChat(client,"%t %t","PluginTag","CommandSurrenderWarnBlue")
+        return Plugin_Handled;
+    }
+    if (!IsPlayerAlive(client))
+    {
+        CPrintToChat(client,"%t %t","PluginTag","CommandSurrenderWarnDead")
+        return Plugin_Handled;
+    }
+    if (!JBFS.HasAmmo[client])
+    {
+        CPrintToChat(client,"%t %t","PluginTag","CommandSurrenderWarnAmmo")
+        return Plugin_Handled;
+    }
+    if (LRConfig.WardayActive)
+    {
+        CPrintToChat(client,"%t %t","PluginTag","CommandSurrenderWarnWarday")
+        return Plugin_Handled;
+    }
+    //play has ammo, is alive, on red
+    JBFS.HasAmmo[client] = false;
+
+    InitClientAttributes(client);
+    RemoveWeapons(client);
+    RemoveAmmo(client);
+    CPrintToChatAll("%t %t","PluginTag","PlayerSurrender",client);
     return Plugin_Handled;
 }
 

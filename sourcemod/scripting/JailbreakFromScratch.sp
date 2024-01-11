@@ -9,6 +9,7 @@
 #include <sdkhooks>
 #include <tf2>
 #include <tf2_stocks>
+#include <dhooks>
 
 public Plugin myinfo =
 {
@@ -27,6 +28,7 @@ public Plugin myinfo =
 #include <JBFS/jbfs_cfg>
 #include <JBFS/jbfs_menu>
 #include <JBFS/jbfs_natives>
+#include <JBFS/detours>
 #include <JBFS/stocks>
 
 //third party deps
@@ -75,6 +77,7 @@ public void OnPluginStart()
     cvarJBFS[DemoCharge] = CreateConVar("sm_jbfs_democharge","1","Can demomen charge?\n0 = No\n1 = With ammo (blues by default)\n2 = Blues only\n3 = Yes (all)",FCVAR_NOTIFY,true,0.0,true,3.0);
     cvarJBFS[LRSetTime] = CreateConVar("sm_jbfs_lrtime","0","Round timer will be set to this many seconds once LR is given.\n0 disables the check",FCVAR_NOTIFY,true,0.0,true,300.0);
     cvarJBFS[LastRequest] = CreateConVar("sm_jbfs_lastrequest","1","Enable the Last Request system.\nDisabling it will prevent wardens and admins from giving out last request to prisoners.\n0 = Disabled\n1 = Enabled",FCVAR_NOTIFY,true,0.0,true,1.0)
+    cvarJBFS[AllowSurrender] = CreateConVar("sm_jbfs_allowsurrender","1","Allow prisoners to surrender their ammo/weapons. Announced to all players.\n0 = Disabled\n1 = Enabled",FCVAR_NOTIFY,true,0.0,true,1.0)
     cvarJBFS[Version] = CreateConVar("jbfs_version",PLUGIN_VERSION,PLUGIN_NAME,FCVAR_REPLICATED | FCVAR_NOTIFY | FCVAR_SPONLY | FCVAR_DONTRECORD);
     //admincmd cvars
     cvarJBFS_CMD[ACMD_WardenMenu] = CreateConVar("sm_jbfs_acmd_adminmenu","2","Admin commands (sm_jbfs_acmd_*) requires setting admin flag bits.\nSee: https://wiki.alliedmods.net/Checking_Admin_Flags_(SourceMod_Scripting)\n\nAdmin flag(s) required to open the admin warden menu.",FCVAR_NOTIFY,true,0.0,true,2097151.0);
@@ -99,6 +102,7 @@ public void OnPluginStart()
     RegConsoleCmd("sm_ff",Command_FriendlyFireStatus,"Show status of Friendly Fire");
     RegConsoleCmd("sm_fire",Command_FireWarden,"Vote to fire the Warden");
     RegConsoleCmd("sm_lr",Command_CheckLastRequest,"Check the current Last Request");
+    RegConsoleCmd("sm_surrender",Command_Surrender,"Surrender your ammo");
 
     //warden commands
     RegConsoleCmd("sm_uw",Command_UnWarden,"Retire from Warden");
@@ -134,6 +138,8 @@ public void OnPluginStart()
     HookEntityOutput("item_ammopack_medium", "OnCacheInteraction", OnTakeAmmo);
     HookEntityOutput("item_ammopack_small", "OnCacheInteraction", OnTakeAmmo);
     HookEntityOutput("tf_ammo_pack", "OnCacheInteraction", OnTakeAmmo);
+
+    InitDHooks();
 
     SetConVars(true);
 
@@ -176,6 +182,27 @@ public void OnConfigsExecuted()
     RegAdminCmd("sm_freeday",Command_Admin_ForceFreeday,cvarJBFS_CMD[ACMD_ForceFreeday].IntValue,"Force give a prisoner a freeday")
     RegAdminCmd("sm_awm",Command_Admin_WardenMenu,cvarJBFS_CMD[ACMD_WardenMenu].IntValue,"Open the Admin Warden menu");
     RegAdminCmd("sm_awmenu",Command_Admin_WardenMenu,cvarJBFS_CMD[ACMD_WardenMenu].IntValue,"Open the Admin Warden menu");
+}
+
+public void InitDHooks()
+{
+    Handle hGameData = LoadGameConfigFile("jbfs.games.txt")
+    if (!hGameData)
+    {
+        SetFailState("Failed to load jbfs gamedata file jbfs.games.txt, make sure it is installed properly.")
+        return;
+    }
+
+    hInitPickedUpWeaponDetour = DHookCreateFromConf(hGameData,"CTFDroppedWeapon::InitPickedUpWeapon")
+    if (!hInitPickedUpWeaponDetour)
+        SetFailState("Failed to setup detour for CTFDroppedWeapon::InitPickedUpWeapon")
+    delete hGameData;
+
+    //no need to hook off the pre for now
+    // if (!DHookEnableDetour(hInitPickedUpWeaponDetour, false, Detour_InitPickedUpWeapon))
+    //     SetFailState("Failed to detour InitPickedUpWeapon")
+    if (!DHookEnableDetour(hInitPickedUpWeaponDetour, true, Detour_InitPickedUpWeapon_Post))
+        SetFailState("Failed to detour InitPickedUpWeapon post")
 }
 
 public void OnMapStart()

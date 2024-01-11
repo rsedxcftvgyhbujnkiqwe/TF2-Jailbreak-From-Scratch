@@ -733,3 +733,23 @@ stock void ReturnWeapons(int client)
         g_HasBlockedWeapons[client] = false;
     }
 }
+
+stock void InitClientAttributes(int client)
+{
+    switch (TF2_GetPlayerClass(client))
+    {
+        case TFClass_Scout:
+        {
+            TF2Attrib_RemoveByDefIndex(client, 49);
+            switch (cvarJBFS[DoubleJump].IntValue)
+            {
+                case 0: TF2Attrib_SetByDefIndex(client, 49, 1.0);
+                case 2:
+                {
+                    if (GetClientTeam(client)==RED)
+                        TF2Attrib_SetByDefIndex(client, 49, 1.0);
+                }
+            }
+        }
+    }
+}

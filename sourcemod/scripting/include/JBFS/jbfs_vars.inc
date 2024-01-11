@@ -38,6 +38,7 @@ enum
     DemoCharge,
     LRSetTime,
     LastRequest,
+    AllowSurrender,
     Version
 }
 ConVar cvarJBFS[Version+1];
@@ -267,3 +268,6 @@ int g_WepIndex[3][10] = {
         7
     }
 };
+
+//dhook detours
+Handle hInitPickedUpWeaponDetour;
