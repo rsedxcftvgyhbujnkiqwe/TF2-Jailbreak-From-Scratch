@@ -14,7 +14,8 @@ stock void SetPlayerGang(int client, int gang_uid, int gang_rank, int mid, bool 
 {
     g_GangData[client].id = gang_uid;
     g_GangData[client].rank = gang_rank;
-
+    g_GangData[client].mid = mid;
+    
     DB_GetGangName(gang_uid,g_GangData[client].name,32);
     if(DB_GetGangTag(gang_uid,g_GangData[client].tag,5))
         g_GangData[client].hastag = true;

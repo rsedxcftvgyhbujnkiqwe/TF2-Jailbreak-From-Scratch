@@ -67,8 +67,13 @@ public void OnClientPutInServer(int client)
 {
     int gang_uid = DB_GetPlayerGang(client);
     int rank = GangRank_None;
-    if (gang_uid >= 0) rank = DB_GetPlayerGangRank(client);
-    SetPlayerGang(client,gang_uid,rank,-1,false);
+    int mid = 0;
+    if (gang_uid >= 0)
+    {
+        rank = DB_GetPlayerGangRank(client);
+        mid = DB_GetPlayerMID(client);
+    }
+    SetPlayerGang(client,gang_uid,rank,mid,false);
 }
 
 public void OnClientDisconnect(int client)

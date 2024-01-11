@@ -117,6 +117,24 @@ stock int DB_GetPlayerGangRank(int client)
     return rank;
 }
 
+//assuming they are in a gang!!!
+stock bool DB_SetPlayerGangRankByMID(int gang_uid, int mid, int rank)
+{
+    SQL_FormatQuery(hDatabase,query,sizeof(query),
+            "UPDATE %s "
+        ... "SET rank = %d "
+        ... "WHERE mid = %d "
+        ... "AND gang_uid = %d",PlayerTable,rank,mid,g_GangData[client].id)
+    if (!SQL_FastQuery(hDatabase, query))
+    {
+        char qerror[255];
+        SQL_GetError(hDatabase, qerror, sizeof(qerror));
+        PrintToServer("Failed to query (error: %s)", qerror);
+        return false;
+    }
+    return true;
+}
+
 stock bool DB_SetPlayerGang(int client, int gang_uid, int rank, int mid)
 {
     char ID[32]; GetClientAuthId(client,AuthId_Steam2,ID,sizeof(ID));
