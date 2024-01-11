@@ -28,7 +28,7 @@ public Plugin myinfo =
 #include <JBFS/jbfs_cfg>
 #include <JBFS/jbfs_menu>
 #include <JBFS/jbfs_natives>
-#include <JBFS/detours>
+#include <JBFS/jbfs_detours>
 #include <JBFS/stocks>
 
 //third party deps

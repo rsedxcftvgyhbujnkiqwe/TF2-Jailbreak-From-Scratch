@@ -1,20 +1,20 @@
 
 "Games"
 {
-	"tf"
-	{
-		"Signatures"
-		{
-			"CTFDroppedWeapon::InitPickedUpWeapon"
-			{
-				"library"	"server"
-				"linux"		"@_ZN16CTFDroppedWeapon18InitPickedUpWeaponEP9CTFPlayerP13CTFWeaponBase"
-				"windows"	"\x55\x8B\xEC\x83\xEC\x08\xD9\xEE\x53\x56\x57"
-			}
-		}
+    "tf"
+    {
+        "Signatures"
+        {
+            "CTFDroppedWeapon::InitPickedUpWeapon"
+            {
+                "library"	"server"
+                "linux"		"@_ZN16CTFDroppedWeapon18InitPickedUpWeaponEP9CTFPlayerP13CTFWeaponBase"
+                "windows"	"\x55\x8B\xEC\x83\xEC\x08\xD9\xEE\x53\x56\x57"
+            }
+        }
         "Functions"
         {
-			"CTFDroppedWeapon::InitPickedUpWeapon"
+            "CTFDroppedWeapon::InitPickedUpWeapon"
             {
                 "signature" "CTFDroppedWeapon::InitPickedUpWeapon"
                 "callconv"  "thiscall"
