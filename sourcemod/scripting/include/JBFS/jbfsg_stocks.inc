@@ -1,3 +1,52 @@
+
+
+stock void SanitizeString(char[] buffer, int maxlength,const char[] input)
+{
+    //assume your buffer and input are the same size!
+    int pos = 0;
+    for(int i;i<maxlength;i++)
+    {
+        if (input[i] == '%' || input[i] == '\\') continue;
+        buffer[pos++] = input[i]
+        if(input[i] == '\0') break;
+    }
+}
+
+stock void ReduceString(char[] buffer, int maxlength, const char[] source)
+{
+    int bufferpos;
+    for (int i;i<maxlength;i++)
+    {
+        char current = source[i];
+        if (current >= 'A' && current <= 'Z')
+            current += 32;
+        if (current >= 'a' && current <= 'z')
+            buffer[bufferpos++] = current;
+    }
+    buffer[bufferpos] = '\0';
+}
+
+stock bool ValidAlphaString(char[] string, int maxlength)
+{
+    bool IsValid = true;
+    int charcount;
+    for(int i;i<maxlength;i++)
+    {
+        char current = string[i];
+        if((current >= 'A' && current <= 'Z') || (current >= 'a' && current <= 'z'))
+        {
+            charcount++;
+            continue;
+        }
+        else if(current == '\0') break;
+        IsValid = false;
+        break;
+    }
+    //address situation of empty string
+    if (charcount == 0) IsValid = false;
+    return IsValid;
+}
+
 stock bool IsPlayerInGang(int client, int gang_uid)
 {
     if (gang_uid > 0)
@@ -15,7 +64,7 @@ stock void SetPlayerGang(int client, int gang_uid, int gang_rank, int mid, bool 
     g_GangData[client].id = gang_uid;
     g_GangData[client].rank = gang_rank;
     g_GangData[client].mid = mid;
-    
+
     DB_GetGangName(gang_uid,g_GangData[client].name,32);
     if(DB_GetGangTag(gang_uid,g_GangData[client].tag,5))
         g_GangData[client].hastag = true;

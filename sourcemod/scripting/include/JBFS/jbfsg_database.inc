@@ -120,11 +120,12 @@ stock int DB_GetPlayerGangRank(int client)
 //assuming they are in a gang!!!
 stock bool DB_SetPlayerGangRankByMID(int gang_uid, int mid, int rank)
 {
+    char query[512];
     SQL_FormatQuery(hDatabase,query,sizeof(query),
             "UPDATE %s "
         ... "SET rank = %d "
         ... "WHERE mid = %d "
-        ... "AND gang_uid = %d",PlayerTable,rank,mid,g_GangData[client].id)
+        ... "AND gang_uid = %d",PlayerTable,rank,mid,gang_uid)
     if (!SQL_FastQuery(hDatabase, query))
     {
         char qerror[255];
@@ -164,7 +165,8 @@ stock bool DB_SetPlayerGang(int client, int gang_uid, int rank, int mid)
     }
     delete hQuery;
 
-    char name[32], char sanitized_name[sizeof(name)];
+    char name[32];
+    char sanitized_name[sizeof(name)];
     Format(name,sizeof(name),"%N",client);
     SanitizeString(sanitized_name,sizeof(name),name);
 
@@ -506,7 +508,7 @@ stock void DB_RemovePlayerFromGangByMID(int gang_uid, int mid)
             char qerror[255];
             SQL_GetError(hDatabase, qerror, sizeof(qerror));
             PrintToServer("Failed to query (error: %s)", qerror);
-            return Plugin_Handled;
+            return;
         }
     }
 }
@@ -619,7 +621,7 @@ stock bool DB_MIDExists(int gang_uid, int mid)
 }
 
 //no two players in one gang should share a member ID
-stock bool DB_GetInfoByMID(int gang_uid, int mid, char[32] id_buffer, char[32] name_buffer, int &rank_buffer)
+stock bool DB_GetInfoByMID(int gang_uid, int mid, char id_buffer[32], char name_buffer[32], int &rank_buffer)
 {
     //get relevant player
     char query[512];
@@ -643,7 +645,7 @@ stock bool DB_GetInfoByMID(int gang_uid, int mid, char[32] id_buffer, char[32] n
         SQL_FetchString(hQuery, 0, id_buffer, sizeof(id_buffer));
         SQL_FetchString(hQuery, 1, name_buffer, sizeof(name_buffer));
         rank_buffer = SQL_FetchInt(hQuery, 2);
-        if (!StrEqual(ID,"\0")) 
+        if (!StrEqual(id_buffer,"\0")) 
         {
             fetched = true;
             break;
@@ -652,4 +654,32 @@ stock bool DB_GetInfoByMID(int gang_uid, int mid, char[32] id_buffer, char[32] n
     delete hQuery;
 
     return fetched
+}
+
+stock int DB_GetPlayerMID(int client,int gang_uid)
+{
+    char ID[32]; GetClientAuthId(client,AuthId_Steam2,ID,sizeof(ID));
+    char query[512];
+    SQL_FormatQuery(hDatabase,query,sizeof(query),
+                "SELECT mid "
+            ... "FROM %s "
+            ... "WHERE gang_uid = %d"
+            ... "AND steamid = '%s'",PlayerTable,gang_uid,ID);
+
+    DBResultSet hQuery = SQL_Query(hDatabase,query);
+    if (hQuery == null)
+    {
+        char qerror[255];
+        SQL_GetError(hDatabase, qerror, sizeof(qerror));
+        PrintToServer("Failed to query (error: %s)", qerror);
+        return 0;
+    }
+
+    int mid;
+    while (SQL_FetchRow(hQuery))
+    {
+        mid = SQL_FetchInt(hQuery, 0);
+    }
+    delete hQuery;
+    return mid;
 }

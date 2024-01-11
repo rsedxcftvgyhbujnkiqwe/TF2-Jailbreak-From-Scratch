@@ -22,7 +22,6 @@ public Plugin myinfo =
 #include <JBFS/jbfsg_database>
 #include <JBFS/jbfsg_commands>
 #include <JBFS/jbfsg_stocks>
-#include <JBFS/stocks>
 
 public void OnPluginStart()
 {
@@ -30,7 +29,7 @@ public void OnPluginStart()
     cvarJBFS[AnnounceGangCreate] = CreateConVar("sm_jbfsg_announcegangcreate","1","Whether to announce to all players when gangs are created/abandoned.\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0)
     cvarJBFS[AnnounceGangName] = CreateConVar("sm_jbfsg_announcegangname","1","Whether to announce to all players when gangs change their names.\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0)
     cvarJBFS[GangChat] = CreateConVar("sm_jbfsg_gangchat","1","Enable the Gang chat feature, which allows gang members to send messages only other gang members can see.\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0)
-    cvarJBFS[MaxGangSize] = CreateConVar("sm_jbfs_maxgangsize","12","Maximum number of players allowed in a gang.\nReducing this later will not prune members",FCVAR_NOTIFY,true,1.0,64.0)
+    cvarJBFS[MaxGangSize] = CreateConVar("sm_jbfs_maxgangsize","12","Maximum number of players allowed in a gang.\nReducing this later will not prune members",FCVAR_NOTIFY,true,1.0,true,64.0)
     cvarJBFS[Version] = CreateConVar("jbfst_version",PLUGIN_VERSION,PLUGIN_NAME,FCVAR_REPLICATED | FCVAR_NOTIFY | FCVAR_SPONLY | FCVAR_DONTRECORD);
     AutoExecConfig(true,"jbfsgangs");
 
@@ -51,11 +50,16 @@ public void OnPluginStart()
     RegConsoleCmd("sm_gangleave",Command_GangLeave,"Leave your gang. If sole member, disband gang.");
     RegConsoleCmd("sm_gangchat",Command_GangChat,"Send a message to your gang.");
     RegConsoleCmd("sm_gc",Command_GangChat,"Send a message to your gang.");
+    RegConsoleCmd("sm_ganglist",Command_GangList,"List all members in the gang and their Member IDs.");
+
 
     //boss cmds
     RegConsoleCmd("sm_ganginvite",Command_GangInvite,"Invite a player to your gang.");
     RegConsoleCmd("sm_gangname",Command_SetGangName,"Change the name of your gang.");
     RegConsoleCmd("sm_gangtag",Command_SetGangTag,"Change your gang's tag.");
+    RegConsoleCmd("sm_gangpromote",Command_GangPromote,"Promote a muscle to officer, or officer to boss.");
+    RegConsoleCmd("sm_gangdemote",Command_GangDemote,"Demote an officer to muscle.");
+    RegConsoleCmd("sm_gangkick",Command_GangKick,"Kick a member from your gang.");
 }
 
 public void OnConfigsExecuted()
@@ -71,7 +75,7 @@ public void OnClientPutInServer(int client)
     if (gang_uid >= 0)
     {
         rank = DB_GetPlayerGangRank(client);
-        mid = DB_GetPlayerMID(client);
+        mid = DB_GetPlayerMID(client,gang_uid);
     }
     SetPlayerGang(client,gang_uid,rank,mid,false);
 }

@@ -139,6 +139,11 @@
     {
         "en"        "{wheat}Gang chat is disabled on this server."
     }
+    "GangPlayerLeave"
+    {
+        "#format"   "{1:N}"
+        "en"        "{unique}{1}{wheat} has left the gang!"
+    }
     "GangInviteReceived"
     {
         "#format"   "{1:N}{2:s}"

@@ -296,7 +296,7 @@ Action Command_GangLeave(int client,int args)
         CPrintToChat(client,"%t %t","PluginTag","CommandGangLeaveWarnBoss");
         return Plugin_Handled;
     }
-    CPrintToChatGang(gang_uid,"%t %t","GangTag","GangPlayerLeave",);
+    CPrintToChatGang(gang_uid,"%t %t","GangTag","GangPlayerLeave",client);
     DB_RemovePlayerFromGang(client,gang_uid);
     if (g_GangData[client].rank == GangRank_Boss)
     {
@@ -332,13 +332,15 @@ Action Command_GangList(int client,int args)
         char qerror[255];
         SQL_GetError(hDatabase, qerror, sizeof(qerror));
         PrintToServer("Failed to query (error: %s)", qerror);
-        return 0;
+        return Plugin_Handled;
     }
 
     CPrintToChat(client,"%t %t","PluginTag","GangMemberList",g_GangData[client].name)
 
-    char ID[32],char name[32];
-    int rank, mid;
+    char ID[32]; 
+    char name[32];
+    int rank;
+    int mid;
     while (SQL_FetchRow(hQuery))
     {
         SQL_FetchString(hQuery, 0, ID, sizeof(ID));
@@ -430,8 +432,7 @@ Action Command_GangPromote(int client, int args)
 
     char ID[32]; char name[32];
     int target_rank;
-    DB_GetInfoByMID(gang_uid,mid,ID,name,rank);
-    int client_rank = g_GangData[client].rank;
+    DB_GetInfoByMID(gang_uid,mid,ID,name,target_rank);
 
     int target_client = GetClientByMID(gang_uid,mid);
     if (target_client == client)
@@ -462,7 +463,7 @@ Action Command_GangPromote(int client, int args)
         DB_SetPlayerGangRankByMID(gang_uid,g_GangData[client].mid,GangRank_Officer);
         CPrintToChatGang(gang_uid,"%t %t","GangTag","GangStepDown",g_RankColors[GangRank_Boss],client,g_RankColors[GangRank_Boss],"GangRankBoss");
         CPrintToChatGang(gang_uid,"%t %t","GangTag","GangPromotion",g_RankColors[GangRank_Officer],sanitized_name,g_RankColors[GangRank_Boss],"GangRankBoss");
-        
+        g_GangData[client].rank++;
     }
     return Plugin_Handled;
 }
@@ -496,8 +497,7 @@ Action Command_GangDemote(int client, int args)
 
     char ID[32]; char name[32];
     int target_rank;
-    DB_GetInfoByMID(gang_uid,mid,ID,name,rank);
-    int client_rank = g_GangData[client].rank;
+    DB_GetInfoByMID(gang_uid,mid,ID,name,target_rank);
 
     int target_client = GetClientByMID(gang_uid,mid);
     if (target_client == client)

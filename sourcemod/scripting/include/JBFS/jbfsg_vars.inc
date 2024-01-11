@@ -43,9 +43,9 @@ enum struct GangData
     char tag[5];
     bool hastag;
     int id;
+    int mid;
     int rank;
     int invite;
-    Menu menu;
 }
 
 GangData g_GangData[MAXPLAYERS+1];
