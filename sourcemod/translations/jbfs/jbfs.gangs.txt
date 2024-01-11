@@ -14,15 +14,40 @@
     }
     "CommandSetTagUsage"
     {
-        "en"        "{wheat} Usage: sm_gangtag <TAG>"
+        "en"        "{wheat}Usage: sm_gangtag <TAG>"
     }
     "CommandGangChatUsage"
     {
-        "en"        "{wheat} Usage: sm_gangchat <message>"
+        "en"        "{wheat}Usage: sm_gangchat <message>"
     }
     "CommandGangInviteUsage"
     {
-        "en"        "{wheat} Usage: sm_ganginvite <player>"
+        "en"        "{wheat}Usage: sm_ganginvite <player>"
+    }
+    "CommandGangPromoteUsage"
+    {
+        "en"        "{wheat}Usage: sm_gangpromote <member id> (see sm_ganglist)"
+    }
+    "CommandGangKickUsage"
+    {
+        "en"        "{wheat}Usage: sm_gangkick <member id> (see sm_ganglist)"
+    }
+    "CommandGangKickWarnMemberID"
+    {
+        "#format"   "{1:d}"
+        "en"        "{wheat}Member with ID of {1} not found."
+    }
+    "CommandGangInviteWarnInGang"
+    {
+        "en"        "{wheat}Player is already in a gang!"
+    }
+    "CommandGangJoinNoInvite"
+    {
+        "en"        "{wheat}You have no pending invites."
+    }
+    "CommandGangLeaveWarnBoss"
+    {
+        "en"        "{wheat}The boss cannot leave the gang if there are other members!"
     }
     "CommandCreateGangWarnInGang"
     {
@@ -78,6 +103,19 @@
     {
         "en"        "{wheat}You are not a high enough rank in the gang to do this!"
     }
+    "GangMaxSize"
+    {
+        "en"        "{wheat}Gang already at max member count."
+    }
+    "GangInactive"
+    {
+        "en"        "{wheat}Gang is inactive."
+    }
+    "GangDisband"
+    {
+        "#format"   "{1:N}{2:s}"
+        "en"        "{unqiue}{1}{wheat} has disbanded the gang {genuine}{2}."
+    }
     "GangNameChange"
     {
         "#format"   "{1:s}{2:s}"
@@ -96,5 +134,47 @@
     "GangChatDisabled"
     {
         "en"        "{wheat}Gang chat is disabled on this server."
+    }
+    "GangInviteReceived"
+    {
+        "#format"   "{1:N}{2:s}"
+        "en"        "{unique}{1}{wheat} has invited you to join the gang {genuine}{2}."
+    }
+    "GangInviteSent"
+    {
+        "#format"   "{1:N}{2:s}{3:N}"
+        "en"        "{unique}{1}{wheat} was invited to join your gang by {{2}}{3}."
+    }
+    "GangInvitePlayerJoined"
+    {
+        "#format"   "{1:s}{2:N}"
+        "en"        "{{1}}{2}{wheat} has joined the gang!"
+    }
+    "GangInviteJoined"
+    {
+        "#format"   "{1:s}"
+        "en"        "{wheat}You have joined the gang {genuine}{2}." 
+    }
+    "GangMemberList"
+    {
+        "#format"   "{1:s}"
+        "en"        "{wheat}List of members in the gang {genuine}{1}:"
+    }
+    "GangPromotion"
+    {
+        "#format"   "{1:s}{2:s}{3:s}"
+        "en"        "{{1}}{2}{wheat} was promoted to {{1}}{3}."
+    }
+    "GangRankBoss"
+    {
+        "en"        "Boss"
+    }
+    "GangRankOfficer"
+    {
+        "en"        "Officer"
+    }
+    "GankRankMuscle"
+    {
+        "en"        "Muscle"
     }
 }
