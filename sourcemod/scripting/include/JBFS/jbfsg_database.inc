@@ -342,7 +342,7 @@ stock int DB_CreateGang(char name[32])
     SQL_FormatQuery(hDatabase,query,sizeof(query),
             "INSERT INTO %s "
         ... "(name, tag, uid, nid, status, creation_date) "
-        ... "VALUES ('%s', '%s', %d, %s, %d, %d)",
+        ... "VALUES ('%s', '%s', %d, '%s', %d, %d)",
             GangTable, name, "\0", uid, nid, 0, GetTime());
     if (!SQL_FastQuery(hDatabase, query))
     {
@@ -395,7 +395,7 @@ stock bool DB_GangNameExists(char name[32])
                 "SELECT exists("
             ... "SELECT * FROM %s "
             ... "WHERE nid = '%s' "
-            ... "AND status = 1 "
+            ... "AND status = 1) "
             ... "AS \"GangExists\"",GangTable,nid);
 
     DBResultSet hQuery = SQL_Query(hDatabase,query);
