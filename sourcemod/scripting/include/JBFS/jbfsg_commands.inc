@@ -379,6 +379,11 @@ Action Command_GangKick(int client, int args)
         CPrintToChat(client,"%t %t","PluginTag","CommandGangKickUsage");
         return Plugin_Handled;
     }
+    if (g_GangData[client].mid == mid)
+    {
+        CPrintToChat(client,"%t %t","PluginTag","CommandGangWarnSelf");
+        return Plugin_Handled;
+    }
 
     //lot of sql bullshit to come
     if (!DB_MIDExists(gang_uid,mid))
@@ -437,7 +442,7 @@ Action Command_GangPromote(int client, int args)
     int target_client = GetClientByMID(gang_uid,mid);
     if (target_client == client)
     {
-        CPrintToChat(client,"%t %t","PluginTag","CommandGangPromoteWarnSelf");
+        CPrintToChat(client,"%t %t","PluginTag","CommandGangWarnSelf");
         return Plugin_Handled;
     }
     char sanitized_name[sizeof(name)];
@@ -504,7 +509,7 @@ Action Command_GangDemote(int client, int args)
     int target_client = GetClientByMID(gang_uid,mid);
     if (target_client == client)
     {
-        CPrintToChat(client,"%t %t","PluginTag","CommandGangDemoteWarnSelf");
+        CPrintToChat(client,"%t %t","PluginTag","CommandGangWarnSelf");
         return Plugin_Handled;
     }
     char sanitized_name[sizeof(name)];

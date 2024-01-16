@@ -169,13 +169,9 @@
         "#format"   "{1:s}"
         "en"        "{wheat}List of members in the gang {genuine}{1}:"
     }
-    "CommandGangPromoteWarnSelf"
+    "CommandGangWarnSelf"
     {
-        "en"        "{wheat}You cannot promote yourself!"
-    }
-    "CommandGangDemoteWarnSelf"
-    {
-        "en"        "{wheat}You cannot demote yourself!"
+        "en"        "{wheat}You cannot perform that action on yourself!"
     }
     "CommandGangDemoteWarnMuscle"
     {
