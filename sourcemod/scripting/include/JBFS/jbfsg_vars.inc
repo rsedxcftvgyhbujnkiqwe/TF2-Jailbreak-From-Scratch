@@ -20,16 +20,16 @@ enum
 enum
 {
     GangRank_None = 0,
-    GangRank_Boss,
+    GangRank_Muscle,
     GangRank_Officer,
-    GangRank_Muscle
+    GangRank_Boss
 }
 //match rank enum
 char g_RankColors[4][32] = {
         "default",
-        "legendary",
+        "silver",
         "arcana",
-        "silver"
+        "legendary"
 }
 
 //temporary variables which mimic the sql tables
@@ -46,6 +46,7 @@ enum struct GangData
     int mid;
     int rank;
     int invite;
+    int boss_promotion;
 }
 
 GangData g_GangData[MAXPLAYERS+1];

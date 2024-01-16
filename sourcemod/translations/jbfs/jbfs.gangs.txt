@@ -1,5 +1,9 @@
 "Phrases"
 {
+    "PluginGangTag"
+    {
+        "en"        "{genuine}[JBFSG]{wheat}"
+    }
     "GangTag"
     {
         "en"        "{genuine}(Gang){wheat}"
@@ -172,6 +176,10 @@
     "CommandGangWarnSelf"
     {
         "en"        "{wheat}You cannot perform that action on yourself!"
+    }
+    "CommandGangPromoteWarnBoss"
+    {
+        "en"        "{wheat}If you promote an officer, they will take your place as boss. Run command again to confirm."
     }
     "CommandGangDemoteWarnMuscle"
     {
