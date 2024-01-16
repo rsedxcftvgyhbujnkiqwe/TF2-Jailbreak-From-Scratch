@@ -201,7 +201,7 @@ public void InitDHooks()
     //no need to hook off the pre for now
     // if (!DHookEnableDetour(hInitPickedUpWeaponDetour, false, Detour_InitPickedUpWeapon))
     //     SetFailState("Failed to detour InitPickedUpWeapon")
-    if (!DHookEnableDetour(hInitPickedUpWeaponDetour, true, Detour_InitPickedUpWeapon_Post))
+    if (!DHookEnableDetour(hInitPickedUpWeaponDetour, true, Detour_OnInitPickedUpWeapon_Post))
         SetFailState("Failed to detour InitPickedUpWeapon post")
 }
 

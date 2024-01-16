@@ -244,14 +244,14 @@ public void OnTakeAmmo(const char[] output, int caller, int activator, float del
 
 public void OnTakeWeapon(int player, int weapon)
 {
-	int owner = GetEntPropEnt(weapon, Prop_Send, "m_hOwnerEntity");
+    int owner = GetEntPropEnt(weapon, Prop_Send, "m_hOwnerEntity");
     int iOffset = GetEntProp(weapon, Prop_Send, "m_iPrimaryAmmoType", 1)*4;
     int iAmmoTable = FindSendPropInfo("CTFPlayer", "m_iAmmo");
     if ((GetEntProp(weapon, Prop_Data, "m_iClip1") > 0) || \
         (GetEntProp(weapon, Prop_Data, "m_iClip2") > 0) || \
         (GetEntData(owner, iAmmoTable+iOffset, 4) > 0))
     {
-        AmmoTaken(activator,false)
+        AmmoTaken(player,false)
     }
 }
 

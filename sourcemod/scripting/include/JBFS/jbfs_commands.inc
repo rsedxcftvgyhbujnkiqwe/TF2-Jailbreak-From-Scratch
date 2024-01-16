@@ -129,7 +129,7 @@ public Action Command_Surrender(int client, int args)
         CPrintToChat(client,"%t %t","PluginTag","CommandDisabled")
         return Plugin_Handled;
     }
-    if (GetPlayerTeam(client) != RED)
+    if (GetClientTeam(client) != RED)
     {
         CPrintToChat(client,"%t %t","PluginTag","CommandSurrenderWarnBlue")
         return Plugin_Handled;
