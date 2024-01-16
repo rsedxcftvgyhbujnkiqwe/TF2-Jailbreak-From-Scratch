@@ -485,7 +485,7 @@ stock void DB_RemovePlayerFromGang(int client, int gang_uid)
         char query[512];
         SQL_FormatQuery(hDatabase,query,sizeof(query), 
                 "DELETE FROM %s "
-            ... "WHERE gang_uid = %d, "
+            ... "WHERE gang_uid = %d "
             ... "AND steamid = '%s'",PlayerTable,gang_uid,ID);
         if (!SQL_FastQuery(hDatabase, query))
         {
@@ -523,7 +523,7 @@ stock void DB_SetGangStatus(int gang_uid, int status)
         SQL_FormatQuery(hDatabase,query,sizeof(query), 
                 "UPDATE %s "
             ... "SET status = %d "
-            ... "WHERE gang_uid = %d",PlayerTable,status,gang_uid);
+            ... "WHERE uid = %d",GangTable,status,gang_uid);
         if (!SQL_FastQuery(hDatabase, query))
         {
             char qerror[255];
