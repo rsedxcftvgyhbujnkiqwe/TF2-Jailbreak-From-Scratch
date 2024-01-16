@@ -343,8 +343,8 @@ Action Command_GangList(int client,int args)
     int mid;
     while (SQL_FetchRow(hQuery))
     {
-        SQL_FetchString(hQuery, 0, ID, sizeof(ID));
-        SQL_FetchString(hQuery, 1, name, sizeof(name));
+        SQL_FetchString(hQuery, 0, name, sizeof(name));
+        SQL_FetchString(hQuery, 1, ID, sizeof(ID));
         rank = SQL_FetchInt(hQuery, 2);
         mid = SQL_FetchInt(hQuery, 3);
         CPrintToChat(client,"{genuine}(%d): {%s}%s (%s)",mid,g_RankColors[rank],name,ID);
@@ -445,7 +445,9 @@ Action Command_GangPromote(int client, int args)
     if (target_client > 0)
     {
         Format(name,sizeof(name),"%N",target_client);
+        PrintToServer("%N: original rank %d",target_client,g_GangData[target_client].rank)
         g_GangData[target_client].rank--;
+        PrintToServer("%N: updated rank %d",target_client,g_GangData[target_client].rank)
     }
     SanitizeString(sanitized_name,sizeof(name),name);
 

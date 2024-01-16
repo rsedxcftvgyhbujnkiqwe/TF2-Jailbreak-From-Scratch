@@ -27,9 +27,9 @@ enum
 //match rank enum
 char g_RankColors[4][32] = {
         "default",
-        "axis",
-        "darkslateblue",
-        "darkslategray"
+        "legendary",
+        "arcana",
+        "silver"
 }
 
 //temporary variables which mimic the sql tables

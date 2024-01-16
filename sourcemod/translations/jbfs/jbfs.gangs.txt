@@ -6,7 +6,7 @@
     }
     "CommandCreateGangUsage"
     {
-        "en"        "{wheat}Usage: sm_creategang <Name Of Gang>"
+        "en"        "{wheat}Usage: sm_gangcreate <Name Of Gang>"
     }
     "CommandSetNameUsage"
     {
@@ -118,7 +118,7 @@
     "GangDisband"
     {
         "#format"   "{1:N}{2:s}"
-        "en"        "{unqiue}{1}{wheat} has disbanded the gang {genuine}{2}."
+        "en"        "{unique}{1}{wheat} has disbanded the gang {genuine}{2}."
     }
     "GangNameChange"
     {
@@ -162,7 +162,7 @@
     "GangInviteJoined"
     {
         "#format"   "{1:s}"
-        "en"        "{wheat}You have joined the gang {genuine}{2}." 
+        "en"        "{wheat}You have joined the gang {genuine}{1}." 
     }
     "GangMemberList"
     {
@@ -180,6 +180,11 @@
     "CommandGangDemoteWarnMuscle"
     {
         "en"        "{wheat}You cannot demote the lowest rank!"
+    }
+    "GangPlayerKicked"
+    {
+        "#format"   "{1:s}"
+        "en"        "{unique}{1}{wheat} was kicked from the gang."
     }
     "GangPromotion"
     {
@@ -204,7 +209,7 @@
     {
         "en"        "Officer"
     }
-    "GankRankMuscle"
+    "GangRankMuscle"
     {
         "en"        "Muscle"
     }

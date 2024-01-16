@@ -165,6 +165,8 @@ stock bool DB_SetPlayerGang(int client, int gang_uid, int rank, int mid)
     }
     delete hQuery;
 
+    PrintToServer("%d",InGang);
+
     char name[32];
     char sanitized_name[sizeof(name)];
     Format(name,sizeof(name),"%N",client);
@@ -192,9 +194,9 @@ stock bool DB_SetPlayerGang(int client, int gang_uid, int rank, int mid)
     {
         SQL_FormatQuery(hDatabase,query,sizeof(query),
                 "INSERT INTO %s "
-            ... "(steamid, name, gang_uid, rank) "
-            ... "VALUES ('%s', '%s', '%d', '%d')",
-                PlayerTable, ID, sanitized_name, gang_uid, rank);
+            ... "(steamid, name, gang_uid, rank, mid) "
+            ... "VALUES ('%s', '%s', %d, %d, %d)",
+                PlayerTable, ID, sanitized_name, gang_uid, rank,mid);
         if (!SQL_FastQuery(hDatabase, query))
         {
             char qerror[255];
@@ -343,7 +345,7 @@ stock int DB_CreateGang(char name[32])
             "INSERT INTO %s "
         ... "(name, tag, uid, nid, status, creation_date) "
         ... "VALUES ('%s', '%s', %d, '%s', %d, %d)",
-            GangTable, name, "\0", uid, nid, 0, GetTime());
+            GangTable, name, "\0", uid, nid, 1, GetTime());
     if (!SQL_FastQuery(hDatabase, query))
     {
         char qerror[255];
@@ -501,7 +503,7 @@ stock void DB_RemovePlayerFromGangByMID(int gang_uid, int mid)
         char query[512];
         SQL_FormatQuery(hDatabase,query,sizeof(query), 
                 "DELETE FROM %s "
-            ... "WHERE gang_uid = %d, "
+            ... "WHERE gang_uid = %d "
             ... "AND mid = %d",PlayerTable,gang_uid,mid);
         if (!SQL_FastQuery(hDatabase, query))
         {
