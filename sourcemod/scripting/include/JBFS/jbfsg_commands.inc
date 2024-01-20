@@ -96,12 +96,13 @@ Action Command_CreateGang(int client, int args)
 
 Action Command_SetGangTag(int client, int args)
 {
-    if (g_GangData[client].id == 0)
+    int gang_index = g_PlayerData[client].index;
+    if (g_GangData[gang_index].id == 0)
     {
         CPrintToChat(client,"%t %t","PluginGangTag","CommandWarnNotInGang")
         return Plugin_Handled;
     }
-    if (g_GangData[client].rank != GangRank_Boss)
+    if (g_PlayerData[client].rank != GangRank_Boss)
     {
         CPrintToChat(client,"%t %t","PluginGangTag","CommandWarnGangRank");
         return Plugin_Handled;
@@ -131,11 +132,15 @@ Action Command_SetGangTag(int client, int args)
         return Plugin_Handled;
     }
 
-    int gang_uid = g_GangData[client].id;
+    int gang_uid = g_GangData[gang_index].id;
 
     char ctag[5];
     DB_GetGangTag(gang_uid,ctag,sizeof(ctag))
-    if (strcmp(tag,ctag)==0) return Plugin_Handled;
+    if (StrEqual(tag,ctag))
+    {
+        CPrintToChat(client,"%t %t","PluginTag","GangTagSame")
+        return Plugin_Handled;
+    }
 
     if (DB_GangTagExists(tag))
     {
@@ -150,12 +155,13 @@ Action Command_SetGangTag(int client, int args)
 
 Action Command_SetGangName(int client, int args)
 {
-    if (g_GangData[client].id == 0)
+    int gang_index = g_PlayerData[client].index;
+    if (g_GangData[gang_index].id == 0)
     {
         CPrintToChat(client,"%t %t","PluginGangTag","CommandWarnNotInGang")
         return Plugin_Handled;
     }
-    if (g_GangData[client].rank != GangRank_Boss)
+    if (g_PlayerData[client].rank != GangRank_Boss)
     {
         CPrintToChat(client,"%t %t","PluginGangTag","CommandWarnGangRank");
         return Plugin_Handled;
@@ -177,11 +183,14 @@ Action Command_SetGangName(int client, int args)
     char sanitized_gangname[32];
     SanitizeString(sanitized_gangname,sizeof(gangname),gangname);
 
-    int gang_uid = g_GangData[client].id;
+    int gang_uid = g_GangData[gang_index].id;
     char current_name[32];
     DB_GetGangName(gang_uid,current_name,sizeof(current_name))
-    if (strcmp(current_name,sanitized_gangname)==0) return Plugin_Handled;
-
+    if (StrEqual(current_name,sanitized_gangname))
+    {
+        CPrintToChat(client,"%t %t","PluginTag","GangNameSame")
+        return Plugin_Handled;
+    }
     if (DB_GangNameExists(sanitized_gangname))
     {
         CPrintToChat(client,"%t %t","PluginGangTag","CommandGangNameTaken")
@@ -200,12 +209,13 @@ Action Command_SetGangName(int client, int args)
 
 Action Command_GangChat(int client, int args)
 {
+    int gang_index = g_PlayerData[client].index;
     if (!cvarJBFS[GangChat].BoolValue)
     {
         CPrintToChat(client,"%t %t","PluginGangTag","GangChatDisabled");
         return Plugin_Handled;
     }
-    if(g_GangData[client].id == 0)
+    if(g_GangData[gang_index].id == 0)
     {
         CPrintToChat(client,"%t %t","PluginGangTag","CommandWarnNotInGang");
         return Plugin_Handled;
@@ -226,14 +236,15 @@ Action Command_GangChat(int client, int args)
 
     char sanitized_message[32];
     SanitizeString(sanitized_message,sizeof(message),message);
-    CPrintToChatGang(g_GangData[client].id,"%t {%s}%N{default}: %s","GangTag",g_RankColors[g_GangData[client].rank],client,sanitized_message);
+    CPrintToChatGang(g_GangData[gang_index].id,"%t {%s}%N{default}: %s","GangTag",g_RankColors[g_PlayerData[client].rank],client,sanitized_message);
     PrintToServer("(Gang Chat) %N: %s",client,sanitized_message);
     return Plugin_Handled;
 }
 
 Action Command_GangInvite(int client,int args)
 {
-    int gang_uid = g_GangData[client].id;
+    int gang_index = g_PlayerData[client].index;
+    int gang_uid = g_GangData[gang_index].id;
     if (args < 1)
     {
         CPrintToChat(client,"%t %t","PluginGangTag","CommandGangInviteUsage");
@@ -244,7 +255,7 @@ Action Command_GangInvite(int client,int args)
         CPrintToChat(client,"%t %t","PluginGangTag","CommandWarnNotInGang");
         return Plugin_Handled;
     }
-    if (g_GangData[client].rank != GangRank_Boss && g_GangData[client].rank != GangRank_Officer)
+    if (g_PlayerData[client].rank != GangRank_Boss && g_PlayerData[client].rank != GangRank_Officer)
     {
         CPrintToChat(client,"%t %t","PluginGangTag","CommandWarnGangRank");
         return Plugin_Handled;
@@ -254,7 +265,8 @@ Action Command_GangInvite(int client,int args)
     int target = FindTarget(client, arg1,true);
     if (target == -1) return Plugin_Handled;
 
-    if (g_GangData[target].id > 0)
+    int target_gang_index = g_PlayerData[target].index;
+    if (g_GangData[target_gang_index].id > 0)
     {
         CPrintToChat(client,"%t %t","PluginGangTag","CommandGangInviteWarnInGang");
         return Plugin_Handled;
@@ -274,16 +286,17 @@ Action Command_GangInvite(int client,int args)
 
     //at this point, client is able to invite, and other player is capable of joining
 
-    g_GangData[target].invite = gang_uid;
-    CPrintToChat(target,"%t %t","GangTag","GangInviteReceived",client,g_GangData[client].name);
-    CPrintToChatGang(gang_uid,"%t %t","GangTag","GangInviteSent",target,g_RankColors[g_GangData[client].rank],client);
+    g_PlayerData[target].invite = gang_uid;
+    CPrintToChat(target,"%t %t","GangTag","GangInviteReceived",client,g_GangData[target_gang_index].name);
+    CPrintToChatGang(gang_uid,"%t %t","GangTag","GangInviteSent",target,g_RankColors[g_PlayerData[client].rank],client);
     return Plugin_Handled;
 }
 
 Action Command_GangJoin(int client,int args)
 {
-    int gang_uid = g_GangData[client].id;
-    int invite_target = g_GangData[client].invite;
+    int gang_index = g_PlayerData[client].index;
+    int gang_uid = g_GangData[gang_index].id;
+    int invite_target = g_PlayerData[client].invite;
     if (gang_uid > 0)
     {
         CPrintToChat(client,"%t %t","PluginGangTag","CommandCreateGangWarnInGang");
@@ -303,35 +316,37 @@ Action Command_GangJoin(int client,int args)
     //player is not in a gang and has a valid invite
     CPrintToChatGang(invite_target,"%t %t","GangTag","GangInvitePlayerJoined",g_RankColors[GangRank_Muscle],client);
     SetPlayerGang(client,invite_target,GangRank_Muscle,DB_GetMaxMID(invite_target)+1,true);
-    CPrintToChat(client,"%t %t","GangTag","GangInviteJoined",g_GangData[client].name);
-    g_GangData[client].invite = 0;
+    CPrintToChat(client,"%t %t","GangTag","GangInviteJoined",g_GangData[invite_target].name);
+    g_PlayerData[client].invite = 0;
     return Plugin_Handled;
 
 }
 
 Action Command_GangLeave(int client,int args)
 {
-    int gang_uid = g_GangData[client].id
+    int gang_index = g_PlayerData[client].index;
+    int gang_uid = g_GangData[gang_index].id
     if (gang_uid == 0)
     {
         CPrintToChat(client,"%t %t","PluginGangTag","CommandWarnNotInGang");
         return Plugin_Handled;
     }
     //boss cant abandon the gang if its still full
-    if (g_GangData[client].rank == GangRank_Boss && DB_GetGangSize(gang_uid) > 1)
+    if (g_PlayerData[client].rank == GangRank_Boss && DB_GetGangSize(gang_uid) > 1)
     {
         CPrintToChat(client,"%t %t","PluginGangTag","CommandGangLeaveWarnBoss");
         return Plugin_Handled;
     }
     CPrintToChatGang(gang_uid,"%t %t","GangTag","GangPlayerLeave",client);
     DB_RemovePlayerFromGang(client,gang_uid);
-    if (g_GangData[client].rank == GangRank_Boss)
+    if (g_PlayerData[client].rank == GangRank_Boss)
     {
         DB_SetGangStatus(gang_uid,0);
         if (cvarJBFS[AnnounceGangCreate].BoolValue)
         {
-            CPrintToChatAll("%t %t","PluginGangTag","GangDisband",client,g_GangData[client].name);
+            CPrintToChatAll("%t %t","PluginGangTag","GangDisband",client,g_GangData[gang_index].name);
         }
+        ResetGangData(gang_index);
     }
     ResetClientGangData(client)
     return Plugin_Handled;
@@ -339,7 +354,8 @@ Action Command_GangLeave(int client,int args)
 
 Action Command_GangList(int client,int args)
 {
-    int gang_uid = g_GangData[client].id
+    int gang_index = g_PlayerData[client].index;
+    int gang_uid = g_GangData[gang_index].id
     if (gang_uid == 0)
     {
         CPrintToChat(client,"%t %t","PluginGangTag","CommandWarnNotInGang");
@@ -362,7 +378,7 @@ Action Command_GangList(int client,int args)
         return Plugin_Handled;
     }
 
-    CPrintToChat(client,"%t %t","PluginGangTag","GangMemberList",g_GangData[client].name)
+    CPrintToChat(client,"%t %t","PluginGangTag","GangMemberList",g_GangData[gang_index].name)
 
     char ID[32]; 
     char name[32];
@@ -382,18 +398,19 @@ Action Command_GangList(int client,int args)
 
 Action Command_GangKick(int client, int args)
 {
+    int gang_index = g_PlayerData[client].index;
     if (args < 1)
     {
         CPrintToChat(client,"%t %t","PluginGangTag","CommandGangKickUsage");
         return Plugin_Handled;
     }
-    int gang_uid = g_GangData[client].id
+    int gang_uid = g_GangData[gang_index].id
     if (gang_uid == 0)
     {
         CPrintToChat(client,"%t %t","PluginGangTag","CommandWarnNotInGang");
         return Plugin_Handled;
     }
-    if (g_GangData[client].rank != GangRank_Boss)// && g_GangData[client].rank != GangRank_Officer)
+    if (g_PlayerData[client].rank != GangRank_Boss)// && g_GangData[client].rank != GangRank_Officer)
     {
         CPrintToChat(client,"%t %t","PluginGangTag","CommandWarnGangRank");
         return Plugin_Handled;
@@ -406,7 +423,7 @@ Action Command_GangKick(int client, int args)
         CPrintToChat(client,"%t %t","PluginGangTag","CommandGangKickUsage");
         return Plugin_Handled;
     }
-    if (g_GangData[client].mid == mid)
+    if (g_PlayerData[client].mid == mid)
     {
         CPrintToChat(client,"%t %t","PluginGangTag","CommandGangWarnSelf");
         return Plugin_Handled;
@@ -430,14 +447,15 @@ Action Command_GangKick(int client, int args)
         Format(name,sizeof(name),"%N",kicked_client)
         ResetClientGangData(kicked_client)
     }
-    CPrintToChatGang(gang_uid,"%t %t","GangTag","GangPlayerKicked",name,g_GangData[client].name)
+    CPrintToChatGang(gang_uid,"%t %t","GangTag","GangPlayerKicked",name,g_GangData[gang_index].name)
 
     return Plugin_Handled;
 }
 
 Action Command_GangPromote(int client, int args)
 {
-    int gang_uid = g_GangData[client].id;
+    int gang_index = g_PlayerData[client].index;
+    int gang_uid = g_GangData[gang_index].id;
     if (args < 1)
     {
         CPrintToChat(client,"%t %t","PluginGangTag","CommandGangPromoteUsage");
@@ -448,7 +466,7 @@ Action Command_GangPromote(int client, int args)
         CPrintToChat(client,"%t %t","PluginGangTag","CommandWarnNotInGang");
         return Plugin_Handled;
     }
-    if (g_GangData[client].rank != GangRank_Boss)
+    if (g_PlayerData[client].rank != GangRank_Boss)
     {
         CPrintToChat(client,"%t %t","PluginGangTag","CommandWarnGangRank");
         return Plugin_Handled;
@@ -515,7 +533,8 @@ Action Command_GangPromote(int client, int args)
 
 Action Command_GangDemote(int client, int args)
 {
-    int gang_uid = g_GangData[client].id;
+    int gang_index = g_PlayerData[client].index;
+    int gang_uid = g_GangData[gang_index].id;
     if (args < 1)
     {
         CPrintToChat(client,"%t %t","PluginGangTag","CommandGangDemoteUsage");
@@ -526,7 +545,7 @@ Action Command_GangDemote(int client, int args)
         CPrintToChat(client,"%t %t","PluginGangTag","CommandWarnNotInGang");
         return Plugin_Handled;
     }
-    if (g_GangData[client].rank != GangRank_Boss)
+    if (g_PlayerData[client].rank != GangRank_Boss)
     {
         CPrintToChat(client,"%t %t","PluginGangTag","CommandWarnGangRank");
         return Plugin_Handled;

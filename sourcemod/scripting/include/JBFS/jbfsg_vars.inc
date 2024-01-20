@@ -43,6 +43,12 @@ enum struct GangData
     char tag[5];
     bool hastag;
     int id;
+    int num_online;
+}
+
+enum struct PlayerData
+{
+    int index;
     int mid;
     int rank;
     int invite;
@@ -50,6 +56,7 @@ enum struct GangData
 }
 
 GangData g_GangData[MAXPLAYERS+1];
+PlayerData g_PlayerData[MAXPLAYERS+1];
 
 Database hDatabase;
 
