@@ -414,3 +414,8 @@ public void OnClientPutInServer(client)
         JBFS_AddGuardBan(client);
     }
 }
+
+public void OnClientDisconnect(client)
+{
+    JBFS_RemoveGuardBan(client);
+}

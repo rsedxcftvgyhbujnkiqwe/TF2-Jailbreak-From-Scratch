@@ -9,6 +9,7 @@ Action Command_GangHelp(int client, int args)
     {
         CPrintToChat(client,"%t %t","PluginGangTag","GangLeaveHelp")
         CPrintToChat(client,"%t %t","PluginGangTag","GangChatHelp")
+        CPrintToChat(client,"%t %t","PluginGangTag","GangPointsHelp")
     }
     if (rank >= GangRank_Officer)
     {
@@ -588,5 +589,20 @@ Action Command_GangDemote(int client, int args)
         CPrintToChatGang(gang_uid,"%t %t","GangTag","GangDemotion",g_RankColors[GangRank_Officer],sanitized_name,g_RankColors[GangRank_Muscle],"GangRankMuscle");
         if (target_client > 0) g_PlayerData[target_client].rank--;
     }
+    return Plugin_Handled;
+}
+
+Action Command_GangPoints(int client, int args)
+{
+    int gang_index = g_PlayerData[client].index;
+    int gang_uid = g_GangData[gang_index].id;
+    if (gang_uid==0)
+    {
+        CPrintToChat(client,"%t %t","PluginGangTag","CommandWarnNotInGang");
+        return Plugin_Handled;
+    }
+
+    CPrintToChat(client,"%t %t","GangTag","GangCommandPoints",g_GangData[gang_index].points);
+
     return Plugin_Handled;
 }

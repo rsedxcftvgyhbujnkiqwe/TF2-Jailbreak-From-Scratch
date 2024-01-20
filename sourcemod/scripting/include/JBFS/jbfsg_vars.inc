@@ -45,6 +45,9 @@ enum struct GangData
     int id;
     int num_online;
     int boss_promotion;
+    int points;
+    int alive_red;
+    int alive_blue;
 }
 
 enum struct PlayerData

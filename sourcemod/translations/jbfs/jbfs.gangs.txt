@@ -225,4 +225,19 @@
     {
         "en"        "Muscle"
     }
+    "GangCommandPoints"
+    {
+        "#format"   "{1:d}"
+        "en"        "{wheat}Gang points: {genuine}{1}"   
+    }
+    "GangPointsGainedLR"
+    {
+        "#format"   "{1:d}"
+        "en"        "{wheat}Gang gained {genuine}{1}{wheat} points for gang member winning last request."
+    }
+    "GangPointsGainedAlive"
+    {
+        "#format"   "{1:d}"
+        "en"        "{wheat}Gang gained {genuine}{1}{wheat} points for gang members alive."
+    }
 }

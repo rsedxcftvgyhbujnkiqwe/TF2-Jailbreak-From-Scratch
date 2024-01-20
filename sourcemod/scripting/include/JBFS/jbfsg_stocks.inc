@@ -141,6 +141,8 @@ stock void ResetGangData(int gang_index)
     g_GangData[gang_index].tag = "\0"
     g_GangData[gang_index].hastag = false;
     g_GangData[gang_index].boss_promotion = 0;
+    g_GangData[gang_index].alive_red = 0;
+    g_GangData[gang_index].alive_blue = 0;
 }
 
 stock CPrintToChatGang(int gang_uid, const String:message[], any:...) {
@@ -169,4 +171,14 @@ stock int GetClientByMID(int gang_uid, int mid)
         if (g_PlayerData[i].index == gang_index && g_PlayerData[i].mid == mid) return i;
     }
     return 0
+}
+
+stock void AddGangPoints(int gang_uid, int points, char[] reason)
+{
+    if (gang_uid > 0)
+    {
+        int gang_index = GetGangIndex(gang_uid);
+        g_GangData[gang_index].points += points;
+        CPrintToChatGang(gang_uid,"%t %t","GangTag",reason,points)
+    }
 }

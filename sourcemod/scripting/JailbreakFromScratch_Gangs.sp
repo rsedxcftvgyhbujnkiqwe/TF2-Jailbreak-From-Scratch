@@ -5,6 +5,7 @@
 
 #include <sourcemod>
 #include <sdktools>
+#include <jbfs>
 
 public Plugin myinfo =
 {
@@ -17,11 +18,12 @@ public Plugin myinfo =
 
 #include <morecolors>
 
-//jbfs incs
+//jbfsg incs
 #include <JBFS/jbfsg_vars>
 #include <JBFS/jbfsg_database>
 #include <JBFS/jbfsg_commands>
 #include <JBFS/jbfsg_stocks>
+#include <JBFS/jbfsg_events>
 
 public void OnPluginStart()
 {
@@ -33,9 +35,8 @@ public void OnPluginStart()
     cvarJBFS[Version] = CreateConVar("jbfst_version",PLUGIN_VERSION,PLUGIN_NAME,FCVAR_REPLICATED | FCVAR_NOTIFY | FCVAR_SPONLY | FCVAR_DONTRECORD);
     AutoExecConfig(true,"jbfsgangs");
 
-    //add custom color(s) to morecolors
-    CCheckTrie();
-    SetTrieValue(CTrie,"day9",0xFFA71A);
+    HookEvent("teamplay_round_win",OnArenaRoundEnd);
+    HookEvent("teamplay_round_stalemate",OnArenaRoundEnd);
 
     LoadTranslations("common.phrases");
     LoadTranslations("jbfs/jbfs.phrases");
@@ -45,22 +46,38 @@ public void OnPluginStart()
     //RegConsoleCmd("sm_ganghelp",Command_GangHelp,"Help menu for Gang related commands")
     RegConsoleCmd("sm_gangcreate",Command_CreateGang,"Create a gang with the specified name.");
     RegConsoleCmd("sm_gangjoin",Command_GangJoin,"Join the gang you have been invited to.");
-    RegConsoleCmd("sm_ganghelp",Command_GangHelp,"Display a help menu for gang commands.")
+    RegConsoleCmd("sm_gjoin",Command_GangJoin,"Join the gang you have been invited to.");
+    RegConsoleCmd("sm_ganghelp",Command_GangHelp,"Display a help menu for gang commands.");
+    RegConsoleCmd("sm_ghelp",Command_GangHelp,"Display a help menu for gang commands.");
 
     //gang cmds
     RegConsoleCmd("sm_gangleave",Command_GangLeave,"Leave your gang. If sole member, disband gang.");
+    RegConsoleCmd("sm_gleave",Command_GangLeave,"Leave your gang. If sole member, disband gang.");
     RegConsoleCmd("sm_gangchat",Command_GangChat,"Send a message to your gang.");
     RegConsoleCmd("sm_gc",Command_GangChat,"Send a message to your gang.");
     RegConsoleCmd("sm_ganglist",Command_GangList,"List all members in the gang and their Member IDs.");
+    RegConsoleCmd("sm_glist",Command_GangList,"List all members in the gang and their Member IDs.");
+    RegConsoleCmd("sm_gangpoints",Command_GangPoints,"List points your gang crrently has.");
+    RegConsoleCmd("sm_gpoints",Command_GangPoints,"List points your gang crrently has.");
 
 
     //boss cmds
     RegConsoleCmd("sm_ganginvite",Command_GangInvite,"Invite a player to your gang.");
+    RegConsoleCmd("sm_ginvite",Command_GangInvite,"Invite a player to your gang.");
     RegConsoleCmd("sm_gangname",Command_SetGangName,"Change the name of your gang.");
+    RegConsoleCmd("sm_gname",Command_SetGangName,"Change the name of your gang.");
     RegConsoleCmd("sm_gangtag",Command_SetGangTag,"Change your gang's tag.");
+    RegConsoleCmd("sm_gtag",Command_SetGangTag,"Change your gang's tag.");
     RegConsoleCmd("sm_gangpromote",Command_GangPromote,"Promote a muscle to officer, or officer to boss.");
+    RegConsoleCmd("sm_gpromote",Command_GangPromote,"Promote a muscle to officer, or officer to boss.");
     RegConsoleCmd("sm_gangdemote",Command_GangDemote,"Demote an officer to muscle.");
+    RegConsoleCmd("sm_gdemote",Command_GangDemote,"Demote an officer to muscle.");
     RegConsoleCmd("sm_gangkick",Command_GangKick,"Kick a member from your gang.");
+    RegConsoleCmd("sm_gkick",Command_GangKick,"Kick a member from your gang.");
+
+    //add custom color(s) to morecolors
+    CCheckTrie();
+    SetTrieValue(CTrie,"day9",0xFFA71A);
 }
 
 public void OnConfigsExecuted()

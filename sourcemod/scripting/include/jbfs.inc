@@ -32,6 +32,23 @@ native bool JBFS_RemoveGuardBan(int client);
  */
 native bool JBFS_IsGuardBanned(int client);
 
+/**
+ * Return the current LR Winner
+ * This value can change mid round if the warden gives a new LR
+ * It is best called after the round has already ended
+ *
+ * @return				index of client, 0 if no winner
+ */
+native int JBFS_GetLRWinner();
+
+/**
+ * Return the current warday status
+ * This value is only updated after round starts
+ *
+ * @return				true if warday, false if not
+ */
+native bool JBFS_IsWarday();
+
 public SharedPlugin __pl_jailbreakfromscratch = {
 	name = "JailbreakFromScratch",
 	file = "JailbreakFromScratch.smx",
@@ -48,5 +65,7 @@ public void __pl_jailbreakfromscratch_SetNTVOptional()
 	MarkNativeAsOptional("JBFS_AddGuardBan");
 	MarkNativeAsOptional("JBFS_RemoveGuardBan");
 	MarkNativeAsOptional("JBFS_IsGuardBanned");
+	MarkNativeAsOptional("JBFS_GetLRWinner");
+	MarkNativeAsOptional("JBFS_IsWarday");
 }
 #endif

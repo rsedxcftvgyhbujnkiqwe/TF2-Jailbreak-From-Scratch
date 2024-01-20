@@ -24,6 +24,10 @@
     {
         "en"        "/gangchat, /gc - Gang chat"
     }
+    "GangPointsHelp"
+    {
+        "en"        "/gangpoints, /gpoints - List gang points"
+    }
     "GangInviteHelp"
     {
         "en"        "/ganginvite, /ginv - Invite a player to your gang"

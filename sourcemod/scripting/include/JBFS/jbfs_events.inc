@@ -129,9 +129,8 @@ public Action OnPlayerDeath(Event event, const char[] name, bool dontBroadcast)
     return Plugin_Handled;
 }
 
-public void OnPlayerDisconnect(Event event, const char[] name, bool dontBroadcast)
+public void OnClientDisconnect(int client)
 {
-    int client = GetClientOfUserId(event.GetInt("userid"));
     if (client == JBFS.Warden)
     {
         RemoveWarden(UW_Disconnect);

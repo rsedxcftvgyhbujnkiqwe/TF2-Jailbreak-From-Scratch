@@ -127,7 +127,6 @@ public void OnPluginStart()
     //hook gameevents for use as functions
     HookEvent("teamplay_round_start",OnPreRoundStart);
     HookEvent("arena_round_start",OnArenaRoundStart);
-    HookEvent("player_disconnect",OnPlayerDisconnect);
     HookEvent("player_death",OnPlayerDeath);
     HookEvent("player_spawn",OnPlayerSpawn);
     HookEvent("teamplay_round_win",OnArenaRoundEnd);
@@ -304,6 +303,8 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
     CreateNative("JBFS_AddGuardBan",Native_AddGuardBan);
     CreateNative("JBFS_RemoveGuardBan",Native_RemoveGuardBan);
     CreateNative("JBFS_IsGuardBanned",Native_IsGuardBanned);
+    CreateNative("JBFS_GetLRWinner",Native_GetLRWinner);
+    CreateNative("JBFS_IsWarday",Native_IsWarday);
 
     RegPluginLibrary("JailbreakFromScratch");
     return APLRes_Success;
