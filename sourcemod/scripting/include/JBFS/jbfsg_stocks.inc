@@ -65,7 +65,7 @@ stock int InitLocalGang(int gang_uid)
     if(DB_GetGangTag(gang_uid,g_GangData[g_ind].tag,5))
         g_GangData[g_ind].hastag = true;
     else
-        g_GangData[gang_index].hastag = false;
+        g_GangData[g_ind].hastag = false;
     return g_ind;
 }
 
@@ -93,9 +93,9 @@ stock bool IsPlayerInGang(int client, int gang_uid)
 
 stock void SetPlayerGang(int client, int gang_uid, int gang_rank, int mid, bool savedatabase = true)
 {
-    int g_ind = InitLocalGang(gang_uid);
-    g_GangData[g_ind].num_online++;
-    g_PlayerData[client].index = g_ind;
+    int gang_index = InitLocalGang(gang_uid);
+    g_GangData[gang_index].num_online++;
+    g_PlayerData[client].index = gang_index;
     g_PlayerData[client].rank = gang_rank;
     g_PlayerData[client].mid = mid;
     if(savedatabase) DB_SetPlayerGang(client,gang_uid,gang_rank,mid);
@@ -119,10 +119,17 @@ stock bool SetGangTag(int gang_index, char new_tag[5], bool savedatabase = true)
 
 stock void ResetClientGangData(int client)
 {
-    g_PlayerData[client].id = 0;
+    int gang_index = g_PlayerData[client].index
+    g_PlayerData[client].index = 0;
     g_PlayerData[client].rank = GangRank_None;
     g_PlayerData[client].mid = GangRank_None;
     g_PlayerData[client].invite = GangRank_None;
+    //local gang db reset
+    g_GangData[gang_index].num_online--;
+    if (g_GangData[gang_index].num_online <= 0)
+    {
+        ResetGangData(gang_index)
+    }
 }
 
 //this nulls the gang at the index
@@ -133,6 +140,7 @@ stock void ResetGangData(int gang_index)
     g_GangData[gang_index].name = "\0"
     g_GangData[gang_index].tag = "\0"
     g_GangData[gang_index].hastag = false;
+    g_GangData[gang_index].boss_promotion = 0;
 }
 
 stock CPrintToChatGang(int gang_uid, const String:message[], any:...) {

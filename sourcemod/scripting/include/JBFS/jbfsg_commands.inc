@@ -1,6 +1,6 @@
 Action Command_GangHelp(int client, int args)
 {
-    int rank = g_GangData[client].rank;
+    int rank = g_PlayerData[client].rank;
     CPrintToChat(client,"%t %t","PluginGangTag","GangHelp")
     CPrintToChat(client,"%t %t","PluginGangTag","GangHelpHelp")
     CPrintToChat(client,"%t %t","PluginGangTag","GangCreateHelp")
@@ -410,7 +410,7 @@ Action Command_GangKick(int client, int args)
         CPrintToChat(client,"%t %t","PluginGangTag","CommandWarnNotInGang");
         return Plugin_Handled;
     }
-    if (g_PlayerData[client].rank != GangRank_Boss)// && g_GangData[client].rank != GangRank_Officer)
+    if (g_PlayerData[client].rank != GangRank_Boss)
     {
         CPrintToChat(client,"%t %t","PluginGangTag","CommandWarnGangRank");
         return Plugin_Handled;
@@ -503,7 +503,7 @@ Action Command_GangPromote(int client, int args)
         //promote to officer
         DB_SetPlayerGangRankByMID(gang_uid,mid,GangRank_Officer);
         CPrintToChatGang(gang_uid,"%t %t","GangTag","GangPromotion",g_RankColors[GangRank_Muscle],sanitized_name,g_RankColors[GangRank_Officer],"GangRankOfficer")
-        if (target_client > 0) g_GangData[target_client].rank++;
+        if (target_client > 0) g_PlayerData[target_client].rank++;
     }
     else if (target_rank == GangRank_Officer)
     {
@@ -513,18 +513,18 @@ Action Command_GangPromote(int client, int args)
         after second command run, perform action
         promote target to boss, and demote self to officer
         */
-        if (g_GangData[client].boss_promotion == mid)
+        if (g_GangData[gang_index].boss_promotion == mid)
         {
             DB_SetPlayerGangRankByMID(gang_uid,mid,GangRank_Boss);
-            DB_SetPlayerGangRankByMID(gang_uid,g_GangData[client].mid,GangRank_Officer);
+            DB_SetPlayerGangRankByMID(gang_uid,g_PlayerData[client].mid,GangRank_Officer);
             CPrintToChatGang(gang_uid,"%t %t","GangTag","GangStepDown",g_RankColors[GangRank_Boss],client,g_RankColors[GangRank_Boss],"GangRankBoss");
             CPrintToChatGang(gang_uid,"%t %t","GangTag","GangPromotion",g_RankColors[GangRank_Officer],sanitized_name,g_RankColors[GangRank_Boss],"GangRankBoss");
-            g_GangData[client].rank--;
-            if (target_client > 0) g_GangData[target_client].rank++;
+            g_PlayerData[client].rank--;
+            if (target_client > 0) g_PlayerData[target_client].rank++;
         }
         else
         {
-            g_GangData[client].boss_promotion = mid;
+            g_GangData[gang_index].boss_promotion = mid;
             CPrintToChat(client,"%t %t","PluginGangTag","CommandGangPromoteWarnBoss")
         }
     }
@@ -586,7 +586,7 @@ Action Command_GangDemote(int client, int args)
     {
         DB_SetPlayerGangRankByMID(gang_uid,mid,GangRank_Muscle);
         CPrintToChatGang(gang_uid,"%t %t","GangTag","GangDemotion",g_RankColors[GangRank_Officer],sanitized_name,g_RankColors[GangRank_Muscle],"GangRankMuscle");
-        if (target_client > 0) g_GangData[target_client].rank--;
+        if (target_client > 0) g_PlayerData[target_client].rank--;
     }
     return Plugin_Handled;
 }

@@ -44,6 +44,7 @@ enum struct GangData
     bool hastag;
     int id;
     int num_online;
+    int boss_promotion;
 }
 
 enum struct PlayerData
@@ -52,7 +53,6 @@ enum struct PlayerData
     int mid;
     int rank;
     int invite;
-    int boss_promotion;
 }
 
 GangData g_GangData[MAXPLAYERS+1];

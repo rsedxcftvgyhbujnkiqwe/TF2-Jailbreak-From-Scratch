@@ -45,6 +45,7 @@ public void OnPluginStart()
     //RegConsoleCmd("sm_ganghelp",Command_GangHelp,"Help menu for Gang related commands")
     RegConsoleCmd("sm_gangcreate",Command_CreateGang,"Create a gang with the specified name.");
     RegConsoleCmd("sm_gangjoin",Command_GangJoin,"Join the gang you have been invited to.");
+    RegConsoleCmd("sm_ganghelp",Command_GangHelp,"Display a help menu for gang comamnds.")
 
     //gang cmds
     RegConsoleCmd("sm_gangleave",Command_GangLeave,"Leave your gang. If sole member, disband gang.");
