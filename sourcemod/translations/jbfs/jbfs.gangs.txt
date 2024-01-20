@@ -127,17 +127,25 @@
     "GangNameChange"
     {
         "#format"   "{1:s}{2:s}"
-        "en"        "{wheat}Gang {genuine}{1}{wheat} has changed their name to {genuine}{2}."
+        "en"        "{wheat}Gang {genuine}{1}{wheat} has changed their name to {genuine}{2}"
     }
     "GangNameChangeSilent"
     {
         "#format"   "{1:s}"
-        "en"        "{wheat}Gang leader has changed the gang name to {genuine}{1}."
+        "en"        "{wheat}Gang leader has changed the gang name to {genuine}{1}"
+    }
+    "GangNameSame"
+    {
+        "en"        "{wheat}That is already the name of your gang!"
     }
     "GangTagChange"
     {
         "#format"   "{1:s}"
-        "en"        "{wheat}Gang leader has changed the gang tag to {genuine}{1}."
+        "en"        "{wheat}Gang leader has changed the gang tag to {genuine}{1}"
+    }
+    "GangTagSame"
+    {
+        "en"        "{wheat}That is already the tag of your gang!"
     }
     "GangChatDisabled"
     {
