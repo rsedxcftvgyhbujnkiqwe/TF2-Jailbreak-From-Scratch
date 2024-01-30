@@ -1,0 +1,65 @@
+"Phrases"
+{
+    "GangMenuTitle"
+    {
+        "en"    "Gang Menu"
+    }
+    "GangMenuOptHelp"
+    {
+        "en"    "Help"
+    }
+    "GangMenuOptCreateGang"
+    {
+        "en"    "Create Gang"
+    }
+    "GangMenuOptJoineGang"
+    {
+        "en"    "Join Gang"
+    }
+    "GangMenuOptListGang"
+    {
+        "en"    "List Members"
+    }
+    "GangMenuOptGangPoints"
+    {
+        "en"    "Show Points"
+    }
+    "GangMenuOptGangChat"
+    {
+        "en"    "Gang Chat"
+    }
+    "GangMenuOptGangPoints"
+    {
+        "en"    "Invite Player"
+    }
+    "GangMenuOptGangShop"
+    {
+        "en"    "Gang Shop"
+    }
+    "ShopMenuTitle"
+    {
+        "#format"   "{1:d}"
+        "en"    "Gang Shop - {1} points"
+    }
+    "ShopItemBanner"
+    {
+        "en"    "Gang Minicrits"
+    }
+    "ShopItemConch"
+    {
+        "en"    "Gang Healing"
+    }
+    "ShopItemBackup"
+    {
+        "en"    "Gang Resist"
+    }
+    "ShopPickGang"
+    {
+        "#format"   "{1:s}{2:s}{3:t}{4:d}"
+        "en"    "{{1}}{2}{wheat} has purchased {strange}{3}{wheat} for the next round. Points remaining: {genuine}{4}"
+    }
+    "ShopWarnPoints"
+    {
+        "en"    "{wheat}Not enough points!"
+    }
+}

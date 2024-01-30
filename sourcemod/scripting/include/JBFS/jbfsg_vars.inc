@@ -65,3 +65,35 @@ Database hDatabase;
 
 char GangTable[] = "Gangs"
 char PlayerTable[] = "GangPlayers"
+
+Menu g_GangMenu[MAXPLAYERS+1];
+Menu g_ShopMenu[MAXPLAYERS+1];
+
+//client menu defs
+typedef ClientFilterFunc = function bool(int client);
+typedef ClientRunFunc = function bool(int client,int target);
+ClientRunFunc g_RunFn[MAXPLAYERS+1];
+ClientFilterFunc g_filterFn[MAXPLAYERS+1];
+Menu g_ClientMenu[MAXPLAYERS+1];
+
+enum
+{
+    GangShop_None,
+    GangShop_Banner,
+    GangShop_Conch,
+    GangShop_Backup
+}
+
+int g_ShopPoints[] = {
+    0,
+    2000,
+    2000,
+    2000
+}
+
+char g_ShopNames[4][32] = {
+    "ShopItemNone",
+    "ShopItemBanner",
+    "ShopItemConch",
+    "ShopItemBackup"
+}

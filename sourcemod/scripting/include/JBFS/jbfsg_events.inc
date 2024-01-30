@@ -38,7 +38,7 @@ public void OnArenaRoundEnd(Event event, const char[] name, bool dontBroadcast)
     {
         if (g_GangData[i].id > 0)
         {
-            points = g_GangData[i].alive_red*100 + g_GangData[i].alive_blue*25;
+            points = (g_GangData[i].alive_blue - g_GangData[i].alive_red) * 50;
             if (points > 0) AddGangPoints(g_GangData[i].id,points,"GangPointsGainedAlive");
         }
     }
@@ -48,4 +48,12 @@ public void OnArenaRoundEnd(Event event, const char[] name, bool dontBroadcast)
     {
         AddGangPoints(LR_Gang,500,"GangPointsGainedLR");
     }
+}
+
+public Action OnPlayerDeath(Event event, const char[] name, bool dontBroadcast)
+{
+    int client = GetClientOfUserId(event.GetInt("userid"));
+    //close gang/client menus on death
+    CloseMenus(client)
+    return Plugin_Handled;
 }

@@ -272,24 +272,7 @@ Action Command_GangInvite(int client,int args)
         CPrintToChat(client,"%t %t","PluginGangTag","CommandGangInviteWarnInGang");
         return Plugin_Handled;
     }
-
-    if (DB_GetGangSize(gang_uid) >= cvarJBFS[MaxGangSize].IntValue)
-    {
-        CPrintToChat(client,"%t %t","PluginGangTag","GangMaxSize");
-        return Plugin_Handled;
-    }
-    //very rare edge case but possible
-    if (!DB_IsGangActive(gang_uid))
-    {
-        CPrintToChat(client,"%t %t","PluginGangTag","GangInactive");
-        return Plugin_Handled;
-    }
-
-    //at this point, client is able to invite, and other player is capable of joining
-
-    g_PlayerData[target].invite = gang_uid;
-    CPrintToChat(target,"%t %t","GangTag","GangInviteReceived",client,g_GangData[target_gang_index].name);
-    CPrintToChatGang(gang_uid,"%t %t","GangTag","GangInviteSent",target,g_RankColors[g_PlayerData[client].rank],client);
+    InviteToGang(client,target,gang_uid);    
     return Plugin_Handled;
 }
 
@@ -350,50 +333,19 @@ Action Command_GangLeave(int client,int args)
         ResetGangData(gang_index);
     }
     ResetClientGangData(client)
+    CloseMenus(client);
     return Plugin_Handled;
 }
 
 Action Command_GangList(int client,int args)
 {
-    int gang_index = g_PlayerData[client].index;
     int gang_uid = g_GangData[gang_index].id
     if (gang_uid == 0)
     {
         CPrintToChat(client,"%t %t","PluginGangTag","CommandWarnNotInGang");
         return Plugin_Handled;
     }
-    //this will suck
-    char query[512];
-    SQL_FormatQuery(hDatabase,query,sizeof(query),
-                "SELECT name, steamid, rank, mid "
-            ... "FROM %s "
-            ... "WHERE gang_uid = %d "
-            ... "ORDER BY mid ASC",PlayerTable,gang_uid);
-
-    DBResultSet hQuery = SQL_Query(hDatabase,query);
-    if (hQuery == null)
-    {
-        char qerror[255];
-        SQL_GetError(hDatabase, qerror, sizeof(qerror));
-        PrintToServer("Failed to query (error: %s)", qerror);
-        return Plugin_Handled;
-    }
-
-    CPrintToChat(client,"%t %t","PluginGangTag","GangMemberList",g_GangData[gang_index].name)
-
-    char ID[32]; 
-    char name[32];
-    int rank;
-    int mid;
-    while (SQL_FetchRow(hQuery))
-    {
-        SQL_FetchString(hQuery, 0, name, sizeof(name));
-        SQL_FetchString(hQuery, 1, ID, sizeof(ID));
-        rank = SQL_FetchInt(hQuery, 2);
-        mid = SQL_FetchInt(hQuery, 3);
-        CPrintToChat(client,"{genuine}(%d): {%s}%s (%s)",mid,g_RankColors[rank],name,ID);
-    }
-    delete hQuery;
+    ListGang(client);
     return Plugin_Handled;
 }
 
@@ -445,10 +397,11 @@ Action Command_GangKick(int client, int args)
     int kicked_client = GetClientByMID(gang_uid,mid)
     if (kicked_client > 0)
     {
-        Format(name,sizeof(name),"%N",kicked_client)
-        ResetClientGangData(kicked_client)
+        Format(name,sizeof(name),"%N",kicked_client);
+        ResetClientGangData(kicked_client);
+        CloseMenus(kicked_client);
     }
-    CPrintToChatGang(gang_uid,"%t %t","GangTag","GangPlayerKicked",name,g_GangData[gang_index].name)
+    CPrintToChatGang(gang_uid,"%t %t","GangTag","GangPlayerKicked",name,g_GangData[gang_index].name);
 
     return Plugin_Handled;
 }
@@ -604,5 +557,27 @@ Action Command_GangPoints(int client, int args)
 
     CPrintToChat(client,"%t %t","GangTag","GangCommandPoints",g_GangData[gang_index].points);
 
+    return Plugin_Handled;
+}
+
+public Action Command_GangMenu(int client, int args)
+{
+    CreateGangMenu(client,0);
+    return Plugin_Handled;
+}
+
+public Action Command_GangShop(int client, int args)
+{
+    if (g_PlayerData[client].index == 0)
+    {
+        CPrintToChat(client,"%t %t","PluginGangTag","CommandWarnNotInGang");
+        return Plugin_Handled;
+    }
+    if (g_PlayerData[client].rank < GangRank_Officer)
+    {
+        CPrintToChat(client,"%t %t","PluginGangTag","CommandWarnGangRank");
+        return Plugin_Handled;
+    }
+    CreateShopMenu(client,0);
     return Plugin_Handled;
 }

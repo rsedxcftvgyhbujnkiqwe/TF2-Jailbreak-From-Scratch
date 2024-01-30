@@ -182,3 +182,102 @@ stock void AddGangPoints(int gang_uid, int points, char[] reason)
         CPrintToChatGang(gang_uid,"%t %t","GangTag",reason,points)
     }
 }
+
+stock void ListGang(int client)
+{
+    int gang_index = g_PlayerData[client].index;
+    int gang_uid = g_GangData[gang_index].id
+    //this will suck
+    char query[512];
+    SQL_FormatQuery(hDatabase,query,sizeof(query),
+                "SELECT name, steamid, rank, mid "
+            ... "FROM %s "
+            ... "WHERE gang_uid = %d "
+            ... "ORDER BY mid ASC",PlayerTable,gang_uid);
+
+    DBResultSet hQuery = SQL_Query(hDatabase,query);
+    if (hQuery == null)
+    {
+        char qerror[255];
+        SQL_GetError(hDatabase, qerror, sizeof(qerror));
+        PrintToServer("Failed to query (error: %s)", qerror);
+        return Plugin_Handled;
+    }
+
+    CPrintToChat(client,"%t %t","PluginGangTag","GangMemberList",g_GangData[gang_index].name)
+
+    char ID[32]; 
+    char name[32];
+    int rank;
+    int mid;
+    while (SQL_FetchRow(hQuery))
+    {
+        SQL_FetchString(hQuery, 0, name, sizeof(name));
+        SQL_FetchString(hQuery, 1, ID, sizeof(ID));
+        rank = SQL_FetchInt(hQuery, 2);
+        mid = SQL_FetchInt(hQuery, 3);
+        CPrintToChat(client,"{genuine}(%d): {%s}%s (%s)",mid,g_RankColors[rank],name,ID);
+    }
+    delete hQuery;
+}
+
+stock void InviteToGang(int client, int target, int gang_uid)
+{
+    int target_gang_index = g_PlayerData[target].index;
+    if (DB_GetGangSize(gang_uid) >= cvarJBFS[MaxGangSize].IntValue)
+    {
+        CPrintToChat(client,"%t %t","PluginGangTag","GangMaxSize");
+        return Plugin_Handled;
+    }
+    //very rare edge case but possible
+    if (!DB_IsGangActive(gang_uid))
+    {
+        CPrintToChat(client,"%t %t","PluginGangTag","GangInactive");
+        return Plugin_Handled;
+    }
+
+    //at this point, client is able to invite, and other player is capable of joining
+    g_PlayerData[target].invite = gang_uid;
+    CPrintToChat(target,"%t %t","GangTag","GangInviteReceived",client,g_GangData[target_gang_index].name);
+    CPrintToChatGang(gang_uid,"%t %t","GangTag","GangInviteSent",target,g_RankColors[g_PlayerData[client].rank],client);
+}
+
+stock void CloseMenus(int client)
+{
+
+    if (g_GangMenu[client] != null)
+    {
+        delete g_GangMenu[client];
+        g_GangMenu[client] = null;
+    }
+    if (g_ClientMenu[client] != null)
+    {
+        delete g_ClientMenu[client];
+        g_ClientMenu[client] = null;
+    }
+    if (g_ShopMenu[client] != null)
+    {
+        delete g_ShopMenu[client];
+        g_ShopMenu[client] = null;
+    }
+}
+
+stock void GangShopPurchase(int client, int purchase)
+{
+    int gang_index = g_PlayerData[client].index;
+    if (gang_index == 0) return;
+
+    int points = g_GangData[gang_index].points;
+
+    if (points > g_ShopPoints[purchase])
+    {
+        CPrintToChat(client,"%t %t","PluginGangTag","ShopWarnPoints");
+        return;
+    }
+
+    "ShopPickGang"
+    {
+        "#format"   "{1:s}{2:s}{3:t}{4:d}"
+        "en"    "{{1}}{2}{wheat} has purchased {strange}{3}{wheat} for the next round. Points remaining: {genuine}{4}"
+    }
+}

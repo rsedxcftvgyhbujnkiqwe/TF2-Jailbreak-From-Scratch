@@ -37,10 +37,15 @@ public void OnPluginStart()
 
     HookEvent("teamplay_round_win",OnArenaRoundEnd);
     HookEvent("teamplay_round_stalemate",OnArenaRoundEnd);
+    HookEvent("player_death",OnPlayerDeath);
+
 
     LoadTranslations("common.phrases");
     LoadTranslations("jbfs/jbfs.phrases");
     LoadTranslations("jbfs/jbfs.gangs");
+    LoadTranslations("jbfs/jbfs.ganghelp");
+    LoadTranslations("jbfs/jbfs.gangmenu");
+
 
     //generic cmds
     //RegConsoleCmd("sm_ganghelp",Command_GangHelp,"Help menu for Gang related commands")
@@ -49,6 +54,9 @@ public void OnPluginStart()
     RegConsoleCmd("sm_gjoin",Command_GangJoin,"Join the gang you have been invited to.");
     RegConsoleCmd("sm_ganghelp",Command_GangHelp,"Display a help menu for gang commands.");
     RegConsoleCmd("sm_ghelp",Command_GangHelp,"Display a help menu for gang commands.");
+    RegConsoleCmd("sm_gangmenu",Command_GangMenu,"Open the Gang menu.");
+    RegConsoleCmd("sm_gmenu",Command_GangMenu,"Open the Gang menu.");
+    RegConsoleCmd("sm_gang",Command_GangMenu,"Open the Gang menu.");
 
     //gang cmds
     RegConsoleCmd("sm_gangleave",Command_GangLeave,"Leave your gang. If sole member, disband gang.");
@@ -60,10 +68,11 @@ public void OnPluginStart()
     RegConsoleCmd("sm_gangpoints",Command_GangPoints,"List points your gang crrently has.");
     RegConsoleCmd("sm_gpoints",Command_GangPoints,"List points your gang crrently has.");
 
-
-    //boss cmds
+    //officer cmds
     RegConsoleCmd("sm_ganginvite",Command_GangInvite,"Invite a player to your gang.");
     RegConsoleCmd("sm_ginvite",Command_GangInvite,"Invite a player to your gang.");
+
+    //boss cmds
     RegConsoleCmd("sm_gangname",Command_SetGangName,"Change the name of your gang.");
     RegConsoleCmd("sm_gname",Command_SetGangName,"Change the name of your gang.");
     RegConsoleCmd("sm_gangtag",Command_SetGangTag,"Change your gang's tag.");
