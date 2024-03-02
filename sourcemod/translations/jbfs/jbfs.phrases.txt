@@ -361,7 +361,7 @@
     "CommandAdminForceFreeday"
     {
         "#format"   "{1:N}"
-        "en"        "{wheat}Forcibly activated freeday for {unique}{1}{wheat}."
+        "en"        "{wheat}Forcibly activated freeday for {unique}{1}."
         "chi"       "{wheat}强制激活 {unique}{1}{wheat} 的自由日!"
     }
     "CommandSurrenderWarnBlue"
