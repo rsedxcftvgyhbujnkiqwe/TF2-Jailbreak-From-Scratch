@@ -55,3 +55,8 @@ public Action Timer_KillCells(Handle timer)
     return Plugin_Stop;
 }
 
+public Action Timer_AllowSurrender(Handle timer, int client)
+{
+    JBFS.HasSurrendered[client] = false;
+    return Plugin_Stop;
+}

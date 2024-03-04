@@ -101,12 +101,15 @@ enum struct gamemode
     int AttachedParticle[MAXPLAYERS+1];
     bool HasAmmo[MAXPLAYERS+1];
     bool GuardBanned[MAXPLAYERS+1];
+    bool HasSurrendered[MAXPLAYERS+1];
+    Handle SurrenderTimers[MAXPLAYERS+1];
 }
 public gamemode JBFS;
 
 enum struct JBMapConfig
 {
     char cells[64];
+    char cellclass[128];
     bool hascells;
     float fspawn[3];
     bool hasfspawn;
@@ -163,7 +166,8 @@ enum
 {
     JBEvent_Warday,
     JBEvent_SetWarden,
-    JBEvent_RemoveWarden
+    JBEvent_RemoveWarden,
+    JBEvent_Surrender
 }
 
 Menu g_WMenu[MAXPLAYERS+1];

@@ -116,7 +116,7 @@ public Action Command_CheckLastRequest(int client, int args)
             case LR_Custom: CPrintToChatAll("%t %t","PluginTag","LRCustomActive",LRConfig.CustomLR);
             case LR_Map: CPrintToChatAll("%t %t","PluginTag","LRMapActive",g_MapLRNames[LRConfig.MapLRChosen]);
         }
-        CreateTimer(5.0,Timer_AllowLRQuery);
+        CreateTimer(5.0,Timer_AllowLRQuery,_,TIMER_FLAG_NO_MAPCHANGE);
     }
     else CPrintToChat(client,"%t %t","PluginTag","SlowDown")
     return Plugin_Handled;
@@ -131,31 +131,39 @@ public Action Command_Surrender(int client, int args)
     }
     if (GetClientTeam(client) != RED)
     {
-        CPrintToChat(client,"%t %t","PluginTag","CommandSurrenderWarnBlue")
+        CPrintToChat(client,"%t %t","PluginTag","CommandSurrenderWarnBlue");
         return Plugin_Handled;
     }
     if (!IsPlayerAlive(client))
     {
-        CPrintToChat(client,"%t %t","PluginTag","CommandSurrenderWarnDead")
-        return Plugin_Handled;
-    }
-    if (!JBFS.HasAmmo[client])
-    {
-        CPrintToChat(client,"%t %t","PluginTag","CommandSurrenderWarnAmmo")
+        CPrintToChat(client,"%t %t","PluginTag","CommandSurrenderWarnDead");
         return Plugin_Handled;
     }
     if (LRConfig.WardayActive)
     {
-        CPrintToChat(client,"%t %t","PluginTag","CommandSurrenderWarnWarday")
+        CPrintToChat(client,"%t %t","PluginTag","CommandSurrenderWarnWarday");
         return Plugin_Handled;
     }
+    if (!JBFS.RoundActive)
+    {
+        CPrintToChat(client,"%t %t","PluginTag","CommandWarnRound");
+        return Plugin_Handled;
+    }
+    if (JBFS.HasSurrendered[client])
+    {
+        CPrintToChat(client,"%t %t","PluginTag","CommandSurrenderWarnRecent");
+        return Plugin_Handled;
+    }
+
     //play has ammo, is alive, on red
     JBFS.HasAmmo[client] = false;
-
     InitClientAttributes(client);
     RemoveWeapons(client);
     RemoveAmmo(client);
     CPrintToChatAll("%t %t","PluginTag","PlayerSurrender",client);
+    JBGameEvent(JBEvent_Surrender,client);
+    JBFS.HasSurrendered[client] = true;
+    JBFS.SurrenderTimers[client] = CreateTimer(30.0,Timer,client,TIMER_FLAG_NO_MAPCHANGE);
     return Plugin_Handled;
 }
 

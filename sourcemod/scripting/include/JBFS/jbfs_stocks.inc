@@ -123,7 +123,7 @@ stock void SetConVars(const bool side)
 stock void SetWarden(int client,int reason, int admin=0)
 {
     JBFS.Warden = client;
-    JBGameEvent(JBEvent_SetWarden);
+    JBGameEvent(JBEvent_SetWarden,client);
     LockWarden(false)
     //we just set warden + wardenlock, so no need for this anymore
     switch (reason)
@@ -152,7 +152,7 @@ stock void SetWarden(int client,int reason, int admin=0)
 stock void RemoveWarden(int reason)
 {
     int currentwarden = JBFS.Warden;
-    JBGameEvent(JBEvent_RemoveWarden);
+    JBGameEvent(JBEvent_RemoveWarden,currentwarden);
     JBFS.Warden = 0;
     //close warden menu if it's open
     if (g_WMenu[currentwarden]!= null) delete g_WMenu[currentwarden];
@@ -264,7 +264,7 @@ stock void UnlockWarden(bool message = false)
     JBFS.WardenLocked = false;
     if (message) CPrintToChatAll("%t %t","PluginTag","WardenUnlock");
     //if no one goes warden in 30s, lock it
-    JBFS.WardenLockTimer = CreateTimer(30.0,Timer_LockWarden);
+    JBFS.WardenLockTimer = CreateTimer(30.0,Timer_LockWarden,_,TIMER_FLAG_NO_MAPCHANGE);
 }
 
 stock void RemoveAmmo(int client)
@@ -339,26 +339,24 @@ stock bool ModifyCells(bool open,int client = 0,bool message = true)
         if(client) CPrintToChat(client,"%t %t","PluginTag","CellsWarnNone");
         return false;
     }
-    int cells = FindEntityByName(-1,"*",MapConfig.cells);
-    if (cells == -1 && LRConfig.LRActive)
+    if (LRConfig.LRActive)
     {
         if(client) CPrintToChat(client,"%t %t","PluginTag","CellsWarnLR");
         return false;
     }
-    char class[PLATFORM_MAX_PATH];
-    GetEntityClassname(cells,class,PLATFORM_MAX_PATH);
-    if (StrEqual(class,"func_door")||StrEqual(class,"func_door_rotating"))
+    if (StrEqual(MapConfig.cellclass,"func_door")||StrEqual(MapConfig.cellclass,"func_door_rotating"))
     {
-        if(open) AcceptEntityInput(cells,"Open");
-        else AcceptEntityInput(cells,"Close");
+        
+        if(open) EntFire(MapConfig.cells,"Open");
+        else EntFire(MapConfig.cells,"Close");
     }
-    else if (StrEqual(class,"logic_relay"))
+    else if (StrEqual(MapConfig.cellclass,"logic_relay"))
     {
-        AcceptEntityInput(cells,"Trigger");
+        EntFire(MapConfig.cells,"Trigger");
     }
-    else if (StrEqual(class,"func_breakable"))
+    else if (StrEqual(MapConfig.cellclass,"func_breakable"))
     {
-        if(open) AcceptEntityInput(cells,"Break");
+        if(open) EntFire(MapConfig.cells,"Break");
         else
         {
             if(client) CPrintToChat(client,"%t %t","PluginTag","CellsCantClose");
@@ -460,7 +458,7 @@ stock void CreateMarker(int client)
         EmitAmbientSound("misc/rd_finale_beep01.wav", endpoint);
     }
     JBFS.MarkerPlaced = true;
-    CreateTimer(2.5,Timer_AllowMarkerPlacement);
+    CreateTimer(2.5,Timer_AllowMarkerPlacement,_,TIMER_FLAG_NO_MAPCHANGE);
 }
 
 public bool ClientEligibleForLR(int client)
@@ -751,5 +749,16 @@ stock void InitClientAttributes(int client)
                 }
             }
         }
+    }
+}
+
+stock void SetRebel(int client)
+{
+    //abstraction that serves to do anything to a player when they rebel
+    //probably only freeday removal for forseeable future
+    if ( IsClientInGame(client) && IsPlayerAlive(client) && GetClientTeam(client)==RED)
+    {
+        LRRemoveFreeday(client);
+        CPrintToChatAll("%t %t","PluginTag","FreedayLost",client)
     }
 }

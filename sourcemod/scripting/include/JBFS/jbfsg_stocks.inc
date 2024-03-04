@@ -269,11 +269,14 @@ stock void GangShopPurchase(int client, int purchase)
 
     int points = g_GangData[gang_index].points;
 
-    if (points > g_ShopPoints[purchase])
+    if (points < g_ShopPoints[purchase])
     {
         CPrintToChat(client,"%t %t","PluginGangTag","ShopWarnPoints");
         return;
     }
+
+    g_GangData[gang_index].points -= g_ShopPoints[purchase];
+    g_GangData[gang_index].shopactive |= 1 << purchase
 
     "ShopPickGang"
     {

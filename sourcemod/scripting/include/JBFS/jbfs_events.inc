@@ -3,8 +3,14 @@ public void OnPreRoundStart(Event event, const char[] name, bool dontBroadcast)
     LRConfig.LRActive = LRConfig.LRChosen;
     LRConfig.LRChosen = LR_None;
     JBFS.RoundActive = false;
-    if (IsValidHandle(JBFS.RoundTimer)) KillTimer(JBFS.RoundTimer);
-    
+    if (IsValidHandle(JBFS.RoundTimer)) KillTimer(JBFS.RoundTimer);    
+    //surrender timers
+    SetArray(JBFS.HasSurrendered,sizeof(JBFS.HasSurrendered),false);
+    for (int i;i<=MaxClients;i++)
+    {
+        if (IsValidHandle(JBFS.SurrenderTimers[i])) KillTimer(JBFS.SurrenderTimers[i]);
+    }
+
     //warden stuff
     RemoveWarden(UW_Silent);
     LockWarden(false);
@@ -14,6 +20,7 @@ public void OnPreRoundStart(Event event, const char[] name, bool dontBroadcast)
     JBGameEvent(JBEvent_SetWarden);
     //reset convars
     FindConVar("mp_friendlyfire").SetBool(false);
+    FindConVar("tf_avoidteammates_pushaway").SetBool(false);
     //fire preround lr stuff (freedays)
     if(LRConfig.LRActive == LR_FreedaySelf || LRConfig.LRActive == LR_FreedayOthers)
     {
@@ -42,7 +49,7 @@ public void OnArenaRoundStart(Event event, const char[] name, bool dontBroadcast
             //open cells
             ModifyCells(true,0,true);
             //kill cells to prevent them from being closed
-            CreateTimer(5.0,Timer_KillCells);
+            CreateTimer(3.0,Timer_KillCells,_,TIMER_FLAG_NO_MAPCHANGE);
             JBFS.TimeLeft = cvarJBFS[FreedayTime].IntValue;
         }
         case LR_Warday:
@@ -59,13 +66,14 @@ public void OnArenaRoundStart(Event event, const char[] name, bool dontBroadcast
         }
     }
     JBFS.RoundTimer = CreateTimer(1.0,RoundTimer,_,TIMER_REPEAT);
-    CreateTimer(3.0,Timer_ChooseWarden);
+    CreateTimer(3.0,Timer_ChooseWarden,_,TIMER_FLAG_NO_MAPCHANGE);
 }
 
 public void OnArenaRoundEnd(Event event, const char[] name, bool dontBroadcast)
 {
     if (IsValidHandle(JBFS.RoundTimer)) KillTimer(JBFS.RoundTimer);
     LockWarden(false);
+    JBFS.RoundActive = false;
     //reset lr stuff
     LRConfig.WardayActive=false;
     LRConfig.LRWinner = 0;

@@ -28,6 +28,7 @@ public void LoadMapConfig()
             int cells = FindEntityByName(-1,"*",MapConfig.cells);
             if (IsValidEntity(cells)){
                 MapConfig.hascells = true;
+                GetEntityClassname(cells,MapConfig.cellclass,sizeof(MapConfig.cellclass));
             }
         }
         if (kv.JumpToKey("LR_Freeday_Spawn"))

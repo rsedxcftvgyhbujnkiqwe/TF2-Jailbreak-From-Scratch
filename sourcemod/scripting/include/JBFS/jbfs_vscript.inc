@@ -1,5 +1,8 @@
 #if defined _vscript_included
 VScriptFunction g_GetWarden;
+VScriptFunction g_SetRebel;
+VScriptFunction g_IsFreeday;
+VScriptFunction g_TakenAmmo;
 
 stock void CreateVScriptFunctions()
 {
@@ -7,6 +10,25 @@ stock void CreateVScriptFunctions()
     g_GetWarden = VScript_CreateGlobalFunction("GetWarden");
     g_GetWarden.Return = FIELD_INTEGER;
     g_GetWarden.SetFunctionEmpty();
+
+    //SetRebel function
+    g_SetRebel = VScript_CreateGlobalFunction("SetRebel");
+    g_SetRebel.SetParam(1,FIELD_INTEGER);
+    g_SetRebel.Return = FIELD_VOID;
+    g_SetRebel.SetFunctionEmpty();
+
+    //IsFreeday function
+    g_IsFreeday = VScript_CreateGlobalFunction("IsFreeday");
+    g_IsFreeday.SetParam(1,FIELD_INTEGER);
+    g_IsFreeday.Return = FIELD_BOOLEAN;
+    g_IsFreeday.SetFunctionEmpty();
+
+    //TakenAmmo function
+    g_TakenAmmo = VScript_CreateGlobalFunction("TakenAmmo");
+    g_TakenAmmo.SetParam(1,FIELD_INTEGER);
+    g_TakenAmmo.SetParam(2,FIELD_BOOLEAN);
+    g_TakenAmmo.Return = FIELD_VOID;
+    g_TakenAmmo.SetFunctionEmpty();
 }
 
 stock void RegisterVScriptFunctions()
@@ -14,7 +36,16 @@ stock void RegisterVScriptFunctions()
     RunScript("::jbplugin<-\"JBFS\"");
     //GetWarden function
     g_GetWarden.Register();
-    g_GetWarden.CreateDetour().Enable(Hook_Pre,Detour_GetWarden)
+    g_GetWarden.CreateDetour().Enable(Hook_Pre,Detour_GetWarden);
+    //SetRebel function
+    g_SetRebel.Register();
+    g_SetRebel.CreateDetour().Enable(Hook_Pre,Detour_SetRebel);
+    //IsFreeday function
+    g_IsFreeday.Register();
+    g_IsFreeday.CreateDetour().Enable(Hook_Pre,Detour_IsFreeday);
+    //TakenAmmo function
+    g_TakenAmmo.Register();
+    g_TakenAmmo.CreateDetour().Enable(Hook_Pre,Detour_TakenAmmo);
 }
 
 stock MRESReturn Detour_GetWarden(DHookReturn hReturn)
@@ -23,6 +54,53 @@ stock MRESReturn Detour_GetWarden(DHookReturn hReturn)
     {
         if (JBFS.Warden > 0) hReturn.Value = GetClientUserId(JBFS.Warden);
         else hReturn.Value = 0;
+        return MRES_Supercede;
+    }
+    return MRES_Ignored;
+}
+
+stock MRESReturn Detour_SetRebel(DHookReturn hReturn, DHookParam hParam)
+{
+    if (vscript)
+    {
+        int userid = hParam.Get(1);
+        if (userid > 0)
+        {
+            int client = GetClientOfUserId(userid);
+            SetRebel(client);
+            return MRES_Supercede;
+        }
+    }
+    return MRES_Ignored;
+}
+
+stock MRESReturn Detour_IsFreeday(DHookReturn hReturn, DHookParam hParam)
+{
+    if (vscript)
+    {
+        int userid = hParam.Get(1);
+        if (userid > 0)
+        {
+            int client = GetClientOfUserId(userid);
+            hReturn.Value = LRConfig.FreedaysActive[client];
+        }
+        else hReturn.Value = false;
+        return MRES_Supercede;
+    }
+    return MRES_Ignored;
+}
+
+stock MRESReturn Detour_TakenAmmo(DHookReturn hReturn, DHookParam hParam)
+{
+    if (vscript)
+    {
+        int userid = hParam.Get(1);
+        if (userid > 0)
+        {
+            int client = GetClientOfUserId(userid);
+            bool return_weapons = hParam.Get(2);
+            AmmoTaken(client,return_weapons);
+        }
         return MRES_Supercede;
     }
     return MRES_Ignored;
@@ -43,11 +121,16 @@ stock any RunScript(const char[] sScript, HSCRIPT pScope = HSCRIPT_RootTable)
 
 #endif
 
-stock void JBGameEvent(int eventType)
+stock void JBGameEvent(int eventType,int client = -1)
 {
     if(vscript)
     {
 #if defined _vscript_included
+
+        int clientid;
+        if (client > 0) clientid = GetClientOfUserId(client);
+        else clientid = 0;
+
         char script[255];
         switch (eventType)
         {
@@ -57,17 +140,15 @@ stock void JBGameEvent(int eventType)
             }
             case JBEvent_SetWarden:
             {
-                int clientid;
-                if (JBFS.Warden > 0) clientid = GetClientUserId(JBFS.Warden);
-                else clientid = 0;
                 Format(script,sizeof(script),"FireScriptEvent(\"JB_OnSetWarden\",{warden=%d})",clientid);
             }
             case JBEvent_RemoveWarden:
             {
-                int clientid;
-                if (JBFS.Warden > 0) clientid = GetClientUserId(JBFS.Warden);
-                else clientid = 0;
                 Format(script,sizeof(script),"FireScriptEvent(\"JB_OnRemoveWarden\",{warden=%d})",clientid);
+            }
+            case JBEvent_Surrender:
+            {
+                Format(script,sizeof(script),"FireScriptEvent(\"JB_OnSurrender\",{userid=%d})",clientid)
             }
             default:
             {

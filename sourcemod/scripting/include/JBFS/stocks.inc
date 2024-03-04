@@ -93,6 +93,19 @@ stock int FindEntityByName(int e, const char[] classname, const char[] targetnam
     return -1;
 }
 
+stock void EntFire(const char[] targetname,const char[] input)
+{
+    char buffer[128];
+    while ((e = FindEntityByClassname(e, MapConfig.cellclass)) != -1)
+    {
+        GetEntPropString(e, Prop_Data, "m_iName", buffer, sizeof(buffer));
+        if (StrEqual(buffer, targetname))
+        {
+            AcceptEntityInput(e, input);
+        }
+    }
+}
+
 stock bool TraceRayFilterPlayers(int entity, int mask, any data)
 {
     return !(0 < entity <= MaxClients);
