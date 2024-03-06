@@ -163,7 +163,7 @@ public Action Command_Surrender(int client, int args)
     CPrintToChatAll("%t %t","PluginTag","PlayerSurrender",client);
     JBGameEvent(JBEvent_Surrender,client);
     JBFS.HasSurrendered[client] = true;
-    JBFS.SurrenderTimers[client] = CreateTimer(30.0,Timer,client,TIMER_FLAG_NO_MAPCHANGE);
+    JBFS.SurrenderTimers[client] = CreateTimer(30.0,Timer_AllowSurrender,client,TIMER_FLAG_NO_MAPCHANGE);
     return Plugin_Handled;
 }
 

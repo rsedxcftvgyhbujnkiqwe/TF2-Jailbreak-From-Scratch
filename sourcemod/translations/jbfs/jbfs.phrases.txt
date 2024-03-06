@@ -389,4 +389,24 @@
         "#format"   "{1:N}"
         "en"        "{unique}{1}{wheat} has surrendered their ammo and weapons!"
     }
+    "SearchProgress"
+    {
+        "#format"   "{1:N}"
+        "en"        "Searching {1}..."
+    }
+    "SearchFound"
+    {
+        "#format"   "{1:N}"
+        "en"        "Weapons found on {1}!"
+    }
+    "SearchNotFound"
+    {
+        "#format"   "{1:N}"
+        "en"        "No weapons found on {1}."
+    }
+    "SearchAnnounceFound"
+    {
+        "#format"   "{1:N}"
+        "en"        "{unique}{1}{wheat} was found to have weapons!"
+    }
 }

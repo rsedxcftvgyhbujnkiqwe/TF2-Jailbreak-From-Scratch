@@ -320,14 +320,14 @@ stock int SetWeaponAmmo(const int weapon, const int ammo)
 stock void HudTextAll(const char[] fmt, any ...)
 {
     //SetGlobalTransTarget(client) - if translation text?
-    SetHudTextParamsEx(-1.0,0.1,2.0,{255,183,27,255},{255,183,27,255},0,0.0,0.0);
     char buffer[255];
     VFormat(buffer, sizeof(buffer), fmt, 2);
     for(int i = 1;i<=MaxClients;i++)
     {
         if (IsClientInGame(i))
         {
-            ShowHudText(i,cvarJBFS[TextChannel].IntValue,buffer);
+            SetHudTextParamsEx(-1.0,0.1,2.0,{255,183,27,255},{255,183,27,255},0,0.0,0.0);
+            ShowSyncHudText(i,TimerHud,buffer);
         }
     }
 }

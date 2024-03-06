@@ -78,6 +78,11 @@ public void OnPluginStart()
     cvarJBFS[LRSetTime] = CreateConVar("sm_jbfs_lrtime","0","Round timer will be set to this many seconds once LR is given.\n0 disables the check",FCVAR_NOTIFY,true,0.0,true,300.0);
     cvarJBFS[LastRequest] = CreateConVar("sm_jbfs_lastrequest","1","Enable the Last Request system.\nDisabling it will prevent wardens and admins from giving out last request to prisoners.\n0 = Disabled\n1 = Enabled",FCVAR_NOTIFY,true,0.0,true,1.0)
     cvarJBFS[AllowSurrender] = CreateConVar("sm_jbfs_allowsurrender","1","Allow prisoners to surrender their ammo/weapons. Announced to all players.\n0 = Disabled\n1 = Enabled",FCVAR_NOTIFY,true,0.0,true,1.0)
+    cvarJBFS[AimNames] = CreateConVar("sm_jbfs_aimnames","1","Control how guards can see prisoner names aimed at.\n0 = No aim names\n1 = Only warden sees names\n2 = All guards see names",FCVAR_NOTIFY,true,0.0,true,2.0);
+    cvarJBFS[AimTime] = CreateConVar("sm_jbfs_aimtime","0.5","How long a player must aim at another to show their name.\nOnly relevant if sm_jbfs_aimnames > 0",FCVAR_NOTIFY,true,0.0,true,5.0);
+    cvarJBFS[AimDistance] = CreateConVar("sm_jbfs_aimdistance","512.0","Distance a prisoner must be to see their name.\nOnly relevant if sm_jbfs_aimnames > 0",FCVAR_NOTIFY,true,128.0,true,16384.0);
+    cvarJBFS[WeaponSearch] = CreateConVar("sm_jbfs_weaponsearch","1","Allow guards to search prisoners for weapons while holding melee.\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0);
+    cvarJBFS[SearchTime] = CreateConVar("sm_jbfs_weaponsearchtime","3.0","Time required to search for weapons.",FCVAR_NOTIFY,true,0.5,true,5.0);
     cvarJBFS[Version] = CreateConVar("jbfs_version",PLUGIN_VERSION,PLUGIN_NAME,FCVAR_REPLICATED | FCVAR_NOTIFY | FCVAR_SPONLY | FCVAR_DONTRECORD);
     //admincmd cvars
     cvarJBFS_CMD[ACMD_WardenMenu] = CreateConVar("sm_jbfs_acmd_adminmenu","2","Admin commands (sm_jbfs_acmd_*) requires setting admin flag bits.\nSee: https://wiki.alliedmods.net/Checking_Admin_Flags_(SourceMod_Scripting)\n\nAdmin flag(s) required to open the admin warden menu.",FCVAR_NOTIFY,true,0.0,true,2097151.0);
@@ -161,6 +166,10 @@ public void OnPluginStart()
     LoadTranslations("common.phrases");
     LoadTranslations("jbfs/jbfs.phrases");
     LoadTranslations("jbfs/jbfs.menu");
+
+    TimerHud = CreateHudSynchronizer();
+    AimHud = CreateHudSynchronizer();
+    SearchHud = CreateHudSynchronizer();
 }
 
 public void OnConfigsExecuted()

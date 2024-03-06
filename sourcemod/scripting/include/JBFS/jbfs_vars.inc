@@ -39,6 +39,11 @@ enum
     LRSetTime,
     LastRequest,
     AllowSurrender,
+    AimNames,
+    AimTime,
+    AimDistance,
+    WeaponSearch,
+    SearchTime,
     Version
 }
 ConVar cvarJBFS[Version+1];
@@ -103,6 +108,12 @@ enum struct gamemode
     bool GuardBanned[MAXPLAYERS+1];
     bool HasSurrendered[MAXPLAYERS+1];
     Handle SurrenderTimers[MAXPLAYERS+1];
+    int AimTarget[MAXPLAYERS+1];
+    float AimTime[MAXPLAYERS+1];
+    int SearchTarget[MAXPLAYERS+1];
+    float SearchTime[MAXPLAYERS+1];
+    Handle SearchTimers[MAXPLAYERS+1];
+    bool BeenSearched[MAXPLAYERS+1];
 }
 public gamemode JBFS;
 
@@ -275,3 +286,9 @@ int g_WepIndex[3][10] = {
 
 //dhook detours
 Handle hInitPickedUpWeaponDetour;
+
+int g_PrevButtons[MAXPLAYERS+1];
+
+Handle TimerHud;
+Handle AimHud;
+Handle SearchHud;

@@ -96,6 +96,7 @@ stock int FindEntityByName(int e, const char[] classname, const char[] targetnam
 stock void EntFire(const char[] targetname,const char[] input)
 {
     char buffer[128];
+    int e;
     while ((e = FindEntityByClassname(e, MapConfig.cellclass)) != -1)
     {
         GetEntPropString(e, Prop_Data, "m_iName", buffer, sizeof(buffer));
@@ -186,4 +187,18 @@ stock int TF2_CreateEquipWeapon(int client, char weaponname[32],int weaponindex)
     DispatchSpawn(weapon);
     EquipPlayerWeapon(client,weapon);
     return weapon;
+}
+
+stock bool TargetInRange(int client, int target,float distance)
+{
+    float cpos[3];
+    float tpos[3];
+    GetClientAbsOrigin(client,cpos);
+    GetClientAbsOrigin(target,tpos);
+    return GetVectorDistance(cpos,tpos) >= distance;
+}
+
+stock bool IsClient(int client)
+{
+    return 0 < client <= MaxClients
 }
