@@ -6,6 +6,7 @@
 #include <sourcemod>
 #include <sdktools>
 #include <jbfs>
+#include <tf2>
 
 public Plugin myinfo =
 {
@@ -24,6 +25,7 @@ public Plugin myinfo =
 #include <JBFS/jbfsg_commands>
 #include <JBFS/jbfsg_stocks>
 #include <JBFS/jbfsg_events>
+#include <JBFS/jbfsg_menu>
 
 public void OnPluginStart()
 {
@@ -37,7 +39,9 @@ public void OnPluginStart()
 
     HookEvent("teamplay_round_win",OnArenaRoundEnd);
     HookEvent("teamplay_round_stalemate",OnArenaRoundEnd);
+    HookEvent("arena_round_start",OnArenaRoundStart);
     HookEvent("player_death",OnPlayerDeath);
+    HookEvent("player_spawn",OnPlayerSpawn);
 
 
     LoadTranslations("common.phrases");

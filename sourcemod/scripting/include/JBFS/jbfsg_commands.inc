@@ -339,6 +339,7 @@ Action Command_GangLeave(int client,int args)
 
 Action Command_GangList(int client,int args)
 {
+    int gang_index = g_PlayerData[client].index;
     int gang_uid = g_GangData[gang_index].id
     if (gang_uid == 0)
     {

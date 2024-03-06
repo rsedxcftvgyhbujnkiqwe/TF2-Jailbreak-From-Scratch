@@ -62,4 +62,8 @@
     {
         "en"    "{wheat}Not enough points!"
     }
+    "ShopWarnPurchased"
+    {
+        "en"    "{wheat}Shop item already purchased this round!"
+    }
 }

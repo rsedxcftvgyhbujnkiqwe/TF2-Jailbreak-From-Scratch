@@ -66,7 +66,7 @@ public int GangMenuHandler(Menu menu, MenuAction action, int param1, int param2)
             }
             else if (StrEqual(info, GMENUCHOICE_GANG5) && g_PlayerData[param1].rank >= GangRank_Officer)
             {
-                CreateShopMenu(client,0);
+                CreateShopMenu(param1,0);
             }
             //boss
 
@@ -132,7 +132,7 @@ public int GangMenuHandler(Menu menu, MenuAction action, int param1, int param2)
 //menu can be used if you are in a gang, or not!
 public void CreateGangMenu(int client,int selection)
 {
-    Menu menu = new Menu(GangnMenuHandler, MENU_ACTIONS_ALL);
+    Menu menu = new Menu(GangMenuHandler, MENU_ACTIONS_ALL);
     g_GangMenu[client] = menu;
     menu.SetTitle("%T","GangMenuTitle",client);
     menu.AddItem(GMENUCHOICE_HELP,"Gang Help");
@@ -204,16 +204,16 @@ public int ShopMenuHandler(Menu menu, MenuAction action, int param1, int param2)
             char display[64];
             if (StrEqual(info,GSHOP1))
             {
-                Format(display,sizeof(display),"%T","ShopItemBanner",param1,g_ShopPoints[GangShop_Banner]);
+                Format(display,sizeof(display),"%T",g_ShopNames[GangShop_Banner],param1,g_ShopPoints[GangShop_Banner]);
                 return RedrawMenuItem(display);
             }
             if (StrEqual(info,GSHOP2))
             {
-                Format(display,sizeof(display),"%T","ShopItemConch",param1,g_ShopPoints[GangShop_Conch]);
+                Format(display,sizeof(display),"%T",g_ShopNames[GangShop_Conch],param1,g_ShopPoints[GangShop_Conch]);
                 return RedrawMenuItem(display);
             }(StrEqual(info,GSHOP3))
             {
-                Format(display,sizeof(display),"%T","ShopItemConch",param1,g_ShopPoints[GangShop_Backup]);
+                Format(display,sizeof(display),"%T",g_ShopNames[GangShop_Backup],param1,g_ShopPoints[GangShop_Backup]);
                 return RedrawMenuItem(display);
             }
         }
@@ -221,15 +221,22 @@ public int ShopMenuHandler(Menu menu, MenuAction action, int param1, int param2)
     return 0;
 }
 
-//menu can be used if you are in a gang, or not!
+//don't create menu if not in gang
 public void CreateShopMenu(int client,int selection)
 {
-    Menu menu = new Menu(GangnMenuHandler, MENU_ACTIONS_ALL);
+    int gang_index = g_PlayerData[client].index;
+    Menu menu = new Menu(ShopMenuHandler, MENU_ACTIONS_ALL);
     g_ShopMenu[client] = menu;
     menu.SetTitle("%T","ShopMenuTitle",client);
-    menu.AddItem(GSHOP1,"Banner");
-    menu.AddItem(GSHOP2,"Conch");
-    menu.AddItem(GSHOP3,"Backup");
+    if (!(g_GangData[gang_index].shopbought & 1 << GangShop_Banner)){
+        menu.AddItem(GSHOP1,"Banner");
+    }
+    if (!(g_GangData[gang_index].shopbought & 1 << GangShop_Conch)){
+        menu.AddItem(GSHOP2,"Conch");
+    }
+    if (!(g_GangData[gang_index].shopbought & 1 << GangShop_Backup)){
+        menu.AddItem(GSHOP3,"Backup");
+    }
     menu.DisplayAt(client,selection,MENU_TIME_FOREVER);
 }
 
@@ -243,7 +250,7 @@ public int ClientMenuHandler(Menu menu, MenuAction action, int param1, int param
         case MenuAction_End:
         {
             delete menu;
-            g_ClientMenu[client] = null;
+            g_ClientMenu[param1] = null;
         }
         case MenuAction_Select:
         {

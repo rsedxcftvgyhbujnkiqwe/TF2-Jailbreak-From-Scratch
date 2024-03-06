@@ -143,6 +143,8 @@ stock void ResetGangData(int gang_index)
     g_GangData[gang_index].boss_promotion = 0;
     g_GangData[gang_index].alive_red = 0;
     g_GangData[gang_index].alive_blue = 0;
+    g_GangData[gang_index].shopbought = 0;
+    g_GangData[gang_index].shopactive = 0;
 }
 
 stock CPrintToChatGang(int gang_uid, const String:message[], any:...) {
@@ -201,7 +203,7 @@ stock void ListGang(int client)
         char qerror[255];
         SQL_GetError(hDatabase, qerror, sizeof(qerror));
         PrintToServer("Failed to query (error: %s)", qerror);
-        return Plugin_Handled;
+        return;
     }
 
     CPrintToChat(client,"%t %t","PluginGangTag","GangMemberList",g_GangData[gang_index].name)
@@ -227,13 +229,13 @@ stock void InviteToGang(int client, int target, int gang_uid)
     if (DB_GetGangSize(gang_uid) >= cvarJBFS[MaxGangSize].IntValue)
     {
         CPrintToChat(client,"%t %t","PluginGangTag","GangMaxSize");
-        return Plugin_Handled;
+        return;
     }
     //very rare edge case but possible
     if (!DB_IsGangActive(gang_uid))
     {
         CPrintToChat(client,"%t %t","PluginGangTag","GangInactive");
-        return Plugin_Handled;
+        return;
     }
 
     //at this point, client is able to invite, and other player is capable of joining
@@ -269,18 +271,40 @@ stock void GangShopPurchase(int client, int purchase)
 
     int points = g_GangData[gang_index].points;
 
+    int purchase_bit = 1 << purchase;
+
     if (points < g_ShopPoints[purchase])
     {
         CPrintToChat(client,"%t %t","PluginGangTag","ShopWarnPoints");
         return;
     }
+    //just in case
+    if (g_GangData[gang_index].shopbought & purchase_bit)
+    {
+        CPrintToChat(client,"%t %t","PluginGangTag","ShopWarnPurchased");
+        return;
+    }
 
     g_GangData[gang_index].points -= g_ShopPoints[purchase];
-    g_GangData[gang_index].shopactive |= 1 << purchase
+    g_GangData[gang_index].shopbought |= purchase_bit;
 
-    "ShopPickGang"
+    CPrintToChatGang(gang_index,"%t %t","GangTag","ShopPickGang",g_RankColors[g_PlayerData[client].rank],client,g_ShopNames[purchase],g_GangData[gang_index].points);
+}
+
+stock void ApplyGangBuffsClient(int client, int active)
+{
+    if (active & GangShop_Banner) TF2_AddCondition(client,TFCond_Buffed,TFCondDuration_Infinite,0);
+    if (active & GangShop_Conch) TF2_AddCondition(client,TFCond_RegenBuffed,TFCondDuration_Infinite,0);
+    if (active & GangShop_Backup) TF2_AddCondition(client,TFCond_DefenseBuffed,TFCondDuration_Infinite,0);
+}
+
+stock void ApplyGangBuff(int gang_index,int active)
+{
+    for (int i;i<=MaxClients;i++)
     {
-        "#format"   "{1:s}{2:s}{3:t}{4:d}"
-        "en"    "{{1}}{2}{wheat} has purchased {strange}{3}{wheat} for the next round. Points remaining: {genuine}{4}"
+        if (g_PlayerData[i].index == gang_index)
+        {
+            ApplyGangBuffsClient(i,active);
+        }
     }
 }

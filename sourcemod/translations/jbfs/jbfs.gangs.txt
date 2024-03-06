@@ -240,4 +240,9 @@
         "#format"   "{1:d}"
         "en"        "{wheat}Gang gained {genuine}{1}{wheat} points for gang members alive."
     }
+    "GangBuffActive"
+    {
+        "#format"   "{1:s}{2:t}"
+        "en"        "{wheat}Gang {genuine}{1}{wheat} activated their {strange}{2}{wheat} buff!"
+    }
 }

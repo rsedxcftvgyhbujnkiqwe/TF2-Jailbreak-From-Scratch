@@ -16,6 +16,23 @@ public void OnClientDisconnect(int client)
     ResetClientGangData(client);
 }
 
+public void OnArenaRoundStart(Event event, const char[] name, bool dontBroadcast)
+{
+    //iterate through gangs
+    for(int i;i<=MaxClients;i++)
+    {
+        if (g_GangData[i].id > 0)
+        {
+            g_GangData[i].shopactive = g_GangData[i].shopbought;
+            g_GangData[i].shopbought = 0;
+            int active = g_GangData[i].shopactive;
+            ApplyGangBuff(i,active);
+            if (active & GangShop_Banner) CPrintToChatAll("%t %t","PluginGangTag","GangBuffActive",g_GangData[i].name,g_ShopNames[GangShop_Banner]);
+            if (active & GangShop_Conch) CPrintToChatAll("%t %t","PluginGangTag","GangBuffActive",g_GangData[i].name,g_ShopNames[GangShop_Conch]);
+            if (active & GangShop_Backup) CPrintToChatAll("%t %t","PluginGangTag","GangBuffActive",g_GangData[i].name,g_ShopNames[GangShop_Backup]);
+        }
+    }
+}
 
 public void OnArenaRoundEnd(Event event, const char[] name, bool dontBroadcast)
 {
@@ -48,6 +65,14 @@ public void OnArenaRoundEnd(Event event, const char[] name, bool dontBroadcast)
     {
         AddGangPoints(LR_Gang,500,"GangPointsGainedLR");
     }
+}
+public Action OnPlayerSpawn(Event event, const char[] name, bool dontBroadcast)
+{
+    int client = GetClientOfUserId(event.GetInt("userid"));
+    int gang_index = g_PlayerData[client].index;
+    int active = g_GangData[gang_index].shopactive;
+    ApplyGangBuffsClient(client,active);
+    return Plugin_Handled;
 }
 
 public Action OnPlayerDeath(Event event, const char[] name, bool dontBroadcast)
