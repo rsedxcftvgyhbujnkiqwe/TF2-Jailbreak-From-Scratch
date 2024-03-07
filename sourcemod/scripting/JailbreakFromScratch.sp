@@ -252,6 +252,9 @@ public void OnMapStart()
     if(vscript)
         RegisterVScriptFunctions();
 #endif
+
+    //thiink timer
+    CreateTimer(0.1,Timer_PlayerThink,_,TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);
 }
 
 public void OnPluginEnd()
