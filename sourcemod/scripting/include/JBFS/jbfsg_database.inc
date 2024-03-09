@@ -143,10 +143,8 @@ stock bool DB_SetPlayerGang(int client, int gang_uid, int rank, int mid)
     //this check is annoying but luckily it only ever needs to be made here
     char query[512];
     SQL_FormatQuery(hDatabase,query,sizeof(query),
-                "SELECT exists("
-            ... "SELECT * FROM %s "
-            ... "WHERE steamid = '%s') "
-            ... "AS \"InGang\"",PlayerTable,ID);
+                "SELECT count(*) FROM %s "
+            ... "WHERE steamid = '%s'",PlayerTable,ID);
 
     DBResultSet hQuery = SQL_Query(hDatabase,query);
     if (hQuery == null)
@@ -361,10 +359,8 @@ stock bool DB_GangExists(int gang_uid)
 
     char query[128];
     SQL_FormatQuery(hDatabase,query,sizeof(query),
-                "SELECT exists("
-            ... "SELECT * FROM %s "
-            ... "WHERE uid = %d) "
-            ... "AS \"GangExists\"",GangTable,gang_uid);
+                "SELECT count(*) FROM %s "
+            ... "WHERE uid = %d",GangTable,gang_uid);
 
     DBResultSet hQuery = SQL_Query(hDatabase,query);
     if (hQuery == null)
@@ -393,11 +389,9 @@ stock bool DB_GangNameExists(char name[32])
 
     char query[512];
     SQL_FormatQuery(hDatabase,query,sizeof(query),
-                "SELECT exists("
-            ... "SELECT * FROM %s "
+                "SELECT count(*) FROM %s "
             ... "WHERE nid = '%s' "
-            ... "AND status = 1) "
-            ... "AS \"GangExists\"",GangTable,nid);
+            ... "AND status = 1",GangTable,nid);
 
     DBResultSet hQuery = SQL_Query(hDatabase,query);
     if (hQuery == null)
@@ -423,10 +417,8 @@ stock bool DB_GangTagExists(char tag[5])
 {
     char query[128];
     SQL_FormatQuery(hDatabase,query,sizeof(query),
-                "SELECT exists("
-            ... "SELECT * FROM %s "
-            ... "WHERE tag = '%s') "
-            ... "AS \"TagExists\"",GangTable,tag);
+                "SELECT count(*) FROM %s "
+            ... "WHERE tag = '%s'",GangTable,tag);
 
     DBResultSet hQuery = SQL_Query(hDatabase,query);
     if (hQuery == null)

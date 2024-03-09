@@ -103,6 +103,7 @@ public Action CP_OnChatMessage(int& author, ArrayList recipients, char[] flagstr
             {
                 if(g_GangData[g_PlayerData[i].index].id == gang_uid)
                 {
+                    PrintToServer("pushing %N to gc visibility")
                     recipients.Push(i);
                 }
             }
