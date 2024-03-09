@@ -108,6 +108,10 @@ public Action CP_OnChatMessage(int& author, ArrayList recipients, char[] flagstr
                     PrintToServer("Erased %N from %N's gang message. %d %d",i,author,g_GangData[g_PlayerData[i].index].id,gang_uid)
                 }
             }
+            for(int i=0;i<recipients.Length;i++)
+            {
+                PrintToServer("%N to receive %N's message.",recipients.Get(i),author)
+            }
             PrintToServer("%N sending gang message...",author)
             Format(name,MAXLENGTH_NAME,"%t {%s}%s","GangTag",g_RankColors[g_PlayerData[author].rank],name);
             return Plugin_Changed;
