@@ -97,15 +97,6 @@ public Action CP_OnChatMessage(int& author, ArrayList recipients, char[] flagstr
         int gang_index = g_PlayerData[author].index;
         if (g_PlayerData[author].gc_active && gang_index > 0)
         {
-            for (int i=1;i<=MaxClients;i++)
-            {
-                int pos = recipients.FindValue(i);
-                if (pos != -1) {
-                    int client = recipients.Get(pos);
-                    if (!IsClientInGame(client)) continue;
-                    PrintToServer("%N set to receive %N's gang message",client,author);
-                }
-            }
             int gang_uid = g_GangData[gang_index].id;
             for(int i=1;i<=MaxClients;i++)
             {
@@ -124,7 +115,8 @@ public Action CP_OnChatMessage(int& author, ArrayList recipients, char[] flagstr
                     }
                 }
             }
-            PrintToServer("%N sending gang message...",author)
+            //this is so stupid you have to do this line. why??????????????????????????????
+            if (recipients.FindValue(author) == -1) recipients.Push(author);
             Format(name,MAXLENGTH_NAME,"%t {%s}%s","GangTag",g_RankColors[g_PlayerData[author].rank],name);
             return Plugin_Changed;
         }
