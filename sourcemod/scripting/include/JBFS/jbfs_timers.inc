@@ -80,8 +80,14 @@ public Action Timer_PlayerThink(Handle timer)
         if (cvarJBFS[AimNames].IntValue > 0){
             if ((cvarJBFS[AimNames].IntValue == 1 && i == JBFS.Warden) || (cvarJBFS[AimNames].IntValue == 2 && GetClientTeam(i)==BLU))
             {
+                bool ic = IsClient(target);
+                bool ig = IsClientInGame(target);
+                bool ia = IsPlayerAlive(target);
+                bool ip = GetClientTeam(target) == RED;
+                bool ir = TargetInRange(i,target,cvarJBFS[AimDistance].FloatValue);
                 //determine if target is valid to see the name of
-                if (IsClient(target) && IsClientInGame(target) && IsPlayerAlive(target) && GetClientTeam(target) == RED && TargetInRange(i,target,cvarJBFS[AimDistance].FloatValue))
+                PrintToServer("%N look at %N: %b %b %b %b %b",i,target,ic,ig,ia,ip,ir);
+                if (ic && ig && ia && ip && ir)
                 {
                     if (JBFS.AimTarget[i] == target) 
                     {
