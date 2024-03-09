@@ -108,7 +108,7 @@ public Action CP_OnChatMessage(int& author, ArrayList recipients, char[] flagstr
                     case 3: sTeamColor = "blue";
                     default: sTeamColor = "default";
                 }
-                Format(name,MAXLENGTH_NAME,"{chartreuse}[{%s}%s{chartreuse}] {%s}%s",g_RankColors[g_PlayerData[author].rank],g_GangData[gang_index].tag,sTeamColor,name);
+                Format(name,MAXLENGTH_NAME,"{%s}[{%s}%s{%s}] %s",sTeamColor,g_RankColors[g_PlayerData[author].rank],g_GangData[gang_index].tag,sTeamColor,name);
                 return Plugin_Changed;
             }
         }
