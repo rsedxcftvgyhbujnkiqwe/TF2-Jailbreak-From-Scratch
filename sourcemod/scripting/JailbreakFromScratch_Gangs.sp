@@ -88,7 +88,7 @@ public void OnPluginStart()
     RegConsoleCmd("sm_gangkick",Command_GangKick,"Kick a member from your gang.");
     RegConsoleCmd("sm_gkick",Command_GangKick,"Kick a member from your gang.");
 
-    RegAdminCmd("sm_gdp",Command_Admin_DumpPlayerData,2,"Dump stored variable values about a player");
+    RegConsoleCmd("sm_gdp",Command_Admin_DumpPlayerData,"Dump stored variable values about a player");
 
     //add custom color(s) to morecolors
     CCheckTrie();
