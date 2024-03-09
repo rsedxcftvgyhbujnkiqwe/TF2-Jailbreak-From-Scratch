@@ -38,7 +38,7 @@ public void OnArenaRoundEnd(Event event, const char[] name, bool dontBroadcast)
 {
     int gang_index;
     //calculate end-round points
-    for (int i;i<=MaxClients;i++)
+    for (int i=1;i<=MaxClients;i++)
     {
         gang_index = g_PlayerData[i].index;
         if(IsClientInGame(i) && IsPlayerAlive(i) && (g_GangData[gang_index].id > 0))
