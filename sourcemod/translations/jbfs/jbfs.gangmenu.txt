@@ -36,6 +36,26 @@
     {
         "en"    "Gang Shop"
     }
+    "GangMenuOptGangName"
+    {
+        "en"    "Change Gang Name"
+    }
+    "GangMenuOptGangTag"
+    {
+        "en"    "Change Gang Tag"
+    }
+    "GangMenuOptGangPromote"
+    {
+        "en"    "Promote Members"
+    }
+    "GangMenuOptGangDemote"
+    {
+        "en"    "Demote Members"
+    }
+    "GangMenuOptGangKick"
+    {
+        "en"    "Kick Members"
+    }
     "ShopMenuTitle"
     {
         "#format"   "{1:d}"

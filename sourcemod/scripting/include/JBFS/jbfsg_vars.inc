@@ -58,6 +58,7 @@ enum struct PlayerData
     int mid;
     int rank;
     int invite;
+    float gmenu_time;
 }
 
 GangData g_GangData[MAXPLAYERS+1];

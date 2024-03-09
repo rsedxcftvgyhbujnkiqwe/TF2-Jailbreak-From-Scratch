@@ -3,6 +3,7 @@ Action Command_GangHelp(int client, int args)
     int rank = g_PlayerData[client].rank;
     CPrintToChat(client,"%t %t","PluginGangTag","GangHelp")
     CPrintToChat(client,"%t %t","PluginGangTag","GangHelpHelp")
+    CPrintToChat(client,"%t %t","PluginGangTag","GangMenuHelp")
     CPrintToChat(client,"%t %t","PluginGangTag","GangCreateHelp")
     CPrintToChat(client,"%t %t","PluginGangTag","GangJoinHelp")
     if (rank >= GangRank_Muscle)

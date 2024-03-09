@@ -54,21 +54,28 @@ public void OnPluginStart()
     //generic cmds
     //RegConsoleCmd("sm_ganghelp",Command_GangHelp,"Help menu for Gang related commands")
     RegConsoleCmd("sm_gangcreate",Command_CreateGang,"Create a gang with the specified name.");
+
     RegConsoleCmd("sm_gangjoin",Command_GangJoin,"Join the gang you have been invited to.");
     RegConsoleCmd("sm_gjoin",Command_GangJoin,"Join the gang you have been invited to.");
+
     RegConsoleCmd("sm_ganghelp",Command_GangHelp,"Display a help menu for gang commands.");
     RegConsoleCmd("sm_ghelp",Command_GangHelp,"Display a help menu for gang commands.");
+
     RegConsoleCmd("sm_gangmenu",Command_GangMenu,"Open the Gang menu.");
     RegConsoleCmd("sm_gmenu",Command_GangMenu,"Open the Gang menu.");
     RegConsoleCmd("sm_gang",Command_GangMenu,"Open the Gang menu.");
+    RegConsoleCmd("sm_g",Command_GangMenu,"Open the Gang menu.");
 
     //gang cmds
     RegConsoleCmd("sm_gangleave",Command_GangLeave,"Leave your gang. If sole member, disband gang.");
     RegConsoleCmd("sm_gleave",Command_GangLeave,"Leave your gang. If sole member, disband gang.");
+
     RegConsoleCmd("sm_gangchat",Command_GangChat,"Send a message to your gang.");
     RegConsoleCmd("sm_gc",Command_GangChat,"Send a message to your gang.");
+
     RegConsoleCmd("sm_ganglist",Command_GangList,"List all members in the gang and their Member IDs.");
     RegConsoleCmd("sm_glist",Command_GangList,"List all members in the gang and their Member IDs.");
+
     RegConsoleCmd("sm_gangpoints",Command_GangPoints,"List points your gang crrently has.");
     RegConsoleCmd("sm_gpoints",Command_GangPoints,"List points your gang crrently has.");
 
@@ -79,12 +86,16 @@ public void OnPluginStart()
     //boss cmds
     RegConsoleCmd("sm_gangname",Command_SetGangName,"Change the name of your gang.");
     RegConsoleCmd("sm_gname",Command_SetGangName,"Change the name of your gang.");
+
     RegConsoleCmd("sm_gangtag",Command_SetGangTag,"Change your gang's tag.");
     RegConsoleCmd("sm_gtag",Command_SetGangTag,"Change your gang's tag.");
+
     RegConsoleCmd("sm_gangpromote",Command_GangPromote,"Promote a muscle to officer, or officer to boss.");
     RegConsoleCmd("sm_gpromote",Command_GangPromote,"Promote a muscle to officer, or officer to boss.");
+
     RegConsoleCmd("sm_gangdemote",Command_GangDemote,"Demote an officer to muscle.");
     RegConsoleCmd("sm_gdemote",Command_GangDemote,"Demote an officer to muscle.");
+    
     RegConsoleCmd("sm_gangkick",Command_GangKick,"Kick a member from your gang.");
     RegConsoleCmd("sm_gkick",Command_GangKick,"Kick a member from your gang.");
 

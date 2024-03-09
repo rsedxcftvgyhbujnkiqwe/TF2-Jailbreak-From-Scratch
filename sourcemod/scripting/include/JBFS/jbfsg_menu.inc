@@ -6,6 +6,11 @@
 #define GMENUCHOICE_GANG3 "#gmenuchoicegang3"
 #define GMENUCHOICE_GANG4 "#gmenuchoicegang4"
 #define GMENUCHOICE_GANG5 "#gmenuchoicegang5"
+#define GMENUCHOICE_GANG6 "#gmenuchoicegang6"
+#define GMENUCHOICE_GANG7 "#gmenuchoicegang7"
+#define GMENUCHOICE_GANG8 "#gmenuchoicegang8"
+#define GMENUCHOICE_GANG9 "#gmenuchoicegang9"
+#define GMENUCHOICE_GANG10 "#gmenuchoicegang10"
 #define GSHOP1 "#gshopchoice1"
 #define GSHOP2 "#gshopchoice2"
 #define GSHOP3 "#gshopchoice3"
@@ -26,7 +31,19 @@ public int GangMenuHandler(Menu menu, MenuAction action, int param1, int param2)
         {
             char info[32];
             menu.GetItem(param2, info, sizeof(info));
+
+            float gametime = GetGameTime();
+                //0.5s cooldown between picks
+            if (gametime - g_PlayerData[param1].gmenu_time < 0.5)
+            {
+                CreateGangMenu(param1, menu.Selection)
+                return 0;
+            }
+
+            g_PlayerData[param1].gmenu_time = gametime;
+
             //help
+            bool reopen_menu = true;
             if (StrEqual(info,GMENUCHOICE_HELP))
             {
                 Command_GangHelp(param1,0);
@@ -57,13 +74,38 @@ public int GangMenuHandler(Menu menu, MenuAction action, int param1, int param2)
             else if (StrEqual(info, GMENUCHOICE_GANG4) && g_PlayerData[param1].rank >= GangRank_Officer)
             {
                 CreateClientSelectMenu(param1,FilterFn_NotInGang,RunFn_InivteToGang);
+                reopen_menu = false;
             }
             else if (StrEqual(info, GMENUCHOICE_GANG5) && g_PlayerData[param1].rank >= GangRank_Officer)
             {
                 CreateShopMenu(param1,0);
+                reopen_menu = false;
             }
             //boss
-
+            else if (StrEqual(info, GMENUCHOICE_GANG6))
+            {
+                Command_SetGangName(param1,0);
+            }
+            else if (StrEqual(info, GMENUCHOICE_GANG7))
+            {
+                Command_SetGangTag(param1,0);
+            }
+            else if (StrEqual(info, GMENUCHOICE_GANG8))
+            {
+                Command_GangPromote(param1,0);
+            }
+            else if (StrEqual(info, GMENUCHOICE_GANG9))
+            {
+                Command_GangDemote(param1,0);
+            }
+            else if (StrEqual(info, GMENUCHOICE_GANG10))
+            {
+                Command_GangKick(param1,0);
+            }
+            if (reopen_menu)
+            {
+                CreateGangMenu(param1,menu.Selection);
+            }
         }
         case MenuAction_Cancel:
         {
@@ -118,6 +160,31 @@ public int GangMenuHandler(Menu menu, MenuAction action, int param1, int param2)
                 Format(display,sizeof(display),"%T","GangMenuOptGangShop",param1);
                 return RedrawMenuItem(display);
             }
+            else if (StrEqual(info,GMENUCHOICE_GANG6))
+            {
+                Format(display,sizeof(display),"%T","GangMenuOptGangName",param1);
+                return RedrawMenuItem(display);
+            }
+            else if (StrEqual(info,GMENUCHOICE_GANG7))
+            {
+                Format(display,sizeof(display),"%T","GangMenuOptGangTag",param1);
+                return RedrawMenuItem(display);
+            }
+            else if (StrEqual(info,GMENUCHOICE_GANG8))
+            {
+                Format(display,sizeof(display),"%T","GangMenuOptGangPromote",param1);
+                return RedrawMenuItem(display);
+            }
+            else if (StrEqual(info,GMENUCHOICE_GANG9))
+            {
+                Format(display,sizeof(display),"%T","GangMenuOptGangDemote",param1);
+                return RedrawMenuItem(display);
+            }
+            else if (StrEqual(info,GMENUCHOICE_GANG10))
+            {
+                Format(display,sizeof(display),"%T","GangMenuOptGangKick",param1);
+                return RedrawMenuItem(display);
+            }
         }
     }
     return 0;
@@ -144,6 +211,14 @@ public void CreateGangMenu(int client,int selection)
         {
             menu.AddItem(GMENUCHOICE_GANG4,"Gang Invite");
             menu.AddItem(GMENUCHOICE_GANG5,"Gang Shop");
+        }
+        if (g_PlayerData[client].rank >= GangRank_Boss)
+        {
+            menu.AddItem(GMENUCHOICE_GANG6,"Gang Name");
+            menu.AddItem(GMENUCHOICE_GANG7,"Gang Tag");
+            menu.AddItem(GMENUCHOICE_GANG8,"Promote");
+            menu.AddItem(GMENUCHOICE_GANG9,"Demote");
+            menu.AddItem(GMENUCHOICE_GANG10,"Kick");
         }
     }
     menu.DisplayAt(client,selection,MENU_TIME_FOREVER);
@@ -186,6 +261,10 @@ public int ShopMenuHandler(Menu menu, MenuAction action, int param1, int param2)
         case MenuAction_Cancel:
         {
             g_ShopMenu[param1] = null;
+            if (param2 == MenuEnd_ExitBack)
+            {
+                CreateGangMenu(param1,0);
+            }
         }
         case MenuAction_End:
         {
@@ -231,6 +310,7 @@ public void CreateShopMenu(int client,int selection)
     if (!(g_GangData[gang_index].shopbought & 1 << GangShop_Backup)){
         menu.AddItem(GSHOP3,"Backup");
     }
+    menu.ExitBackButton = true;
     menu.DisplayAt(client,selection,MENU_TIME_FOREVER);
 }
 

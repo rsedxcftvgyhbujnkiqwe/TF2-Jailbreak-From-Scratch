@@ -8,6 +8,10 @@
     {
         "en"        "/ganghelp, /ghelp - Print this help output"
     }
+    "GangMenuHelp"
+    {
+        "en"        "/gangmenu, /gmenu, /gang, /g - Open the Gang menu"
+    }
     "GangCreateHelp"
     {
         "en"        "/gangcreate - Create a gang"
