@@ -76,7 +76,10 @@ public void LoadMapConfig()
         */
         MapConfig.cells = "cell_door";
         int cells = FindEntityByName(-1,"*","cell_door");
-        if (IsValidEntity(cells)) MapConfig.hascells = true;
+        if (IsValidEntity(cells)){
+            MapConfig.hascells = true;
+            GetEntityClassname(cells,MapConfig.cellclass,sizeof(MapConfig.cellclass));
+        }
         /*
         this section is to allow mappers to set these values on their own using named entities
         I would recommend logic_relay because it's not an edict

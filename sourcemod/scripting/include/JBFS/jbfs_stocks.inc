@@ -365,7 +365,7 @@ stock bool ModifyCells(bool open,int client = 0,bool message = true)
     }
     else
     {
-        if(client) CPrintToChat(client,"%t %t","PluginTag","CellsBadClass");
+        if(client) CPrintToChat(client,"%t %t","PluginTag","CellsWarnBadClass");
         return false;
     }
     if(message)

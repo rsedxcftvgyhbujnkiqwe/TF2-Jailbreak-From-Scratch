@@ -81,6 +81,7 @@ public Action Timer_PlayerThink(Handle timer)
         if (cvarJBFS[AimNames].IntValue > 0){
             if ((cvarJBFS[AimNames].IntValue == 1 && i == JBFS.Warden) || (cvarJBFS[AimNames].IntValue == 2 && GetClientTeam(i)==BLU))
             {
+                if (IsClient(target)) PrintToServer("%N looking at %N, success! (aimname)"i,target);
                 //determine if target is valid to see the name of
                 if (IsClient(target) && IsClientInGame(target) && IsPlayerAlive(target) && GetClientTeam(target) == RED && TargetInRange(i,target,cvarJBFS[AimDistance].FloatValue))
                 {
@@ -109,6 +110,7 @@ public Action Timer_PlayerThink(Handle timer)
         }
         if (cvarJBFS[WeaponSearch].BoolValue && GetClientTeam(i) == BLU)
         {
+            if (IsClient(target)) PrintToServer("%N looking at %N, success! (search)"i,target);
             if (IsClient(target) && !JBFS.BeenSearched[target])
             {
                 if (IsClientInGame(target) && IsPlayerAlive(target) && GetClientTeam(target) == RED && TargetInRange(i,target,128.0))
