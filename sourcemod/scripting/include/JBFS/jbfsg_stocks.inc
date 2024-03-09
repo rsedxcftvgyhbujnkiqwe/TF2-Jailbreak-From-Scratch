@@ -293,9 +293,9 @@ stock void GangShopPurchase(int client, int purchase)
 
 stock void ApplyGangBuffsClient(int client, int active)
 {
-    if (active & GangShop_Banner) TF2_AddCondition(client,TFCond_Buffed,TFCondDuration_Infinite,0);
-    if (active & GangShop_Conch) TF2_AddCondition(client,TFCond_RegenBuffed,TFCondDuration_Infinite,0);
-    if (active & GangShop_Backup) TF2_AddCondition(client,TFCond_DefenseBuffed,TFCondDuration_Infinite,0);
+    if (active & ( 1 << GangShop_Banner)) TF2_AddCondition(client,TFCond_Buffed,TFCondDuration_Infinite,0);
+    if (active & ( 1 << GangShop_Conch)) TF2_AddCondition(client,TFCond_RegenBuffed,TFCondDuration_Infinite,0);
+    if (active & ( 1 << GangShop_Backup)) TF2_AddCondition(client,TFCond_DefenseBuffed,TFCondDuration_Infinite,0);
 }
 
 stock void ApplyGangBuff(int gang_index,int active)

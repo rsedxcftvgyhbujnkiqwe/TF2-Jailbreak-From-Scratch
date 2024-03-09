@@ -27,9 +27,9 @@ public void OnArenaRoundStart(Event event, const char[] name, bool dontBroadcast
             g_GangData[i].shopbought = 0;
             int active = g_GangData[i].shopactive;
             ApplyGangBuff(i,active);
-            if (active & GangShop_Banner) CPrintToChatAll("%t %t","PluginGangTag","GangBuffActive",g_GangData[i].name,g_ShopNames[GangShop_Banner]);
-            if (active & GangShop_Conch) CPrintToChatAll("%t %t","PluginGangTag","GangBuffActive",g_GangData[i].name,g_ShopNames[GangShop_Conch]);
-            if (active & GangShop_Backup) CPrintToChatAll("%t %t","PluginGangTag","GangBuffActive",g_GangData[i].name,g_ShopNames[GangShop_Backup]);
+            if (active & ( 1 << GangShop_Banner)) CPrintToChatAll("%t %t","PluginGangTag","GangBuffActive",g_GangData[i].name,g_ShopNames[GangShop_Banner]);
+            if (active & ( 1 << GangShop_Conch)) CPrintToChatAll("%t %t","PluginGangTag","GangBuffActive",g_GangData[i].name,g_ShopNames[GangShop_Conch]);
+            if (active & ( 1 << GangShop_Backup)) CPrintToChatAll("%t %t","PluginGangTag","GangBuffActive",g_GangData[i].name,g_ShopNames[GangShop_Backup]);
         }
     }
 }
