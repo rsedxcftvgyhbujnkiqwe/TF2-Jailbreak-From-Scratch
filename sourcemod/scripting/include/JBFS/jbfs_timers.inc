@@ -76,7 +76,7 @@ public Action Timer_PlayerThink(Handle timer)
         int buttons = GetClientButtons(i);
 
         int target = GetClientAimTarget(i,true);
-
+        PrintToServer("Thinking for %N...",i)
         //determine whether this player should be able to see names
         if (cvarJBFS[AimNames].IntValue > 0){
             if ((cvarJBFS[AimNames].IntValue == 1 && i == JBFS.Warden) || (cvarJBFS[AimNames].IntValue == 2 && GetClientTeam(i)==BLU))
