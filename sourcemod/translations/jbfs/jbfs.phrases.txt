@@ -389,10 +389,6 @@
         "#format"   "{1:N}"
         "en"        "{unique}{1}{wheat} has surrendered their ammo and weapons!"
     }
-    "SearchCooldown"
-    {
-        "en"        "{1} already searched recently."
-    }
     "SearchProgress"
     {
         "#format"   "{1:N}"
