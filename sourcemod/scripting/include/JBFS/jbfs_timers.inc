@@ -96,7 +96,7 @@ public Action Timer_PlayerThink(Handle timer)
                 }
                 else
                 {
-                    PrintToServer("%N invalid: %b %b %b %b %b",IsClient(target),IsClientInGame(target),IsPlayerAlive(target),GetClientTeam(target) == RED,TargetInRange(i,target,cvarJBFS[AimDistance].FloatValue))
+                    PrintToServer("%N invalid: %b %b %b %b %b",target,IsClient(target),IsClientInGame(target),IsPlayerAlive(target),GetClientTeam(target) == RED,TargetInRange(i,target,cvarJBFS[AimDistance].FloatValue))
                     JBFS.AimTarget[i] = 0;
                     JBFS.AimTime[i] = 0.0;
                 }
