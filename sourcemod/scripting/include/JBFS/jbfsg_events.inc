@@ -94,29 +94,26 @@ public Action CP_OnChatMessage(int& author, ArrayList recipients, char[] flagstr
 {
     if (0 < author <= MaxClients)
     {
+        for (int i = 0; i < recipients.Length; i++)
+        {
+            PrintToServer("%d found at %d in recipients arraylist",recipients.Get(i),i)
+        }
         int gang_index = g_PlayerData[author].index;
         if (g_PlayerData[author].gc_active && gang_index > 0)
         {
             int gang_uid = g_GangData[gang_index].id;
             for(int i=1;i<=MaxClients;i++)
             {
-                if (!IsClientInGame(i)){
-                    
-                    int pos = recipients.FindValue(i)
-                    if (pos != -1) recipients.Erase(pos);
-                    continue;
+                if (!IsClientInGame(i)){ continue;
                 }
                 if(g_GangData[g_PlayerData[i].index].id != gang_uid)
                 {
                     int pos = recipients.FindValue(i)
                     if (pos != -1){
                         recipients.Erase(pos);
-                        PrintToServer("Erased %N from %N's gang message. %d %d",i,author,g_GangData[g_PlayerData[i].index].id,gang_uid)
                     }
                 }
             }
-            //this is so stupid you have to do this line. why??????????????????????????????
-            if (recipients.FindValue(author) == -1) recipients.Push(author);
             Format(name,MAXLENGTH_NAME,"%t {%s}%s","GangTag",g_RankColors[g_PlayerData[author].rank],name);
             return Plugin_Changed;
         }
