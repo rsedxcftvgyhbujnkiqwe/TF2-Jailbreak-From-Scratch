@@ -74,7 +74,7 @@ public Action Timer_PlayerThink(Handle timer)
         if (!IsClientInGame(i) || !IsPlayerAlive(i)) continue;
 
         int buttons = GetClientButtons(i);
-
+        PrintToServer("%N buttons: %d",i,buttons);
         int target = GetClientAimTarget(i,true);
         //determine whether this player should be able to see names
         if (cvarJBFS[AimNames].IntValue > 0){
