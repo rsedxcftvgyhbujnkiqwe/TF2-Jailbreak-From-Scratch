@@ -15,7 +15,7 @@ Action Command_GangHelp(int client, int args)
     {
         CPrintToChat(client,"%t %t","PluginGangTag","GangInviteHelp")
     }
-    if (rank <= GangRank_Boss)
+    if (rank == GangRank_Boss)
     {
         CPrintToChat(client,"%t %t","PluginGangTag","GangNameHelp")
         CPrintToChat(client,"%t %t","PluginGangTag","GangTagHelp")
@@ -580,5 +580,19 @@ public Action Command_GangShop(int client, int args)
         return Plugin_Handled;
     }
     CreateShopMenu(client,0);
+    return Plugin_Handled;
+}
+
+Action Command_Admin_DumpPlayerData(int client,int args)
+{
+    if (args < 1) return Plugin_Handled;
+    char arg1[32];
+    GetCmdArg(1, arg1, sizeof(arg1));
+    int target = FindTarget(client, arg1,true);
+    if (target == -1) return Plugin_Handled;
+    int gang_index = g_PlayerData[target].index;
+    
+    CPrintToChat(client,"%t plr:%N ind:%d mid:%d rank:%d inv:%d","PluginGangTag",target,g_PlayerData[target].index,g_PlayerData[target].mid,g_PlayerData[target].rank,g_PlayerData[target].invite)
+    CPrintToChat(client,"%t gang:%s tag:%s id:%d n_o:%d b_p:%d pnt:%d shb:%d sha:%d a_r:%d a_b:%d","PluginGangTag",g_GangData[gang_index].name,g_GangData[gang_index].tag,g_GangData[gang_index].id,g_GangData[gang_index].num_online,g_GangData[gang_index].boss_promotion,g_GangData[gang_index].points,g_GangData[gang_index].shopbought,g_GangData[gang_index].shopactive,g_GangData[gang_index].alive_red,g_GangData[gang_index].alive_blue)
     return Plugin_Handled;
 }

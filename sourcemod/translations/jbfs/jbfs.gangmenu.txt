@@ -28,7 +28,7 @@
     {
         "en"    "Gang Chat"
     }
-    "GangMenuOptGangPoints"
+    "GangMenuOptGangInvite"
     {
         "en"    "Invite Player"
     }
