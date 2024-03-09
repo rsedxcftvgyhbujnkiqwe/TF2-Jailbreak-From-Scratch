@@ -47,6 +47,7 @@ stock bool ValidAlphaString(char[] string, int maxlength)
 
 stock int InitLocalGang(int gang_uid)
 {
+    if (gang_uid < 1) return 0;
     //gangs start at 1
     //in sql anyway
     //haha
