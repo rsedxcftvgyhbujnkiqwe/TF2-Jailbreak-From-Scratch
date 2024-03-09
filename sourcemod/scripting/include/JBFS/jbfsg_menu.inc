@@ -24,12 +24,6 @@ public int GangMenuHandler(Menu menu, MenuAction action, int param1, int param2)
         }
         case MenuAction_Select:
         {
-            //delete if player not in gang
-            if (g_PlayerData[param1].index == 0)
-            {
-                delete menu;
-                return 0;
-            }
             char info[32];
             menu.GetItem(param2, info, sizeof(info));
             //help
