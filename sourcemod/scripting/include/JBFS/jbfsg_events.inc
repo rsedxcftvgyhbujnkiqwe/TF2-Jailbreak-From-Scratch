@@ -100,7 +100,11 @@ public Action CP_OnChatMessage(int& author, ArrayList recipients, char[] flagstr
             for (int i=1;i<=MaxClients;i++)
             {
                 int pos = recipients.FindValue(i);
-                if (pos != -1) PrintToServer("%N set to receive %N's gang message",recipients.Get(pos),author);
+                if (pos != -1) {
+                    int client = recipients.Get(pos);
+                    if (!IsClientInGame(client)) continue;
+                    PrintToServer("%N set to receive %N's gang message",client,author);
+                }
             }
             int gang_uid = g_GangData[gang_index].id;
             for(int i=1;i<=MaxClients;i++)
