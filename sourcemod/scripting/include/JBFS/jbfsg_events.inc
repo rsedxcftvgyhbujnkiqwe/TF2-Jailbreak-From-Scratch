@@ -100,7 +100,12 @@ public Action CP_OnChatMessage(int& author, ArrayList recipients, char[] flagstr
             int gang_uid = g_GangData[gang_index].id;
             for(int i=1;i<=MaxClients;i++)
             {
-                if (!IsClientInGame(i)) continue;
+                if (!IsClientInGame(i)){
+                    
+                    int pos = recipients.FindValue(i)
+                    if (pos != -1) recipients.Erase(pos);
+                    continue;
+                }
                 if(g_GangData[g_PlayerData[i].index].id != gang_uid)
                 {
                     int pos = recipients.FindValue(i)
