@@ -310,12 +310,3 @@ stock void ApplyGangBuff(int gang_index,int active)
         }
     }
 }
-
-stock void SendGangChatMessage(int client,char[] message,int size)
-{
-    int gang_index = g_PlayerData[client].index;
-    char sanitized_message[32];
-    SanitizeString(sanitized_message,size,message);
-    CPrintToChatGang(g_GangData[gang_index].id,"%t {%s}%N{default}: %s","GangTag",g_RankColors[g_PlayerData[client].rank],client,sanitized_message);
-    PrintToServer("(Gang Chat) %N: %s",client,sanitized_message);
-}

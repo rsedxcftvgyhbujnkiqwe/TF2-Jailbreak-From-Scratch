@@ -258,4 +258,12 @@
         "#format"   "{1:s}{2:t}"
         "en"        "{wheat}Gang {chartreuse}{1}{wheat} activated their {strange}{2}{wheat} buff!"
     }
+    "GangChatOn"
+    {
+        "en"        "{wheat}Enabled gang chat. Messages will only be seen by gang members."
+    }
+    "GangChatOff"
+    {
+        "en"        "{wheat}Disabled gang chat. Messages will be seen by all players."
+    }
 }

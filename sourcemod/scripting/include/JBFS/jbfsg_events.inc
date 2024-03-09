@@ -94,14 +94,24 @@ public Action CP_OnChatMessage(int& author, ArrayList recipients, char[] flagstr
 {
     if (0 < author <= MaxClients)
     {
-        if (g_PlayerData[author].gc_active)
+        int gang_index = g_PlayerData[author].index;
+        if (g_PlayerData[author].gc_active && gang_index > 0)
         {
-            SendGangChatMessage(author,message,MAXLENGTH_MESSAGE)
-            return Plugin_Stop;
+            int gang_uid = g_GangData[gang_index].id;
+            recipients.Clear();
+            for(int i=1;i<=MaxClients;i++)
+            {
+                if(g_GangData[g_PlayerData[i].index].id == gang_uid)
+                {
+                    recipients.Push(i);
+                }
+            }
+            Format(name,MAXLENGTH_NAME,"%t {%s}%s","GangTag",g_RankColors[g_PlayerData[author].rank],name)
+            PrintToServer("(Gang Chat) %N: %s",author,message);
+            return Plugin_Changed;
         }
         if (cvarJBFS[GangTags].BoolValue)
         {
-            int gang_index = g_PlayerData[author].index
             if (gang_index > 0)
             {
                 if (!StrEqual(g_GangData[gang_index].tag,"\0"))
