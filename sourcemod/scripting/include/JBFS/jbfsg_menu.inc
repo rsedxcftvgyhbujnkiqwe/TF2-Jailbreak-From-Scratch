@@ -244,6 +244,9 @@ public int ClientMenuHandler(Menu menu, MenuAction action, int param1, int param
         case MenuAction_End:
         {
             delete menu;
+        }
+        case MenuAction_Cancel:
+        {
             g_ClientMenu[param1] = null;
         }
         case MenuAction_Select:
