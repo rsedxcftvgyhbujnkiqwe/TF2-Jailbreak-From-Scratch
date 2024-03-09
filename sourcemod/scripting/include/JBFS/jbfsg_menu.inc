@@ -257,6 +257,7 @@ public int ShopMenuHandler(Menu menu, MenuAction action, int param1, int param2)
             {
                 GangShopPurchase(param1,GangShop_Backup);
             }
+            CreateShopMenu(param1,0);
         }
         case MenuAction_Cancel:
         {
@@ -309,6 +310,13 @@ public void CreateShopMenu(int client,int selection)
     }
     if (!(g_GangData[gang_index].shopbought & 1 << GangShop_Backup)){
         menu.AddItem(GSHOP3,"Backup");
+    }
+    if (menu.ItemCount == 0){
+        CreateGangMenu(client,0);
+        CPrintToChat(client,"%t %t","PluginGangTag","ShopMenuNoneLeft")
+        delete menu;
+        g_ShopMenu[client] = null;
+        return;
     }
     menu.ExitBackButton = true;
     menu.DisplayAt(client,selection,MENU_TIME_FOREVER);

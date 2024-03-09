@@ -56,6 +56,10 @@
     {
         "en"    "Kick Members"
     }
+    "ShopMenuNoneLeft"
+    {
+        "en"    "Nothing left to purchase!"
+    }
     "ShopMenuTitle"
     {
         "#format"   "{1:d}"
