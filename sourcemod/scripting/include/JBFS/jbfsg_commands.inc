@@ -271,7 +271,6 @@ Action Command_GangInvite(int client,int args)
         CPrintToChat(client,"%t %t","PluginGangTag","CommandGangInviteWarnInGang");
         return Plugin_Handled;
     }
-    PrintToServer("%N invited to gang, index: %d",target,g_PlayerData[target].index)
     InviteToGang(client,target,gang_uid);    
     return Plugin_Handled;
 }

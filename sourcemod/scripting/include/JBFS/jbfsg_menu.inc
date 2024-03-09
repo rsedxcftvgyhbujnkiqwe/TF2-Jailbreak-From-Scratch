@@ -56,7 +56,7 @@ public int GangMenuHandler(Menu menu, MenuAction action, int param1, int param2)
             //officer
             else if (StrEqual(info, GMENUCHOICE_GANG4) && g_PlayerData[param1].rank >= GangRank_Officer)
             {
-                CreateClientSelectMenu(param1,FilterFn_InGang,RunFn_InivteToGang);
+                CreateClientSelectMenu(param1,FilterFn_NotInGang,RunFn_InivteToGang);
             }
             else if (StrEqual(info, GMENUCHOICE_GANG5) && g_PlayerData[param1].rank >= GangRank_Officer)
             {
@@ -305,7 +305,7 @@ public void CreateClientSelectMenu(int client, ClientFilterFunc filterFn, Client
     menu.Display(client, MENU_TIME_FOREVER);
 }
 
-public bool FilterFn_InGang(int target)
+public bool FilterFn_NotInGang(int target)
 {
     if (g_PlayerData[target].index == 0) return false;
     return true;
