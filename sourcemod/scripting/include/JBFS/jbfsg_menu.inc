@@ -307,8 +307,8 @@ public void CreateClientSelectMenu(int client, ClientFilterFunc filterFn, Client
 
 public bool FilterFn_NotInGang(int target)
 {
-    if (g_PlayerData[target].index == 0) return false;
-    return true;
+    if (g_PlayerData[target].index == 0) return true;
+    return false;
 }
 
 public bool RunFn_InivteToGang(int client, int target)
