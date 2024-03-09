@@ -100,7 +100,7 @@ public Action Timer_PlayerThink(Handle timer)
 
                 if (JBFS.AimTarget[i] > 0 && JBFS.AimTime[i] >= cvarJBFS[AimTime].FloatValue)
                 {
-                    SetHudTextParamsEx(-1.0,0.6,0.5,{255,0,0,255},{255,0,0,255},0,0.25,0.25);
+                    SetHudTextParamsEx(-1.0,0.6,0.2,{255,0,0,255},{255,0,0,255},0,0.25,0.25);
                     ShowSyncHudText(i,AimHud,"%N",target)
                 }
             }   
