@@ -98,13 +98,12 @@ public Action CP_OnChatMessage(int& author, ArrayList recipients, char[] flagstr
         if (g_PlayerData[author].gc_active && gang_index > 0)
         {
             int gang_uid = g_GangData[gang_index].id;
-            recipients.Clear();
             for(int i=1;i<=MaxClients;i++)
             {
-                if(g_GangData[g_PlayerData[i].index].id == gang_uid)
+                if(g_GangData[g_PlayerData[i].index].id != gang_uid)
                 {
-                    PrintToServer("pushing %N to gc visibility")
-                    recipients.Push(i);
+                    PrintToServer("erasing %N from gc visibility",i)
+                    recipients.Erase(i);
                 }
             }
             Format(name,MAXLENGTH_NAME,"%t {%s}%s","GangTag",g_RankColors[g_PlayerData[author].rank],name)

@@ -173,7 +173,7 @@ stock bool DB_SetPlayerGang(int client, int gang_uid, int rank, int mid)
     {
         SQL_FormatQuery(hDatabase,query,sizeof(query),
                 "UPDATE %s "
-            ... "SET name = %s, "
+            ... "SET name = '%s', "
             ... "gang_uid = %d, "
             ... "rank = %d, "
             ... "mid = %d "
