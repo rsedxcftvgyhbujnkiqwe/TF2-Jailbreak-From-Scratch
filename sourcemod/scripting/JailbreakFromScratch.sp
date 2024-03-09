@@ -216,7 +216,7 @@ public void OnConfigsExecuted()
 
 public void InitDHooks()
 {
-    Handle hGameData = LoadGameConfigFile("jbfs.games.txt")
+    Handle hGameData = LoadGameConfigFile("jbfs.games")
     if (!hGameData)
     {
         SetFailState("Failed to load jbfs gamedata file jbfs.games.txt, make sure it is installed properly.")
