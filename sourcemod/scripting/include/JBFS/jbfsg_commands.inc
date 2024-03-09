@@ -266,8 +266,7 @@ Action Command_GangInvite(int client,int args)
     int target = FindTarget(client, arg1,true);
     if (target == -1) return Plugin_Handled;
 
-    int target_gang_index = g_PlayerData[target].index;
-    if (g_GangData[target_gang_index].id > 0)
+    if (g_PlayerData[target].index > 0)
     {
         CPrintToChat(client,"%t %t","PluginGangTag","CommandGangInviteWarnInGang");
         return Plugin_Handled;
