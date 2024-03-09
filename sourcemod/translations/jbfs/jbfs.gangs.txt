@@ -189,6 +189,10 @@
         "#format"   "{1:s}"
         "en"        "{wheat}List of members in the gang {chartreuse}{1}:"
     }
+    "GangMemberListFormat"
+    {
+        "en"        "{chartreuse}(member_id): {wheat}steam_name (steam_id)"
+    }
     "CommandGangWarnSelf"
     {
         "en"        "{wheat}You cannot perform that action on yourself!"

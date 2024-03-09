@@ -207,6 +207,7 @@ stock void ListGang(int client)
     }
 
     CPrintToChat(client,"%t %t","PluginGangTag","GangMemberList",g_GangData[gang_index].name)
+    CPrintToChat(client,"%t %t","PluginGangTag","GangMemberListFormat")
 
     char ID[32]; 
     char name[32];
