@@ -195,9 +195,7 @@ stock bool TargetInRange(int client, int target,float distance)
     float tpos[3];
     GetClientAbsOrigin(client,cpos);
     GetClientAbsOrigin(target,tpos);
-    float dist = GetVectorDistance(cpos,tpos);
-    PrintToServer("%f >= %f",dist,distance);
-    return dist >= distance;
+    return GetVectorDistance(cpos,tpos) <= distance;
 }
 
 stock bool IsClient(int client)
