@@ -74,7 +74,6 @@ public Action Timer_PlayerThink(Handle timer)
         if (!IsClientInGame(i) || !IsPlayerAlive(i)) continue;
 
         int buttons = GetClientButtons(i);
-        PrintToServer("%N buttons: %d",i,buttons);
         int target = GetClientAimTarget(i,true);
         //determine whether this player should be able to see names
         if (cvarJBFS[AimNames].IntValue > 0){
@@ -112,7 +111,7 @@ public Action Timer_PlayerThink(Handle timer)
             {
                 if (IsClientInGame(target) && IsPlayerAlive(target) && GetClientTeam(target) == RED && TargetInRange(i,target,128.0))
                 {
-                    if (JBFS.SearchTarget[i] == target && !(g_PrevButtons[i] & IN_RELOAD) && (buttons & IN_RELOAD))
+                    if (JBFS.SearchTarget[i] == target && (g_PrevButtons[i] & IN_RELOAD) && (buttons & IN_RELOAD))
                     {
                         JBFS.SearchTime[i] += 0.1;
 
