@@ -125,6 +125,7 @@ stock void ResetClientGangData(int client)
     g_PlayerData[client].rank = GangRank_None;
     g_PlayerData[client].mid = GangRank_None;
     g_PlayerData[client].invite = GangRank_None;
+    g_PlayerData[client].gc_active = false;
     //local gang db reset
     g_GangData[gang_index].num_online--;
     if (g_GangData[gang_index].num_online <= 0)
@@ -207,7 +208,7 @@ stock void ListGang(int client)
     }
 
     CPrintToChat(client,"%t %t","PluginGangTag","GangMemberList",g_GangData[gang_index].name)
-    CPrintToChat(client,"%t %t","PluginGangTag","GangMemberListFormat")
+    CPrintToChat(client,"%t","GangMemberListFormat")
 
     char ID[32]; 
     char name[32];
@@ -308,4 +309,13 @@ stock void ApplyGangBuff(int gang_index,int active)
             ApplyGangBuffsClient(i,active);
         }
     }
+}
+
+stock void SendGangChatMessage(int client,char[] message,int size)
+{
+    int gang_index = g_PlayerData[client].index;
+    char sanitized_message[32];
+    SanitizeString(sanitized_message,size,message);
+    CPrintToChatGang(g_GangData[gang_index].id,"%t {%s}%N{default}: %s","GangTag",g_RankColors[g_PlayerData[client].rank],client,sanitized_message);
+    PrintToServer("(Gang Chat) %N: %s",client,sanitized_message);
 }

@@ -20,10 +20,6 @@
     {
         "en"        "{wheat}Usage: sm_gangtag <TAG>"
     }
-    "CommandGangChatUsage"
-    {
-        "en"        "{wheat}Usage: sm_gangchat <message>"
-    }
     "CommandGangInviteUsage"
     {
         "en"        "{wheat}Usage: sm_ganginvite <player>"

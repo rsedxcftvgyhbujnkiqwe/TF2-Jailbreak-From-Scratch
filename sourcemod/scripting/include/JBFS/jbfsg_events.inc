@@ -8,7 +8,7 @@ public void OnClientPutInServer(int client)
         rank = DB_GetPlayerGangRank(client);
         mid = DB_GetPlayerMID(client,gang_uid);
     }
-    SetPlayerGang(client,gang_uid,rank,mid,false);
+    SetPlayerGang(client,gang_uid,rank,mid,true);
 }
 
 public void OnClientDisconnect(int client)
@@ -92,24 +92,32 @@ public Action OnPlayerDeath(Event event, const char[] name, bool dontBroadcast)
 
 public Action CP_OnChatMessage(int& author, ArrayList recipients, char[] flagstring, char[] name, char[] message, bool & processcolors, bool & removecolors)
 {
-    if ((0 < author <= MaxClients) && cvarJBFS[GangTags].BoolValue)
+    if (0 < author <= MaxClients)
     {
-        int gang_index = g_PlayerData[author].index
-        if (gang_index > 0)
+        if (g_PlayerData[author].gc_active)
         {
-            if (!StrEqual(g_GangData[gang_index].tag,"\0"))
+            SendGangChatMessage(author,message,MAXLENGTH_MESSAGE)
+            return Plugin_Stop;
+        }
+        if (cvarJBFS[GangTags].BoolValue)
+        {
+            int gang_index = g_PlayerData[author].index
+            if (gang_index > 0)
             {
-                char sTeamColor[32];
-                PrintToServer("%N team: %d",author,GetClientTeam(author))
-                switch(GetClientTeam(author))
+                if (!StrEqual(g_GangData[gang_index].tag,"\0"))
                 {
-                    case 1: sTeamColor = "gray";
-                    case 2: sTeamColor = "red";
-                    case 3: sTeamColor = "blue";
-                    default: sTeamColor = "default";
+                    char sTeamColor[32];
+                    PrintToServer("%N team: %d",author,GetClientTeam(author))
+                    switch(GetClientTeam(author))
+                    {
+                        case 1: sTeamColor = "gray";
+                        case 2: sTeamColor = "red";
+                        case 3: sTeamColor = "blue";
+                        default: sTeamColor = "default";
+                    }
+                    Format(name,MAXLENGTH_NAME,"{%s}[{%s}%s{%s}] %s",sTeamColor,g_RankColors[g_PlayerData[author].rank],g_GangData[gang_index].tag,sTeamColor,name);
+                    return Plugin_Changed;
                 }
-                Format(name,MAXLENGTH_NAME,"{%s}[{%s}%s{%s}] %s",sTeamColor,g_RankColors[g_PlayerData[author].rank],g_GangData[gang_index].tag,sTeamColor,name);
-                return Plugin_Changed;
             }
         }
     }

@@ -222,24 +222,16 @@ Action Command_GangChat(int client, int args)
         CPrintToChat(client,"%t %t","PluginGangTag","CommandWarnNotInGang");
         return Plugin_Handled;
     }
-
-    char message[255], s[32];
-    for (int i = 1; i <= args; i++)
+    if (!g_PlayerData[client].gc_active)
     {
-        GetCmdArg(i, s, sizeof(s));
-        if (StrEqual(message,"\0")) Format(message,sizeof(message),"%s",s)
-        else Format(message, sizeof(message), "%s %s", message, s);
+        CPrintToChat(client,"%t %t","PluginGangTag","GangChatOn")
+        g_PlayerData[client].gc_active = true;
     }
-    if (StrEqual(message,"\0"))
+    else
     {
-        CPrintToChat(client,"%t %t","PluginGangTag","CommandGangChatUsage");
-        return Plugin_Handled;
+        CPrintToChat(client,"%t %t","PluginGangTag","GangChatOff")
+        g_PlayerData[client].gc_active = false;
     }
-
-    char sanitized_message[32];
-    SanitizeString(sanitized_message,sizeof(message),message);
-    CPrintToChatGang(g_GangData[gang_index].id,"%t {%s}%N{default}: %s","GangTag",g_RankColors[g_PlayerData[client].rank],client,sanitized_message);
-    PrintToServer("(Gang Chat) %N: %s",client,sanitized_message);
     return Plugin_Handled;
 }
 

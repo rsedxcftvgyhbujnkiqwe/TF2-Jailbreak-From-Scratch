@@ -26,7 +26,7 @@
     }
     "GangChatHelp"
     {
-        "en"        "/gangchat, /gc - Gang chat"
+        "en"        "/gangchat, /gc - Toggle gang chat"
     }
     "GangPointsHelp"
     {
