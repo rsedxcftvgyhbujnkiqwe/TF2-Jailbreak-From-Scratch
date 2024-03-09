@@ -105,6 +105,7 @@ public Action CP_OnChatMessage(int& author, ArrayList recipients, char[] flagstr
                 {
                     int pos = recipients.FindValue(i)
                     if (pos != -1) recipients.Erase(pos);
+                    PrintToServer("Erased %N from %N's gang message. %d %d",i,author,g_GangData[g_PlayerData[i].index].id,gang_uid)
                 }
             }
             PrintToServer("%N sending gang message...",author)
