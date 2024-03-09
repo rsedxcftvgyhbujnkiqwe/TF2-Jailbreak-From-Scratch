@@ -261,8 +261,7 @@ public int ShopMenuHandler(Menu menu, MenuAction action, int param1, int param2)
         case MenuAction_Cancel:
         {
             g_ShopMenu[param1] = null;
-            PrintToServer("%N cancelled shop menu: %d",param1,param2)
-            if (param2 == MenuEnd_ExitBack)
+            if (param2 == MenuCancel_ExitBack)
             {
                 CreateGangMenu(param1,0);
             }

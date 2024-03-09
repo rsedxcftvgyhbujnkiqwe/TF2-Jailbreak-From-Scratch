@@ -18,6 +18,8 @@ public Plugin myinfo =
 };
 
 #include <morecolors>
+//needed for chat tags
+#include <chat-processor>
 
 //jbfsg incs
 #include <JBFS/jbfsg_vars>
@@ -43,10 +45,6 @@ public void OnPluginStart()
     HookEvent("arena_round_start",OnArenaRoundStart);
     HookEvent("player_death",OnPlayerDeath);
     HookEvent("player_spawn",OnPlayerSpawn);
-
-    //hook for chat tags
-    UserMsg SayText2 = GetUserMessageId("SayText2");
-    HookUserMessage(SayText2, OnSayText2, true);
 
     LoadTranslations("common.phrases");
     LoadTranslations("jbfs/jbfs.phrases");

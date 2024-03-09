@@ -90,14 +90,19 @@ public Action OnPlayerDeath(Event event, const char[] name, bool dontBroadcast)
     return Plugin_Handled;
 }
 
-public Action OnSayText2(UserMsg msg_id, BfRead msg, const int[] players, int playersNum, bool reliable, bool init)
+public Action CP_OnChatMessage(int& author, ArrayList recipients, char[] flagstring, char[] name, char[] message, bool & processcolors, bool & removecolors)
 {
-    if (cvarJBFS[GangTags].BoolValue)
+    if ((0 < author <= MaxClients) && cvarJBFS[GangTags].BoolValue)
     {
-        char sMessage[256];
-        PbReadString(msg, "params", sMessage, sizeof(sMessage),1);
-        int author = PbReadInt(msg, "ent_idx")
-        PrintToServer("proto: %d, protoN: %N, msg %s",author,author,sMessage)
+        int gang_index = g_PlayerData[author].index
+        if (gang_index > 0)
+        {
+            if (!StrEqual(g_GangData[gang_index].tag,"\0"))
+            {
+                Format(message,MAXLENGTH_MESSAGE,"{%s}[%s] %s",g_RankColors[g_PlayerData[author].rank],g_GangData[gang_index].tag,message);
+                return Plugin_Changed;
+            }
+        }
     }
     return Plugin_Continue;
 }
