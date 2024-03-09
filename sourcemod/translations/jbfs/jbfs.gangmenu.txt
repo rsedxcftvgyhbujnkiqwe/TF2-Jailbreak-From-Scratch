@@ -12,7 +12,7 @@
     {
         "en"    "Create Gang"
     }
-    "GangMenuOptJoineGang"
+    "GangMenuOptJoinGang"
     {
         "en"    "Join Gang"
     }
