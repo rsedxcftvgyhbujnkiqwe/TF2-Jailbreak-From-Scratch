@@ -41,7 +41,7 @@ public void OnArenaRoundEnd(Event event, const char[] name, bool dontBroadcast)
     for (int i=1;i<=MaxClients;i++)
     {
         gang_index = g_PlayerData[i].index;
-        if(IsClientInGame(i) && IsPlayerAlive(i) && (g_GangData[gang_index].id > 0))
+        if(IsClientInGame(i) && IsPlayerAlive(i) && (gang_index > 0))
         {
             switch (GetClientTeam(i))
             {
@@ -55,8 +55,10 @@ public void OnArenaRoundEnd(Event event, const char[] name, bool dontBroadcast)
     {
         if (g_GangData[i].id > 0)
         {
-            points = (g_GangData[i].alive_blue - g_GangData[i].alive_red) * 50;
+            points = (g_GangData[i].alive_red - g_GangData[i].alive_blue) * 50;
             if (points > 0) AddGangPoints(g_GangData[i].id,points,"GangPointsGainedAlive");
+            g_GangData[i].alive_blue = 0;
+            g_GangData[i].alive_red = 0;
         }
     }
     int LR_Winner = JBFS_GetLRWinner();
