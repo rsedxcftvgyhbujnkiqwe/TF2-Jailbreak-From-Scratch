@@ -76,7 +76,6 @@ public Action Timer_PlayerThink(Handle timer)
         int buttons = GetClientButtons(i);
 
         int target = GetClientAimTarget(i,true);
-        PrintToServer("Thinking for %N...",i)
         //determine whether this player should be able to see names
         if (cvarJBFS[AimNames].IntValue > 0){
             if ((cvarJBFS[AimNames].IntValue == 1 && i == JBFS.Warden) || (cvarJBFS[AimNames].IntValue == 2 && GetClientTeam(i)==BLU))
@@ -97,6 +96,7 @@ public Action Timer_PlayerThink(Handle timer)
                 }
                 else
                 {
+                    PrintToServer("%N invalid: %b %b %b %b %b",IsClient(target),IsClientInGame(target),IsPlayerAlive(target),GetClientTeam(target) == RED,TargetInRange(i,target,cvarJBFS[AimDistance].FloatValue))
                     JBFS.AimTarget[i] = 0;
                     JBFS.AimTime[i] = 0.0;
                 }
@@ -110,7 +110,6 @@ public Action Timer_PlayerThink(Handle timer)
         }
         if (cvarJBFS[WeaponSearch].BoolValue && GetClientTeam(i) == BLU)
         {
-            if (IsClient(target)) PrintToServer("%N looking at %N, success! (search)",i,target);
             if (IsClient(target) && !JBFS.BeenSearched[target])
             {
                 if (IsClientInGame(target) && IsPlayerAlive(target) && GetClientTeam(target) == RED && TargetInRange(i,target,128.0))
