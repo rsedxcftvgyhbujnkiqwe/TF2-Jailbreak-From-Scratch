@@ -89,3 +89,15 @@ public Action OnPlayerDeath(Event event, const char[] name, bool dontBroadcast)
     CloseMenus(client)
     return Plugin_Handled;
 }
+
+public Action OnSayText2(UserMsg msg_id, BfRead msg, const int[] players, int playersNum, bool reliable, bool init)
+{
+    if (cvarJBFS[GangTags].BoolValue)
+    {
+        char sMessage[256];
+        PbReadString(msg, "params", sMessage, sizeof(sMessage),1);
+        int author = PbReadInt(msg, "ent_idx")
+        PrintToServer("proto: %d, protoN: %N, msg %s",author,author,sMessage)
+    }
+    return Plugin_Continue;
+}

@@ -34,6 +34,7 @@ public void OnPluginStart()
     cvarJBFS[AnnounceGangName] = CreateConVar("sm_jbfsg_announcegangname","1","Whether to announce to all players when gangs change their names.\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0)
     cvarJBFS[GangChat] = CreateConVar("sm_jbfsg_gangchat","1","Enable the Gang chat feature, which allows gang members to send messages only other gang members can see.\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0)
     cvarJBFS[MaxGangSize] = CreateConVar("sm_jbfs_maxgangsize","12","Maximum number of players allowed in a gang.\nReducing this later will not prune members",FCVAR_NOTIFY,true,1.0,true,64.0)
+    cvarJBFS[GangTags] = CreateConVar("sm_jbfs_gangtags","1","Enable gang tags in chat.\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0)
     cvarJBFS[Version] = CreateConVar("jbfst_version",PLUGIN_VERSION,PLUGIN_NAME,FCVAR_REPLICATED | FCVAR_NOTIFY | FCVAR_SPONLY | FCVAR_DONTRECORD);
     AutoExecConfig(true,"jbfsgangs");
 
@@ -43,13 +44,15 @@ public void OnPluginStart()
     HookEvent("player_death",OnPlayerDeath);
     HookEvent("player_spawn",OnPlayerSpawn);
 
+    //hook for chat tags
+    UserMsg SayText2 = GetUserMessageId("SayText2");
+    HookUserMessage(SayText2, OnSayText2, true);
 
     LoadTranslations("common.phrases");
     LoadTranslations("jbfs/jbfs.phrases");
     LoadTranslations("jbfs/jbfs.gangs");
     LoadTranslations("jbfs/jbfs.ganghelp");
     LoadTranslations("jbfs/jbfs.gangmenu");
-
 
     //generic cmds
     //RegConsoleCmd("sm_ganghelp",Command_GangHelp,"Help menu for Gang related commands")
@@ -95,7 +98,7 @@ public void OnPluginStart()
 
     RegConsoleCmd("sm_gangdemote",Command_GangDemote,"Demote an officer to muscle.");
     RegConsoleCmd("sm_gdemote",Command_GangDemote,"Demote an officer to muscle.");
-    
+
     RegConsoleCmd("sm_gangkick",Command_GangKick,"Kick a member from your gang.");
     RegConsoleCmd("sm_gkick",Command_GangKick,"Kick a member from your gang.");
 

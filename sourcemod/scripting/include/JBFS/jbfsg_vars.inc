@@ -6,6 +6,7 @@ enum
     AnnounceGangName,
     GangChat,
     MaxGangSize,
+    GangTags,
     Version
 }
 
