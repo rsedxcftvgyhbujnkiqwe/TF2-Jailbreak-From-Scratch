@@ -73,6 +73,11 @@ public Action OnPlayerSpawn(Event event, const char[] name, bool dontBroadcast)
     int client = GetClientOfUserId(event.GetInt("userid"));
     int gang_index = g_PlayerData[client].index;
     int active = g_GangData[gang_index].shopactive;
+    //remove buffs first
+    TF2_RemoveCondition(client,TFCond_Buffed);
+    TF2_RemoveCondition(client,TFCond_RegenBuffed);
+    TF2_RemoveCondition(client,TFCond_DefenseBuffed);
+    //then check if they should be reapplied
     ApplyGangBuffsClient(client,active);
     return Plugin_Handled;
 }
