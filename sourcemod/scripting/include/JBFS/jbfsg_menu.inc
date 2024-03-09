@@ -221,7 +221,7 @@ public void CreateShopMenu(int client,int selection)
     int gang_index = g_PlayerData[client].index;
     Menu menu = new Menu(ShopMenuHandler, MENU_ACTIONS_ALL);
     g_ShopMenu[client] = menu;
-    menu.SetTitle("%T","ShopMenuTitle",client);
+    menu.SetTitle("%t","ShopMenuTitle",client);
     if (!(g_GangData[gang_index].shopbought & 1 << GangShop_Banner)){
         menu.AddItem(GSHOP1,"Banner");
     }
