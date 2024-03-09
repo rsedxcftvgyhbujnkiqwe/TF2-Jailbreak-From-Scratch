@@ -99,7 +99,9 @@ public Action CP_OnChatMessage(int& author, ArrayList recipients, char[] flagstr
         {
             if (!StrEqual(g_GangData[gang_index].tag,"\0"))
             {
-                Format(name,MAXLENGTH_NAME,"{chartreuse}[{%s}%s{chartreuse}] {team%d}%s",g_RankColors[g_PlayerData[author].rank],g_GangData[gang_index].tag,GetClientTeam(author),name);
+                char sTeamColor[32];
+                Format(sTeamColor,sizeof(sTeamColor),"team%d",GetClientTeam(author))
+                Format(name,MAXLENGTH_NAME,"{chartreuse}[{%s}%s{chartreuse}] {%s}%s",g_RankColors[g_PlayerData[author].rank],g_GangData[gang_index].tag,sTeamColor,name);
                 return Plugin_Changed;
             }
         }
