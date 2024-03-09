@@ -134,7 +134,7 @@ public Action Timer_PlayerThink(Handle timer)
                     JBFS.BeenSearched[target] = true;
                     CreateTimer(30.0,Timer_AllowSearch,target,TIMER_FLAG_NO_MAPCHANGE);
                     //player has been searched, perform search stuff
-                    SetHudTextParamsEx(-1.0,0.65,3.0,{255,0,0,255},{255,0,0,255},0,0.25,0.25);
+                    SetHudTextParamsEx(-1.0,0.65,1.0,{255,0,0,255},{255,0,0,255},0,0.25,0.25);
                     if (JBFS.HasAmmo[target])
                     {
                         ShowSyncHudText(i,SearchHud,"%t","SearchFound",target);
@@ -148,9 +148,9 @@ public Action Timer_PlayerThink(Handle timer)
                     JBFS.SearchTarget[i] = 0;
                 }
             }
-            else if (JBFS.BeenSearched[target] && (buttons & IN_RELOAD) && GetClientTeam(target) == RED && TargetInRange(i,target,128.0))
+            else if (IsClient(target) && JBFS.BeenSearched[target] && (buttons & IN_RELOAD) && GetClientTeam(target) == RED && TargetInRange(i,target,128.0))
             {
-                SetHudTextParamsEx(-1.0,0.65,3.0,{255,0,0,255},{255,0,0,255},0,0.25,0.25);
+                SetHudTextParamsEx(-1.0,0.65,1.0,{255,0,0,255},{255,0,0,255},0,0.25,0.25);
                 if (JBFS.HasAmmo[target])
                 {
                     ShowSyncHudText(i,SearchHud,"%t","SearchFound",target);
