@@ -69,7 +69,7 @@ public Action Timer_AllowSearch(Handle timer,int client)
 
 public Action Timer_PlayerThink(Handle timer)
 {
-    for(int i; i<=MaxClients; i++)
+    for(int i=1; i<=MaxClients; i++)
     {
         if (!IsClientInGame(i) || !IsPlayerAlive(i)) continue;
 
