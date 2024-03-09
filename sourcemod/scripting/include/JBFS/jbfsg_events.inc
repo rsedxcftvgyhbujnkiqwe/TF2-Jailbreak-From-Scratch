@@ -107,7 +107,6 @@ public Action CP_OnChatMessage(int& author, ArrayList recipients, char[] flagstr
                 }
             }
             Format(name,MAXLENGTH_NAME,"%t {%s}%s","GangTag",g_RankColors[g_PlayerData[author].rank],name)
-            PrintToServer("(Gang Chat) %N: %s",author,message);
             return Plugin_Changed;
         }
         if (cvarJBFS[GangTags].BoolValue)
@@ -117,7 +116,6 @@ public Action CP_OnChatMessage(int& author, ArrayList recipients, char[] flagstr
                 if (!StrEqual(g_GangData[gang_index].tag,"\0"))
                 {
                     char sTeamColor[32];
-                    PrintToServer("%N team: %d",author,GetClientTeam(author))
                     switch(GetClientTeam(author))
                     {
                         case 1: sTeamColor = "gray";

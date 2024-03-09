@@ -161,11 +161,10 @@ stock bool DB_SetPlayerGang(int client, int gang_uid, int rank, int mid)
     while (SQL_FetchRow(hQuery))
     {
         InGang = SQL_FetchInt(hQuery, 0);
+        PrintToServer("ingang set: %d",InGang);
         if (InGang) break;
     }
     delete hQuery;
-
-    PrintToServer("%d",InGang);
 
     char name[32];
     char sanitized_name[sizeof(name)];
