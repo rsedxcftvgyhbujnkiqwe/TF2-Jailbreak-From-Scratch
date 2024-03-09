@@ -94,10 +94,6 @@ public Action CP_OnChatMessage(int& author, ArrayList recipients, char[] flagstr
 {
     if (0 < author <= MaxClients)
     {
-        for (int i = 0; i < recipients.Length; i++)
-        {
-            PrintToServer("%d found at %d in recipients arraylist",recipients.Get(i),i)
-        }
         int gang_index = g_PlayerData[author].index;
         if (g_PlayerData[author].gc_active && gang_index > 0)
         {
@@ -108,7 +104,7 @@ public Action CP_OnChatMessage(int& author, ArrayList recipients, char[] flagstr
                 }
                 if(g_GangData[g_PlayerData[i].index].id != gang_uid)
                 {
-                    int pos = recipients.FindValue(i)
+                    int pos = recipients.FindValue(GetClientUserId(i))
                     if (pos != -1){
                         recipients.Erase(pos);
                     }
