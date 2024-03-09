@@ -218,7 +218,7 @@ stock void ListGang(int client)
         SQL_FetchString(hQuery, 1, ID, sizeof(ID));
         rank = SQL_FetchInt(hQuery, 2);
         mid = SQL_FetchInt(hQuery, 3);
-        CPrintToChat(client,"{genuine}(%d): {%s}%s (%s)",mid,g_RankColors[rank],name,ID);
+        CPrintToChat(client,"{chartreuse}(%d): {%s}%s (%s)",mid,g_RankColors[rank],name,ID);
     }
     delete hQuery;
 }
