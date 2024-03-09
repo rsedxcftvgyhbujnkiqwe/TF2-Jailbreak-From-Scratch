@@ -150,7 +150,7 @@ Action Command_SetGangTag(int client, int args)
         return Plugin_Handled;
     }
 
-    if(SetGangTag(gang_uid,tag,true))
+    if(SetGangTag(gang_index,tag,true))
         CPrintToChatGang(gang_uid,"%t %t","GangTag","GangTagChange",tag);
     return Plugin_Handled;
 }
@@ -385,6 +385,7 @@ Action Command_GangKick(int client, int args)
     int rank;
     DB_GetInfoByMID(gang_uid,mid,ID,name,rank);
 
+
     //delete them from their gang
     DB_RemovePlayerFromGangByMID(gang_uid,mid);
     int kicked_client = GetClientByMID(gang_uid,mid)
@@ -393,8 +394,9 @@ Action Command_GangKick(int client, int args)
         Format(name,sizeof(name),"%N",kicked_client);
         ResetClientGangData(kicked_client);
         CloseMenus(kicked_client);
+        CPrintToChat(kicked_client,"%t %t","GangTag","GangPlayerKickedPlayer",g_GangData[gang_index].name)
     }
-    CPrintToChatGang(gang_uid,"%t %t","GangTag","GangPlayerKicked",name,g_GangData[gang_index].name);
+    CPrintToChatGang(gang_uid,"%t %t","GangTag","GangPlayerKicked",name);
 
     return Plugin_Handled;
 }

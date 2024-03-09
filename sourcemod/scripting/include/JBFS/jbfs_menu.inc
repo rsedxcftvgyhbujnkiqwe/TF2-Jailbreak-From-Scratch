@@ -522,6 +522,11 @@ public Action Command_Admin_ForceLastRequest(int client, int args)
         CPrintToChat(client,"%t %t","PluginTag","LastRequestsDisabled");
         return Plugin_Handled;
     }
+    if (!JBFS.RoundActive)
+    {
+        CPrintToChat(client,"%t %t","PluginTag","CommandWarnRound");
+        return Plugin_Handled;
+    }
     if (client) CreateClientSelectMenu(client, ClientEligibleForLR, AdminGiveLR);
     return Plugin_Handled;
 }

@@ -44,6 +44,7 @@ enum
     AimDistance,
     WeaponSearch,
     SearchTime,
+    WardenLockTime,
     Version
 }
 ConVar cvarJBFS[Version+1];
@@ -114,6 +115,7 @@ enum struct gamemode
     float SearchTime[MAXPLAYERS+1];
     Handle SearchTimers[MAXPLAYERS+1];
     bool BeenSearched[MAXPLAYERS+1];
+    bool SearchFound[MAXPLAYERS+1];
 }
 public gamemode JBFS;
 

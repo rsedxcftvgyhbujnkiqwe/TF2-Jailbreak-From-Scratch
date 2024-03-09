@@ -83,6 +83,7 @@ public void OnPluginStart()
     cvarJBFS[AimDistance] = CreateConVar("sm_jbfs_aimdistance","1024.0","Distance a prisoner must be to see their name.\nOnly relevant if sm_jbfs_aimnames > 0",FCVAR_NOTIFY,true,128.0,true,16384.0);
     cvarJBFS[WeaponSearch] = CreateConVar("sm_jbfs_weaponsearch","1","Allow guards to search prisoners for weapons while holding melee.\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0);
     cvarJBFS[SearchTime] = CreateConVar("sm_jbfs_weaponsearchtime","3.0","Time required to search for weapons.",FCVAR_NOTIFY,true,0.5,true,5.0);
+    cvarJBFS[WardenLockTime] = CreateConVar("sm_jbfs_wardenlocktime","120.0","Clamp round time to this value, in seconds, when warden locks.\n0 = Disabled",FCVAR_NOTIFY,true,0.0,true,300.0)
     cvarJBFS[Version] = CreateConVar("jbfs_version",PLUGIN_VERSION,PLUGIN_NAME,FCVAR_REPLICATED | FCVAR_NOTIFY | FCVAR_SPONLY | FCVAR_DONTRECORD);
     //admincmd cvars
     cvarJBFS_CMD[ACMD_WardenMenu] = CreateConVar("sm_jbfs_acmd_adminmenu","2","Admin commands (sm_jbfs_acmd_*) requires setting admin flag bits.\nSee: https://wiki.alliedmods.net/Checking_Admin_Flags_(SourceMod_Scripting)\n\nAdmin flag(s) required to open the admin warden menu.",FCVAR_NOTIFY,true,0.0,true,2097151.0);
@@ -339,6 +340,7 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
     CreateNative("JBFS_IsGuardBanned",Native_IsGuardBanned);
     CreateNative("JBFS_GetLRWinner",Native_GetLRWinner);
     CreateNative("JBFS_IsWarday",Native_IsWarday);
+    CreateNative("JBFS_IsFreeday",Native_IsFreeday);
 
     RegPluginLibrary("JailbreakFromScratch");
     return APLRes_Success;

@@ -206,6 +206,11 @@
         "#format"   "{1:s}"
         "en"        "{unique}{1}{wheat} was kicked from the gang."
     }
+    "GangPlayerKickedPlayer"
+    {
+        "#format"   "{1:s}"
+        "en"        "You have been kicked from the gang {chartreuse}{1}."
+    }
     "GangPromotion"
     {
         "#format"   "{1:s}{2:s}{3:s}{4:t}"
@@ -256,7 +261,7 @@
     "GangBuffActive"
     {
         "#format"   "{1:s}{2:t}"
-        "en"        "{wheat}Gang {chartreuse}{1}{wheat} activated their {strange}{2}{wheat} buff!"
+        "en"        "{wheat}Gang {chartreuse}{1}{wheat} activated {strange}{2}{wheat}!"
     }
     "GangChatOn"
     {

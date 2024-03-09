@@ -49,6 +49,15 @@ native int JBFS_GetLRWinner();
  */
 native bool JBFS_IsWarday();
 
+/**
+ * Returns whether a player is a freeday or not
+ * This value is set during pre round start
+ * @param client		Client to check
+ *
+ * @return				true if freeday, false if not
+ */
+native bool JBFS_IsFreeday(int client);
+
 public SharedPlugin __pl_jailbreakfromscratch = {
 	name = "JailbreakFromScratch",
 	file = "JailbreakFromScratch.smx",
@@ -67,5 +76,6 @@ public void __pl_jailbreakfromscratch_SetNTVOptional()
 	MarkNativeAsOptional("JBFS_IsGuardBanned");
 	MarkNativeAsOptional("JBFS_GetLRWinner");
 	MarkNativeAsOptional("JBFS_IsWarday");
+	MarkNativeAsOptional("JBFS_IsFreeday");
 }
 #endif

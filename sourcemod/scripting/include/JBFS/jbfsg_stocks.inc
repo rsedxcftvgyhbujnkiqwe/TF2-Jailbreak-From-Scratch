@@ -228,6 +228,10 @@ stock void ListGang(int client)
 stock void InviteToGang(int client, int target, int gang_uid)
 {
     int target_gang_index = g_PlayerData[target].index;
+    if (target_gang_index > 0) {
+        CPrintToChat(client,"%t %t","PluginGangTag","CommandGangInviteWarnInGang")
+        return;
+    }
     if (DB_GetGangSize(gang_uid) >= cvarJBFS[MaxGangSize].IntValue)
     {
         CPrintToChat(client,"%t %t","PluginGangTag","GangMaxSize");
@@ -291,11 +295,14 @@ stock void GangShopPurchase(int client, int purchase)
     g_GangData[gang_index].shopbought |= purchase_bit;
 
     CPrintToChatGang(gang_index,"%t %t","GangTag","ShopPickGang",g_RankColors[g_PlayerData[client].rank],client,g_ShopNames[purchase],g_GangData[gang_index].points);
+    switch (purchase)
+    {
+        case GangShop_Warp: g_GangData[gang_index].warp_target = client;
+    }
 }
 
 stock void ApplyGangBuffsClient(int client, int active)
 {
-    if (GetClientTeam(client) != RED) return;
     if (active & ( 1 << GangShop_Banner)) TF2_AddCondition(client,TFCond_Buffed,TFCondDuration_Infinite,0);
     if (active & ( 1 << GangShop_Conch)) TF2_AddCondition(client,TFCond_RegenBuffed,TFCondDuration_Infinite,0);
     if (active & ( 1 << GangShop_Backup)) TF2_AddCondition(client,TFCond_DefenseBuffed,TFCondDuration_Infinite,0);

@@ -73,7 +73,7 @@ public int GangMenuHandler(Menu menu, MenuAction action, int param1, int param2)
             //officer
             else if (StrEqual(info, GMENUCHOICE_GANG4) && g_PlayerData[param1].rank >= GangRank_Officer)
             {
-                CreateClientSelectMenu(param1,FilterFn_NotInGang,RunFn_InivteToGang);
+                CreateClientSelectMenu(param1,FilterFn_Inviteable,RunFn_InivteToGang,CreateGangMenu);
                 reopen_menu = false;
             }
             else if (StrEqual(info, GMENUCHOICE_GANG5) && g_PlayerData[param1].rank >= GangRank_Officer)
@@ -257,6 +257,10 @@ public int ShopMenuHandler(Menu menu, MenuAction action, int param1, int param2)
             {
                 GangShopPurchase(param1,GangShop_Backup);
             }
+            else if (StrEqual(info,GSHOP4))
+            {
+                GangShopPurchase(param1,GangShop_Warp);
+            }
             CreateShopMenu(param1,0);
         }
         case MenuAction_Cancel:
@@ -278,16 +282,22 @@ public int ShopMenuHandler(Menu menu, MenuAction action, int param1, int param2)
             char display[64];
             if (StrEqual(info,GSHOP1))
             {
-                Format(display,sizeof(display),"%T",g_ShopNames[GangShop_Banner],param1,g_ShopPoints[GangShop_Banner]);
+                Format(display,sizeof(display),"%T- %d",g_ShopNames[GangShop_Banner],param1,g_ShopPoints[GangShop_Banner]);
                 return RedrawMenuItem(display);
             }
-            if (StrEqual(info,GSHOP2))
+            else if (StrEqual(info,GSHOP2))
             {
-                Format(display,sizeof(display),"%T",g_ShopNames[GangShop_Conch],param1,g_ShopPoints[GangShop_Conch]);
+                Format(display,sizeof(display),"%T - %d",g_ShopNames[GangShop_Conch],param1,g_ShopPoints[GangShop_Conch]);
                 return RedrawMenuItem(display);
-            }(StrEqual(info,GSHOP3))
+            }
+            else if (StrEqual(info,GSHOP3))
             {
-                Format(display,sizeof(display),"%T",g_ShopNames[GangShop_Backup],param1,g_ShopPoints[GangShop_Backup]);
+                Format(display,sizeof(display),"%T- %d",g_ShopNames[GangShop_Backup],param1,g_ShopPoints[GangShop_Backup]);
+                return RedrawMenuItem(display);
+            }
+            else if (StrEqual(info,GSHOP4))
+            {
+                Format(display,sizeof(display),"%T- %d",g_ShopNames[GangShop_Warp],param1,g_ShopPoints[GangShop_Warp]);
                 return RedrawMenuItem(display);
             }
         }
@@ -310,6 +320,9 @@ public void CreateShopMenu(int client,int selection)
     }
     if (!(g_GangData[gang_index].shopbought & 1 << GangShop_Backup)){
         menu.AddItem(GSHOP3,"Backup");
+    }
+    if (!(g_GangData[gang_index].shopbought & 1 << GangShop_Warp)){
+        menu.AddItem(GSHOP4,"Warp");
     }
     if (menu.ItemCount == 0){
         CreateGangMenu(client,0);
@@ -351,7 +364,7 @@ public int ClientMenuHandler(Menu menu, MenuAction action, int param1, int param
             //else, do nothing
             if(result)
             {
-                CreateClientSelectMenu(param1,g_filterFn[param1],g_RunFn[param1]);
+                CreateClientSelectMenu(param1,g_filterFn[param1],g_RunFn[param1],g_CallbackFn[param1]);
             }
         }
     }
@@ -359,10 +372,11 @@ public int ClientMenuHandler(Menu menu, MenuAction action, int param1, int param
     return 0;
 }
 
-public void CreateClientSelectMenu(int client, ClientFilterFunc filterFn, ClientRunFunc runFn)
+public void CreateClientSelectMenu(int client, ClientFilterFunc filterFn, ClientRunFunc runFn, MenuCallbackFunc callbackFn)
 {
     g_RunFn[client] = runFn;
     g_filterFn[client] = filterFn;
+    g_CallbackFn[client] = callbackFn;
     Menu menu = new Menu(ClientMenuHandler);
     g_ClientMenu[client] = menu;
     int clients;
@@ -388,12 +402,17 @@ public void CreateClientSelectMenu(int client, ClientFilterFunc filterFn, Client
     {
         delete menu;
         g_ClientMenu[client] = null;
+        //callback fn in case of failure
+        Call_StartFunction(null,callbackFn)
+        Call_PushCell(client);
+        Call_PushCell(0);
+        Call_Finish();
         return;
     }
     menu.Display(client, MENU_TIME_FOREVER);
 }
 
-public bool FilterFn_NotInGang(int target)
+public bool FilterFn_Inviteable(int target)
 {
     if (g_PlayerData[target].index == 0) return true;
     return false;

@@ -51,6 +51,7 @@ enum struct GangData
     int shopactive;
     int alive_red;
     int alive_blue;
+    int warp_target;
 }
 
 enum struct PlayerData
@@ -77,28 +78,34 @@ Menu g_ShopMenu[MAXPLAYERS+1];
 //client menu defs
 typedef ClientFilterFunc = function bool(int client);
 typedef ClientRunFunc = function bool(int client,int target);
+typedef MenuCallbackFunc = function void(int client, int selection);
 ClientRunFunc g_RunFn[MAXPLAYERS+1];
 ClientFilterFunc g_filterFn[MAXPLAYERS+1];
+MenuCallbackFunc g_CallbackFn[MAXPLAYERS+1];
 Menu g_ClientMenu[MAXPLAYERS+1];
+
 
 enum
 {
     GangShop_None,
     GangShop_Banner,
     GangShop_Conch,
-    GangShop_Backup
+    GangShop_Backup,
+    GangShop_Warp
 }
 
 int g_ShopPoints[] = {
     0,
     2000,
     2000,
-    2000
+    2000,
+    1000
 }
 
-char g_ShopNames[4][32] = {
+char g_ShopNames[5][32] = {
     "ShopItemNone",
     "ShopItemBanner",
     "ShopItemConch",
-    "ShopItemBackup"
+    "ShopItemBackup",
+    "ShopItemWarp"
 }

@@ -202,3 +202,14 @@ stock bool IsClient(int client)
 {
     return 0 < client <= MaxClients
 }
+
+stock any Max(any val1, any val2)
+{
+    if (val1 > val2) return val1;
+    else return val2;
+}
+stock any Min(any val1, any val2)
+{
+    if (val1 < val2) return val1;
+    else return val2;
+}

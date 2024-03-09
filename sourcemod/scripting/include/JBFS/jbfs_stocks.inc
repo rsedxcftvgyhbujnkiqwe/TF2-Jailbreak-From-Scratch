@@ -164,32 +164,32 @@ stock void RemoveWarden(int reason)
     {
         case UW_Retire:
         {
-            CPrintToChatAll("%t %t","PluginTag","WardenUWRetire",currentwarden);
+            if (currentwarden > 0) CPrintToChatAll("%t %t","PluginTag","WardenUWRetire",currentwarden);
             UnlockWarden(false);
         }
         case UW_Force:
         {
-            CPrintToChatAll("%t %t","PluginTag","WardenUWForce",currentwarden);
+            if (currentwarden > 0) CPrintToChatAll("%t %t","PluginTag","WardenUWForce",currentwarden);
             UnlockWarden(false);
         }
         case UW_Death:
         {
-            CPrintToChatAll("%t %t","PluginTag","WardenUWDeath",currentwarden);
+            if (currentwarden > 0) CPrintToChatAll("%t %t","PluginTag","WardenUWDeath",currentwarden);
             UnlockWarden(true);
         }
         case UW_Disconnect:
         {
-            CPrintToChatAll("%t %t","PluginTag","WardenUWDisconnect",currentwarden);
+            if (currentwarden > 0) CPrintToChatAll("%t %t","PluginTag","WardenUWDisconnect",currentwarden);
             UnlockWarden(true);
         }
         case UW_Fire:
         {
-            CPrintToChatAll("%t %t","PluginTag","WardenUWFire",currentwarden);
+            if (currentwarden > 0) CPrintToChatAll("%t %t","PluginTag","WardenUWFire",currentwarden);
             UnlockWarden(true);
         }
         case UW_TeamChange:
         {
-            CPrintToChatAll("%t %t","PluginTag","WardenUWTeamChange",currentwarden);
+            if (currentwarden > 0) CPrintToChatAll("%t %t","PluginTag","WardenUWTeamChange",currentwarden);
             UnlockWarden(true);
         }
         case UW_Silent:
@@ -254,6 +254,9 @@ stock void LockWarden(bool message = true)
     JBFS.WardenLocked = true;
     if (message) CPrintToChatAll("%t %t","PluginTag","WardenLock");
     if (IsValidHandle(JBFS.WardenLockTimer)) KillTimer(JBFS.WardenLockTimer);
+    if (cvarJBFS[WardenLockTime].IntValue > 0) {
+        JBFS.TimeLeft = Min(JBFS.TimeLeft, cvarJBFS[WardenLockTime].IntValue)
+    }
 }
 
 stock void UnlockWarden(bool message = false)

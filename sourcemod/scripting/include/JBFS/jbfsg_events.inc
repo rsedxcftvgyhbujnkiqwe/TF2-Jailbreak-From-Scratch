@@ -30,6 +30,43 @@ public void OnArenaRoundStart(Event event, const char[] name, bool dontBroadcast
             if (active & ( 1 << GangShop_Banner)) CPrintToChatAll("%t %t","PluginGangTag","GangBuffActive",g_GangData[i].name,g_ShopNames[GangShop_Banner]);
             if (active & ( 1 << GangShop_Conch)) CPrintToChatAll("%t %t","PluginGangTag","GangBuffActive",g_GangData[i].name,g_ShopNames[GangShop_Conch]);
             if (active & ( 1 << GangShop_Backup)) CPrintToChatAll("%t %t","PluginGangTag","GangBuffActive",g_GangData[i].name,g_ShopNames[GangShop_Backup]);
+            if (active & ( 1 << GangShop_Warp))
+            {
+                CPrintToChatAll("%t %t","PluginGangTag","GangBuffActive",g_GangData[i].name,g_ShopNames[GangShop_Warp]);
+                int target = g_GangData[i].warp_target;
+                int warp_target = target;
+                if (!IsClientInGame(target) || g_PlayerData[target].index != i || !IsPlayerAlive(target) || GetClientTeam(target) != RED || JBFS_IsFreeday(target))
+                {
+                    //teleport target was not found or is invalid for some other reason
+                    //we must find a better client
+                    //prefer highest ranking clients
+                    int warp_rank = 0;
+                    for (int j=1;j<=MaxClients;j++){
+                        if (g_PlayerData[j].index == g_PlayerData[target].index && g_PlayerData[j].rank > warp_rank)
+                        {
+                            if (IsClientInGame(j) && IsPlayerAlive(j) && GetClientTeam(j) == RED && !JBFS_IsFreeday(j))
+                            {
+                                warp_target = j;
+                                warp_rank = g_PlayerData[j].rank;
+                                break
+                            }
+                        }
+                    }
+                }
+                if (warp_target > 0)
+                {
+                    float warp_pos[3];
+                    GetEntPropVector(warp_target,Prop_Send,"m_vecOrigin",warp_pos);
+                    //we have a teleport target and can now proceed with the teleport
+                    for (int j=1; j<=MaxClients;j++){
+                        if (j == warp_target) continue;
+                        if (g_PlayerData[j].index == i && IsClientInGame(j) && IsPlayerAlive(j) && GetClientTeam(j) == RED && !JBFS_IsFreeday(j))
+                        {
+                            TeleportEntity(j,warp_pos,NULL_VECTOR,{0.0,0.0,0.0})
+                        }
+                    }
+                }
+            }
         }
     }
 }

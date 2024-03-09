@@ -275,6 +275,11 @@ public Action Command_WardenMarker(int client, int args)
 //Admin Commands
 public Action Command_Admin_ForceWarden(int client, int args)
 {
+    if (!JBFS.RoundActive)
+    {
+        CPrintToChat(client,"%t %t","PluginTag","CommandWarnRound");
+        return Plugin_Handled;
+    }
     //handle no arg first
     //if none, select random
     if (args == 0)
@@ -312,6 +317,11 @@ public Action Command_Admin_ForceWarden(int client, int args)
 
 public Action Command_Admin_ForceUnWarden(int client, int args)
 {
+    if (!JBFS.RoundActive)
+    {
+        CPrintToChat(client,"%t %t","PluginTag","CommandWarnRound");
+        return Plugin_Handled;
+    }
     if (JBFS.Warden)
     {
         char tag[64],msg[256]; 
@@ -330,6 +340,11 @@ public Action Command_Admin_ForceUnWarden(int client, int args)
 
 public Action Command_Admin_LockWarden(int client, int args)
 {
+    if (!JBFS.RoundActive)
+    {
+        CPrintToChat(client,"%t %t","PluginTag","CommandWarnRound");
+        return Plugin_Handled;
+    }
     if(JBFS.WardenLocked)
     {
         CPrintToChat(client,"%t %t","PluginTag","WardenLockWarn")
@@ -341,6 +356,11 @@ public Action Command_Admin_LockWarden(int client, int args)
 
 public Action Command_Admin_UnlockWarden(int client, int args)
 {
+    if (!JBFS.RoundActive)
+    {
+        CPrintToChat(client,"%t %t","PluginTag","CommandWarnRound");
+        return Plugin_Handled;
+    }
     if(!JBFS.WardenLocked)
     {
         CPrintToChat(client,"%t %t","PluginTag","WardenUnlockWarn")
@@ -353,6 +373,11 @@ public Action Command_Admin_UnlockWarden(int client, int args)
 
 public Action Command_Admin_JailTime(int client, int args)
 {
+    if (!JBFS.RoundActive)
+    {
+        CPrintToChat(client,"%t %t","PluginTag","CommandWarnRound");
+        return Plugin_Handled;
+    }
     int seconds;
     if (args == 1 && GetCmdArgIntEx(1,seconds) && seconds >= 0)
     {

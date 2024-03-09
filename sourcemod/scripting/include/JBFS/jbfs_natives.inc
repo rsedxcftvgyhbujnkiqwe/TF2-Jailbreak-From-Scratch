@@ -28,3 +28,8 @@ public any Native_IsWarday(Handle plugin, int numParams)
 {
     return LRConfig.WardayActive;
 }
+
+public any Native_IsFreeday(Handle plugin, int numParamas)
+{
+    return LRConfig.FreedaysActive[GetNativeCell(1)];
+}
