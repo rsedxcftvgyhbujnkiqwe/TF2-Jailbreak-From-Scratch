@@ -2,6 +2,7 @@ public void OnPreRoundStart(Event event, const char[] name, bool dontBroadcast)
 {
     LRConfig.LRActive = LRConfig.LRChosen;
     LRConfig.LRChosen = LR_None;
+    LRConfig.LRWinner = 0; //this is done here so you can get lr winner on round end
     JBFS.RoundActive = false;
     if (IsValidHandle(JBFS.RoundTimer)) KillTimer(JBFS.RoundTimer);    
     //surrender timers
@@ -76,7 +77,6 @@ public void OnArenaRoundEnd(Event event, const char[] name, bool dontBroadcast)
     JBFS.RoundActive = false;
     //reset lr stuff
     LRConfig.WardayActive=false;
-    LRConfig.LRWinner = 0;
     ResetActiveLR();
     for(int i=1;i<=MaxClients;i++){
         if(!IsClientInGame(i)) continue;
