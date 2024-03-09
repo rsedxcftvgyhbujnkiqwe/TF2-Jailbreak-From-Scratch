@@ -272,7 +272,7 @@ stock bool DB_SetGangName(int gang_uid, char name[32])
     SQL_FormatQuery(hDatabase,query,sizeof(query),
         "UPDATE %s "
     ... "SET name = '%s', "
-    ... "nid = '%s', "
+    ... "nid = '%s' "
     ... "WHERE uid = %d ",
     GangTable,name,nid,gang_uid)
     if (!SQL_FastQuery(hDatabase, query))
@@ -290,7 +290,7 @@ stock bool DB_SetGangTag(int gang_uid, char tag[5])
     char query[128];
     SQL_FormatQuery(hDatabase,query,sizeof(query),
         "UPDATE %s "
-    ... "SET tag = '%s', "
+    ... "SET tag = '%s' "
     ... "WHERE uid = %d ",
     GangTable,tag,gang_uid)
     if (!SQL_FastQuery(hDatabase, query))
