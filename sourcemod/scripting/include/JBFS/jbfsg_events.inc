@@ -107,8 +107,7 @@ public Action CP_OnChatMessage(int& author, ArrayList recipients, char[] flagstr
                 }
             }
             PrintToServer("%N sending gang message...",author)
-            Format(name,MAXLENGTH_NAME,"%t {%s}%s","GangTag",g_RankColors[g_PlayerData[author].rank],name)
-            author = 0;
+            Format(name,MAXLENGTH_NAME,"%t {%s}%s","GangTag",g_RankColors[g_PlayerData[author].rank],name);
             return Plugin_Changed;
         }
         else if (cvarJBFS[GangTags].BoolValue)
