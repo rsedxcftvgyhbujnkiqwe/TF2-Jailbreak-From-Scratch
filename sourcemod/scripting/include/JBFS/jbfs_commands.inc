@@ -305,7 +305,7 @@ public Action Command_Admin_ForceWarden(int client, int args)
     }
     else
     {
-        CPrintToChat(client,"%t %t","PluginTag","WardenWarnAdminInvalid");
+        CPrintToChat(client,"%t %t","PluginTag","WardenWarnAdminInvalid",target);
     }
     return Plugin_Handled;
 }
