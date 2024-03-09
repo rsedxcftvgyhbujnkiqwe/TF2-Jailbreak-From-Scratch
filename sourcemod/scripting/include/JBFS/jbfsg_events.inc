@@ -103,7 +103,7 @@ public Action CP_OnChatMessage(int& author, ArrayList recipients, char[] flagstr
                 if (!IsClientInGame(i)) continue;
                 if(g_GangData[g_PlayerData[i].index].id != gang_uid)
                 {
-                    recipients.Erase(i);
+                    if (recipients.FindValue(i) != -1) recipients.Erase(i);
                 }
             }
             PrintToServer("%N sending gang message...",author)
