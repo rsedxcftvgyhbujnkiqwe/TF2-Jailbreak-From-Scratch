@@ -100,7 +100,7 @@ public Action CP_OnChatMessage(int& author, ArrayList recipients, char[] flagstr
             if (!StrEqual(g_GangData[gang_index].tag,"\0"))
             {
                 char sTeamColor[32];
-                switch(GetClientTeam(author)-1)
+                switch(GetClientTeam(author))
                 {
                     case 1: sTeamColor = "gray";
                     case 2: sTeamColor = "red";
