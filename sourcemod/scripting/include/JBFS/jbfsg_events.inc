@@ -103,14 +103,15 @@ public Action CP_OnChatMessage(int& author, ArrayList recipients, char[] flagstr
                 if (!IsClientInGame(i)) continue;
                 if(g_GangData[g_PlayerData[i].index].id != gang_uid)
                 {
-                    PrintToServer("erasing %N from gc visibility",i)
                     recipients.Erase(i);
                 }
             }
+            PrintToServer("%N sending gang message...",author)
             Format(name,MAXLENGTH_NAME,"%t {%s}%s","GangTag",g_RankColors[g_PlayerData[author].rank],name)
+            author = 0;
             return Plugin_Changed;
         }
-        if (cvarJBFS[GangTags].BoolValue)
+        else if (cvarJBFS[GangTags].BoolValue)
         {
             if (gang_index > 0)
             {
