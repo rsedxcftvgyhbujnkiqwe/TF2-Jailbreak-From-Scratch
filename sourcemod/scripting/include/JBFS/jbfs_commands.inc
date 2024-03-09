@@ -396,6 +396,12 @@ public Action Command_Admin_ToggleCollisions(int client, int args)
 
 public Action Command_Admin_ForceFreeday(int client, int args)
 {
+    if (!JBFS.RoundActive)
+    {
+        CPrintToChat(client,"%t %t","PluginTag","CommandWarnRound");
+        return Plugin_Handled;
+    }
+
     char arg[32];
     GetCmdArg(1, arg, sizeof(arg));
     int target = FindTarget(client, arg);

@@ -40,6 +40,10 @@
     {
         "en"        "{wheat}Usage: sm_gangkick <member id> (see sm_ganglist)"
     }
+    "CommandAdminGivePointsUsage"
+    {
+        "en"        "{wheat}Usage: sm_givepoints <#userid|name> [points]"
+    }
     "CommandGangKickWarnMemberID"
     {
         "#format"   "{1:d}"
@@ -106,6 +110,10 @@
     "CommandWarnNotInGang"
     {
         "en"        "{wheat}You are not in a gang!"
+    }
+    "CommandWarnTargetNotInGang"
+    {
+        "en"        "{wheat}Player is not in a gang."
     }
     "CommandWarnGangRank"
     {
@@ -239,6 +247,11 @@
     {
         "#format"   "{1:d}"
         "en"        "{wheat}Gang gained {genuine}{1}{wheat} points for gang members alive."
+    }
+    "GangPointsGainedAdmin"
+    {
+        "#format"   "{1:d}"
+        "en"        "{wheat}Gang gained {genuine}{1}{wheat} points from admin."
     }
     "GangBuffActive"
     {

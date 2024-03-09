@@ -595,3 +595,26 @@ Action Command_Admin_DumpPlayerData(int client,int args)
     CPrintToChat(client,"%t gang:%s tag:%s id:%d n_o:%d b_p:%d pnt:%d shb:%d sha:%d a_r:%d a_b:%d","PluginGangTag",g_GangData[gang_index].name,g_GangData[gang_index].tag,g_GangData[gang_index].id,g_GangData[gang_index].num_online,g_GangData[gang_index].boss_promotion,g_GangData[gang_index].points,g_GangData[gang_index].shopbought,g_GangData[gang_index].shopactive,g_GangData[gang_index].alive_red,g_GangData[gang_index].alive_blue)
     return Plugin_Handled;
 }
+
+Action Command_Admin_GivePoints(int client,int args)
+{
+    if (args < 2)
+    {
+        CPrintToChat(client,"%t %t","PluginGangTag","CommandAdminGivePointsUsage");
+        return Plugin_Handled;
+    }
+    char arg1[32], arg2[32];
+    GetCmdArg(1, arg1, sizeof(arg1));
+    GetCmdArg(2,arg2,sizeof(arg2));
+    int points = StringToInt(arg2);
+    int target = FindTarget(client, arg1,true);
+    if (target == -1) return Plugin_Handled;
+
+    if (g_PlayerData[target].index == 0)
+    {
+        CPrintToChat(client,"%t %t","PluginGangTag","CommandWarnTargetNotInGang");
+        return Plugin_Handled;
+    }
+    AddGangPoints(g_PlayerData[target].index, points,"GangPointsGainedAdmin")
+    return Plugin_Handled;
+}

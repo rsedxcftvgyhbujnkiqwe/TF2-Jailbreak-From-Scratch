@@ -176,13 +176,12 @@ stock int GetClientByMID(int gang_uid, int mid)
     return 0
 }
 
-stock void AddGangPoints(int gang_uid, int points, char[] reason)
+stock void AddGangPoints(int gang_index, int points, char[] reason)
 {
-    if (gang_uid > 0)
+    if (gang_index > 0)
     {
-        int gang_index = GetGangIndex(gang_uid);
         g_GangData[gang_index].points += points;
-        CPrintToChatGang(gang_uid,"%t %t","GangTag",reason,points)
+        CPrintToChatGang(g_GangData[gang_index].id,"%t %t","GangTag",reason,points)
     }
 }
 

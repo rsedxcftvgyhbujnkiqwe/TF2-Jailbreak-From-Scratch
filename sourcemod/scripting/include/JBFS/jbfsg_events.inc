@@ -56,16 +56,16 @@ public void OnArenaRoundEnd(Event event, const char[] name, bool dontBroadcast)
         if (g_GangData[i].id > 0)
         {
             points = (g_GangData[i].alive_red - g_GangData[i].alive_blue) * 50;
-            if (points > 0) AddGangPoints(g_GangData[i].id,points,"GangPointsGainedAlive");
+            if (points > 0) AddGangPoints(i,points,"GangPointsGainedAlive");
             g_GangData[i].alive_blue = 0;
             g_GangData[i].alive_red = 0;
         }
     }
     int LR_Winner = JBFS_GetLRWinner();
-    int LR_Gang = g_GangData[g_PlayerData[LR_Winner].index].id;
-    if ((LR_Winner > 0) && (LR_Gang > 0))
+    int LR_GangIndex = g_PlayerData[LR_Winner].index;
+    if ((LR_Winner > 0) && (LR_GangIndex > 0))
     {
-        AddGangPoints(LR_Gang,500,"GangPointsGainedLR");
+        AddGangPoints(LR_GangIndex,500,"GangPointsGainedLR");
     }
 }
 public Action OnPlayerSpawn(Event event, const char[] name, bool dontBroadcast)
