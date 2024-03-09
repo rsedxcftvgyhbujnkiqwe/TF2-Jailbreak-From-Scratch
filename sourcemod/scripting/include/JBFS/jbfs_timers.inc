@@ -130,6 +130,7 @@ public Action Timer_PlayerThink(Handle timer)
                     JBFS.SearchTime[i] = 0.0;
                     JBFS.SearchTarget[i] = 0;
                 }
+                PrintToServer("%N searched, progress: %f",JBFS.SearchTarget[i],JBFS.SearchTime[i])
                 if (target > 0 && JBFS.SearchTime[i] >= cvarJBFS[SearchTime].FloatValue)
                 {
                     JBFS.BeenSearched[target] = true;
