@@ -129,7 +129,6 @@ public Action Timer_PlayerThink(Handle timer)
                     JBFS.SearchTime[i] = 0.0;
                     JBFS.SearchTarget[i] = 0;
                 }
-                PrintToServer("%N searched, progress: %f",JBFS.SearchTarget[i],JBFS.SearchTime[i])
                 if (target > 0 && JBFS.SearchTime[i] >= cvarJBFS[SearchTime].FloatValue)
                 {
                     JBFS.BeenSearched[target] = true;
@@ -138,16 +137,21 @@ public Action Timer_PlayerThink(Handle timer)
                     SetHudTextParamsEx(-1.0,0.65,5.0,{255,0,0,255},{255,0,0,255},0,0.25,0.25);
                     if (JBFS.HasAmmo[target])
                     {
-                        ShowSyncHudText(i,SearchHud,"SearchFound",target);
+                        ShowSyncHudText(i,SearchHud,"%t","SearchFound",target);
                         CPrintToChatAll("%t %t","PluginTag","SearchAnnounceFound",target)
                     }
                     else
                     {
-                        ShowSyncHudText(i,SearchHud,"SearchNotFound",target);
+                        ShowSyncHudText(i,SearchHud,"%t","SearchNotFound",target);
                     }
                     JBFS.SearchTime[i] = 0.0;
                     JBFS.SearchTarget[i] = 0;
                 }
+            }
+            else if (JBFS.BeenSearched[target] && (buttons & IN_RELOAD) && GetClientTeam(target) == RED && TargetInRange(i,target,128.0))
+            {
+                SetHudTextParamsEx(-1.0,0.65,5.0,{255,0,0,255},{255,0,0,255},0,0.25,0.25);
+                ShowSyncHudText(i,SearchHud,"%t","SearchCooldown",target);
             }
         }
         g_PrevButtons[i] = buttons;
