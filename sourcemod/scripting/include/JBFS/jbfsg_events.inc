@@ -99,7 +99,15 @@ public Action CP_OnChatMessage(int& author, ArrayList recipients, char[] flagstr
         {
             if (!StrEqual(g_GangData[gang_index].tag,"\0"))
             {
-                Format(name,MAXLENGTH_NAME,"{chartreuse}[{%s}%s{chartreuse}] {team%d}%s",g_RankColors[g_PlayerData[author].rank],g_GangData[gang_index].tag,GetClientTeam(author)-1,name);
+                char sTeamColor[32];
+                switch(GetClientTeam(author)-1)
+                {
+                    case 1: sTeamColor = "gray";
+                    case 2: sTeamColor = "red";
+                    case 3: sTeamColor = "blue";
+                    default: sTeamColor = "default";
+                }
+                Format(name,MAXLENGTH_NAME,"{chartreuse}[{%s}%s{chartreuse}] {team%d}%s",g_RankColors[g_PlayerData[author].rank],g_GangData[gang_index].tag,sTeamColor,name);
                 return Plugin_Changed;
             }
         }
