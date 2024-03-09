@@ -247,21 +247,21 @@ stock void InviteToGang(int client, int target, int gang_uid)
 stock void CloseMenus(int client)
 {
 
-    if (g_GangMenu[client] != null)
+    if (IsValidHandle(g_GangMenu[client]))
     {
         delete g_GangMenu[client];
-        g_GangMenu[client] = null;
     }
-    if (g_ClientMenu[client] != null)
+    if (IsValidHandle(g_ClientMenu[client]))
     {
         delete g_ClientMenu[client];
-        g_ClientMenu[client] = null;
     }
-    if (g_ShopMenu[client] != null)
+    if (IsValidHandle(g_ShopMenu[client]))
     {
         delete g_ShopMenu[client];
-        g_ShopMenu[client] = null;
     }
+    g_GangMenu[client] = null;
+    g_ClientMenu[client] = null;
+    g_ShopMenu[client] = null;
 }
 
 stock void GangShopPurchase(int client, int purchase)
