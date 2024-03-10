@@ -57,50 +57,54 @@ public int GangMenuHandler(Menu menu, MenuAction action, int param1, int param2)
             {
                 Command_GangJoin(param1,0);
             }
-            //gang
-            else if (StrEqual(info, GMENUCHOICE_GANG1))
+            //just in case!
+            if (g_PlayerData[param1].index > 0)
             {
-                ListGang(param1);
-            }
-            else if (StrEqual(info, GMENUCHOICE_GANG2))
-            {
-                Command_GangPoints(param1,0);
-            }
-            else if (StrEqual(info, GMENUCHOICE_GANG3))
-            {
-                Command_GangChat(param1,0);
-            }
-            //officer
-            else if (StrEqual(info, GMENUCHOICE_GANG4) && g_PlayerData[param1].rank >= GangRank_Officer)
-            {
-                CreateClientSelectMenu(param1,FilterFn_Inviteable,RunFn_InivteToGang,CreateGangMenu);
-                reopen_menu = false;
-            }
-            else if (StrEqual(info, GMENUCHOICE_GANG5) && g_PlayerData[param1].rank >= GangRank_Officer)
-            {
-                CreateShopMenu(param1,0);
-                reopen_menu = false;
-            }
-            //boss
-            else if (StrEqual(info, GMENUCHOICE_GANG6))
-            {
-                Command_SetGangName(param1,0);
-            }
-            else if (StrEqual(info, GMENUCHOICE_GANG7))
-            {
-                Command_SetGangTag(param1,0);
-            }
-            else if (StrEqual(info, GMENUCHOICE_GANG8))
-            {
-                Command_GangPromote(param1,0);
-            }
-            else if (StrEqual(info, GMENUCHOICE_GANG9))
-            {
-                Command_GangDemote(param1,0);
-            }
-            else if (StrEqual(info, GMENUCHOICE_GANG10))
-            {
-                Command_GangKick(param1,0);
+                //gang
+                if (StrEqual(info, GMENUCHOICE_GANG1))
+                {
+                    ListGang(param1);
+                }
+                else if (StrEqual(info, GMENUCHOICE_GANG2))
+                {
+                    Command_GangPoints(param1,0);
+                }
+                else if (StrEqual(info, GMENUCHOICE_GANG3))
+                {
+                    Command_GangChat(param1,0);
+                }
+                //officer
+                else if (StrEqual(info, GMENUCHOICE_GANG4) && g_PlayerData[param1].rank >= GangRank_Officer)
+                {
+                    CreateClientSelectMenu(param1,FilterFn_Inviteable,RunFn_InivteToGang,CreateGangMenu);
+                    reopen_menu = false;
+                }
+                else if (StrEqual(info, GMENUCHOICE_GANG5) && g_PlayerData[param1].rank >= GangRank_Officer)
+                {
+                    CreateShopMenu(param1,0);
+                    reopen_menu = false;
+                }
+                //boss
+                else if (StrEqual(info, GMENUCHOICE_GANG6))
+                {
+                    Command_SetGangName(param1,0);
+                }
+                else if (StrEqual(info, GMENUCHOICE_GANG7))
+                {
+                    Command_SetGangTag(param1,0);
+                }
+                else if (StrEqual(info, GMENUCHOICE_GANG8))
+                {
+                    Command_GangPromote(param1,0);
+                }
+                else if (StrEqual(info, GMENUCHOICE_GANG9))
+                {
+                    Command_GangDemote(param1,0);
+                }
+                else if (StrEqual(info, GMENUCHOICE_GANG10))
+                {
+                    Command_GangKick(param1,0);
+                }
             }
             if (reopen_menu)
             {
