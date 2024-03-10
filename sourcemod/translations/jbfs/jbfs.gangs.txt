@@ -49,6 +49,10 @@
     {
         "en"        "{wheat}Player is already in a gang!"
     }
+    "CommandGangInviteWarnInvited"
+    {
+        "en"        "{wheat}Player has already been invited to your gang."
+    }
     "CommandGangJoinNoInvite"
     {
         "en"        "{wheat}You have no pending invites."

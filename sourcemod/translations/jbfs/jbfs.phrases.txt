@@ -149,6 +149,10 @@
     {
         "en"        "{wheat}Usage: sm_jailtime <seconds>"
     }
+    "CommandUsageGiveLR"
+    {
+        "en"        "{wheat}Usage: sm_givelr"
+    }
     "AdminJailTime"
     {
         "#format"   "{1:d}"
@@ -407,6 +411,6 @@
     "SearchAnnounceFound"
     {
         "#format"   "{1:N}"
-        "en"        "{unique}{1}{wheat} was found to have weapons!"
+        "en"        "{unique}{1}{wheat} was caught with weapons during a search!"
     }
 }

@@ -35,6 +35,10 @@
         "en"        "Marker"
         "chi"       "标记"
     }
+    "WardenMenuLastRequest"
+    {
+        "en"        "Last Request"
+    }
     "AdminWardenMenuForceWarden"
     {
         "en"        "Force Random Warden"

@@ -7,6 +7,9 @@ public Action Timer_ChooseWarden(Handle timer)
 public Action Timer_LockWarden(Handle timer)
 {
     LockWarden(true);
+    if (cvarJBFS[WardenLockTime].IntValue > 0) {
+        JBFS.TimeLeft = Min(JBFS.TimeLeft, cvarJBFS[WardenLockTime].IntValue)
+    }
     return Plugin_Stop;
 }
 

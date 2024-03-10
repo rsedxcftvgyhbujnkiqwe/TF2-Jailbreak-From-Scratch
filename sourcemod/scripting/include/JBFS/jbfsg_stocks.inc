@@ -232,6 +232,10 @@ stock void InviteToGang(int client, int target, int gang_uid)
         CPrintToChat(client,"%t %t","PluginGangTag","CommandGangInviteWarnInGang")
         return;
     }
+    if (g_PlayerData[target].invite == gang_uid) {
+        CPrintToChat(client,"%t %t","PluginGangTag","CommandGangInviteWarnInvited")
+        return;
+    }
     if (DB_GetGangSize(gang_uid) >= cvarJBFS[MaxGangSize].IntValue)
     {
         CPrintToChat(client,"%t %t","PluginGangTag","GangMaxSize");

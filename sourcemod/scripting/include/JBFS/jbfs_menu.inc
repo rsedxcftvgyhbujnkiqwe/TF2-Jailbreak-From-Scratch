@@ -7,6 +7,7 @@
 #define WMENU_CHOICE7 "#wmchoice7"
 #define WMENU_CHOICE8 "#wmchoice8"
 
+
 #define LRCHOICE1 "#lrchoice1"
 #define LRCHOICE2 "#lrchoice2"
 #define LRCHOICE3 "#lrchoice3"
@@ -66,6 +67,10 @@ public int WardenMenuHandler(Menu menu, MenuAction action, int param1, int param
             {
                 CreateMarker(param1);
             }
+            else if (StrEqual(info, WMENU_CHOICE6))
+            {
+                CPrintToChat(param1,"%t %t","PluginTag","CommandUsageGiveLR")
+            }
             g_WMenuTime = gametime;
             CreateWardenMenu(param1, menu.Selection)
         }
@@ -118,6 +123,11 @@ public int WardenMenuHandler(Menu menu, MenuAction action, int param1, int param
                 Format(display,sizeof(display),"%T","WardenMenuMarker",param1);
                 return RedrawMenuItem(display);
             }
+            else if (StrEqual(info,WMENU_CHOICE6))
+            {
+                Format(display,sizeof(display),"%T","WardenMenuLastRequest",param1);
+                return RedrawMenuItem(display);
+            }
         }
     }
     return 0;
@@ -147,6 +157,7 @@ public void CreateWardenMenu(int client,int selection)
     if (cvarJBFS_CMD[WCMD_FriendlyFire].BoolValue) menu.AddItem(WMENU_CHOICE3,"Toggle Friendly-Fire");
     if (cvarJBFS_CMD[WCMD_Collisions].BoolValue) menu.AddItem(WMENU_CHOICE4,"Toggle Collisions");
     if (cvarJBFS_CMD[WCMD_Marker].BoolValue) menu.AddItem(WMENU_CHOICE5,"Marker");
+    menu.AddItem(WMENU_CHOICE6,"Last Request");
     menu.DisplayAt(client,selection,MENU_TIME_FOREVER);
 }
 
@@ -205,13 +216,7 @@ public int AdminWardenMenuHandler(Menu menu, MenuAction action, int param1, int 
         }
         case MenuAction_Cancel:
         {
-            switch(param2)
-            {
-                case MenuCancel_Exit,MenuCancel_NoDisplay:
-                {
-                    CPrintToChat(param1,"%t %t","PluginTag","WardenMenuReOpen");
-                }
-            }
+            //do nothing
         }
         case MenuAction_End:
         {

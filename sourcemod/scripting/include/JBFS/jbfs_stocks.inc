@@ -254,9 +254,6 @@ stock void LockWarden(bool message = true)
     JBFS.WardenLocked = true;
     if (message) CPrintToChatAll("%t %t","PluginTag","WardenLock");
     if (IsValidHandle(JBFS.WardenLockTimer)) KillTimer(JBFS.WardenLockTimer);
-    if (cvarJBFS[WardenLockTime].IntValue > 0) {
-        JBFS.TimeLeft = Min(JBFS.TimeLeft, cvarJBFS[WardenLockTime].IntValue)
-    }
 }
 
 stock void UnlockWarden(bool message = false)
