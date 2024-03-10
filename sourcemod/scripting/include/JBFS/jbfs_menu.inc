@@ -7,6 +7,7 @@
 #define WMENU_CHOICE7 "#wmchoice7"
 #define WMENU_CHOICE8 "#wmchoice8"
 
+
 #define LRCHOICE1 "#lrchoice1"
 #define LRCHOICE2 "#lrchoice2"
 #define LRCHOICE3 "#lrchoice3"
@@ -66,6 +67,10 @@ public int WardenMenuHandler(Menu menu, MenuAction action, int param1, int param
             {
                 CreateMarker(param1);
             }
+            else if (StrEqual(info, WMENU_CHOICE6))
+            {
+                CPrintToChat(param1,"%t %t","PluginTag","CommandUsageGiveLR")
+            }
             g_WMenuTime = gametime;
             CreateWardenMenu(param1, menu.Selection)
         }
@@ -118,6 +123,11 @@ public int WardenMenuHandler(Menu menu, MenuAction action, int param1, int param
                 Format(display,sizeof(display),"%T","WardenMenuMarker",param1);
                 return RedrawMenuItem(display);
             }
+            else if (StrEqual(info,WMENU_CHOICE6))
+            {
+                Format(display,sizeof(display),"%T","WardenMenuLastRequest",param1);
+                return RedrawMenuItem(display);
+            }
         }
     }
     return 0;
@@ -147,6 +157,7 @@ public void CreateWardenMenu(int client,int selection)
     if (cvarJBFS_CMD[WCMD_FriendlyFire].BoolValue) menu.AddItem(WMENU_CHOICE3,"Toggle Friendly-Fire");
     if (cvarJBFS_CMD[WCMD_Collisions].BoolValue) menu.AddItem(WMENU_CHOICE4,"Toggle Collisions");
     if (cvarJBFS_CMD[WCMD_Marker].BoolValue) menu.AddItem(WMENU_CHOICE5,"Marker");
+    menu.AddItem(WMENU_CHOICE6,"Last Request");
     menu.DisplayAt(client,selection,MENU_TIME_FOREVER);
 }
 
@@ -205,13 +216,7 @@ public int AdminWardenMenuHandler(Menu menu, MenuAction action, int param1, int 
         }
         case MenuAction_Cancel:
         {
-            switch(param2)
-            {
-                case MenuCancel_Exit,MenuCancel_NoDisplay:
-                {
-                    CPrintToChat(param1,"%t %t","PluginTag","WardenMenuReOpen");
-                }
-            }
+            //do nothing
         }
         case MenuAction_End:
         {
@@ -356,6 +361,7 @@ public int LRMenuHandler(Menu menu, MenuAction action, int param1, int param2)
         }
         case MenuAction_Cancel:
         {
+            CPrintToChatAll("%t %t","PluginTag","LRMenuClose")
             //do nothing
         }
         case MenuAction_End:
@@ -422,6 +428,7 @@ public void CreateLRMenu(int client)
             menu.AddItem(key,g_MapLRNames[i])
         }
     }
+    menu.ExitButton = false;
     menu.Display(client,MENU_TIME_FOREVER);
 }
 
@@ -432,6 +439,10 @@ public int ClientMenuHandler(Menu menu, MenuAction action, int param1, int param
         case MenuAction_End:
         {
             delete menu;
+        }
+        case MenuAction_Cancel:
+        {
+            g_ClientMenu[param1] = null;
         }
         case MenuAction_Select:
         {
@@ -514,6 +525,11 @@ public Action Command_Admin_ForceLastRequest(int client, int args)
     if (!cvarJBFS[LastRequest].BoolValue)
     {
         CPrintToChat(client,"%t %t","PluginTag","LastRequestsDisabled");
+        return Plugin_Handled;
+    }
+    if (!JBFS.RoundActive)
+    {
+        CPrintToChat(client,"%t %t","PluginTag","CommandWarnRound");
         return Plugin_Handled;
     }
     if (client) CreateClientSelectMenu(client, ClientEligibleForLR, AdminGiveLR);

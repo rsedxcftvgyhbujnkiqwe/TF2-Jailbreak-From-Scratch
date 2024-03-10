@@ -9,7 +9,6 @@ enum
 enum
 {
     BalanceRatio=0,
-    TextChannel,
     GuardCrits,
     RoundTime,
     WardayTime,
@@ -38,6 +37,13 @@ enum
     DemoCharge,
     LRSetTime,
     LastRequest,
+    AllowSurrender,
+    AimNames,
+    AimTime,
+    AimDistance,
+    WeaponSearch,
+    SearchTime,
+    WardenLockTime,
     Version
 }
 ConVar cvarJBFS[Version+1];
@@ -100,12 +106,22 @@ enum struct gamemode
     int AttachedParticle[MAXPLAYERS+1];
     bool HasAmmo[MAXPLAYERS+1];
     bool GuardBanned[MAXPLAYERS+1];
+    bool HasSurrendered[MAXPLAYERS+1];
+    Handle SurrenderTimers[MAXPLAYERS+1];
+    int AimTarget[MAXPLAYERS+1];
+    float AimTime[MAXPLAYERS+1];
+    int SearchTarget[MAXPLAYERS+1];
+    float SearchTime[MAXPLAYERS+1];
+    Handle SearchTimers[MAXPLAYERS+1];
+    bool BeenSearched[MAXPLAYERS+1];
+    bool SearchFound[MAXPLAYERS+1];
 }
 public gamemode JBFS;
 
 enum struct JBMapConfig
 {
     char cells[64];
+    char cellclass[128];
     bool hascells;
     float fspawn[3];
     bool hasfspawn;
@@ -162,7 +178,8 @@ enum
 {
     JBEvent_Warday,
     JBEvent_SetWarden,
-    JBEvent_RemoveWarden
+    JBEvent_RemoveWarden,
+    JBEvent_Surrender
 }
 
 Menu g_WMenu[MAXPLAYERS+1];
@@ -267,3 +284,12 @@ int g_WepIndex[3][10] = {
         7
     }
 };
+
+//dhook detours
+Handle hInitPickedUpWeaponDetour;
+
+int g_PrevButtons[MAXPLAYERS+1];
+
+Handle TimerHud;
+Handle AimHud;
+Handle SearchHud;

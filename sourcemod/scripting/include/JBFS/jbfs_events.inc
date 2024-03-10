@@ -2,9 +2,16 @@ public void OnPreRoundStart(Event event, const char[] name, bool dontBroadcast)
 {
     LRConfig.LRActive = LRConfig.LRChosen;
     LRConfig.LRChosen = LR_None;
+    LRConfig.LRWinner = 0; //this is done here so you can get lr winner on round end
     JBFS.RoundActive = false;
-    if (IsValidHandle(JBFS.RoundTimer)) KillTimer(JBFS.RoundTimer);
-    
+    if (IsValidHandle(JBFS.RoundTimer)) KillTimer(JBFS.RoundTimer);    
+    //surrender timers
+    SetArray(JBFS.HasSurrendered,sizeof(JBFS.HasSurrendered),false);
+    for (int i;i<=MaxClients;i++)
+    {
+        if (IsValidHandle(JBFS.SurrenderTimers[i])) KillTimer(JBFS.SurrenderTimers[i]);
+    }
+
     //warden stuff
     RemoveWarden(UW_Silent);
     LockWarden(false);
@@ -14,6 +21,7 @@ public void OnPreRoundStart(Event event, const char[] name, bool dontBroadcast)
     JBGameEvent(JBEvent_SetWarden);
     //reset convars
     FindConVar("mp_friendlyfire").SetBool(false);
+    FindConVar("tf_avoidteammates_pushaway").SetBool(false);
     //fire preround lr stuff (freedays)
     if(LRConfig.LRActive == LR_FreedaySelf || LRConfig.LRActive == LR_FreedayOthers)
     {
@@ -42,7 +50,7 @@ public void OnArenaRoundStart(Event event, const char[] name, bool dontBroadcast
             //open cells
             ModifyCells(true,0,true);
             //kill cells to prevent them from being closed
-            CreateTimer(5.0,Timer_KillCells);
+            CreateTimer(3.0,Timer_KillCells,_,TIMER_FLAG_NO_MAPCHANGE);
             JBFS.TimeLeft = cvarJBFS[FreedayTime].IntValue;
         }
         case LR_Warday:
@@ -59,16 +67,16 @@ public void OnArenaRoundStart(Event event, const char[] name, bool dontBroadcast
         }
     }
     JBFS.RoundTimer = CreateTimer(1.0,RoundTimer,_,TIMER_REPEAT);
-    CreateTimer(3.0,Timer_ChooseWarden);
+    CreateTimer(3.0,Timer_ChooseWarden,_,TIMER_FLAG_NO_MAPCHANGE);
 }
 
 public void OnArenaRoundEnd(Event event, const char[] name, bool dontBroadcast)
 {
     if (IsValidHandle(JBFS.RoundTimer)) KillTimer(JBFS.RoundTimer);
     LockWarden(false);
+    JBFS.RoundActive = false;
     //reset lr stuff
     LRConfig.WardayActive=false;
-    LRConfig.LRWinner = 0;
     ResetActiveLR();
     for(int i=1;i<=MaxClients;i++){
         if(!IsClientInGame(i)) continue;
@@ -102,21 +110,7 @@ public Action OnPlayerSpawn(Event event, const char[] name, bool dontBroadcast)
         }
     }
 
-    switch (TF2_GetPlayerClass(client))
-    {
-        case TFClass_Scout:
-        {
-            switch (cvarJBFS[DoubleJump].IntValue)
-            {
-                case 0: TF2Attrib_SetByDefIndex(client, 49, 1.0);
-                case 2:
-                {
-                    if (GetClientTeam(client)==RED)
-                        TF2Attrib_SetByDefIndex(client, 49, 1.0);
-                }
-            }
-        }
-    }
+    InitClientAttributes(client);
     if (cvarJBFS[AirblastImmunity].BoolValue) TF2Attrib_SetByDefIndex(client, 329, 0.0);
 
     RemoveWeapons(client);
@@ -143,9 +137,8 @@ public Action OnPlayerDeath(Event event, const char[] name, bool dontBroadcast)
     return Plugin_Handled;
 }
 
-public void OnPlayerDisconnect(Event event, const char[] name, bool dontBroadcast)
+public void OnClientDisconnect(int client)
 {
-    int client = GetClientOfUserId(event.GetInt("userid"));
     if (client == JBFS.Warden)
     {
         RemoveWarden(UW_Disconnect);
@@ -231,22 +224,41 @@ public void OnClientSayCommand_Post(int client, const char[] command, const char
     }
 }
 
-public void OnTakeAmmo(const char[] output, int caller, int activator, float delay)
+public void AmmoTaken(int client, bool return_weapons)
 {
-    JBFS.HasAmmo[activator] = true;
-    ReturnWeapons(activator);
-    switch (TF2_GetPlayerClass(activator))
+    JBFS.HasAmmo[client] = true;
+    if (return_weapons) ReturnWeapons(client);
+    switch (TF2_GetPlayerClass(client))
     {
         case TFClass_Scout:
         {
             if (cvarJBFS[DoubleJump].IntValue==1)
-                TF2Attrib_RemoveByDefIndex(activator,49)
+                TF2Attrib_RemoveByDefIndex(client,49)
         }
     }
-    if (LRConfig.FreedaysActive[activator])
+    if (LRConfig.FreedaysActive[client])
     {
-        LRRemoveFreeday(activator);
-        CPrintToChatAll("%t %t","PluginTag","FreedayLost",activator)
+        LRRemoveFreeday(client);
+        CPrintToChatAll("%t %t","PluginTag","FreedayLost",client)
+    }
+
+}
+
+public void OnTakeAmmo(const char[] output, int caller, int activator, float delay)
+{
+    AmmoTaken(activator,true)
+}
+
+public void OnTakeWeapon(int player, int weapon)
+{
+    int owner = GetEntPropEnt(weapon, Prop_Send, "m_hOwnerEntity");
+    int iOffset = GetEntProp(weapon, Prop_Send, "m_iPrimaryAmmoType", 1)*4;
+    int iAmmoTable = FindSendPropInfo("CTFPlayer", "m_iAmmo");
+    if ((GetEntProp(weapon, Prop_Data, "m_iClip1") > 0) || \
+        (GetEntProp(weapon, Prop_Data, "m_iClip2") > 0) || \
+        (GetEntData(owner, iAmmoTable+iOffset, 4) > 0))
+    {
+        AmmoTaken(player,false)
     }
 }
 

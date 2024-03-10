@@ -1,0 +1,278 @@
+"Phrases"
+{
+    "PluginGangTag"
+    {
+        "en"        "{chartreuse}[JBFSG]{wheat}"
+    }
+    "GangTag"
+    {
+        "en"        "{chartreuse}(Gang){wheat}"
+    }
+    "CommandCreateGangUsage"
+    {
+        "en"        "{wheat}Usage: sm_gangcreate <Name Of Gang>"
+    }
+    "CommandSetNameUsage"
+    {
+        "en"        "{wheat}Usage: sm_gangname <Name of Gang>"
+    }
+    "CommandSetTagUsage"
+    {
+        "en"        "{wheat}Usage: sm_gangtag <TAG>"
+    }
+    "CommandGangInviteUsage"
+    {
+        "en"        "{wheat}Usage: sm_ganginvite <player>"
+    }
+    "CommandGangPromoteUsage"
+    {
+        "en"        "{wheat}Usage: sm_gangpromote <member id> (see sm_ganglist)"
+    }
+    "CommandGangDemoteUsage"
+    {
+        "en"        "{wheat}Usage: sm_gangdemote <member id> (see sm_ganglist)"
+    }
+    "CommandGangKickUsage"
+    {
+        "en"        "{wheat}Usage: sm_gangkick <member id> (see sm_ganglist)"
+    }
+    "CommandAdminGivePointsUsage"
+    {
+        "en"        "{wheat}Usage: sm_givepoints <#userid|name> [points]"
+    }
+    "CommandGangKickWarnMemberID"
+    {
+        "#format"   "{1:d}"
+        "en"        "{wheat}Member with ID of {1} not found."
+    }
+    "CommandGangInviteWarnInGang"
+    {
+        "en"        "{wheat}Player is already in a gang!"
+    }
+    "CommandGangInviteWarnInvited"
+    {
+        "en"        "{wheat}Player has already been invited to your gang."
+    }
+    "CommandGangJoinNoInvite"
+    {
+        "en"        "{wheat}You have no pending invites."
+    }
+    "CommandGangLeaveWarnBoss"
+    {
+        "en"        "{wheat}The boss cannot leave the gang if there are other members!"
+    }
+    "CommandCreateGangWarnInGang"
+    {
+        "en"        "{wheat}You are already in a gang!"
+    }
+    "CommandGangNameExists"
+    {
+        "en"        "{wheat}A gang with that name already exists."
+    }
+    "CommandGangTagExists"
+    {
+        "en"        "{wheat}An existing gang has taken that tag."
+    }
+    "CommandCreateGangWarnError"
+    {
+        "en"        "{wheat}There was an error creating the gang. Please check server console for more information."
+    }
+    "GangNameFormat"
+    {
+        "en"        "{wheat}Gang names can contain any character, but letters in the gang name must be unique."
+    }
+    "GangNameExample"
+    {
+        "en"        "{wheat}Example: MyGang1 and MyGang2 would be considered the same, but MyGang1 and GangMy1 would be considered different."
+    }
+    "GangTagFormat"
+    {
+        "en"        "{wheat}Gang Tags are 2-4 letters long and must only contain letters."
+    }
+    "GangTagExample"
+    {
+        "en"        "{wheat}Example: TAG, GanG, Dx"
+    }
+    "GangCreated"
+    {
+        "#format"   "{1:N}{2:s}"
+        "en"        "{unique}{1}{wheat} has formed the gang {chartreuse}{2}."
+    }
+    "GangCreatedSilent"
+    {
+        "#format"   "{1:s}"
+        "en"        "{wheat}You have formed the gang {chartreuse}{1}."
+    }
+    "GangCreatedHelp"
+    {
+        "en"        "{wheat}Use sm_ganghelp for a list of gang related commands."
+    }
+    "CommandWarnNotInGang"
+    {
+        "en"        "{wheat}You are not in a gang!"
+    }
+    "CommandWarnTargetNotInGang"
+    {
+        "en"        "{wheat}Player is not in a gang."
+    }
+    "CommandWarnGangRank"
+    {
+        "en"        "{wheat}You are not a high enough rank in the gang to do this!"
+    }
+    "GangMaxSize"
+    {
+        "en"        "{wheat}Gang already at max member count."
+    }
+    "GangInactive"
+    {
+        "en"        "{wheat}Gang is inactive."
+    }
+    "GangDisband"
+    {
+        "#format"   "{1:N}{2:s}"
+        "en"        "{unique}{1}{wheat} has disbanded the gang {chartreuse}{2}."
+    }
+    "GangNameChange"
+    {
+        "#format"   "{1:s}{2:s}"
+        "en"        "{wheat}Gang {chartreuse}{1}{wheat} has changed their name to {chartreuse}{2}"
+    }
+    "GangNameChangeSilent"
+    {
+        "#format"   "{1:s}"
+        "en"        "{wheat}Gang leader has changed the gang name to {chartreuse}{1}"
+    }
+    "GangNameSame"
+    {
+        "en"        "{wheat}That is already the name of your gang!"
+    }
+    "GangTagChange"
+    {
+        "#format"   "{1:s}"
+        "en"        "{wheat}Gang leader has changed the gang tag to {chartreuse}{1}"
+    }
+    "GangTagSame"
+    {
+        "en"        "{wheat}That is already the tag of your gang!"
+    }
+    "GangChatDisabled"
+    {
+        "en"        "{wheat}Gang chat is disabled on this server."
+    }
+    "GangPlayerLeave"
+    {
+        "#format"   "{1:N}"
+        "en"        "{unique}{1}{wheat} has left the gang!"
+    }
+    "GangInviteReceived"
+    {
+        "#format"   "{1:N}{2:s}"
+        "en"        "{unique}{1}{wheat} has invited you to join the gang {chartreuse}{2}{wheat}. Use sm_gangjoin to join them."
+    }
+    "GangInviteSent"
+    {
+        "#format"   "{1:N}{2:s}{3:N}"
+        "en"        "{unique}{1}{wheat} was invited to join your gang by {{2}}{3}."
+    }
+    "GangInvitePlayerJoined"
+    {
+        "#format"   "{1:s}{2:N}"
+        "en"        "{{1}}{2}{wheat} has joined the gang!"
+    }
+    "GangInviteJoined"
+    {
+        "#format"   "{1:s}"
+        "en"        "{wheat}You have joined the gang {chartreuse}{1}." 
+    }
+    "GangMemberList"
+    {
+        "#format"   "{1:s}"
+        "en"        "{wheat}List of members in the gang {chartreuse}{1}:"
+    }
+    "GangMemberListFormat"
+    {
+        "en"        "{chartreuse}(member_id): {wheat}steam_name (steam_id)"
+    }
+    "CommandGangWarnSelf"
+    {
+        "en"        "{wheat}You cannot perform that action on yourself!"
+    }
+    "CommandGangPromoteWarnBoss"
+    {
+        "en"        "{wheat}If you promote an officer, they will take your place as boss. Run command again to confirm."
+    }
+    "CommandGangDemoteWarnMuscle"
+    {
+        "en"        "{wheat}You cannot demote the lowest rank!"
+    }
+    "GangPlayerKicked"
+    {
+        "#format"   "{1:s}"
+        "en"        "{unique}{1}{wheat} was kicked from the gang."
+    }
+    "GangPlayerKickedPlayer"
+    {
+        "#format"   "{1:s}"
+        "en"        "You have been kicked from the gang {chartreuse}{1}."
+    }
+    "GangPromotion"
+    {
+        "#format"   "{1:s}{2:s}{3:s}{4:t}"
+        "en"        "{{1}}{2}{wheat} was promoted to {{3}}{4}."
+    }
+    "GangDemotion"
+    {
+        "#format"   "{1:s}{2:s}{3:s}{4:t}"
+        "en"        "{{1}}{2}{wheat} was demoted to {{3}}{4}."
+    }
+    "GangStepDown"
+    {
+        "#format"   "{1:s}{2:N}{3:s}{4:t}"
+        "en"        "{{1}}{2}{wheat} has stepped down from {{3}}{4}."
+    }
+    "GangRankBoss"
+    {
+        "en"        "Boss"
+    }
+    "GangRankOfficer"
+    {
+        "en"        "Officer"
+    }
+    "GangRankMuscle"
+    {
+        "en"        "Muscle"
+    }
+    "GangCommandPoints"
+    {
+        "#format"   "{1:d}"
+        "en"        "{wheat}Gang points: {chartreuse}{1}"   
+    }
+    "GangPointsGainedLR"
+    {
+        "#format"   "{1:d}"
+        "en"        "{wheat}Gang gained {chartreuse}{1}{wheat} points for gang member winning last request."
+    }
+    "GangPointsGainedAlive"
+    {
+        "#format"   "{1:d}"
+        "en"        "{wheat}Gang gained {chartreuse}{1}{wheat} points for gang members alive."
+    }
+    "GangPointsGainedAdmin"
+    {
+        "#format"   "{1:d}"
+        "en"        "{wheat}Gang gained {chartreuse}{1}{wheat} points from admin."
+    }
+    "GangBuffActive"
+    {
+        "#format"   "{1:s}{2:t}"
+        "en"        "{wheat}Gang {chartreuse}{1}{wheat} activated {strange}{2}{wheat}!"
+    }
+    "GangChatOn"
+    {
+        "en"        "{wheat}Enabled gang chat. Messages will only be seen by gang members."
+    }
+    "GangChatOff"
+    {
+        "en"        "{wheat}Disabled gang chat. Messages will be seen by all players."
+    }
+}

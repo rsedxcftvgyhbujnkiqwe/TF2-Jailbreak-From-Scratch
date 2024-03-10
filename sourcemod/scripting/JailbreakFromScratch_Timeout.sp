@@ -1,8 +1,5 @@
-//This is too much work right now
-//maybe in another version...
-
 #define PLUGIN_NAME         "[JBFS] Timeout"
-#define PLUGIN_VERSION      "1.0"
+#define PLUGIN_VERSION      "1.1"
 #define PLUGIN_AUTHOR       "blank"
 #define PLUGIN_DESCRIPTION  "Minimal teamban plugin for JBFS"
 
@@ -55,6 +52,7 @@ char TableName[] = "JBFSTimeouts"
 
 public void OnPluginStart()
 {
+    PrintToServer("[JBFS] Loading JBFS Timeouts")
     cvarJBFS[DatabaseName] = CreateConVar("sm_jbfst_database","jbfstimeouts","Name of SQL database to use. Configured in databases.cfg",FCVAR_NOTIFY)
     cvarJBFS[ACMD_Timeout] = CreateConVar("sm_jbfst_timeout","2","Admin flag(s) required to timeout a player.",FCVAR_NOTIFY,true,0.0,true,2097151.0)
     cvarJBFS[Version] = CreateConVar("jbfst_version",PLUGIN_VERSION,PLUGIN_NAME,FCVAR_REPLICATED | FCVAR_NOTIFY | FCVAR_SPONLY | FCVAR_DONTRECORD);
@@ -87,9 +85,21 @@ public void OnConfigsExecuted()
     DBConnect();
 }
 
+stock void SanitizeString(char[] buffer, int maxlength,const char[] input)
+{
+    //assume your buffer and input are the same size!
+    int pos = 0;
+    for(int i;i<maxlength;i++)
+    {
+        if (input[i] == '%' || input[i] == '\\') continue;
+        buffer[pos++] = input[i]
+        if(input[i] == '\0') break;
+    }
+}
+
 public void DBConnect()
 {
-    char dbname[255];
+    char dbname[256];
     cvarJBFS[DatabaseName].GetString(dbname,sizeof(dbname))
     Database.Connect(GotDatabase,dbname)
 }
@@ -314,7 +324,10 @@ public Action Command_Admin_Timeout(int client, int args)
         else Format(reason, sizeof(reason), "%s %s", reason, s);
     }
 
-    DB_AddGuardBan(target,Ban_Round,rounds,client,reason)
+    char sanitized_reason[256];
+    SanitizeString(sanitized_reason,sizeof(sanitized_reason),reason)
+
+    DB_AddGuardBan(target,Ban_Round,rounds,client,sanitized_reason)
 
     //pre round -> will be moved
     switch(RoundStatus)
@@ -325,16 +338,16 @@ public Action Command_Admin_Timeout(int client, int args)
         }
     }
     char tag[64],msg[256]; Format(tag,sizeof(tag),"%t","PluginTagAdmin");
-    if(StrEqual(reason,"\0"))
+    if(StrEqual(sanitized_reason,"\0"))
     {
         Format(msg,sizeof(msg)," %t","TimeoutIssued",target,rounds)
     }
     else
     {
-        Format(msg,sizeof(msg)," %t","TimeoutIssuedReason",target,rounds,reason)
+        Format(msg,sizeof(msg)," %t","TimeoutIssuedReason",target,rounds,sanitized_reason)
     }
     CShowActivity2(client, tag, msg);
-    LogAction(client,target,"\"%L\" timed out \"%L\" for %d rounds (reason: %s)",client,target,rounds,reason);
+    LogAction(client,target,"\"%L\" timed out \"%L\" for %d rounds (reason: %s)",client,target,rounds,sanitized_reason);
     return Plugin_Handled;
 }
 
@@ -400,4 +413,9 @@ public void OnClientPutInServer(client)
     {
         JBFS_AddGuardBan(client);
     }
+}
+
+public void OnClientDisconnect(client)
+{
+    JBFS_RemoveGuardBan(client);
 }

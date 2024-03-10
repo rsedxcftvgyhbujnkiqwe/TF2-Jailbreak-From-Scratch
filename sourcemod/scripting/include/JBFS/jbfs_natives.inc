@@ -18,3 +18,18 @@ public any Native_IsGuardBanned(Handle plugin, int numParams)
 {
     return JBFS.GuardBanned[GetNativeCell(1)];
 }
+
+public any Native_GetLRWinner(Handle plugin, int numParams)
+{
+    return LRConfig.LRWinner;
+}
+
+public any Native_IsWarday(Handle plugin, int numParams)
+{
+    return LRConfig.WardayActive;
+}
+
+public any Native_IsFreeday(Handle plugin, int numParamas)
+{
+    return LRConfig.FreedaysActive[GetNativeCell(1)];
+}

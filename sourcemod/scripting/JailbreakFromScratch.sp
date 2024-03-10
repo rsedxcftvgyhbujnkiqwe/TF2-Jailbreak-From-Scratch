@@ -1,5 +1,5 @@
 #define PLUGIN_NAME         "Jailbreak From Scratch"
-#define PLUGIN_VERSION      "1.1"
+#define PLUGIN_VERSION      "1.2"
 #define PLUGIN_AUTHOR       "blank"
 #define PLUGIN_DESCRIPTION  "Minimal TF2 Jailbreak plugin"
 
@@ -9,6 +9,7 @@
 #include <sdkhooks>
 #include <tf2>
 #include <tf2_stocks>
+#include <dhooks>
 
 public Plugin myinfo =
 {
@@ -27,6 +28,7 @@ public Plugin myinfo =
 #include <JBFS/jbfs_cfg>
 #include <JBFS/jbfs_menu>
 #include <JBFS/jbfs_natives>
+#include <JBFS/jbfs_detours>
 #include <JBFS/stocks>
 
 //third party deps
@@ -46,7 +48,6 @@ public void OnPluginStart()
     PrintToServer("===Starting %s, version %s===",PLUGIN_NAME,PLUGIN_VERSION);
     //register cvars
     cvarJBFS[BalanceRatio] = CreateConVar("sm_jbfs_balanceratio","0.5","Default balance ratio of blues to reds.",FCVAR_NOTIFY,true,0.1,true,1.0);
-    cvarJBFS[TextChannel] = CreateConVar("sm_jbfs_textchannel","4","Default text channel for JBFS Hud text.",FCVAR_NOTIFY,true,0.0,true,5.0);
     cvarJBFS[GuardCrits] = CreateConVar("sm_jbfs_guardcrits","1","Should Guards have crits.\n0 = No Crits\n1 = Crits",FCVAR_NOTIFY,true,0.0,true,1.0);
     cvarJBFS[RoundTime] = CreateConVar("sm_jbfs_roundtime","600","Time per round, in seconds",FCVAR_NOTIFY,true,120.0);
     cvarJBFS[WardayTime] = CreateConVar("sm_jbfs_wardaytime","300","Time per round on Warday, in seconds",FCVAR_NOTIFY,true,120.0);
@@ -75,6 +76,13 @@ public void OnPluginStart()
     cvarJBFS[DemoCharge] = CreateConVar("sm_jbfs_democharge","1","Can demomen charge?\n0 = No\n1 = With ammo (blues by default)\n2 = Blues only\n3 = Yes (all)",FCVAR_NOTIFY,true,0.0,true,3.0);
     cvarJBFS[LRSetTime] = CreateConVar("sm_jbfs_lrtime","0","Round timer will be set to this many seconds once LR is given.\n0 disables the check",FCVAR_NOTIFY,true,0.0,true,300.0);
     cvarJBFS[LastRequest] = CreateConVar("sm_jbfs_lastrequest","1","Enable the Last Request system.\nDisabling it will prevent wardens and admins from giving out last request to prisoners.\n0 = Disabled\n1 = Enabled",FCVAR_NOTIFY,true,0.0,true,1.0)
+    cvarJBFS[AllowSurrender] = CreateConVar("sm_jbfs_allowsurrender","1","Allow prisoners to surrender their ammo/weapons. Announced to all players.\n0 = Disabled\n1 = Enabled",FCVAR_NOTIFY,true,0.0,true,1.0)
+    cvarJBFS[AimNames] = CreateConVar("sm_jbfs_aimnames","1","Control how guards can see prisoner names aimed at.\n0 = No aim names\n1 = Only warden sees names\n2 = All guards see names",FCVAR_NOTIFY,true,0.0,true,2.0);
+    cvarJBFS[AimTime] = CreateConVar("sm_jbfs_aimtime","0.25","How long a player must aim at another to show their name.\nOnly relevant if sm_jbfs_aimnames > 0",FCVAR_NOTIFY,true,0.0,true,5.0);
+    cvarJBFS[AimDistance] = CreateConVar("sm_jbfs_aimdistance","1024.0","Distance a prisoner must be to see their name.\nOnly relevant if sm_jbfs_aimnames > 0",FCVAR_NOTIFY,true,128.0,true,16384.0);
+    cvarJBFS[WeaponSearch] = CreateConVar("sm_jbfs_weaponsearch","1","Allow guards to search prisoners for weapons while holding melee.\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0);
+    cvarJBFS[SearchTime] = CreateConVar("sm_jbfs_weaponsearchtime","3.0","Time required to search for weapons.",FCVAR_NOTIFY,true,0.5,true,5.0);
+    cvarJBFS[WardenLockTime] = CreateConVar("sm_jbfs_wardenlocktime","0.0","Clamp round time to this value, in seconds, when warden locks.\n0 = Disabled",FCVAR_NOTIFY,true,0.0,true,300.0)
     cvarJBFS[Version] = CreateConVar("jbfs_version",PLUGIN_VERSION,PLUGIN_NAME,FCVAR_REPLICATED | FCVAR_NOTIFY | FCVAR_SPONLY | FCVAR_DONTRECORD);
     //admincmd cvars
     cvarJBFS_CMD[ACMD_WardenMenu] = CreateConVar("sm_jbfs_acmd_adminmenu","2","Admin commands (sm_jbfs_acmd_*) requires setting admin flag bits.\nSee: https://wiki.alliedmods.net/Checking_Admin_Flags_(SourceMod_Scripting)\n\nAdmin flag(s) required to open the admin warden menu.",FCVAR_NOTIFY,true,0.0,true,2097151.0);
@@ -96,26 +104,38 @@ public void OnPluginStart()
     //regular commands for players
     RegConsoleCmd("sm_w",Command_Warden,"Become the Warden");
     RegConsoleCmd("sm_warden",Command_Warden,"Become the Warden");
+    
     RegConsoleCmd("sm_ff",Command_FriendlyFireStatus,"Show status of Friendly Fire");
+    
     RegConsoleCmd("sm_fire",Command_FireWarden,"Vote to fire the Warden");
+    
     RegConsoleCmd("sm_lr",Command_CheckLastRequest,"Check the current Last Request");
+    
+    RegConsoleCmd("sm_surrender",Command_Surrender,"Surrender your ammo");
 
     //warden commands
     RegConsoleCmd("sm_uw",Command_UnWarden,"Retire from Warden");
     RegConsoleCmd("sm_unwarden",Command_UnWarden,"Retire from Warden");
+    
     RegConsoleCmd("sm_oc",Command_OpenCells,"Open the cell doors");
     RegConsoleCmd("sm_opencells",Command_OpenCells,"Open the cell doors");
+    
     RegConsoleCmd("sm_cc",Command_CloseCells,"Close the cell doors");
     RegConsoleCmd("sm_closecells",Command_CloseCells,"Close the cell doors");
+    
     RegConsoleCmd("sm_wm",Command_WardenMenu,"Open the Warden menu");
     RegConsoleCmd("sm_wmenu",Command_WardenMenu,"Open the Warden menu");
     RegConsoleCmd("sm_wardenmenu",Command_WardenMenu,"Open the Warden menu");
+    
     RegConsoleCmd("sm_wff",Command_ToggleFriendlyFire,"Toggle Friendly Fire");
     RegConsoleCmd("sm_wardenff",Command_ToggleFriendlyFire,"Toggle Friendly Fire");
+    
     RegConsoleCmd("sm_wcc",Command_ToggleCollisions,"Toggle Collisions");
     RegConsoleCmd("sm_wcol",Command_ToggleCollisions,"Toggle Collisions");
     RegConsoleCmd("sm_wardencol",Command_ToggleCollisions,"Toggle Collisions");
+    
     RegConsoleCmd("sm_marker",Command_WardenMarker,"Create a Warden marker");
+    
     RegConsoleCmd("sm_glr",Command_GiveLastRequest,"Give a prisoner LR");
     RegConsoleCmd("sm_givelr",Command_GiveLastRequest,"Give a prisoner LR");
 
@@ -123,7 +143,6 @@ public void OnPluginStart()
     //hook gameevents for use as functions
     HookEvent("teamplay_round_start",OnPreRoundStart);
     HookEvent("arena_round_start",OnArenaRoundStart);
-    HookEvent("player_disconnect",OnPlayerDisconnect);
     HookEvent("player_death",OnPlayerDeath);
     HookEvent("player_spawn",OnPlayerSpawn);
     HookEvent("teamplay_round_win",OnArenaRoundEnd);
@@ -135,6 +154,8 @@ public void OnPluginStart()
     HookEntityOutput("item_ammopack_small", "OnCacheInteraction", OnTakeAmmo);
     HookEntityOutput("tf_ammo_pack", "OnCacheInteraction", OnTakeAmmo);
 
+    InitDHooks();
+
     SetConVars(true);
 
     //add custom color(s) to morecolors
@@ -145,6 +166,10 @@ public void OnPluginStart()
     LoadTranslations("common.phrases");
     LoadTranslations("jbfs/jbfs.phrases");
     LoadTranslations("jbfs/jbfs.menu");
+
+    TimerHud = CreateHudSynchronizer();
+    AimHud = CreateHudSynchronizer();
+    SearchHud = CreateHudSynchronizer();
 }
 
 public void OnConfigsExecuted()
@@ -152,30 +177,62 @@ public void OnConfigsExecuted()
     //admin commands
     RegAdminCmd("sm_fw",Command_Admin_ForceWarden,cvarJBFS_CMD[ACMD_ForceWarden].IntValue,"Force a player to become Warden");
     RegAdminCmd("sm_forcewarden",Command_Admin_ForceWarden,cvarJBFS_CMD[ACMD_ForceWarden].IntValue,"Force a player to become Warden");
+    
     RegAdminCmd("sm_fuw",Command_Admin_ForceUnWarden,cvarJBFS_CMD[ACMD_ForceWarden].IntValue,"Force the current Warden to retire");
     RegAdminCmd("sm_forceretire",Command_Admin_ForceUnWarden,cvarJBFS_CMD[ACMD_ForceWarden].IntValue,"Force the current Warden to retire");
     RegAdminCmd("sm_forceunwarden",Command_Admin_ForceUnWarden,cvarJBFS_CMD[ACMD_ForceWarden].IntValue,"Force the current Warden to retire");
+    
     RegAdminCmd("sm_lw",Command_Admin_LockWarden,cvarJBFS_CMD[ACMD_LockWarden].IntValue,"Lock Warden");
     RegAdminCmd("sm_lockwarden",Command_Admin_LockWarden,cvarJBFS_CMD[ACMD_LockWarden].IntValue,"Lock Warden");
+    
     RegAdminCmd("sm_ulw",Command_Admin_UnlockWarden,cvarJBFS_CMD[ACMD_LockWarden].IntValue,"Unlock Warden");
     RegAdminCmd("sm_unlockwarden",Command_Admin_UnlockWarden,cvarJBFS_CMD[ACMD_LockWarden].IntValue,"Unlock Warden");
+    
     RegAdminCmd("sm_jt",Command_Admin_JailTime,cvarJBFS_CMD[ACMD_JailTime].IntValue,"Set time left in round, in seconds");
     RegAdminCmd("sm_jtime",Command_Admin_JailTime,cvarJBFS_CMD[ACMD_JailTime].IntValue,"Set time left in round, in seconds");
     RegAdminCmd("sm_jailtime",Command_Admin_JailTime,cvarJBFS_CMD[ACMD_JailTime].IntValue,"Set time left in round, in seconds");
+    
     RegAdminCmd("sm_foc",Command_Admin_OpenCells,cvarJBFS_CMD[ACMD_Cells].IntValue,"Force open the cell doors");
     RegAdminCmd("sm_forceopencells",Command_Admin_OpenCells,cvarJBFS_CMD[ACMD_Cells].IntValue,"Force open the cell doors");
+    
     RegAdminCmd("sm_fcc",Command_Admin_CloseCells,cvarJBFS_CMD[ACMD_Cells].IntValue,"Force close the cell doors");
     RegAdminCmd("sm_forceclosecells",Command_Admin_CloseCells,cvarJBFS_CMD[ACMD_Cells].IntValue,"Force close the cell doors");
+    
     RegAdminCmd("sm_aff",Command_Admin_ToggleFriendlyFire,cvarJBFS_CMD[ACMD_FF].IntValue,"Toggle Friendly Fire");
     RegAdminCmd("sm_adminff",Command_Admin_ToggleFriendlyFire,cvarJBFS_CMD[ACMD_FF].IntValue,"Toggle Friendly Fire");
+    
     RegAdminCmd("sm_acc",Command_Admin_ToggleCollisions,cvarJBFS_CMD[ACMD_CC].IntValue,"Toggle Collisions");
     RegAdminCmd("sm_acol",Command_Admin_ToggleCollisions,cvarJBFS_CMD[ACMD_CC].IntValue,"Toggle Collisions");
     RegAdminCmd("sm_admincol",Command_Admin_ToggleCollisions,cvarJBFS_CMD[ACMD_CC].IntValue,"Toggle Collisions");
+    
     RegAdminCmd("sm_flr",Command_Admin_ForceLastRequest,cvarJBFS_CMD[ACMD_ForceLR].IntValue,"Force give a prisoner LR");
     RegAdminCmd("sm_forcelr",Command_Admin_ForceLastRequest,cvarJBFS_CMD[ACMD_ForceLR].IntValue,"Force give a prisoner LR");
+    
     RegAdminCmd("sm_freeday",Command_Admin_ForceFreeday,cvarJBFS_CMD[ACMD_ForceFreeday].IntValue,"Force give a prisoner a freeday")
+    
     RegAdminCmd("sm_awm",Command_Admin_WardenMenu,cvarJBFS_CMD[ACMD_WardenMenu].IntValue,"Open the Admin Warden menu");
     RegAdminCmd("sm_awmenu",Command_Admin_WardenMenu,cvarJBFS_CMD[ACMD_WardenMenu].IntValue,"Open the Admin Warden menu");
+}
+
+public void InitDHooks()
+{
+    Handle hGameData = LoadGameConfigFile("jbfs.games")
+    if (!hGameData)
+    {
+        SetFailState("Failed to load jbfs gamedata file jbfs.games.txt, make sure it is installed properly.")
+        return;
+    }
+
+    hInitPickedUpWeaponDetour = DHookCreateFromConf(hGameData,"CTFDroppedWeapon::InitPickedUpWeapon")
+    if (!hInitPickedUpWeaponDetour)
+        SetFailState("Failed to setup detour for CTFDroppedWeapon::InitPickedUpWeapon")
+    delete hGameData;
+
+    //no need to hook off the pre for now
+    // if (!DHookEnableDetour(hInitPickedUpWeaponDetour, false, Detour_InitPickedUpWeapon))
+    //     SetFailState("Failed to detour InitPickedUpWeapon")
+    if (!DHookEnableDetour(hInitPickedUpWeaponDetour, true, Detour_OnInitPickedUpWeapon_Post))
+        SetFailState("Failed to detour InitPickedUpWeapon post")
 }
 
 public void OnMapStart()
@@ -195,6 +252,9 @@ public void OnMapStart()
     if(vscript)
         RegisterVScriptFunctions();
 #endif
+
+    //thiink timer
+    CreateTimer(0.1,Timer_PlayerThink,_,TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);
 }
 
 public void OnPluginEnd()
@@ -277,6 +337,9 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
     CreateNative("JBFS_AddGuardBan",Native_AddGuardBan);
     CreateNative("JBFS_RemoveGuardBan",Native_RemoveGuardBan);
     CreateNative("JBFS_IsGuardBanned",Native_IsGuardBanned);
+    CreateNative("JBFS_GetLRWinner",Native_GetLRWinner);
+    CreateNative("JBFS_IsWarday",Native_IsWarday);
+    CreateNative("JBFS_IsFreeday",Native_IsFreeday);
 
     RegPluginLibrary("JailbreakFromScratch");
     return APLRes_Success;

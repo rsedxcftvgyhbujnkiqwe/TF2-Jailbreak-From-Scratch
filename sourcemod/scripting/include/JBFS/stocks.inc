@@ -93,6 +93,20 @@ stock int FindEntityByName(int e, const char[] classname, const char[] targetnam
     return -1;
 }
 
+stock void EntFire(const char[] targetname,const char[] input)
+{
+    char buffer[128];
+    int e;
+    while ((e = FindEntityByClassname(e, MapConfig.cellclass)) != -1)
+    {
+        GetEntPropString(e, Prop_Data, "m_iName", buffer, sizeof(buffer));
+        if (StrEqual(buffer, targetname))
+        {
+            AcceptEntityInput(e, input);
+        }
+    }
+}
+
 stock bool TraceRayFilterPlayers(int entity, int mask, any data)
 {
     return !(0 < entity <= MaxClients);
@@ -173,4 +187,29 @@ stock int TF2_CreateEquipWeapon(int client, char weaponname[32],int weaponindex)
     DispatchSpawn(weapon);
     EquipPlayerWeapon(client,weapon);
     return weapon;
+}
+
+stock bool TargetInRange(int client, int target,float distance)
+{
+    float cpos[3];
+    float tpos[3];
+    GetClientAbsOrigin(client,cpos);
+    GetClientAbsOrigin(target,tpos);
+    return GetVectorDistance(cpos,tpos) <= distance;
+}
+
+stock bool IsClient(int client)
+{
+    return 0 < client <= MaxClients
+}
+
+stock any Max(any val1, any val2)
+{
+    if (val1 > val2) return val1;
+    else return val2;
+}
+stock any Min(any val1, any val2)
+{
+    if (val1 < val2) return val1;
+    else return val2;
 }

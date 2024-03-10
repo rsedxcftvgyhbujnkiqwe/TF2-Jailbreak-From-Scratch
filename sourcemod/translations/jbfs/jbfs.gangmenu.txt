@@ -1,0 +1,97 @@
+"Phrases"
+{
+    "GangMenuTitle"
+    {
+        "en"    "Gang Menu"
+    }
+    "GangMenuOptHelp"
+    {
+        "en"    "Help"
+    }
+    "GangMenuOptCreateGang"
+    {
+        "en"    "Create Gang"
+    }
+    "GangMenuOptJoinGang"
+    {
+        "en"    "Join Gang"
+    }
+    "GangMenuOptListGang"
+    {
+        "en"    "List Members"
+    }
+    "GangMenuOptGangPoints"
+    {
+        "en"    "Show Points"
+    }
+    "GangMenuOptGangChat"
+    {
+        "en"    "Gang Chat"
+    }
+    "GangMenuOptGangInvite"
+    {
+        "en"    "Invite Player"
+    }
+    "GangMenuOptGangShop"
+    {
+        "en"    "Gang Shop"
+    }
+    "GangMenuOptGangName"
+    {
+        "en"    "Change Gang Name"
+    }
+    "GangMenuOptGangTag"
+    {
+        "en"    "Change Gang Tag"
+    }
+    "GangMenuOptGangPromote"
+    {
+        "en"    "Promote Members"
+    }
+    "GangMenuOptGangDemote"
+    {
+        "en"    "Demote Members"
+    }
+    "GangMenuOptGangKick"
+    {
+        "en"    "Kick Members"
+    }
+    "ShopMenuNoneLeft"
+    {
+        "en"    "Nothing left to purchase!"
+    }
+    "ShopMenuTitle"
+    {
+        "#format"   "{1:d}"
+        "en"    "Gang Shop - {1} points"
+    }
+    "ShopItemBanner"
+    {
+        "en"    "Gang Minicrits"
+    }
+    "ShopItemConch"
+    {
+        "en"    "Gang Healing"
+    }
+    "ShopItemBackup"
+    {
+        "en"    "Gang Resist"
+    }
+    "ShopItemWarp"
+    {
+        "en"    "Gang Teleport"
+    }
+    "ShopPickGang"
+    {
+        "#format"   "{1:s}{2:N}{3:t}{4:d}"
+        "en"    "{{1}}{2}{wheat} has purchased {strange}{3}{wheat} for the next round. Points remaining: {chartreuse}{4}"
+    }
+    "ShopWarnPoints"
+    {
+        "en"    "{wheat}Not enough points!"
+    }
+    "ShopWarnPurchased"
+    {
+        "en"    "{wheat}Shop item already purchased this round!"
+    }
+}

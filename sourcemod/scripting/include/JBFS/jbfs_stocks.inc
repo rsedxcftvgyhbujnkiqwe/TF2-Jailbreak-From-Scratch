@@ -123,7 +123,7 @@ stock void SetConVars(const bool side)
 stock void SetWarden(int client,int reason, int admin=0)
 {
     JBFS.Warden = client;
-    JBGameEvent(JBEvent_SetWarden);
+    JBGameEvent(JBEvent_SetWarden,client);
     LockWarden(false)
     //we just set warden + wardenlock, so no need for this anymore
     switch (reason)
@@ -152,7 +152,7 @@ stock void SetWarden(int client,int reason, int admin=0)
 stock void RemoveWarden(int reason)
 {
     int currentwarden = JBFS.Warden;
-    JBGameEvent(JBEvent_RemoveWarden);
+    JBGameEvent(JBEvent_RemoveWarden,currentwarden);
     JBFS.Warden = 0;
     //close warden menu if it's open
     if (g_WMenu[currentwarden]!= null) delete g_WMenu[currentwarden];
@@ -164,32 +164,32 @@ stock void RemoveWarden(int reason)
     {
         case UW_Retire:
         {
-            CPrintToChatAll("%t %t","PluginTag","WardenUWRetire",currentwarden);
+            if (currentwarden > 0) CPrintToChatAll("%t %t","PluginTag","WardenUWRetire",currentwarden);
             UnlockWarden(false);
         }
         case UW_Force:
         {
-            CPrintToChatAll("%t %t","PluginTag","WardenUWForce",currentwarden);
+            if (currentwarden > 0) CPrintToChatAll("%t %t","PluginTag","WardenUWForce",currentwarden);
             UnlockWarden(false);
         }
         case UW_Death:
         {
-            CPrintToChatAll("%t %t","PluginTag","WardenUWDeath",currentwarden);
+            if (currentwarden > 0) CPrintToChatAll("%t %t","PluginTag","WardenUWDeath",currentwarden);
             UnlockWarden(true);
         }
         case UW_Disconnect:
         {
-            CPrintToChatAll("%t %t","PluginTag","WardenUWDisconnect",currentwarden);
+            if (currentwarden > 0) CPrintToChatAll("%t %t","PluginTag","WardenUWDisconnect",currentwarden);
             UnlockWarden(true);
         }
         case UW_Fire:
         {
-            CPrintToChatAll("%t %t","PluginTag","WardenUWFire",currentwarden);
+            if (currentwarden > 0) CPrintToChatAll("%t %t","PluginTag","WardenUWFire",currentwarden);
             UnlockWarden(true);
         }
         case UW_TeamChange:
         {
-            CPrintToChatAll("%t %t","PluginTag","WardenUWTeamChange",currentwarden);
+            if (currentwarden > 0) CPrintToChatAll("%t %t","PluginTag","WardenUWTeamChange",currentwarden);
             UnlockWarden(true);
         }
         case UW_Silent:
@@ -223,11 +223,8 @@ stock void ChooseWarden(bool adminforce = false)
 
         if (MicCount==0){
             //nobody with mic eligible
-            if(!adminforce)
-            {
-                CPrintToChatAll("%t %t","PluginTag","WardenChooseNone")
-                UnlockWarden(true)
-            }
+            CPrintToChatAll("%t %t","PluginTag","WardenChooseNone")
+            UnlockWarden(true)
             return;
         }
         //set client to ignore if being admin forced
@@ -264,7 +261,7 @@ stock void UnlockWarden(bool message = false)
     JBFS.WardenLocked = false;
     if (message) CPrintToChatAll("%t %t","PluginTag","WardenUnlock");
     //if no one goes warden in 30s, lock it
-    JBFS.WardenLockTimer = CreateTimer(30.0,Timer_LockWarden);
+    JBFS.WardenLockTimer = CreateTimer(30.0,Timer_LockWarden,_,TIMER_FLAG_NO_MAPCHANGE);
 }
 
 stock void RemoveAmmo(int client)
@@ -320,14 +317,14 @@ stock int SetWeaponAmmo(const int weapon, const int ammo)
 stock void HudTextAll(const char[] fmt, any ...)
 {
     //SetGlobalTransTarget(client) - if translation text?
-    SetHudTextParamsEx(-1.0,0.1,2.0,{255,183,27,255},{255,183,27,255},0,0.0,0.0);
     char buffer[255];
     VFormat(buffer, sizeof(buffer), fmt, 2);
     for(int i = 1;i<=MaxClients;i++)
     {
         if (IsClientInGame(i))
         {
-            ShowHudText(i,cvarJBFS[TextChannel].IntValue,buffer);
+            SetHudTextParamsEx(-1.0,0.1,2.0,{255,183,27,255},{255,183,27,255},0,0.0,0.0);
+            ShowSyncHudText(i,TimerHud,buffer);
         }
     }
 }
@@ -339,26 +336,24 @@ stock bool ModifyCells(bool open,int client = 0,bool message = true)
         if(client) CPrintToChat(client,"%t %t","PluginTag","CellsWarnNone");
         return false;
     }
-    int cells = FindEntityByName(-1,"*",MapConfig.cells);
-    if (cells == -1 && LRConfig.LRActive)
+    if (LRConfig.LRActive)
     {
         if(client) CPrintToChat(client,"%t %t","PluginTag","CellsWarnLR");
         return false;
     }
-    char class[PLATFORM_MAX_PATH];
-    GetEntityClassname(cells,class,PLATFORM_MAX_PATH);
-    if (StrEqual(class,"func_door")||StrEqual(class,"func_door_rotating"))
+    if (StrEqual(MapConfig.cellclass,"func_door")||StrEqual(MapConfig.cellclass,"func_door_rotating"))
     {
-        if(open) AcceptEntityInput(cells,"Open");
-        else AcceptEntityInput(cells,"Close");
+        
+        if(open) EntFire(MapConfig.cells,"Open");
+        else EntFire(MapConfig.cells,"Close");
     }
-    else if (StrEqual(class,"logic_relay"))
+    else if (StrEqual(MapConfig.cellclass,"logic_relay"))
     {
-        AcceptEntityInput(cells,"Trigger");
+        EntFire(MapConfig.cells,"Trigger");
     }
-    else if (StrEqual(class,"func_breakable"))
+    else if (StrEqual(MapConfig.cellclass,"func_breakable"))
     {
-        if(open) AcceptEntityInput(cells,"Break");
+        if(open) EntFire(MapConfig.cells,"Break");
         else
         {
             if(client) CPrintToChat(client,"%t %t","PluginTag","CellsCantClose");
@@ -367,7 +362,7 @@ stock bool ModifyCells(bool open,int client = 0,bool message = true)
     }
     else
     {
-        if(client) CPrintToChat(client,"%t %t","PluginTag","CellsBadClass");
+        if(client) CPrintToChat(client,"%t %t","PluginTag","CellsWarnBadClass");
         return false;
     }
     if(message)
@@ -460,7 +455,7 @@ stock void CreateMarker(int client)
         EmitAmbientSound("misc/rd_finale_beep01.wav", endpoint);
     }
     JBFS.MarkerPlaced = true;
-    CreateTimer(2.5,Timer_AllowMarkerPlacement);
+    CreateTimer(2.5,Timer_AllowMarkerPlacement,_,TIMER_FLAG_NO_MAPCHANGE);
 }
 
 public bool ClientEligibleForLR(int client)
@@ -677,7 +672,7 @@ stock void RemoveWeapons(int client)
                 RemoveWeapon(client,i);
                 HasBlocked = true;
             }
-            else if (AmmoWep && GetClientTeam(client)==RED)
+            else if (AmmoWep && GetClientTeam(client)==RED && !LRConfig.WardayActive)
             {
                 //DANGER! If you put a melee weapon here, prisoner will A-pose!
                 SetEntPropEnt(client,Prop_Send,"m_hMyWeapons",-1,i);
@@ -731,5 +726,36 @@ stock void ReturnWeapons(int client)
         }
         SetArray(g_BlockedWeapons[client],6 ,-1);
         g_HasBlockedWeapons[client] = false;
+    }
+}
+
+stock void InitClientAttributes(int client)
+{
+    switch (TF2_GetPlayerClass(client))
+    {
+        case TFClass_Scout:
+        {
+            TF2Attrib_RemoveByDefIndex(client, 49);
+            switch (cvarJBFS[DoubleJump].IntValue)
+            {
+                case 0: TF2Attrib_SetByDefIndex(client, 49, 1.0);
+                case 2:
+                {
+                    if (GetClientTeam(client)==RED)
+                        TF2Attrib_SetByDefIndex(client, 49, 1.0);
+                }
+            }
+        }
+    }
+}
+
+stock void SetRebel(int client)
+{
+    //abstraction that serves to do anything to a player when they rebel
+    //probably only freeday removal for forseeable future
+    if ( IsClientInGame(client) && IsPlayerAlive(client) && GetClientTeam(client)==RED)
+    {
+        LRRemoveFreeday(client);
+        CPrintToChatAll("%t %t","PluginTag","FreedayLost",client)
     }
 }

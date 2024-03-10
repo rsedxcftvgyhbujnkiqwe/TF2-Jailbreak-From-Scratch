@@ -1,0 +1,59 @@
+"Phrases"
+{
+    "GangHelp"
+    {
+        "en"        "{wheat}List of Gang related commands:"
+    }
+    "GangHelpHelp"
+    {
+        "en"        "/ganghelp, /ghelp - Print this help output"
+    }
+    "GangMenuHelp"
+    {
+        "en"        "/gangmenu, /gmenu, /gang, /g - Open the Gang menu"
+    }
+    "GangCreateHelp"
+    {
+        "en"        "/gangcreate - Create a gang"
+    }
+    "GangJoinHelp"
+    {
+        "en"        "/gangjoin, /gjoin - Join a gang you have been invited to"
+    }
+    "GangLeaveHelp"
+    {
+        "en"        "/gangleave, /gleave - Leave your gang"
+    }
+    "GangChatHelp"
+    {
+        "en"        "/gangchat, /gc - Toggle gang chat"
+    }
+    "GangPointsHelp"
+    {
+        "en"        "/gangpoints, /gpoints - List gang points"
+    }
+    "GangInviteHelp"
+    {
+        "en"        "/ganginvite, /ginv - Invite a player to your gang"
+    }
+    "GangNameHelp"
+    {
+        "en"        "/gangname, /gname - Change your gang's name"
+    }
+    "GangTagHelp"
+    {
+        "en"        "/gangtag, /gtag - Change your gang's tag"
+    }
+    "GangPromoteHelp"
+    {
+        "en"        "/gangpromote, /gpromo - Promote a player in your gang"
+    }
+    "GangDemoteHelp"
+    {
+        "en"        "/gangdemote, /gdemo - Demote a player in your gang"
+    }
+    "GangKickHelp"
+    {
+        "en"        "/gangkick, /gkick - Kick a player from your gang"
+    }
+}
