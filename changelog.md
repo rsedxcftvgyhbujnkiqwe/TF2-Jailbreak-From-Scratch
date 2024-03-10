@@ -52,7 +52,7 @@ None currently planned
 - Added `sm_jbfs_aimnames`, `sm_jbfs_aimtime`, `sm_jbfs_aimdistance` ConVars, which configure the Aim Name system
 - Added `sm_jbfs_weaponsearch`, `sm_jbfs_weaponsearchtime` ConVars, which configure the weapon search system
 - Added `sm_jbfs_wardenlocktime` ConVar, which controls round time clamping after warden is locked
-- Removed `sm_jbfs_textchannel` ConVar, made obsolete by HudSynchronizersn
+- Removed `sm_jbfs_textchannel` ConVar, made obsolete by HudSynchronizers
 ### VScript
 - Added global function `SetRebel`. Calling it and passing a userid of a client will cause them to lose freeday. Not the same as picking up ammo, see `TakenAmmo`. If `TakenAmmo` is called, this is redundant.
 - Added global function `IsFreeday`. Calling it with a client userid will return true/false depending if that player is currently a freeday.
