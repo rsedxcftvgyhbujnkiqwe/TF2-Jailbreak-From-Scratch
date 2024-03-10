@@ -167,7 +167,7 @@
     "GangInviteReceived"
     {
         "#format"   "{1:N}{2:s}"
-        "en"        "{unique}{1}{wheat} has invited you to join the gang {chartreuse}{2}."
+        "en"        "{unique}{1}{wheat} has invited you to join the gang {chartreuse}{2}{wheat}. Use sm_gangjoin to join them."
     }
     "GangInviteSent"
     {

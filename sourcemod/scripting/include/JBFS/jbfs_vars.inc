@@ -9,7 +9,6 @@ enum
 enum
 {
     BalanceRatio=0,
-    TextChannel,
     GuardCrits,
     RoundTime,
     WardayTime,
