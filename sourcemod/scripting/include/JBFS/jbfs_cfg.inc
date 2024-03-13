@@ -7,6 +7,17 @@ public void LoadConfigs()
 
 public void LoadMapConfig()
 {
+    //reset vars
+    MapConfig.fspawn = {0.0,0.0,0.0};
+    MapConfig.hasfspawn = false;
+    MapConfig.rspawn = {0.0,0.0,0.0};
+    MapConfig.hasrspawn = false;
+    MapConfig.bspawn = {0.0,0.0,0.0};
+    MapConfig.hasbspawn = false;
+    MapConfig.hascells = false;
+    MapConfig.cells = "\0"
+    MapConfig.cellclass = "\0"
+
     char mapcfg[64] = "configs/jbfs/maps.cfg";
     KeyValues kv = new KeyValues("Maps");
     char path[PLATFORM_MAX_PATH];
@@ -74,6 +85,7 @@ public void LoadMapConfig()
         cell button is assumed to be:
         func_button named open_cells
         */
+        PrintToServer("====Config not found for map, generating...====")
         MapConfig.cells = "cell_door";
         int cells = FindEntityByName(-1,"*","cell_door");
         if (IsValidEntity(cells)){
