@@ -3,8 +3,7 @@ public void OnPreRoundStart(Event event, const char[] name, bool dontBroadcast)
     LRConfig.LRActive = LRConfig.LRChosen;
     LRConfig.LRChosen = LR_None;
     LRConfig.LRWinner = 0; //this is done here so you can get lr winner on round end
-    JBFS.RoundActive = false;
-    if (IsValidHandle(JBFS.RoundTimer)) KillTimer(JBFS.RoundTimer);    
+    JBFS.RoundActive = false;  
     //surrender timers
     SetArray(JBFS.HasSurrendered,sizeof(JBFS.HasSurrendered),false);
     for (int i;i<=MaxClients;i++)
@@ -22,6 +21,7 @@ public void OnPreRoundStart(Event event, const char[] name, bool dontBroadcast)
     //reset convars
     FindConVar("mp_friendlyfire").SetBool(false);
     FindConVar("tf_avoidteammates_pushaway").SetBool(false);
+    FindConVar("tf_arena_round_time").SetInt(cvarJBFS[RoundTime].IntValue);
     //fire preround lr stuff (freedays)
     if(LRConfig.LRActive == LR_FreedaySelf || LRConfig.LRActive == LR_FreedayOthers)
     {
@@ -35,9 +35,9 @@ public void OnPreRoundStart(Event event, const char[] name, bool dontBroadcast)
 public void OnArenaRoundStart(Event event, const char[] name, bool dontBroadcast)
 {
     JBFS.RoundActive = true;
+    JBFS.RoundTimer = FindEntityByClassname(-1,"team_round_timer");
     //initial values
     AutoBalanceTeams();
-    JBFS.TimeLeft = cvarJBFS[RoundTime].IntValue;
     //modify for LR
     switch (LRConfig.LRActive)
     {
@@ -51,12 +51,12 @@ public void OnArenaRoundStart(Event event, const char[] name, bool dontBroadcast
             ModifyCells(true,0,true);
             //kill cells to prevent them from being closed
             CreateTimer(3.0,Timer_KillCells,_,TIMER_FLAG_NO_MAPCHANGE);
-            JBFS.TimeLeft = cvarJBFS[FreedayTime].IntValue;
+            SetRoundTime(cvarJBFS[FreedayTime].IntValue);
         }
         case LR_Warday:
         {
             LRWarday();
-            JBFS.TimeLeft = cvarJBFS[WardayTime].IntValue;
+            SetRoundTime(cvarJBFS[WardayTime].IntValue);
             CPrintToChatAll("%t %t","PluginTag","LRWardayActive");
         }
         case LR_Custom: CPrintToChatAll("%t %t","PluginTag","LRCustomActive",LRConfig.CustomLR);
@@ -66,13 +66,11 @@ public void OnArenaRoundStart(Event event, const char[] name, bool dontBroadcast
             AcceptEntityInput(relay,"Trigger");
         }
     }
-    JBFS.RoundTimer = CreateTimer(1.0,RoundTimer,_,TIMER_REPEAT);
     CreateTimer(3.0,Timer_ChooseWarden,_,TIMER_FLAG_NO_MAPCHANGE);
 }
 
 public void OnArenaRoundEnd(Event event, const char[] name, bool dontBroadcast)
 {
-    if (IsValidHandle(JBFS.RoundTimer)) KillTimer(JBFS.RoundTimer);
     LockWarden(false);
     JBFS.RoundActive = false;
     //reset lr stuff

@@ -482,7 +482,7 @@ stock bool SetLRWinner(int client, int warden, bool adminforce = false, int admi
         LogAction(admin,client,"\"%L\" forcibly gave \"%L\" last request.",admin,client);
     }
     int timeleft = cvarJBFS[LRSetTime].IntValue;
-    if(timeleft > 0) JBFS.TimeLeft = timeleft;
+    if(timeleft > 0) SetRoundTime(timeleft);
     return false;
 }
 
@@ -758,4 +758,10 @@ stock void SetRebel(int client)
         LRRemoveFreeday(client);
         CPrintToChatAll("%t %t","PluginTag","FreedayLost",client)
     }
+}
+
+stock void SetRoundTime(int time)
+{
+    SetVariantInt(time);
+    AcceptEntityInput(JBFS.RoundTimer,"SetTime")
 }

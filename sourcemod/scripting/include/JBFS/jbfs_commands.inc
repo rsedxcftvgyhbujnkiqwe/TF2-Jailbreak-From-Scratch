@@ -381,7 +381,7 @@ public Action Command_Admin_JailTime(int client, int args)
     int seconds;
     if (args == 1 && GetCmdArgIntEx(1,seconds) && seconds >= 0)
     {
-        JBFS.TimeLeft = seconds;
+        SetRoundTime(seconds);
         char tag[64],msg[256]; 
         Format(tag,sizeof(tag),"%t","PluginTagAdmin");
         Format(msg,sizeof(msg)," %t","AdminJailTime",seconds);

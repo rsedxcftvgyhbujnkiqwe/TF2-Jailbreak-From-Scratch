@@ -8,34 +8,11 @@ public Action Timer_LockWarden(Handle timer)
 {
     LockWarden(true);
     if (cvarJBFS[WardenLockTime].IntValue > 0) {
-        JBFS.TimeLeft = Min(JBFS.TimeLeft, cvarJBFS[WardenLockTime].IntValue)
+        float current_time = GetEntPropFloat(JBFS.RoundTimer,Prop_Send,"m_flTimeRemaining",1);
+        int time_int = RoundFloat(current_time)
+        SetRoundTime(Min(time_int, cvarJBFS[WardenLockTime].IntValue))
     }
     return Plugin_Stop;
-}
-
-public Action RoundTimer(Handle timer)
-{
-    int TimeLeft = JBFS.TimeLeft--;
-    switch (TimeLeft)
-    {
-        case 1,2,3,4,5,10,30,60:
-        {
-            char sound[PLATFORM_MAX_PATH];
-            FormatEx(sound,PLATFORM_MAX_PATH,"vo/announcer_ends_%dsec.mp3",TimeLeft);
-            EmitSoundToAll(sound);
-        }
-        case 0:
-        {
-            ForceTeamWin(BLU)
-            return Plugin_Stop;
-        }
-    }
-    int Minutes = TimeLeft/60;
-    int Seconds = TimeLeft%60;
-    if (Seconds<10) HudTextAll("%d:0%d",Minutes,Seconds);
-    else HudTextAll("%d:%d",Minutes,Seconds);
-
-    return Plugin_Continue;
 }
 
 public Action Timer_AllowMarkerPlacement(Handle timer)
