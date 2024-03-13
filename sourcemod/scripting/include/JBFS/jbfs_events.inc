@@ -1,5 +1,7 @@
 public void OnPreRoundStart(Event event, const char[] name, bool dontBroadcast)
 {
+    //kill timer to prevent it from ending round
+    if (IsValidHandle(JBFS.RoundTimer))KillTimer(JBFS.RoundTimer);
     LRConfig.LRActive = LRConfig.LRChosen;
     LRConfig.LRChosen = LR_None;
     LRConfig.LRWinner = 0; //this is done here so you can get lr winner on round end
@@ -72,6 +74,8 @@ public void OnArenaRoundStart(Event event, const char[] name, bool dontBroadcast
 
 public void OnArenaRoundEnd(Event event, const char[] name, bool dontBroadcast)
 {
+    //kill timer to prevent it from ending round
+    if (IsValidHandle(JBFS.RoundTimer))KillTimer(JBFS.RoundTimer);
     LockWarden(false);
     JBFS.RoundActive = false;
     //reset lr stuff
