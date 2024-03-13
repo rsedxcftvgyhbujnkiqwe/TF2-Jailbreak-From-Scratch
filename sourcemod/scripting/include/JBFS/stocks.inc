@@ -61,8 +61,8 @@ stock void ForceTeamWin(const int team)
 	{
 		entity = CreateEntityByName("team_control_point_master");
 		DispatchSpawn(entity);
-		AcceptEntityInput(entity, "Enable");
 	}
+	AcceptEntityInput(entity, "Enable");
 	SetVariantInt(team);
 	AcceptEntityInput(entity, "SetWinner");
 }

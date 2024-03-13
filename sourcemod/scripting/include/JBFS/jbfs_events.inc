@@ -34,6 +34,8 @@ public void OnPreRoundStart(Event event, const char[] name, bool dontBroadcast)
 
 public void OnArenaRoundStart(Event event, const char[] name, bool dontBroadcast)
 {
+    //this should be called to spawn the timer initially
+    SetRoundTime(cvarJBFS[RoundTime].IntValue);
     JBFS.RoundActive = true;
     //initial values
     AutoBalanceTeams();

@@ -16,6 +16,13 @@ public Action Timer_LockWarden(Handle timer)
     return Plugin_Stop;
 }
 
+public Action Timer_EndRound(Handle timer)
+{
+    //stalemate on wardays
+    if (!LRConfig.WardayActive) ForceTeamWin(BLU);
+    return Plugin_Stop;
+}
+
 public Action Timer_AllowMarkerPlacement(Handle timer)
 {
     JBFS.MarkerPlaced = false;
