@@ -167,7 +167,6 @@ public void OnPluginStart()
     LoadTranslations("jbfs/jbfs.phrases");
     LoadTranslations("jbfs/jbfs.menu");
 
-    TimerHud = CreateHudSynchronizer();
     AimHud = CreateHudSynchronizer();
     SearchHud = CreateHudSynchronizer();
 }

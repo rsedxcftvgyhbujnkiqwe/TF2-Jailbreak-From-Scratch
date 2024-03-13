@@ -292,6 +292,5 @@ Handle hInitPickedUpWeaponDetour;
 
 int g_PrevButtons[MAXPLAYERS+1];
 
-Handle TimerHud;
 Handle AimHud;
 Handle SearchHud;

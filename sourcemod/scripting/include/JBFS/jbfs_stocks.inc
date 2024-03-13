@@ -314,21 +314,6 @@ stock int SetWeaponAmmo(const int weapon, const int ammo)
 	return 0;
 }
 
-stock void HudTextAll(const char[] fmt, any ...)
-{
-    //SetGlobalTransTarget(client) - if translation text?
-    char buffer[255];
-    VFormat(buffer, sizeof(buffer), fmt, 2);
-    for(int i = 1;i<=MaxClients;i++)
-    {
-        if (IsClientInGame(i))
-        {
-            SetHudTextParamsEx(-1.0,0.1,2.0,{255,183,27,255},{255,183,27,255},0,0.0,0.0);
-            ShowSyncHudText(i,TimerHud,buffer);
-        }
-    }
-}
-
 stock bool ModifyCells(bool open,int client = 0,bool message = true)
 {
     if (!MapConfig.hascells)
