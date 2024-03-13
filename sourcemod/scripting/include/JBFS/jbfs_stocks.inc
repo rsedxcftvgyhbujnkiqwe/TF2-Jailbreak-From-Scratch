@@ -762,8 +762,8 @@ stock void SetRebel(int client)
 
 stock void SetRoundTime(int time)
 {
-    if (IsValidHandle(JBFS.RoundTimer)) KillTimer(JBFS.RoundTimer);
-    else JBFS.RoundTimer = CreateTimer(float(time) - 1.0,Timer_EndRound,_,TIMER_FLAG_NO_MAPCHANGE);
+    if (IsValidHandle(JBFS.RoundTimer))KillTimer(JBFS.RoundTimer);
+    JBFS.RoundTimer = CreateTimer(float(time) - 0.10,Timer_EndRound,_,TIMER_FLAG_NO_MAPCHANGE);
     int timer = FindEntityByClassname(-1,"team_round_timer");
     SetVariantInt(time);
     AcceptEntityInput(timer,"SetTime");

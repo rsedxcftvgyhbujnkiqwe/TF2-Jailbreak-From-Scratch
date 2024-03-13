@@ -19,7 +19,6 @@ public Action Timer_LockWarden(Handle timer)
 public Action Timer_EndRound(Handle timer)
 {
     //stalemate on wardays
-    PrintToServer("Ending round...")
     if (!LRConfig.WardayActive) ForceTeamWin(BLU);
     return Plugin_Stop;
 }
