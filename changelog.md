@@ -1,3 +1,6 @@
+## JBFS v1.2.2
+### Bug Fixes
+- Fixed issue where map config was not reset on map change, causing previous map config values to carry over.
 ## JBFS v1.2.1
 ### Changes
 - Round timer is no longer hudtext, instead using the built in arena timer
