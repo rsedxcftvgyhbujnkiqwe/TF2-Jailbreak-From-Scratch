@@ -1,3 +1,8 @@
+## JBFS v1.2.1
+### Changes
+- Round timer is no longer hudtext, instead using the built in arena timer
+### Bug Fixes
+- Fixed issue where admin command re-registered every map change, causing multiple firings
 ## JBFS Gangs v1.0
 ### Features
 - Players can create gangs, which are stored in an SQL database in order to function across servers/sessions.
