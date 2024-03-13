@@ -1,5 +1,5 @@
 #define PLUGIN_NAME         "Jailbreak From Scratch"
-#define PLUGIN_VERSION      "1.2"
+#define PLUGIN_VERSION      "1.2.1"
 #define PLUGIN_AUTHOR       "blank"
 #define PLUGIN_DESCRIPTION  "Minimal TF2 Jailbreak plugin"
 
@@ -167,7 +167,6 @@ public void OnPluginStart()
     LoadTranslations("jbfs/jbfs.phrases");
     LoadTranslations("jbfs/jbfs.menu");
 
-    TimerHud = CreateHudSynchronizer();
     AimHud = CreateHudSynchronizer();
     SearchHud = CreateHudSynchronizer();
 }
@@ -175,43 +174,47 @@ public void OnPluginStart()
 public void OnConfigsExecuted()
 {
     //admin commands
-    RegAdminCmd("sm_fw",Command_Admin_ForceWarden,cvarJBFS_CMD[ACMD_ForceWarden].IntValue,"Force a player to become Warden");
-    RegAdminCmd("sm_forcewarden",Command_Admin_ForceWarden,cvarJBFS_CMD[ACMD_ForceWarden].IntValue,"Force a player to become Warden");
-    
-    RegAdminCmd("sm_fuw",Command_Admin_ForceUnWarden,cvarJBFS_CMD[ACMD_ForceWarden].IntValue,"Force the current Warden to retire");
-    RegAdminCmd("sm_forceretire",Command_Admin_ForceUnWarden,cvarJBFS_CMD[ACMD_ForceWarden].IntValue,"Force the current Warden to retire");
-    RegAdminCmd("sm_forceunwarden",Command_Admin_ForceUnWarden,cvarJBFS_CMD[ACMD_ForceWarden].IntValue,"Force the current Warden to retire");
-    
-    RegAdminCmd("sm_lw",Command_Admin_LockWarden,cvarJBFS_CMD[ACMD_LockWarden].IntValue,"Lock Warden");
-    RegAdminCmd("sm_lockwarden",Command_Admin_LockWarden,cvarJBFS_CMD[ACMD_LockWarden].IntValue,"Lock Warden");
-    
-    RegAdminCmd("sm_ulw",Command_Admin_UnlockWarden,cvarJBFS_CMD[ACMD_LockWarden].IntValue,"Unlock Warden");
-    RegAdminCmd("sm_unlockwarden",Command_Admin_UnlockWarden,cvarJBFS_CMD[ACMD_LockWarden].IntValue,"Unlock Warden");
-    
-    RegAdminCmd("sm_jt",Command_Admin_JailTime,cvarJBFS_CMD[ACMD_JailTime].IntValue,"Set time left in round, in seconds");
-    RegAdminCmd("sm_jtime",Command_Admin_JailTime,cvarJBFS_CMD[ACMD_JailTime].IntValue,"Set time left in round, in seconds");
-    RegAdminCmd("sm_jailtime",Command_Admin_JailTime,cvarJBFS_CMD[ACMD_JailTime].IntValue,"Set time left in round, in seconds");
-    
-    RegAdminCmd("sm_foc",Command_Admin_OpenCells,cvarJBFS_CMD[ACMD_Cells].IntValue,"Force open the cell doors");
-    RegAdminCmd("sm_forceopencells",Command_Admin_OpenCells,cvarJBFS_CMD[ACMD_Cells].IntValue,"Force open the cell doors");
-    
-    RegAdminCmd("sm_fcc",Command_Admin_CloseCells,cvarJBFS_CMD[ACMD_Cells].IntValue,"Force close the cell doors");
-    RegAdminCmd("sm_forceclosecells",Command_Admin_CloseCells,cvarJBFS_CMD[ACMD_Cells].IntValue,"Force close the cell doors");
-    
-    RegAdminCmd("sm_aff",Command_Admin_ToggleFriendlyFire,cvarJBFS_CMD[ACMD_FF].IntValue,"Toggle Friendly Fire");
-    RegAdminCmd("sm_adminff",Command_Admin_ToggleFriendlyFire,cvarJBFS_CMD[ACMD_FF].IntValue,"Toggle Friendly Fire");
-    
-    RegAdminCmd("sm_acc",Command_Admin_ToggleCollisions,cvarJBFS_CMD[ACMD_CC].IntValue,"Toggle Collisions");
-    RegAdminCmd("sm_acol",Command_Admin_ToggleCollisions,cvarJBFS_CMD[ACMD_CC].IntValue,"Toggle Collisions");
-    RegAdminCmd("sm_admincol",Command_Admin_ToggleCollisions,cvarJBFS_CMD[ACMD_CC].IntValue,"Toggle Collisions");
-    
-    RegAdminCmd("sm_flr",Command_Admin_ForceLastRequest,cvarJBFS_CMD[ACMD_ForceLR].IntValue,"Force give a prisoner LR");
-    RegAdminCmd("sm_forcelr",Command_Admin_ForceLastRequest,cvarJBFS_CMD[ACMD_ForceLR].IntValue,"Force give a prisoner LR");
-    
-    RegAdminCmd("sm_freeday",Command_Admin_ForceFreeday,cvarJBFS_CMD[ACMD_ForceFreeday].IntValue,"Force give a prisoner a freeday")
-    
-    RegAdminCmd("sm_awm",Command_Admin_WardenMenu,cvarJBFS_CMD[ACMD_WardenMenu].IntValue,"Open the Admin Warden menu");
-    RegAdminCmd("sm_awmenu",Command_Admin_WardenMenu,cvarJBFS_CMD[ACMD_WardenMenu].IntValue,"Open the Admin Warden menu");
+    if (!CommandsExecuted)
+    {
+        RegAdminCmd("sm_fw",Command_Admin_ForceWarden,cvarJBFS_CMD[ACMD_ForceWarden].IntValue,"Force a player to become Warden");
+        RegAdminCmd("sm_forcewarden",Command_Admin_ForceWarden,cvarJBFS_CMD[ACMD_ForceWarden].IntValue,"Force a player to become Warden");
+        
+        RegAdminCmd("sm_fuw",Command_Admin_ForceUnWarden,cvarJBFS_CMD[ACMD_ForceWarden].IntValue,"Force the current Warden to retire");
+        RegAdminCmd("sm_forceretire",Command_Admin_ForceUnWarden,cvarJBFS_CMD[ACMD_ForceWarden].IntValue,"Force the current Warden to retire");
+        RegAdminCmd("sm_forceunwarden",Command_Admin_ForceUnWarden,cvarJBFS_CMD[ACMD_ForceWarden].IntValue,"Force the current Warden to retire");
+        
+        RegAdminCmd("sm_lw",Command_Admin_LockWarden,cvarJBFS_CMD[ACMD_LockWarden].IntValue,"Lock Warden");
+        RegAdminCmd("sm_lockwarden",Command_Admin_LockWarden,cvarJBFS_CMD[ACMD_LockWarden].IntValue,"Lock Warden");
+        
+        RegAdminCmd("sm_ulw",Command_Admin_UnlockWarden,cvarJBFS_CMD[ACMD_LockWarden].IntValue,"Unlock Warden");
+        RegAdminCmd("sm_unlockwarden",Command_Admin_UnlockWarden,cvarJBFS_CMD[ACMD_LockWarden].IntValue,"Unlock Warden");
+        
+        RegAdminCmd("sm_jt",Command_Admin_JailTime,cvarJBFS_CMD[ACMD_JailTime].IntValue,"Set time left in round, in seconds");
+        RegAdminCmd("sm_jtime",Command_Admin_JailTime,cvarJBFS_CMD[ACMD_JailTime].IntValue,"Set time left in round, in seconds");
+        RegAdminCmd("sm_jailtime",Command_Admin_JailTime,cvarJBFS_CMD[ACMD_JailTime].IntValue,"Set time left in round, in seconds");
+        
+        RegAdminCmd("sm_foc",Command_Admin_OpenCells,cvarJBFS_CMD[ACMD_Cells].IntValue,"Force open the cell doors");
+        RegAdminCmd("sm_forceopencells",Command_Admin_OpenCells,cvarJBFS_CMD[ACMD_Cells].IntValue,"Force open the cell doors");
+        
+        RegAdminCmd("sm_fcc",Command_Admin_CloseCells,cvarJBFS_CMD[ACMD_Cells].IntValue,"Force close the cell doors");
+        RegAdminCmd("sm_forceclosecells",Command_Admin_CloseCells,cvarJBFS_CMD[ACMD_Cells].IntValue,"Force close the cell doors");
+        
+        RegAdminCmd("sm_aff",Command_Admin_ToggleFriendlyFire,cvarJBFS_CMD[ACMD_FF].IntValue,"Toggle Friendly Fire");
+        RegAdminCmd("sm_adminff",Command_Admin_ToggleFriendlyFire,cvarJBFS_CMD[ACMD_FF].IntValue,"Toggle Friendly Fire");
+        
+        RegAdminCmd("sm_acc",Command_Admin_ToggleCollisions,cvarJBFS_CMD[ACMD_CC].IntValue,"Toggle Collisions");
+        RegAdminCmd("sm_acol",Command_Admin_ToggleCollisions,cvarJBFS_CMD[ACMD_CC].IntValue,"Toggle Collisions");
+        RegAdminCmd("sm_admincol",Command_Admin_ToggleCollisions,cvarJBFS_CMD[ACMD_CC].IntValue,"Toggle Collisions");
+        
+        RegAdminCmd("sm_flr",Command_Admin_ForceLastRequest,cvarJBFS_CMD[ACMD_ForceLR].IntValue,"Force give a prisoner LR");
+        RegAdminCmd("sm_forcelr",Command_Admin_ForceLastRequest,cvarJBFS_CMD[ACMD_ForceLR].IntValue,"Force give a prisoner LR");
+        
+        RegAdminCmd("sm_freeday",Command_Admin_ForceFreeday,cvarJBFS_CMD[ACMD_ForceFreeday].IntValue,"Force give a prisoner a freeday")
+        
+        RegAdminCmd("sm_awm",Command_Admin_WardenMenu,cvarJBFS_CMD[ACMD_WardenMenu].IntValue,"Open the Admin Warden menu");
+        RegAdminCmd("sm_awmenu",Command_Admin_WardenMenu,cvarJBFS_CMD[ACMD_WardenMenu].IntValue,"Open the Admin Warden menu");
+    }
+    CommandsExecuted = true;
 }
 
 public void InitDHooks()

@@ -314,21 +314,6 @@ stock int SetWeaponAmmo(const int weapon, const int ammo)
 	return 0;
 }
 
-stock void HudTextAll(const char[] fmt, any ...)
-{
-    //SetGlobalTransTarget(client) - if translation text?
-    char buffer[255];
-    VFormat(buffer, sizeof(buffer), fmt, 2);
-    for(int i = 1;i<=MaxClients;i++)
-    {
-        if (IsClientInGame(i))
-        {
-            SetHudTextParamsEx(-1.0,0.1,2.0,{255,183,27,255},{255,183,27,255},0,0.0,0.0);
-            ShowSyncHudText(i,TimerHud,buffer);
-        }
-    }
-}
-
 stock bool ModifyCells(bool open,int client = 0,bool message = true)
 {
     if (!MapConfig.hascells)
@@ -482,7 +467,7 @@ stock bool SetLRWinner(int client, int warden, bool adminforce = false, int admi
         LogAction(admin,client,"\"%L\" forcibly gave \"%L\" last request.",admin,client);
     }
     int timeleft = cvarJBFS[LRSetTime].IntValue;
-    if(timeleft > 0) JBFS.TimeLeft = timeleft;
+    if(timeleft > 0) SetRoundTime(timeleft);
     return false;
 }
 
@@ -758,4 +743,13 @@ stock void SetRebel(int client)
         LRRemoveFreeday(client);
         CPrintToChatAll("%t %t","PluginTag","FreedayLost",client)
     }
+}
+
+stock void SetRoundTime(int time)
+{
+    if (IsValidHandle(JBFS.RoundTimer))KillTimer(JBFS.RoundTimer);
+    JBFS.RoundTimer = CreateTimer(float(time) - 0.10,Timer_EndRound,_,TIMER_FLAG_NO_MAPCHANGE);
+    int timer = FindEntityByClassname(-1,"team_round_timer");
+    SetVariantInt(time);
+    AcceptEntityInput(timer,"SetTime");
 }

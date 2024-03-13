@@ -48,6 +48,8 @@ enum
 }
 ConVar cvarJBFS[Version+1];
 
+bool CommandsExecuted;
+
 enum
 {
     Building_Dispenser= (1<<0),
@@ -93,11 +95,11 @@ enum
 enum struct gamemode
 {
     bool MicStatus[MAXPLAYERS+1];
+    Handle RoundTimer;
     int Warden;
     bool WardenLocked;
     Handle WardenLockTimer;
     int TimeLeft;
-    Handle RoundTimer;
     bool FireVotes[MAXPLAYERS+1];
     int FireVoteCount;
     bool FireStatus[MAXPLAYERS+1];
@@ -290,6 +292,5 @@ Handle hInitPickedUpWeaponDetour;
 
 int g_PrevButtons[MAXPLAYERS+1];
 
-Handle TimerHud;
 Handle AimHud;
 Handle SearchHud;
