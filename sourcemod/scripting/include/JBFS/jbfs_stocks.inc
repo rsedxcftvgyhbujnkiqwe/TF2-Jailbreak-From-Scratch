@@ -762,7 +762,9 @@ stock void SetRebel(int client)
 
 stock void SetRoundTime(int time)
 {
-    SetVariantInt(time);
+    //SetVariantInt(time);
     PrintToServer("%d -  Timer",JBFS.RoundTimer)
-    AcceptEntityInput(JBFS.RoundTimer,"SetTime")
+
+    //AcceptEntityInput(JBFS.RoundTimer,"SetTime")
+    SetEntPropFloat(JBFS.RoundTimer,Prop_Send,"m_flTimeRemaining",float(time))
 }
