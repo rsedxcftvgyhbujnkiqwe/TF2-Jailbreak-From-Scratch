@@ -35,7 +35,6 @@ public void OnPreRoundStart(Event event, const char[] name, bool dontBroadcast)
 public void OnArenaRoundStart(Event event, const char[] name, bool dontBroadcast)
 {
     JBFS.RoundActive = true;
-    JBFS.RoundTimer = FindEntityByClassname(-1,"team_round_timer");
     //initial values
     AutoBalanceTeams();
     //modify for LR

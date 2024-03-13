@@ -95,7 +95,6 @@ enum
 enum struct gamemode
 {
     bool MicStatus[MAXPLAYERS+1];
-    int RoundTimer;
     int Warden;
     bool WardenLocked;
     Handle WardenLockTimer;

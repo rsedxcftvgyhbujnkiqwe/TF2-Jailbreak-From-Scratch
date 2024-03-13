@@ -8,7 +8,8 @@ public Action Timer_LockWarden(Handle timer)
 {
     LockWarden(true);
     if (cvarJBFS[WardenLockTime].IntValue > 0) {
-        float current_time = GetEntPropFloat(JBFS.RoundTimer,Prop_Send,"m_flTimeRemaining",1);
+        int round_timer = FindEntityByClassname(-1,"team_round_timer");
+        float current_time = GetEntPropFloat(round_timer,Prop_Send,"m_flTimeRemaining",1);
         int time_int = RoundFloat(current_time)
         SetRoundTime(Min(time_int, cvarJBFS[WardenLockTime].IntValue))
     }
