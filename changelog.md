@@ -1,3 +1,6 @@
+## JBFS v1.2.3
+### Bug Fixes
+- Fixed issue where guard crit convar was not being evaluated properly
 ## JBFS v1.2.2
 ### Bug Fixes
 - Fixed issue where map config was not reset on map change, causing previous map config values to carry over.
