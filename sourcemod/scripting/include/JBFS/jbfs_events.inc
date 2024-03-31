@@ -187,7 +187,7 @@ public Action:OnTakeDamage(victim,&attacker,&inflictor,&Float:damage,&damagetype
         //only for blues
         if(GetClientTeam(attacker)==BLU)
         {
-            if(cvarJBFS[GuardCrits])
+            if(cvarJBFS[GuardCrits].BoolValue)
             {
                 //cases for crits:
                 //is_warden    true    true    false   false
