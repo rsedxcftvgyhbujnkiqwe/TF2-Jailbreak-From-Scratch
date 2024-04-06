@@ -371,46 +371,56 @@
     "CommandWarnRound"
     {
         "en"        "{wheat}Round not active."
+        "chi"       "{wheat}回合未激活。"
     }
     "CommandSurrenderWarnBlue"
     {
         "en"        "{wheat}Only prisoners can surrender."
+        "chi"       "{wheat}只有囚犯可以投降。"
     }
     "CommandSurrenderWarnDead"
     {
         "en"        "{wheat}You must be alive to do that."
+        "chi"       "{wheat}你必须活着才能做那个。"
     }
     "CommandSurrenderWarnRecent"
     {
         "en"        "{wheat}You already surrendered recently."
+        "chi"       "{wheat}你最近已经投降了。"
     }
     "CommandSurrenderWarnWarday"
     {
         "en"        "{wheat}You cannot surrender on a Warday"
+        "chi"       "{wheat}你不能在战争日投降"
     }
     "PlayerSurrender"
     {
         "#format"   "{1:N}"
         "en"        "{unique}{1}{wheat} has surrendered their ammo and weapons!"
+        "chi"       "{unique}{1}{wheat}已经投降，放弃了他们的弹药和武器！"
     }
     "SearchProgress"
     {
         "#format"   "{1:N}"
         "en"        "Searching {1}..."
+        "chi"       "正在搜索{1}..."
     }
     "SearchFound"
     {
         "#format"   "{1:N}"
         "en"        "Weapons found on {1}!"
+        "chi"       "在{1}上找到了武器！"
     }
     "SearchNotFound"
     {
         "#format"   "{1:N}"
         "en"        "No weapons found on {1}."
+        "chi"       "在{1}上没有找到武器。"
     }
     "SearchAnnounceFound"
     {
         "#format"   "{1:N}"
         "en"        "{unique}{1}{wheat} was caught with weapons during a search!"
+        "chi"       "{unique}{1}{wheat}在搜索过程中被发现有武器！"
     }
 }
