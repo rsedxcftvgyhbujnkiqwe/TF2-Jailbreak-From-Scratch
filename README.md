@@ -6,6 +6,10 @@ I made this plugin because I wanted to learn how to write sourcemod. Additionall
 
 I mentioned Jailbreak Redux, and this plugin was heavily inspired by it. I am a (somewhat former) jailbreak player, and I am very used to how Jailbreak Redux works, thus many of the functionalities of my plugin are similar. Additionally, as I was learning I had the source code of Redux open on the other monitor so I could understand how certain things are done. If you actually bother reading the code, you will notice many similarities. My biggest thanks to Scags for creating Redux, it is a plugin that has served me well for a long time and has modernized the old original plugin.
 
+### Translation Credits
+Big thanks to anyone who submits translation requests.
+- Mr. Cai (q1085909155) - Chinese Translations
+
 ## Features
 JBFS contains many interesting features. For the sake of not being redundant with redux, I will only include new and interesting features which are not a part of redux.
 
@@ -28,4 +32,6 @@ Head over to the [Wiki](https://github.com/rsedxcftvgyhbujnkiqwe/TF2-Jailbreak-F
 The installation guide can be found on the [Wiki](https://github.com/rsedxcftvgyhbujnkiqwe/TF2-Jailbreak-From-Scratch/wiki/Installation)
 
 ## Contributing
-Currently I am not very interested in direct code contributions. I would like to get a better feel of sourcemod, and make it more developer friendly first. Until then, submit feature requests in the issues tab.
+For feature requests, please submit an issue. For code contributions, such as features or bug fixes, I welcome pull requests, however there will probably be some discussion first.
+
+Feel free to submit translation request PRs.
