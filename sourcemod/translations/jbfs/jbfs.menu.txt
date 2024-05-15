@@ -168,6 +168,6 @@
 		"#format"   "{1:N}"
 		"en"		"{unique}{1}{wheat} was forcibly given a {unusual}last request{wheat}."
 		"chi"		"{unique}{1}{wheat} 被强制得到了一个 {unusual}最终要求{wheat}。"
-		"en"		"{unique}{1}{wheat} için zorla bir {unusual}son istek{wheat} verildi."
+		"tr"		"{unique}{1}{wheat} için zorla bir {unusual}son istek{wheat} verildi."
 	}
 }
