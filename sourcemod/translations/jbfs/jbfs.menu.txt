@@ -1,145 +1,173 @@
 "Phrases"
 {
-    "WardenMenuTitle"
-    {
-        "en"        "Warden Menu"
-        "chi"       "监狱长菜单"
-    }
-    "WardenMenuReOpen"
-    {
-        "en"        "Warden menu closed. Type !wm to reopen it."
-        "chi"       "监狱长菜单已关闭！重新打开请输入!wm"
-    }
-    "WardenMenuOpenCells"
-    {
-        "en"        "Open Cells"
-        "chi"       "打开牢门"
-    }
-    "WardenMenuCloseCells"
-    {
-        "en"        "Close Cells"
-        "chi"       "关闭牢门"
-    }
-    "WardenMenuToggleFF"
-    {
-        "en"        "Toggle Friendly Fire"
-        "chi"       "控制友伤"
-    }
-    "WardenMenuToggleCC"
-    {
-        "en"        "Toggle Collisions"
-        "chi"       "控制碰撞"
-    }
-    "WardenMenuMarker"
-    {
-        "en"        "Marker"
-        "chi"       "标记"
-    }
-    "WardenMenuLastRequest"
-    {
-        "en"        "Last Request"
-    }
-    "AdminWardenMenuForceWarden"
-    {
-        "en"        "Force Random Warden"
-        "chi"       "随机生成一个监狱长"
-    }
-    "AdminWardenMenuRetireWarden"
-    {
-        "en"        "Fire Warden"
-        "chi"       "废除监狱长"
-    }
-    "AdminWardenMenuLockWarden"
-    {
-        "en"        "Lock Warden"
-        "chi"       "锁定监狱长"
-    }
-    "AdminWardenMenuUnlockWarden"
-    {
-        "en"        "Unlock Warden"
-        "chi"       "解锁监狱长"
-    }
-    "LRMenuTitle"
-    {
-        "en"        "Last Request"
-        "chi"       "最终请求"
-    }
-    "LRMenuClose"
-    {
-        "en"        "{wheat}Last Request menu has been closed. Give LR again to reopen it."
-        "chi"       "{wheat}请求菜单已关闭，重新打开需要再给予一次最终要求"
-    }
-    "LRMenuOptionFreeday"
-    {
-        "en"        "Freeday for yourself"
-        "chi"       "给自己自由日"
-    }
-    "LRMenuOptionFreedayOthers"
-    {
-        "en"        "Freeday for others"
-        "chi"       "给其他人自由日"
-    }
-    "LRMenuOptionFreedayAll"
-    {
-        "en"        "Freeday for all"
-        "chi"       "给所有人自由日"
-    }
-    "LRMenuOptionWarday"
-    {
-        "en"        "Warday"
-        "chi"       "战争之日"
-    }
-    "LRMenuOptionCustom"
-    {
-        "en"        "Custom"
-        "chi"       "自定义要求"
-    }
-    "LRMenuPickedFreeday"
-    {
-        "#format"   "{1:N}"
-        "en"        "{unique}{1}{wheat} has chosen to give themself a {strange}Freeday."
-        "chi"       "{unique}{1}{wheat} 选择了给自己{strange}自由日"
-    }
-    "LRMenuPickedFreedayOthers"
-    {
-        "#format"   "{1:N}"
-        "en"        "{unique}{1}{wheat} is choosing others for a {strange}Freeday..."
-        "chi"       "{unique}{1}{wheat} 选择了给其他人{strange}自由日"
-    }
-    "LRMenuPickedFreedayAll"
-    {
-        "#format"   "{1:N}"
-        "en"        "{unique}{1}{wheat} has chosen to give all prisoners a {strange}Freeday."
-        "chi"       "{unique}{1}{wheat} 选择了给所有人{strange}自由日"
-    }
-    "LRMenuPickedWarday"
-    {
-        "#format"   "{1:N}"
-        "en"        "{unique}{1}{wheat} has chosen to have a {collectors}Warday."
-        "chi"       "{unique}{1}{wheat} 选择了{collectors}战争之日"
-    }
-    "LRMenuPickedCustom"
-    {
-        "#format"   "{1:N}"
-        "en"        "{unique}{1}{wheat} is typing out a custom last request."
-        "chi"       "{unique}{1}{wheat} 选择了自定义要求"
-    }
-    "LRMenuPickedMap"
-    {
-        "#format"   "{1:N}{2:s}"
-        "en"        "{unique}{1}{wheat} has chosen a Map LR: {vintage}{2}."
-        "chi"       "{unique}{1}{wheat} 选择了地图自带的最终要求 {vintage}{2}."
-    }
-    "LRMenuWinner"
-    {
-        "#format"   "{1:N}"
-        "en"        "{unique}{1}{wheat} has been given a {unusual}last request."
-        "chi"       "{unique}{1}{wheat} 得到了一个 {unusual}最终要求."
-    }
-    "LRMenuWinnerAdmin"
-    {
-        "#format"   "{1:N}"
-        "en"        "{unique}{1}{wheat} was forcibly given a {unusual}last request."
-        "chi"       "{unique}{1}{wheat} 被强制得到了一个 {unusual}最终要求."
-    }
+	"WardenMenuTitle"
+	{
+		"en"		"Warden Menu"
+		"chi"		"监狱长菜单"
+		"tr"		"Müdür Menüsü"
+	}
+	"WardenMenuReOpen"
+	{
+		"en"		"Warden menu closed. Type !wm to reopen it."
+		"chi"		"监狱长菜单已关闭. 重新打开请输入 !wm。"
+		"tr"		"Müdür menüsü kapandı. Tekrar açmak için !wm yaz."
+	}
+	"WardenMenuOpenCells"
+	{
+		"en"		"Open Cells"
+		"chi"		"打开牢门"
+		"tr"		"Hücreleri Aç"
+	}
+	"WardenMenuCloseCells"
+	{
+		"en"		"Close Cells"
+		"chi"		"关闭牢门"
+		"tr"		"Hücreleri Kapat"
+	}
+	"WardenMenuToggleFF"
+	{
+		"en"		"Toggle Friendly Fire"
+		"chi"		"控制友伤"
+		"tr"		"Dost Ateşini Aç/Kapat"
+	}
+	"WardenMenuToggleCC"
+	{
+		"en"		"Toggle Collisions"
+		"chi"		"控制碰撞"
+		"tr"		"Çarpışmaları Aç/Kapat"
+	}
+	"WardenMenuMarker"
+	{
+		"en"		"Marker"
+		"chi"		"标记"
+		"tr"		"İşaret"
+	}
+	"WardenMenuLastRequest"
+	{
+		"en"		"Last Request"
+		"chi"		"最终请求"
+		"tr"		"Son İstek"
+	}
+	"AdminWardenMenuForceWarden"
+	{
+		"en"		"Force Random Warden"
+		"chi"		"随机生成一个监狱长"
+		"tr"		"Rastgele Müdür Zorla"
+	}
+	"AdminWardenMenuRetireWarden"
+	{
+		"en"		"Fire Warden"
+		"chi"		"废除监狱长"
+		"tr"		"Müdürü Kov"
+	}
+	"AdminWardenMenuLockWarden"
+	{
+		"en"		"Lock Warden"
+		"chi"		"锁定监狱长"
+		"tr"		"Müdürü Kilitle"
+	}
+	"AdminWardenMenuUnlockWarden"
+	{
+		"en"		"Unlock Warden"
+		"chi"		"解锁监狱长"
+		"tr"		"Müdürün Kilidini Aç"
+	}
+	"LRMenuTitle"
+	{
+		"en"		"Last Request"
+		"chi"		"最终请求"
+		"tr"		"Son İstek"
+	}
+	"LRMenuClose"
+	{
+		"en"		"{wheat}Last Request menu has been closed. Give LR again to reopen it."
+		"chi"		"{wheat}请求菜单已关闭，重新打开需要再给予一次最终要求。"
+		"tr"		"{wheat}Son İstek menüsü kapatıldı. Tekrar açmak için yeniden Sİ ver."
+	}
+	"LRMenuOptionFreeday"
+	{
+		"en"		"Freeday for Yourself"
+		"chi"		"给自己自由日"
+		"tr"		"Kendin için Boş Gün"
+	}
+	"LRMenuOptionFreedayOthers"
+	{
+		"en"		"Freeday for Others"
+		"chi"		"给其他人自由日"
+		"tr"		"Başkaları için Boş Gün"
+	}
+	"LRMenuOptionFreedayAll"
+	{
+		"en"		"Freeday for All"
+		"chi"		"给所有人自由日"
+		"tr"		"Herkes için Boş Gün"
+	}
+	"LRMenuOptionWarday"
+	{
+		"en"		"Warday"
+		"chi"		"战争之日"
+		"tr"		"Savaş Günü"
+	}
+	"LRMenuOptionCustom"
+	{
+		"en"		"Custom"
+		"chi"		"自定义要求"
+		"tr"		"Özel"
+	}
+	"LRMenuPickedFreeday"
+	{
+		"#format"   "{1:N}"
+		"en"		"{unique}{1}{wheat} has chosen to give themself a {strange}Freeday{wheat}."
+		"chi"		"{unique}{1}{wheat} 选择了给自己 {strange}自由日{wheat}。"
+		"tr"		"{unique}{1}{wheat} kendisine {strange}Boş Gün{wheat} vermeyi seçti."
+	}
+	"LRMenuPickedFreedayOthers"
+	{
+		"#format"   "{1:N}"
+		"en"		"{unique}{1}{wheat} is choosing others for a {strange}Freeday{wheat}."
+		"chi"		"{unique}{1}{wheat} 选择了给其他人 {strange}自由日{wheat}。"
+		"tr"		"{unique}{1}{wheat} başkalarını {strange}Boş Gün{wheat} için seçiyor."
+	}
+	"LRMenuPickedFreedayAll"
+	{
+		"#format"   "{1:N}"
+		"en"		"{unique}{1}{wheat} has chosen to give all prisoners a {strange}Freeday{wheat}."
+		"chi"		"{unique}{1}{wheat} 选择了给所有人 {strange}自由日{wheat}。"
+		"tr"		"{unique}{1}{wheat} bütün mahkumlara {strange}Boş Gün{wheat} vermeyi seçti."
+	}
+	"LRMenuPickedWarday"
+	{
+		"#format"   "{1:N}"
+		"en"		"{unique}{1}{wheat} has chosen to have a {collectors}Warday."
+		"chi"		"{unique}{1}{wheat} 选择了 {collectors}战争之日{wheat}。"
+		"tr"		"{unique}{1} {collectors}Savaş Günü{wheat} olmasını seçti."
+	}
+	"LRMenuPickedCustom"
+	{
+		"#format"   "{1:N}"
+		"en"		"{unique}{1}{wheat} is typing out a custom last request."
+		"chi"		"{unique}{1}{wheat} 选择了自定义要求。"
+		"tr"		"{unique}{1}{wheat} özel bir son istek yazıyor."
+	}
+	"LRMenuPickedMap"
+	{
+		"#format"   "{1:N}{2:s}"
+		"en"		"{unique}{1}{wheat} has chosen a Map LR: {vintage}{2}"
+		"chi"		"{unique}{1}{wheat} 选择了地图自带的最终要求 {vintage}{2}"
+		"tr"		"{unique}{1}{wheat} bir harita Sİ seçti: {vintage}{2}"
+	}
+	"LRMenuWinner"
+	{
+		"#format"   "{1:N}"
+		"en"		"{unique}{1}{wheat} has been given a {unusual}last request{wheat}."
+		"chi"		"{unique}{1}{wheat} 得到了一个 {unusual}最终要求{wheat}。"
+		"tr"		"{unique}{1}{wheat} için bir {unusual}son istek{wheat} verildi."
+	}
+	"LRMenuWinnerAdmin"
+	{
+		"#format"   "{1:N}"
+		"en"		"{unique}{1}{wheat} was forcibly given a {unusual}last request{wheat}."
+		"chi"		"{unique}{1}{wheat} 被强制得到了一个 {unusual}最终要求{wheat}。"
+		"en"		"{unique}{1}{wheat} için zorla bir {unusual}son istek{wheat} verildi."
+	}
 }
