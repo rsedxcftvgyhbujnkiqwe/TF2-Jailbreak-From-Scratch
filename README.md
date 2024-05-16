@@ -9,6 +9,7 @@ I mentioned Jailbreak Redux, and this plugin was heavily inspired by it. I am a 
 ### Translation Credits
 Big thanks to anyone who submits translation requests.
 - Mr. Cai ([q1085909155](https://github.com/q1085909155)) - Chinese Translations
+- Berke ([RealBerke](https://github.com/RealBerke)) - Turkish Translations
 
 ## Features
 JBFS contains many interesting features. For the sake of not being redundant with redux, I will only include new and interesting features which are not a part of redux.
