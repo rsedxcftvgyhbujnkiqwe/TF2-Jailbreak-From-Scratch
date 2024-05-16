@@ -1,120 +1,143 @@
 "Phrases"
 {
-    "GangMenuTitle"
-    {
-        "en"    "Gang Menu"
-        "chi"   "帮派菜单"
-    }
-    "GangMenuOptHelp"
-    {
-        "en"    "Help"
-        "chi"   "帮助"
-    }
-    "GangMenuOptCreateGang"
-    {
-        "en"    "Create Gang"
-        "chi"   "创建帮派"
-    }
-    "GangMenuOptJoinGang"
-    {
-        "en"    "Join Gang"
-        "chi"   "加入帮派"
-    }
-    "GangMenuOptListGang"
-    {
-        "en"    "List Members"
-        "chi"   "列出成员"
-    }
-    "GangMenuOptGangPoints"
-    {
-        "en"    "Show Points"
-        "chi"   "显示积分"
-    }
-    "GangMenuOptGangChat"
-    {
-        "en"    "Gang Chat"
-        "chi"   "帮派聊天"
-    }
-    "GangMenuOptGangInvite"
-    {
-        "en"    "Invite Player"
-        "chi"   "邀请玩家"
-    }
-    "GangMenuOptGangShop"
-    {
-        "en"    "Gang Shop"
-        "chi"   "帮派商店"
-    }
-    "GangMenuOptGangName"
-    {
-        "en"    "Change Gang Name"
-        "chi"   "更改帮派名称"
-    }
-    "GangMenuOptGangTag"
-    {
-        "en"    "Change Gang Tag"
-        "chi"   "更改帮派标签"
-    }
-    "GangMenuOptGangPromote"
-    {
-        "en"    "Promote Members"
-        "chi"   "提升成员"
-    }
-    "GangMenuOptGangDemote"
-    {
-        "en"    "Demote Members"
-        "chi"   "降低成员"
-    }
-    "GangMenuOptGangKick"
-    {
-        "en"    "Kick Members"
-        "chi"   "踢出成员"
-    }
-    "ShopMenuNoneLeft"
-    {
-        "en"    "Nothing left to purchase!"
-        "chi"   "没有剩余的购买项！"
-    }
-    "ShopMenuTitle"
-    {
-        "#format"   "{1:d}"
-        "en"    "Gang Shop - {1} points"
-        "chi"   "帮派商店 - {1} 积分"
-    }
-    "ShopItemBanner"
-    {
-        "en"    "Gang Minicrits"
-        "chi"   "帮派小暴击"
-    }
-    "ShopItemConch"
-    {
-        "en"    "Gang Healing"
-        "chi"   "帮派治疗"
-    }
-    "ShopItemBackup"
-    {
-        "en"    "Gang Resist"
-        "chi"   "帮派抵抗"
-    }
-    "ShopItemWarp"
-    {
-        "en"    "Gang Teleport"
-        "chi"   "帮派传送"
-    }
-    "ShopPickGang"
-    {
-        "#format"   "{1:s}{2:N}{3:t}{4:d}"
-        "en"    "{{1}}{2}{wheat} has purchased {strange}{3}{wheat} for the next round. Points remaining: {chartreuse}{4}"
-        "chi"   "{{1}}{2}{wheat} 已购买 {strange}{3}{wheat} 用于下一轮。剩余积分：{chartreuse}{4}"
-    }
-    "ShopWarnPoints"
-    {
-        "en"    "{wheat}Not enough points!"
-        "chi"   "{wheat}积分不足！"
-    }
-    "ShopWarnPurchased"
-    {
-        "en"    "{wheat}Shop item already purchased this round!"
-        "chi"   "{wheat}本轮已购买商店物品！"
-    }
+	"GangMenuTitle"
+	{
+		"en"		"Gang Menu"
+		"chi"		"帮派菜单"
+		"tr"		"Çete Menüsü"
+	}
+	"GangMenuOptHelp"
+	{
+		"en"		"Help"
+		"chi"		"帮助"
+		"tr"		"Yardım"
+	}
+	"GangMenuOptCreateGang"
+	{
+		"en"		"Create Gang"
+		"chi"		"创建帮派"
+		"tr"		"Çete Oluştur"
+	}
+	"GangMenuOptJoinGang"
+	{
+		"en"		"Join Gang"
+		"chi"		"加入帮派"
+		"tr"		"Çeteye Katıl"
+	}
+	"GangMenuOptListGang"
+	{
+		"en"		"List Members"
+		"chi"		"列出成员"
+		"tr"		"Üyeleri Listele"
+	}
+	"GangMenuOptGangPoints"
+	{
+		"en"		"Show Points"
+		"chi"		"显示积分"
+		"tr"		"Puanı Göster"
+	}
+	"GangMenuOptGangChat"
+	{
+		"en"		"Gang Chat"
+		"chi"		"帮派聊天"
+		"tr"		"Çete Sohbeti"
+	}
+	"GangMenuOptGangInvite"
+	{
+		"en"		"Invite Player"
+		"chi"		"邀请玩家"
+		"tr"		"Oyuncu Davet Et"
+	}
+	"GangMenuOptGangShop"
+	{
+		"en"		"Gang Shop"
+		"chi"		"帮派商店"
+		"tr"		"Çete Dükkanı"
+	}
+	"GangMenuOptGangName"
+	{
+		"en"		"Change Gang Name"
+		"chi"		"更改帮派名称"
+		"tr"		"Çete İsmini Değiştir"
+	}
+	"GangMenuOptGangTag"
+	{
+		"en"		"Change Gang Tag"
+		"chi"		"更改帮派标签"
+		"tr"		"Çete Etiketini Değiştir"
+	}
+	"GangMenuOptGangPromote"
+	{
+		"en"		"Promote Members"
+		"chi"		"提升成员"
+		"tr"		"Üyeleri Terfi Ettir"
+	}
+	"GangMenuOptGangDemote"
+	{
+		"en"		"Demote Members"
+		"chi"		"降低成员"
+		"tr"		"Üyelerin Rütbesini Düşür"
+	}
+	"GangMenuOptGangKick"
+	{
+		"en"		"Kick Members"
+		"chi"		"踢出成员"
+		"tr"		"Üyeleri At"
+	}
+	"ShopMenuNoneLeft"
+	{
+		"en"		"Nothing left to purchase!"
+		"chi"		"没有剩余的购买项！"
+		"tr"		"Satın alacak birşey kalmadı!"
+	}
+	"ShopMenuTitle"
+	{
+		"#format"	"{1:i}"
+		"en"		"Gang Shop - {1} points"
+		"chi"		"帮派商店 - {1} 积分"
+		"tr"		"Çete Dükkanı - {1} puan"
+	}
+	"ShopItemBanner"
+	{
+		"en"		"Gang Minicrits"
+		"chi"		"帮派小暴击"
+		"tr"		"Çete Minikritik"
+	}
+	"ShopItemConch"
+	{
+		"en"		"Gang Healing"
+		"chi"		"帮派治疗"
+		"tr"		"Çete İyileştirmesi"
+	}
+	"ShopItemBackup"
+	{
+		"en"		"Gang Resist"
+		"chi"		"帮派抵抗"
+		"tr"		"Çete Direnişi"
+	}
+	"ShopItemWarp"
+	{
+		"en"		"Gang Teleport"
+		"chi"		"帮派传送"
+		"tr"		"Çete Işınlanması"
+	}
+	"ShopPickGang"
+	{
+		"#format"	"{1:s}{2:N}{3:t}{4:i}"
+		"en"		"{{1}}{2}{wheat} has purchased {strange}{3}{wheat} for the next round. Points remaining: {chartreuse}{4}"
+		"chi"		"{{1}}{2}{wheat} 已购买 {strange}{3}{wheat} 用于下一轮。剩余积分：{chartreuse}{4}"
+		"tr"		"{{1}}{2}{wheat}, sonraki tur için {strange}{3}{wheat} öğesini satın aldı. Kalan puan: {chartreuse}{4}"
+	}
+	"ShopWarnPoints"
+	{
+		"en"		"{wheat}Not enough points!"
+		"chi"		"{wheat}积分不足！"
+		"tr"		"{wheat}Yeterli puan yok!"
+	}
+	"ShopWarnPurchased"
+	{
+		"en"		"{wheat}Shop item already purchased this round!"
+		"chi"		"{wheat}本轮已购买商店物品！"
+		"tr"		"{wheat}Dükkan öğesi bu tur zaten satın alınmış!"
+	}
 }

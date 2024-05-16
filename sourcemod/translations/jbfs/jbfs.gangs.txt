@@ -1,341 +1,402 @@
 "Phrases"
 {
-    "PluginGangTag"
-    {
-        "en"        "{chartreuse}[JBFSG]{wheat}"
-        "chi"       "{chartreuse}[JBFSG]{wheat}"
-    }
-    "GangTag"
-    {
-        "en"        "{chartreuse}(Gang){wheat}"
-        "chi"       "{chartreuse}(帮派){wheat}"
-    }
-    "CommandCreateGangUsage"
-    {
-        "en"        "{wheat}Usage: sm_gangcreate <Name Of Gang>"
-        "chi"       "{wheat}用法：sm_gangcreate <帮派名称>"
-    }
-    "CommandSetNameUsage"
-    {
-        "en"        "{wheat}Usage: sm_gangname <Name of Gang>"
-        "chi"       "{wheat}用法：sm_gangname <帮派名称>"
-    }
-    "CommandSetTagUsage"
-    {
-        "en"        "{wheat}Usage: sm_gangtag <TAG>"
-        "chi"       "{wheat}用法：sm_gangtag <标签>"
-    }
-    "CommandGangInviteUsage"
-    {
-        "en"        "{wheat}Usage: sm_ganginvite <player>"
-        "chi"       "{wheat}用法：sm_ganginvite <玩家>"
-    }
-    "CommandGangPromoteUsage"
-    {
-        "en"        "{wheat}Usage: sm_gangpromote <member id> (see sm_ganglist)"
-        "chi"       "{wheat}用法：sm_gangpromote <成员id> (参见 sm_ganglist)"
-    }
-    "CommandGangDemoteUsage"
-    {
-        "en"        "{wheat}Usage: sm_gangdemote <member id> (see sm_ganglist)"
-        "chi"       "{wheat}用法：sm_gangdemote <成员id> (参见 sm_ganglist)"
-    }
-    "CommandGangKickUsage"
-    {
-        "en"        "{wheat}Usage: sm_gangkick <member id> (see sm_ganglist)"
-        "chi"       "{wheat}用法：sm_gangkick <成员id> (参见 sm_ganglist)"
-    }
-    "CommandAdminGivePointsUsage"
-    {
-        "en"        "{wheat}Usage: sm_givepoints <#userid|name> [points]"
-        "chi"       "{wheat}用法：sm_givepoints <#用户id|名称> [点数]"
-    }
-    "CommandGangKickWarnMemberID"
-    {
-        "#format"   "{1:d}"
-        "en"        "{wheat}Member with ID of {1} not found."
-        "chi"       "{wheat}未找到ID为{1}的成员。"
-    }
-    "CommandGangInviteWarnInGang"
-    {
-        "en"        "{wheat}Player is already in a gang!"
-        "chi"       "{wheat}玩家已经在一个帮派中！"
-    }
-    "CommandGangInviteWarnInvited"
-    {
-        "en"        "{wheat}Player has already been invited to your gang."
-        "chi"       "{wheat}玩家已经被邀请加入你的帮派。"
-    }
-    "CommandGangJoinNoInvite"
-    {
-        "en"        "{wheat}You have no pending invites."
-        "chi"       "{wheat}你没有待处理的邀请。"
-    }
-    "CommandGangLeaveWarnBoss"
-    {
-        "en"        "{wheat}The boss cannot leave the gang if there are other members!"
-        "chi"       "{wheat}如果帮派中还有其他成员，帮主不能离开帮派！"
-    }
-    "CommandCreateGangWarnInGang"
-    {
-        "en"        "{wheat}You are already in a gang!"
-        "chi"       "{wheat}你已经在一个帮派中！"
-    }
-    "CommandGangNameExists"
-    {
-        "en"        "{wheat}A gang with that name already exists."
-        "chi"       "{wheat}已经存在一个同名的帮派。"
-    }
-    "CommandGangTagExists"
-    {
-        "en"        "{wheat}An existing gang has taken that tag."
-        "chi"       "{wheat}已经有一个帮派使用了那个标签。"
-    }
-    "CommandCreateGangWarnError"
-    {
-        "en"        "{wheat}There was an error creating the gang. Please check server console for more information."
-        "chi"       "{wheat}创建帮派时出错。请查看服务器控制台以获取更多信息。"
-    }
-    "GangNameFormat"
-    {
-        "en"        "{wheat}Gang names can contain any character, but letters in the gang name must be unique."
-        "chi"       "{wheat}帮派名称可以包含任何字符，但帮派名称中的字母必须是唯一的。"
-    }
-    "GangNameExample"
-    {
-        "en"        "{wheat}Example: MyGang1 and MyGang2 would be considered the same, but MyGang1 and GangMy1 would be considered different."
-        "chi"       "{wheat}例如：MyGang1和MyGang2会被认为是相同的，但MyGang1和GangMy1会被认为是不同的。"
-    }
-    "GangTagFormat"
-    {
-        "en"        "{wheat}Gang Tags are 2-4 letters long and must only contain letters."
-        "chi"       "{wheat}帮派标签长度为2-4个字母，且只能包含字母。"
-    }
-    "GangTagExample"
-    {
-        "en"        "{wheat}Example: TAG, GanG, Dx"
-        "chi"       "{wheat}例如：TAG, GanG, Dx"
-    }
-    "GangCreated"
-    {
-        "#format"   "{1:N}{2:s}"
-        "en"        "{unique}{1}{wheat} has formed the gang {chartreuse}{2}."
-        "chi"       "{unique}{1}{wheat}已经组建了帮派{chartreuse}{2}。"
-    }
-    "GangCreatedSilent"
-    {
-        "#format"   "{1:s}"
-        "en"        "{wheat}You have formed the gang {chartreuse}{1}."
-        "chi"       "{wheat}你已经组建了帮派{chartreuse}{1}。"
-    }
-    "GangCreatedHelp"
-    {
-        "en"        "{wheat}Use sm_ganghelp for a list of gang related commands."
-        "chi"       "{wheat}使用sm_ganghelp查看帮派相关命令列表。"
-    }
-    "CommandWarnNotInGang"
-    {
-        "en"        "{wheat}You are not in a gang!"
-        "chi"       "{wheat}你不在一个帮派中！"
-    }
-    "CommandWarnTargetNotInGang"
-    {
-        "en"        "{wheat}Player is not in a gang."
-        "chi"       "{wheat}玩家不在一个帮派中。"
-    }
-    "CommandWarnGangRank"
-    {
-        "en"        "{wheat}You are not a high enough rank in the gang to do this!"
-        "chi"       "{wheat}你在帮派中的等级不够高，无法执行此操作！"
-    }
-    "GangMaxSize"
-    {
-        "en"        "{wheat}Gang already at max member count."
-        "chi"       "{wheat}帮派的成员数量已达上限。"
-    }
-    "GangInactive"
-    {
-        "en"        "{wheat}Gang is inactive."
-        "chi"       "{wheat}帮派处于非活跃状态。"
-    }
-    "GangDisband"
-    {
-        "#format"   "{1:N}{2:s}"
-        "en"        "{unique}{1}{wheat} has disbanded the gang {chartreuse}{2}."
-        "chi"       "{unique}{1}{wheat}已经解散了帮派{chartreuse}{2}。"
-    }
-    "GangNameChange"
-    {
-        "#format"   "{1:s}{2:s}"
-        "en"        "{wheat}Gang {chartreuse}{1}{wheat} has changed their name to {chartreuse}{2}"
-        "chi"       "{wheat}帮派{chartreuse}{1}{wheat}已经将名字改为{chartreuse}{2}"
-    }
-    "GangNameChangeSilent"
-    {
-        "#format"   "{1:s}"
-        "en"        "{wheat}Gang leader has changed the gang name to {chartreuse}{1}"
-        "chi"       "{wheat}帮派领导已将帮派名称更改为{chartreuse}{1}"
-    }
-    "GangNameSame"
-    {
-        "en"        "{wheat}That is already the name of your gang!"
-        "chi"       "{wheat}那已经是你的帮派的名字了！"
-    }
-    "GangTagChange"
-    {
-        "#format"   "{1:s}"
-        "en"        "{wheat}Gang leader has changed the gang tag to {chartreuse}{1}"
-        "chi"       "{wheat}帮派领导已将帮派标签更改为{chartreuse}{1}"
-    }
-    "GangTagSame"
-    {
-        "en"        "{wheat}That is already the tag of your gang!"
-        "chi"       "{wheat}那已经是你的帮派的标签了！"
-    }
-    "GangChatDisabled"
-    {
-        "en"        "{wheat}Gang chat is disabled on this server."
-        "chi"       "{wheat}此服务器已禁用帮派聊天。"
-    }
-    "GangPlayerLeave"
-    {
-        "#format"   "{1:N}"
-        "en"        "{unique}{1}{wheat} has left the gang!"
-        "chi"       "{unique}{1}{wheat}已离开帮派！"
-    }
-    "GangInviteReceived"
-    {
-        "#format"   "{1:N}{2:s}"
-        "en"        "{unique}{1}{wheat} has invited you to join the gang {chartreuse}{2}{wheat}. Use sm_gangjoin to join them."
-        "chi"       "{unique}{1}{wheat}邀请你加入帮派{chartreuse}{2}{wheat}。使用sm_gangjoin加入他们。"
-    }
-    "GangInviteSent"
-    {
-        "#format"   "{1:N}{2:s}{3:N}"
-        "en"        "{unique}{1}{wheat} was invited to join your gang by {{2}}{3}."
-        "chi"       "{unique}{1}{wheat}被{{2}}{3}邀请加入你的帮派。"
-    }
-    "GangInvitePlayerJoined"
-    {
-        "#format"   "{1:s}{2:N}"
-        "en"        "{{1}}{2}{wheat} has joined the gang!"
-        "chi"       "{{1}}{2}{wheat}已加入帮派！"
-    }
-    "GangInviteJoined"
-    {
-        "#format"   "{1:s}"
-        "en"        "{wheat}You have joined the gang {chartreuse}{1}." 
-        "chi"       "{wheat}你已加入帮派{chartreuse}{1}。"
-    }
-    "GangMemberList"
-    {
-        "#format"   "{1:s}"
-        "en"        "{wheat}List of members in the gang {chartreuse}{1}:"
-        "chi"       "{wheat}帮派{chartreuse}{1}的成员列表："
-    }
-    "GangMemberListFormat"
-    {
-        "en"        "{chartreuse}(member_id): {wheat}steam_name (steam_id)"
-        "chi"       "{chartreuse}(成员id)：{wheat}steam名称 (steam_id)"
-    }
-    "CommandGangWarnSelf"
-    {
-        "en"        "{wheat}You cannot perform that action on yourself!"
-        "chi"       "{wheat}你不能对自己执行该操作！"
-    }
-    "CommandGangPromoteWarnBoss"
-    {
-        "en"        "{wheat}If you promote an officer, they will take your place as boss. Run command again to confirm."
-        "chi"       "{wheat}如果你提升一名官员，他们将取代你成为帮主。再次运行命令以确认。"
-    }
-    "CommandGangDemoteWarnMuscle"
-    {
-        "en"        "{wheat}You cannot demote the lowest rank!"
-        "chi"       "{wheat}你不能降低最低等级！"
-    }
-    "GangPlayerKicked"
-    {
-        "#format"   "{1:s}"
-        "en"        "{unique}{1}{wheat} was kicked from the gang."
-        "chi"       "{unique}{1}{wheat}被从帮派中踢出。"
-    }
-    "GangPlayerKickedPlayer"
-    {
-        "#format"   "{1:s}"
-        "en"        "You have been kicked from the gang {chartreuse}{1}."
-        "chi"       "你已被从帮派{chartreuse}{1}中踢出。"
-    }
-    "GangPromotion"
-    {
-        "#format"   "{1:s}{2:s}{3:s}{4:t}"
-        "en"        "{{1}}{2}{wheat} was promoted to {{3}}{4}."
-        "chi"       "{{1}}{2}{wheat}被提升为{{3}}{4}。"
-    }
-    "GangDemotion"
-    {
-        "#format"   "{1:s}{2:s}{3:s}{4:t}"
-        "en"        "{{1}}{2}{wheat} was demoted to {{3}}{4}."
-        "chi"       "{{1}}{2}{wheat}被降级为{{3}}{4}。"
-    }
-    "GangStepDown"
-    {
-        "#format"   "{1:s}{2:N}{3:s}{4:t}"
-        "en"        "{{1}}{2}{wheat} has stepped down from {{3}}{4}."
-        "chi"       "{{1}}{2}{wheat}已从{{3}}{4}中退下。"
-    }
-    "GangRankBoss"
-    {
-        "en"        "Boss"
-        "chi"       "老大"
-    }
-    "GangRankOfficer"
-    {
-        "en"        "Officer"
-        "chi"       "官员"
-    }
-    "GangRankMuscle"
-    {
-        "en"        "Muscle"
-        "chi"       "肌肉"
-    }
-    "GangCommandPoints"
-    {
-        "#format"   "{1:d}"
-        "en"        "{wheat}Gang points: {chartreuse}{1}"   
-        "chi"       "{wheat}帮派积分：{chartreuse}{1}"   
-    }
-    "GangPointsGainedLR"
-    {
-        "#format"   "{1:d}"
-        "en"        "{wheat}Gang gained {chartreuse}{1}{wheat} points for gang member winning last request."
-        "chi"       "{wheat}帮派因帮派成员赢得最后的请求而获得{chartreuse}{1}{wheat}积分。"
-    }
-    "GangPointsGainedAlive"
-    {
-        "#format"   "{1:d}"
-        "en"        "{wheat}Gang gained {chartreuse}{1}{wheat} points for gang members alive."
-        "chi"       "{wheat}帮派因帮派成员存活而获得{chartreuse}{1}{wheat}积分。"
-    }
-    "GangPointsGainedAdmin"
-    {
-        "#format"   "{1:d}"
-        "en"        "{wheat}Gang gained {chartreuse}{1}{wheat} points from admin."
-        "chi"       "{wheat}帮派从管理员那里获得了{chartreuse}{1}{wheat}积分。"
-    }
-    "GangBuffActive"
-    {
-        "#format"   "{1:s}{2:t}"
-        "en"        "{wheat}Gang {chartreuse}{1}{wheat} activated {strange}{2}{wheat}!"
-        "chi"       "{wheat}帮派{chartreuse}{1}{wheat}激活了{strange}{2}{wheat}！"
-    }
-    "GangChatOn"
-    {
-        "en"        "{wheat}Enabled gang chat. Messages will only be seen by gang members."
-        "chi"       "{wheat}启用了帮派聊天。消息只会被帮派成员看到。"
-    }
-    "GangChatOff"
-    {
-        "en"        "{wheat}Disabled gang chat. Messages will be seen by all players."
-        "chi"       "{wheat}禁用了帮派聊天。消息将被所有玩家看到。"
-    }
+	"PluginGangTag"
+	{
+		"en"		"{chartreuse}[JBFSG]{wheat}"
+	}
+	"GangTag"
+	{
+		"en"		"{chartreuse}(Gang){wheat}"
+		"chi"		"{chartreuse}(帮派){wheat}"
+		"tr"		"{chartreuse}(Çete){wheat}"
+	}
+	"CommandCreateGangUsage"
+	{
+		"en"		"{wheat}Usage: sm_gangcreate <name of gang>"
+		"chi"		"{wheat}用法：sm_gangcreate <帮派名称>"
+		"tr"		"{wheat}Kullanım: sm_gangcreate <çetenin ismi>"
+	}
+	"CommandSetNameUsage"
+	{
+		"en"		"{wheat}Usage: sm_gangname <name of gang>"
+		"chi"		"{wheat}用法：sm_gangname <帮派名称>"
+		"tr"		"{wheat}Kullanım: sm_gangname <çetenin ismi>"
+	}
+	"CommandSetTagUsage"
+	{
+		"en"		"{wheat}Usage: sm_gangtag <tag>"
+		"chi"		"{wheat}用法：sm_gangtag <标签>"
+		"tr"		"{wheat}Kullanım: sm_gangtag <etiket>"
+	}
+	"CommandGangInviteUsage"
+	{
+		"en"		"{wheat}Usage: sm_ganginvite <#userid|name>"
+		"chi"		"{wheat}用法：sm_ganginvite <#用户id|名称>"
+		"tr"		"{wheat}Kullanım: sm_ganginvite <#userid|isim>"
+	}
+	"CommandGangPromoteUsage"
+	{
+		"en"		"{wheat}Usage: sm_gangpromote <member id> (see sm_ganglist)"
+		"chi"		"{wheat}用法：sm_gangpromote <成员id> (参见 sm_ganglist)"
+		"tr"		"{wheat}Kullanım: sm_gangpromote <üye id> (sm_ganglist'e göz at)"
+	}
+	"CommandGangDemoteUsage"
+	{
+		"en"		"{wheat}Usage: sm_gangdemote <member id> (see sm_ganglist)"
+		"chi"		"{wheat}用法：sm_gangdemote <成员id> (参见 sm_ganglist)"
+		"tr"		"{wheat}Kullanım: sm_gangdemote <üye id> (sm_ganglist'e göz at)"
+	}
+	"CommandGangKickUsage"
+	{
+		"en"		"{wheat}Usage: sm_gangkick <member id> (see sm_ganglist)"
+		"chi"		"{wheat}用法：sm_gangkick <成员id> (参见 sm_ganglist)"
+		"tr"		"{wheat}Kullanım: sm_gangkick <üye id> (sm_ganglist'e göz at)"
+	}
+	"CommandAdminGivePointsUsage"
+	{
+		"en"		"{wheat}Usage: sm_givepoints <#userid|name> [points]"
+		"chi"		"{wheat}用法：sm_givepoints <#用户id|名称> [点数]"
+		"tr"		"{wheat}Kullanım: sm_givepoints <#userid|isim> [puan]"
+	}
+	"CommandGangKickWarnMemberID"
+	{
+		"#format"   "{1:i}"
+		"en"		"{wheat}Member with ID of {1} not found."
+		"chi"		"{wheat}未找到 ID为{1} 的成员。"
+		"tr"		"{wheat}{1} ID'si ile üye bulunamadı."
+	}
+	"CommandGangInviteWarnInGang"
+	{
+		"en"		"{wheat}Player is already in a gang!"
+		"chi"		"{wheat}玩家已经在一个帮派中！"
+		"tr"		"{wheat}Oyuncu zaten bir çetede!"
+	}
+	"CommandGangInviteWarnInvited"
+	{
+		"en"		"{wheat}Player has already been invited to your gang."
+		"chi"		"{wheat}玩家已经被邀请加入你的帮派。"
+		"tr"		"{wheat}Oyuncu zaten senin çetene davet edilmiş."
+	}
+	"CommandGangJoinNoInvite"
+	{
+		"en"		"{wheat}You have no pending invites."
+		"chi"		"{wheat}你没有待处理的邀请。"
+		"tr"		"{wheat}Hiçbir bekleyen davetin yok."
+	}
+	"CommandGangLeaveWarnBoss"
+	{
+		"en"		"{wheat}boss cannot leave the gang if there are other members!"
+		"chi"		"{wheat}如果帮派中还有其他成员，帮主不能离开帮派！"
+		"tr"		"{wheat}Patron başka üyeler varsa çeteden ayrılamaz!"
+	}
+	"CommandCreateGangWarnInGang"
+	{
+		"en"		"{wheat}You are already in a gang!"
+		"chi"		"{wheat}你已经在一个帮派中！"
+		"tr"		"{wheat}Zaten bir çetedesin!"
+	}
+	"CommandGangNameExists"
+	{
+		"en"		"{wheat}A gang with that name already exists."
+		"chi"		"{wheat}已经存在一个同名的帮派。"
+		"tr"		"{wheat}O isimde bir çete zaten var."
+	}
+	"CommandGangTagExists"
+	{
+		"en"		"{wheat}An existing gang has taken that tag."
+		"chi"		"{wheat}已经有一个帮派使用了那个标签。"
+		"tr"		"{wheat}O etiketi zaten bir çete almış."
+	}
+	"CommandCreateGangWarnError"
+	{
+		"en"		"{wheat}There was an error creating the gang. Please check server console for more information."
+		"chi"		"{wheat}创建帮派时出错。请查看服务器控制台以获取更多信息。"
+		"tr"		"{wheat}Çeteyi kurarken bir hata oluştu. Lütfen daha fazla bilgi için sunucu konsoluna bakın."
+	}
+	"GangNameFormat"
+	{
+		"en"		"{wheat}Gang names can contain any character, but letters in the gang name must be unique."
+		"chi"		"{wheat}帮派名称可以包含任何字符，但帮派名称中的字母必须是唯一的。"
+		"tr"		"{wheat}Çete isimleri herhangi bir karakter içerebilir ama çete ismindeki karakterler özgün olmalıdır."
+	}
+	"GangNameExample"
+	{
+		"en"		"{wheat}Example: MyGang1 and MyGang2 would be considered the same, but MyGang1 and GangMy1 would be considered different."
+		"chi"		"{wheat}例如：MyGang1 和 MyGang2 会被认为是相同的，但 MyGang1 和 GangMy1 会被认为是不同的。"
+		"tr"		"{wheat}Örnek: BenimÇetem1 ve BenimÇetem2 aynı kabul edilir ama BenimÇetem1 ve ÇetemBenim1 farklı kabul edilir."
+	}
+	"GangTagFormat"
+	{
+		"en"		"{wheat}Gang tags are 2-4 letters long and must only contain letters."
+		"chi"		"{wheat}帮派标签长度为 2-4 个字母，且只能包含字母。"
+		"tr"		"{wheat}Çete etiketleri 2-4 harf uzunluğunda olmalı ve sadece harf içermeli."
+	}
+	"GangTagExample"
+	{
+		"en"		"{wheat}Example: GanG, Dx"
+		"chi"		"{wheat}例如： GanG, Dx"
+		"tr"		"{wheat}Örnek: ÇetE, Dx"
+	}
+	"GangCreated"
+	{
+		"#format"   "{1:N}{2:s}"
+		"en"		"{unique}{1}{wheat} has formed the {chartreuse}{2}{wheat} gang."
+		"chi"		"{unique}{1}{wheat} 已经组建了帮派 {chartreuse}{2}{wheat}。"
+		"tr"		"{unique}{1}{wheat}, {chartreuse}{2}{wheat} çetesini oluşturdu."
+	}
+	"GangCreatedSilent"
+	{
+		"#format"   "{1:s}"
+		"en"		"{wheat}You have formed the {chartreuse}{1}{wheat} gang."
+		"chi"		"{wheat}你已经组建了帮派 {chartreuse}{1}{wheat}。"
+		"tr"		"{chartreuse}{1}{wheat} çetesini oluşturdun."
+	}
+	"GangCreatedHelp"
+	{
+		"en"		"{wheat}Use sm_ganghelp for a list of gang related commands."
+		"chi"		"{wheat}使用 sm_ganghelp 查看帮派相关命令列表。"
+		"tr"		"{wheat}Çete ile ilgili komutları görmek için sm_ganghelp'i kullan."
+	}
+	"CommandWarnNotInGang"
+	{
+		"en"		"{wheat}You are not in a gang!"
+		"chi"		"{wheat}你不在一个帮派中！"
+		"tr"		"{wheat}Bir çetede değilsin!"
+	}
+	"CommandWarnTargetNotInGang"
+	{
+		"en"		"{wheat}Player is not in a gang."
+		"chi"		"{wheat}玩家不在一个帮派中。"
+		"tr"		"{wheat}Oyuncu bir çetede değil."
+	}
+	"CommandWarnGangRank"
+	{
+		"en"		"{wheat}You are not a high enough rank in the gang to do this!"
+		"chi"		"{wheat}你在帮派中的等级不够高，无法执行此操作！"
+		"tr"		"{wheat}Çetede bunu yapacak kadar yüksek bir rütbeye sahip değilsin!"
+	}
+	"GangMaxSize"
+	{
+		"en"		"{wheat}Gang already at max member count."
+		"chi"		"{wheat}帮派的成员数量已达上限。"
+		"tr"		"{wheat}Çete zaten maksimum üye sayısına ulaştı."
+	}
+	"GangInactive"
+	{
+		"en"		"{wheat}Gang is inactive."
+		"chi"		"{wheat}帮派处于非活跃状态。"
+		"tr"		"{wheat}Çete aktif değil."
+	}
+	"GangDisband"
+	{
+		"#format"   "{1:N}{2:s}"
+		"en"		"{unique}{1}{wheat} has disbanded the {chartreuse}{2}{wheat} gang."
+		"chi"		"{unique}{1}{wheat} 已经解散了帮派 {chartreuse}{2}{wheat}。"
+		"tr"		"{unique}{1}{wheat}, {chartreuse}{2}{wheat} çetesini dağıttı."
+	}
+	"GangNameChange"
+	{
+		"#format"   "{1:s}{2:s}"
+		"en"		"{chartreuse}{1}{wheat} gang has changed their name to {chartreuse}{2}{wheat}."
+		"chi"		"{wheat}帮派 {chartreuse}{1}{wheat} 已经将名字改为 {chartreuse}{2}{wheat}。"
+		"tr"		"{chartreuse}{1}{wheat} çetesi ismini {chartreuse}{2}{wheat} olarak değiştirdi."
+	}
+	"GangNameChangeSilent"
+	{
+		"#format"   "{1:s}"
+		"en"		"{wheat}Boss has changed the gang name to {chartreuse}{1}{wheat}."
+		"chi"		"{wheat}帮派领导已将帮派名称更改为 {chartreuse}{1}{wheat}。"
+		"tr"		"{wheat}Patron çetenin ismini {chartreuse}{1}{wheat} olarak değiştirdi."
+	}
+	"GangNameSame"
+	{
+		"en"		"{wheat}That is already the name of your gang!"
+		"chi"		"{wheat}那已经是你的帮派的名字了！"
+		"tr"		"{wheat}Senin çetenin ismi zaten o!"
+	}
+	"GangTagChange"
+	{
+		"#format"   "{1:s}"
+		"en"		"{wheat}Boss has changed the gang tag to {chartreuse}{1}{wheat}."
+		"chi"		"{wheat}帮派领导已将帮派标签更改为 {chartreuse}{1}{wheat}。"
+		"tr"		"{wheat}Patron çete etiketini {chartreuse}{1}{wheat} olarak değiştirdi."
+	}
+	"GangTagSame"
+	{
+		"en"		"{wheat}That is already the tag of your gang!"
+		"chi"		"{wheat}那已经是你的帮派的标签了！"
+		"tr"		"{wheat}Senin çetenin etiketi zaten o!"
+	}
+	"GangChatDisabled"
+	{
+		"en"		"{wheat}Gang chat is disabled on this server."
+		"chi"		"{wheat}此服务器已禁用帮派聊天。"
+		"tr"		"{wheat}Çete etiketi bu sunucuda devre dışı."
+	}
+	"GangPlayerLeave"
+	{
+		"#format"   "{1:N}"
+		"en"		"{unique}{1}{wheat} has left the gang!"
+		"chi"		"{unique}{1}{wheat} 已离开帮派！"
+		"tr"		"{unique}{1}{wheat} çeteden ayrıldı!"
+	}
+	"GangInviteReceived"
+	{
+		"#format"   "{1:N}{2:s}"
+		"en"		"{unique}{1}{wheat} has invited you to join the {chartreuse}{2}{wheat} gang. Use sm_gangjoin to join them."
+		"chi"		"{unique}{1}{wheat}邀请你加入帮派{chartreuse}{2}{wheat}。 使用sm_gangjoin加入他们。"
+		"tr"		"{unique}{1}{wheat} seni {chartreuse}{2}{wheat} çetesine katılman için davet etti. sm_gangjoin kullanarak onlara katıl."
+	}
+	"GangInviteSent"
+	{
+		"#format"   "{1:N}{2:s}{3:N}"
+		"en"		"{unique}{1}{wheat} was invited to join your gang by {{2}}{3}{wheat}."
+		"chi"		"{unique}{1}{wheat}被{{2}}{3}{wheat}邀请加入你的帮派。"
+		"tr"		"{unique}{1}{wheat} senin çetene katılması için {{2}}{3}{wheat} tarafından davet edildi."
+	}
+	"GangInvitePlayerJoined"
+	{
+		"#format"   "{1:s}{2:N}"
+		"en"		"{{1}}{2}{wheat} has joined the gang!"
+		"chi"		"{{1}}{2}{wheat} 已加入帮派！"
+		"tr"		"{{1}}{2}{wheat} çeteye katıldı!"
+	}
+	"GangInviteJoined"
+	{
+		"#format"   "{1:s}"
+		"en"		"{wheat}You have joined the {chartreuse}{1}{wheat} gang." 
+		"chi"		"{wheat}你已加入帮派{chartreuse}{1}{wheat}。"
+		"tr"		"{chartreuse}{1}{wheat} çetesine katıldın." 
+	}
+	"GangMemberList"
+	{
+		"#format"   "{1:s}"
+		"en"		"{wheat}List of members in the {chartreuse}{1}{wheat} gang:"
+		"chi"		"{wheat}帮派 {chartreuse}{1}{wheat} 的成员列表："
+		"tr"		"{chartreuse}{1}:{wheat} çetesindeki üyelerin listesi:"
+	}
+	"GangMemberListFormat"
+	{
+		"en"		"{chartreuse}(member_id):{wheat} steam_name (steam_id)"
+		"chi"		"{chartreuse}(成员id){wheat} steam名称 (steam_id)"
+		"tr"		"{chartreuse}(üye_id):{wheat} steam_ismi (steam_id)"
+	}
+	"CommandGangWarnSelf"
+	{
+		"en"		"{wheat}You cannot perform that action on yourself!"
+		"chi"		"{wheat}你不能对自己执行该操作！"
+		"tr"		"{wheat}Bu aksiyonu kendin üzerinde gerçekleştiremessin."
+	}
+	"CommandGangPromoteWarnBoss"
+	{
+		"en"		"{wheat}If you promote an officer, they will take your place as boss. Run command again to confirm."
+		"chi"		"{wheat}如果你提升一名官员，他们将取代你成为帮主。再次运行命令以确认。"
+		"tr"		"{wheat}Eğer bir subayı terfi edersen patron olarak senin yerine geçer. Onaylamak için komudu tekrar yürüt."
+	}
+	"CommandGangDemoteWarnMuscle"
+	{
+		"en"		"{wheat}You cannot demote the lowest rank!"
+		"chi"		"{wheat}你不能降低最低等级！"
+		"tr"		"{wheat}En düşük rütbedekinin rütbesini düşüremezsin!"
+	}
+	"GangPlayerKicked"
+	{
+		"#format"   "{1:s}"
+		"en"		"{unique}{1}{wheat} was kicked from the gang."
+		"chi"		"{unique}{1}{wheat} 被从帮派中踢出。"
+		"tr"		"{unique}{1}{wheat} çeteden atıldı."
+	}
+	"GangPlayerKickedPlayer"
+	{
+		"#format"   "{1:s}"
+		"en"		"{wheat}You have been kicked from the {chartreuse}{1}{wheat} gang."
+		"chi"		"{wheat}你已被从帮派 {chartreuse}{1}中踢出{wheat}。"
+		"tr"		"{chartreuse}{1}{wheat} çetesinden atıldın."
+	}
+	"GangPromotion"
+	{
+		"#format"   "{1:s}{2:s}{3:s}{4:t}"
+		"en"		"{{1}}{2}{wheat} was promoted to {{3}}{4}{wheat}."
+		"chi"		"{{1}}{2}{wheat} 被提升为 {{3}}{4}{wheat}。"
+		"tr"		"{{1}}{2}{wheat}, {{3}}{4}{wheat} rütbesine terfi ettirildi."
+	}
+	"GangDemotion"
+	{
+		"#format"   "{1:s}{2:s}{3:s}{4:t}"
+		"en"		"{{1}}{2}{wheat} was demoted to {{3}}{4}{wheat}."
+		"chi"		"{{1}}{2}{wheat} 被降级为 {{3}}{4}{wheat}。"
+		"tr"		"{{1}}{2}{wheat}, {{3}}{4}{wheat} rütbesine düşürüldü."
+	}
+	"GangStepDown"
+	{
+		"#format"   "{1:s}{2:N}{3:s}{4:t}"
+		"en"		"{{1}}{2}{wheat} has stepped down from {{3}}{4}{wheat}."
+		"chi"		"{{1}}{2}{wheat} 已从 {{3}}{4}{wheat} 中退下。"
+		"tr"		"{{1}}{2}{wheat}, {{3}}{4}{wheat} rütbesinden çekildi."
+	}
+	"GangRankBoss"
+	{
+		"en"		"Boss"
+		"chi"		"老大"
+		"tr"		"Patron"
+	}
+	"GangRankOfficer"
+	{
+		"en"		"Officer"
+		"chi"		"官员"
+		"en"		"Subay"
+	}
+	"GangRankMuscle"
+	{
+		"en"		"Muscle"
+		"chi"		"肌肉"
+		"en"		"Kas"
+	}
+	"GangCommandPoints"
+	{
+		"#format"   "{1:i}"
+		"en"		"{wheat}Gang points: {chartreuse}{1}"
+		"chi"		"{wheat}帮派积分： {chartreuse}{1}"
+		"tr"		"{wheat}Çete puanı: {chartreuse}{1}"
+	}
+	"GangPointsGainedLR"
+	{
+		"#format"   "{1:i}"
+		"en"		"{wheat}Gang gained {chartreuse}{1}{wheat} points for gang member winning last request."
+		"chi"		"{wheat}帮派因帮派成员赢得最后的请求而获得 {chartreuse}{1}{wheat} 积分。"
+		"tr"		"{wheat}Çete çete üyeleri son istek kazandığı için {chartreuse}{1}{wheat} puan aldı."
+	}
+	"GangPointsGainedAlive"
+	{
+		"#format"   "{1:i}"
+		"en"		"{wheat}Gang gained {chartreuse}{1}{wheat} points for gang members alive."
+		"chi"		"{wheat}帮派因帮派成员存活而获得{chartreuse}{1}{wheat}积分。"
+		"tr"		"{wheat}Çete çete üyeleri hayatta kaldığı için {chartreuse}{1}{wheat} puan aldı."
+	}
+	"GangPointsGainedAdmin"
+	{
+		"#format"   "{1:i}"
+		"en"		"{wheat}Gang gained {chartreuse}{1}{wheat} points from admin."
+		"chi"		"{wheat}帮派从管理员那里获得了{chartreuse}{1}{wheat}积分。"
+		"tr"		"{wheat}Çete yöneticiden {chartreuse}{1}{wheat} puan aldı.
+	}
+	"GangBuffActive"
+	{
+		"#format"   "{1:s}{2:t}"
+		"en"		"{chartreuse}{1}{wheat} gang activated {strange}{2}{wheat}!"
+		"chi"		"{wheat}帮派 {chartreuse}{1}{wheat} 激活了 {strange}{2}{wheat}！"
+		"tr"		"{chartreuse}{1}{wheat} çetesi {strange}{2}{wheat} öğesini aktif etti!"
+	}
+	"GangChatOn"
+	{
+		"en"		"{wheat}Enabled gang chat. Messages will only be seen by gang members."
+		"chi"		"{wheat}启用了帮派聊天。消息只会被帮派成员看到。"
+		"tr"		"{wheat}Çete sohbeti etkinleştirildi. Mesajlar sadece çete üyeleri tarafından görülecek."
+	}
+	"GangChatOff"
+	{
+		"en"		"{wheat}Disabled gang chat. Messages will be seen by all players."
+		"chi"		"{wheat}禁用了帮派聊天。消息将被所有玩家看到。"
+		"tr"		"{wheat}Çete sohbeti devre dışı bırakıldı. Mesajlar bütün oyuncular tarafından görülecek."
+	}
 }

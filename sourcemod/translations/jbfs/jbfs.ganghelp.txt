@@ -1,73 +1,87 @@
 "Phrases"
 {
-    "GangHelp"
-    {
-        "en"        "{wheat}List of Gang related commands:"
-        "chi"       "{wheat}帮派相关命令列表："
-    }
-    "GangHelpHelp"
-    {
-        "en"        "/ganghelp, /ghelp - Print this help output"
-        "chi"       "/ganghelp, /ghelp - 打印此帮助输出"
-    }
-    "GangMenuHelp"
-    {
-        "en"        "/gangmenu, /gmenu, /gang, /g - Open the Gang menu"
-        "chi"       "/gangmenu, /gmenu, /gang, /g - 打开帮派菜单"
-    }
-    "GangCreateHelp"
-    {
-        "en"        "/gangcreate - Create a gang"
-        "chi"       "/gangcreate - 创建一个帮派"
-    }
-    "GangJoinHelp"
-    {
-        "en"        "/gangjoin, /gjoin - Join a gang you have been invited to"
-        "chi"       "/gangjoin, /gjoin - 加入你被邀请的帮派"
-    }
-    "GangLeaveHelp"
-    {
-        "en"        "/gangleave, /gleave - Leave your gang"
-        "chi"       "/gangleave, /gleave - 离开你的帮派"
-    }
-    "GangChatHelp"
-    {
-        "en"        "/gangchat, /gc - Toggle gang chat"
-        "chi"       "/gangchat, /gc - 切换帮派聊天"
-    }
-    "GangPointsHelp"
-    {
-        "en"        "/gangpoints, /gpoints - List gang points"
-        "chi"       "/gangpoints, /gpoints - 列出帮派积分"
-    }
-    "GangInviteHelp"
-    {
-        "en"        "/ganginvite, /ginv - Invite a player to your gang"
-        "chi"       "/ganginvite, /ginv - 邀请玩家加入你的帮派"
-    }
-    "GangNameHelp"
-    {
-        "en"        "/gangname, /gname - Change your gang's name"
-        "chi"       "/gangname, /gname - 更改你的帮派名称"
-    }
-    "GangTagHelp"
-    {
-        "en"        "/gangtag, /gtag - Change your gang's tag"
-        "chi"       "/gangtag, /gtag - 更改你的帮派标签"
-    }
-    "GangPromoteHelp"
-    {
-        "en"        "/gangpromote, /gpromo - Promote a player in your gang"
-        "chi"       "/gangpromote, /gpromo - 提升你帮派中的一个玩家"
-    }
-    "GangDemoteHelp"
-    {
-        "en"        "/gangdemote, /gdemo - Demote a player in your gang"
-        "chi"       "/gangdemote, /gdemo - 降低你帮派中的一个玩家的级别"
-    }
-    "GangKickHelp"
-    {
-        "en"        "/gangkick, /gkick - Kick a player from your gang"
-        "chi"       "/gangkick, /gkick - 从你的帮派中踢出一个玩家"
-    }
+	"GangHelp"
+	{
+		"en"		"{wheat}List of gang related commands:"
+		"chi"		"{wheat}帮派相关命令列表："
+		"tr"		"{wheat}Çete ile ilgili komutların listesi:"
+	}
+	"GangHelpHelp"
+	{
+		"en"		"/ganghelp, /ghelp - Print this help output."
+		"chi"		"/ganghelp, /ghelp - 打印此帮助输出。"
+		"tr"		"/ganghelp, /ghelp - Bu yardım çıktısını yazdır."
+	}
+	"GangMenuHelp"
+	{
+		"en"		"/gangmenu, /gmenu, /gang, /g - Open the gang menu."
+		"chi"		"/gangmenu, /gmenu, /gang, /g - 打开帮派菜单。"
+		"tr"		"/gangmenu, /gmenu, /gang, /g - Çete menüsünü aç."
+	}
+	"GangCreateHelp"
+	{
+		"en"		"/gangcreate - Create a gang."
+		"chi"		"/gangcreate - 创建一个帮派。"
+		"tr"		"/gangcreate - Çete oluştur."
+	}
+	"GangJoinHelp"
+	{
+		"en"		"/gangjoin, /gjoin - Join a gang you have been invited to."
+		"chi"		"/gangjoin, /gjoin - 加入你被邀请的帮派。"
+		"tr"		"/gangjoin, /gjoin - Davet edildiğin bir çeteye katıl."
+	}
+	"GangLeaveHelp"
+	{
+		"en"		"/gangleave, /gleave - Leave your gang."
+		"chi"		"/gangleave, /gleave - 离开你的帮派。"
+		"tr"		"/gangleave, /gleave - Çetenden ayrıl."
+	}
+	"GangChatHelp"
+	{
+		"en"		"/gangchat, /gc - Toggle gang chat."
+		"chi"		"/gangchat, /gc - 切换帮派聊天。"
+		"tr"		"/gangchat, /gc - Çete sohbetini aç/kapat."
+	}
+	"GangPointsHelp"
+	{
+		"en"		"/gangpoints, /gpoints - List gang points."
+		"chi"		"/gangpoints, /gpoints - 列出帮派积分。"
+		"tr"		"/gangpoints, /gpoints - Çete puanını sırala."
+	}
+	"GangInviteHelp"
+	{
+		"en"		"/ganginvite, /ginv - Invite a player to your gang."
+		"chi"		"/ganginvite, /ginv - 邀请玩家加入你的帮派。"
+		"tr"		"/ganginvite, /ginv - Çetene bir oyuncu davet et."
+	}
+	"GangNameHelp"
+	{
+		"en"		"/gangname, /gname - Change your gang's name."
+		"chi"		"/gangname, /gname - 更改你的帮派名称。"
+		"tr"		"/gangname, /gname - Senin çetenin ismini değiştir."
+	}
+	"GangTagHelp"
+	{
+		"en"		"/gangtag, /gtag - Change your gang's tag."
+		"chi"		"/gangtag, /gtag - 更改你的帮派标签。"
+		"tr"		"/gangtag, /gtag - Senin çetenin etiketini değiştir."
+	}
+	"GangPromoteHelp"
+	{
+		"en"		"/gangpromote, /gpromo - Promote a player in your gang."
+		"chi"		"/gangpromote, /gpromo - 提升你帮派中的一个玩家。"
+		"tr"		"/gangpromote, /gpromo - Çetendeki bir oyuncuyu terfi ettir."
+	}
+	"GangDemoteHelp"
+	{
+		"en"		"/gangdemote, /gdemo - Demote a player in your gang."
+		"chi"		"/gangdemote, /gdemo - 降低你帮派中的一个玩家的级别。"
+		"tr"		"/gangdemote, /gdemo - Çetendeki bir oyuncunun rütbesini düşür."
+	}
+	"GangKickHelp"
+	{
+		"en"		"/gangkick, /gkick - Kick a player from your gang."
+		"chi"		"/gangkick, /gkick - 从你的帮派中踢出一个玩家。"
+		"tr"		"/gangkick, /gkick - Çetenden bir oyuncuyu at."
+	}
 }
