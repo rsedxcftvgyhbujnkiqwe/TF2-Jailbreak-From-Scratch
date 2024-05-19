@@ -1,0 +1,115 @@
+"Phrases"
+{
+	"HelpCmd"
+	{
+		"en"	"/jhelp"
+	}
+	"HelpHelp"
+	{
+		"en"	"Open this help menu"
+	}
+	"WardenCmd"
+	{
+		"en"	"/warden, /w"
+	}
+	"WardenHelp"
+	{
+		"en"	"Become the Warden"
+	}
+	"FFCmd"
+	{
+		"en"	"/ff"
+	}
+	"FFHelp"
+	{
+		"en"	"Show status of Friendly Fire"
+	}
+	"FireCmd"
+	{
+		"en"	"/fire"
+	}
+	"FireHelp"
+	{
+		"en"	"Vote to fire the Warden"
+	}
+	"LRCmd"
+	{
+		"en"	"/lr"
+	}
+	"LRHelp"
+	{
+		"en"	"Check the current Last Request"
+	}
+	"SurrenderCmd"
+	{
+		"en"	"/surrender"
+	}
+	"SurrenderHelp"
+	{
+		"en"	"Surrender your ammo"
+	}
+	"UnwardenCmd"
+	{
+		"en"	"/unwarden, /uw"
+	}
+	"UnwardenHelp"
+	{
+		"en"	"Retire from Warden"
+	}
+	"OpenCellsCmd"
+	{
+		"en"	"/opencells, /oc"
+	}
+	"OpenCellsHelp"
+	{
+		"en"	"Open the cell doors"
+	}
+	"CloseCellsCmd"
+	{
+		"en"	"/closecells, /cc"
+	}
+	"CloseCellsHelp"
+	{
+		"en"	"Close the cell doors"
+	}
+	"WardenMenuCmd"
+	{
+		"en"	"/wardenmenu, /wmenu, /wm"
+	}
+	"WardenMenuHelp"
+	{
+		"en"	"Open the Warden menu"
+	}
+	"WardenFFCmd"
+	{
+		"en"	"/wardenff, /wff"
+	}
+	"WardenFFHelp"
+	{
+		"en"	"Toggle Friendly Fire"
+	}
+	"WardenColCmd"
+	{
+		"en"	"/wardencol, /wcol, /wcc"
+	}
+	"WardenColHelp"
+	{
+		"en"	"Toggle Collisions"
+	}
+	"MarkerCmd"
+	{
+		"en"	"/marker"
+	}
+	"MarkerHelp"
+	{
+		"en"	"Create a Warden marker"
+	}
+	"GiveLRCmd"
+	{
+		"en"	"/givelr, /glr"
+	}
+	"GiveLRHelp"
+	{
+		"en"	"Give a prisoner LR"
+	}
+}
