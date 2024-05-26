@@ -454,10 +454,6 @@ public int HelpSubMenuHandler(Menu menu, MenuAction action, int param1, int para
         }
         case MenuAction_DrawItem:
         {
-            //pass
-        }
-        case MenuAction_DrawItem:
-        {
             return ITEMDRAW_RAWLINE;
         }
         case MenuAction_DisplayItem:
