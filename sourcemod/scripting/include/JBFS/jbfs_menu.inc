@@ -69,7 +69,7 @@ public int WardenMenuHandler(Menu menu, MenuAction action, int param1, int param
             }
             else if (StrEqual(info, WMENU_CHOICE6))
             {
-                CPrintToChat(param1,"%t %t","PluginTag","CommandUsageGiveLR")
+                CPrintToChat(param1,"%T %T","PluginTag","CommandUsageGiveLR")
             }
             g_WMenuTime = gametime;
             CreateWardenMenu(param1, menu.Selection)
@@ -81,7 +81,7 @@ public int WardenMenuHandler(Menu menu, MenuAction action, int param1, int param
             {
                 case MenuCancel_Exit,MenuCancel_NoDisplay:
                 {
-                    CPrintToChat(param1,"%t %t","PluginTag","WardenMenuReOpen");
+                    CPrintToChat(param1,"%T %T","PluginTag","WardenMenuReOpen");
                 }
             }
         }
@@ -137,7 +137,7 @@ public Action Command_WardenMenu(int client, int args)
 {
     if(client!=JBFS.Warden)
     {
-        CPrintToChat(client,"%t %t","PluginTag","WardenWarnNotWarden");
+        CPrintToChat(client,"%T %T","PluginTag","WardenWarnNotWarden");
         return Plugin_Handled;
     }
     CreateWardenMenu(client,0);
@@ -148,7 +148,7 @@ public void CreateWardenMenu(int client,int selection)
 {
     Menu menu = new Menu(WardenMenuHandler, MENU_ACTIONS_ALL);
     g_WMenu[client] = menu;
-    menu.SetTitle("%T","WardenMenuTitle",LANG_SERVER);
+    menu.SetTitle("%T","WardenMenuTitle",client);
     if (cvarJBFS_CMD[WCMD_Cells].BoolValue)
     {
         menu.AddItem(WMENU_CHOICE1,"Open Cells");
@@ -284,7 +284,7 @@ public Action Command_Admin_WardenMenu(int client, int args)
 public void CreateAdminWardenMenu(int client,int selection)
 {
     Menu menu = new Menu(AdminWardenMenuHandler,MENU_ACTIONS_ALL);
-    menu.SetTitle("%T","WardenMenuTitle",LANG_SERVER);
+    menu.SetTitle("%T","WardenMenuTitle",client);
     if(CheckCommandAccess(client,"sm_forceopencells",2))
     {
         menu.AddItem(WMENU_CHOICE1,"Open Cells");
@@ -361,7 +361,7 @@ public int LRMenuHandler(Menu menu, MenuAction action, int param1, int param2)
         }
         case MenuAction_Cancel:
         {
-            CPrintToChatAll("%t %t","PluginTag","LRMenuClose")
+            CPrintToChatAll("%T %T","PluginTag","LRMenuClose")
             //do nothing
         }
         case MenuAction_End:
@@ -413,7 +413,7 @@ public void CreateLRMenu(int client)
 {
     Menu menu = new Menu(LRMenuHandler, MENU_ACTIONS_ALL);
     LRConfig.menu = menu;
-    menu.SetTitle("%T","LRMenuTitle",LANG_SERVER);
+    menu.SetTitle("%T","LRMenuTitle",client);
     menu.AddItem(LRCHOICE1,"Freeday for yourself");
     menu.AddItem(LRCHOICE2,"Freeday for others");
     menu.AddItem(LRCHOICE3,"Freeday for all");
@@ -430,6 +430,107 @@ public void CreateLRMenu(int client)
     }
     menu.ExitButton = false;
     menu.Display(client,MENU_TIME_FOREVER);
+}
+
+public int HelpSubMenuHandler(Menu menu, MenuAction action, int param1, int param2)
+{
+    switch (action)
+    {
+        case MenuAction_End:
+        {
+            delete menu;
+        }
+        case MenuAction_Cancel:
+        {
+            if (param2 == MenuCancel_ExitBack)
+            {
+                CreateHelpMenu(param1)
+            }
+        }
+        case MenuAction_Select:
+        {
+            //this menu has nothing selectable
+            //nothing to do here
+        }
+        case MenuAction_DrawItem:
+        {
+            //pass
+        }
+        case MenuAction_DisplayItem:
+        {
+            char info[64];
+            menu.GetItem(param2, info, sizeof(info));
+            char display[64];
+            Format(display,sizeof(display),"%T",info,param1);
+            return RedrawMenuItem(display);
+        }
+    }
+    return 0;
+}
+
+//why is this hardcoded, you may ask?
+//well, it's the easiest way to allow conditional menu values based on player/config state
+public void CreateHelpSubMenu(int client,char[] cmdname)
+{
+    Menu menu = new Menu(AdminWardenMenuHandler,MENU_ACTIONS_ALL);
+    menu.SetTitle("%T","HelpMenuTitle",client);
+    char helpcmd[64];
+    Format(helpcmd,sizeof(helpcmd),"%sCmd",cmdname);
+    char helphelp[64];
+    Format(helphelp,sizeof(helphelp),"%sCmd",cmdname);
+    menu.AddItem(helpcmd,helpcmd,ITEMDRAW_DISABLED);
+    menu.AddItem(helphelp,helphelp,ITEMDRAW_DISABLED);
+    menu.ExitBackButton = true;
+}
+
+public int HelpMenuHandler(Menu menu, MenuAction action, int param1, int param2)
+{
+    switch (action)
+    {
+        case MenuAction_End:
+        {
+            delete menu;
+        }
+        case MenuAction_Cancel:
+        {
+            //pass
+        }
+        case MenuAction_Select:
+        {
+            char info[64];
+            menu.GetItem(param2, info, sizeof(info));
+            CreateHelpSubMenu(param1,info)
+        }
+        case MenuAction_DrawItem:
+        {
+            //pass
+        }
+        case MenuAction_DisplayItem:
+        {
+            char info[64];
+            menu.GetItem(param2, info, sizeof(info));
+            char temp[64];
+            Format(temp,sizeof(temp),"%sCmd",info)
+            char display[64];
+            Format(display,sizeof(display),"%T",temp,param1);
+            return RedrawMenuItem(display);
+        }
+    }
+    return 0;
+}
+
+//why is this hardcoded, you may ask?
+//well, it's the easiest way to allow conditional menu values based on player/config state
+public void CreateHelpMenu(int client)
+{
+    Menu menu = new Menu(AdminWardenMenuHandler,MENU_ACTIONS_ALL);
+    menu.SetTitle("%T","WardenMenuTitle",client);
+    menu.AddItem("Help","Help");
+    menu.AddItem("Warden","Warden");
+    menu.AddItem("FF","FF");
+    menu.AddItem("Fire","Fire");
+    menu.AddItem("LR","LR");
+    menu.AddItem("Surrender","Surrender");
 }
 
 public int ClientMenuHandler(Menu menu, MenuAction action, int param1, int param2)

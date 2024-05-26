@@ -1,5 +1,9 @@
 "Phrases"
 {
+	"HelpMenuTitle"
+	{
+		"en"	"Help Menu"
+	}
 	"HelpCmd"
 	{
 		"en"	"/jhelp"
@@ -14,7 +18,7 @@
 	}
 	"WardenHelp"
 	{
-		"en"	"Become the Warden"
+		"en"	"Become the Warden if you are on the guard team. You can only become Warden if Warden is unlocked, and no one else is Warden."
 	}
 	"FFCmd"
 	{
@@ -22,7 +26,7 @@
 	}
 	"FFHelp"
 	{
-		"en"	"Show status of Friendly Fire"
+		"en"	"Show status of Friendly Fire in chat"
 	}
 	"FireCmd"
 	{
@@ -30,7 +34,7 @@
 	}
 	"FireHelp"
 	{
-		"en"	"Vote to fire the Warden"
+		"en"	"Vote to fire the Warden. Requires a majority vote from players"
 	}
 	"LRCmd"
 	{
@@ -38,7 +42,7 @@
 	}
 	"LRHelp"
 	{
-		"en"	"Check the current Last Request"
+		"en"	"Print the current Last Request in chat"
 	}
 	"SurrenderCmd"
 	{
@@ -46,7 +50,7 @@
 	}
 	"SurrenderHelp"
 	{
-		"en"	"Surrender your ammo"
+		"en"	"Surrender your ammo. Lose any extra weapons or perks from having ammo"
 	}
 	"UnwardenCmd"
 	{
@@ -54,7 +58,7 @@
 	}
 	"UnwardenHelp"
 	{
-		"en"	"Retire from Warden"
+		"en"	"Retire from Warden if you  are currently Warden"
 	}
 	"OpenCellsCmd"
 	{
@@ -62,7 +66,7 @@
 	}
 	"OpenCellsHelp"
 	{
-		"en"	"Open the cell doors"
+		"en"	"Open the cell doors. Requires server owner to configure the map"
 	}
 	"CloseCellsCmd"
 	{
@@ -70,7 +74,7 @@
 	}
 	"CloseCellsHelp"
 	{
-		"en"	"Close the cell doors"
+		"en"	"Close the cell doors. Requires server owner to configure the map"
 	}
 	"WardenMenuCmd"
 	{
@@ -86,7 +90,7 @@
 	}
 	"WardenFFHelp"
 	{
-		"en"	"Toggle Friendly Fire"
+		"en"	"Toggle Friendly Fire if you are the Warden"
 	}
 	"WardenColCmd"
 	{
@@ -94,7 +98,7 @@
 	}
 	"WardenColHelp"
 	{
-		"en"	"Toggle Collisions"
+		"en"	"Toggle Collisions if you are the Warden"
 	}
 	"MarkerCmd"
 	{
@@ -110,6 +114,6 @@
 	}
 	"GiveLRHelp"
 	{
-		"en"	"Give a prisoner LR"
+		"en"	"Give a prisoner LR if you are the Warden"
 	}
 }
