@@ -454,7 +454,7 @@ public int HelpSubMenuHandler(Menu menu, MenuAction action, int param1, int para
         }
         case MenuAction_DrawItem:
         {
-            return ITEMDRAW_RAWLINE;
+            return ITEMDRAW_DISABLED;
         }
         case MenuAction_DisplayItem:
         {
