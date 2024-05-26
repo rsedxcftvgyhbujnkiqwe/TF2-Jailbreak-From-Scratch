@@ -168,6 +168,7 @@ public void OnPluginStart()
     LoadTranslations("common.phrases");
     LoadTranslations("jbfs/jbfs.phrases");
     LoadTranslations("jbfs/jbfs.menu");
+    LoadTranslations("jbfs/jbfs.help");
 
     AimHud = CreateHudSynchronizer();
     SearchHud = CreateHudSynchronizer();
