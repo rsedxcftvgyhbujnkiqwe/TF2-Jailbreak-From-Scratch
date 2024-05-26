@@ -456,6 +456,10 @@ public int HelpSubMenuHandler(Menu menu, MenuAction action, int param1, int para
         {
             //pass
         }
+        case MenuAction_DrawItem:
+        {
+            return ITEMDRAW_RAWLINE;
+        }
         case MenuAction_DisplayItem:
         {
             char info[64];
@@ -476,8 +480,8 @@ public void CreateHelpSubMenu(int client,char[] cmdname)
     Format(helpcmd,sizeof(helpcmd),"%sCmd",cmdname);
     char helphelp[64];
     Format(helphelp,sizeof(helphelp),"%sHelp",cmdname);
-    menu.AddItem(helpcmd,helpcmd,ITEMDRAW_RAWLINE);
-    menu.AddItem(helphelp,helphelp,ITEMDRAW_RAWLINE);
+    menu.AddItem(helpcmd,helpcmd);
+    menu.AddItem(helphelp,helphelp);
     menu.ExitBackButton = true;
     menu.Display(client, MENU_TIME_FOREVER);
 }
