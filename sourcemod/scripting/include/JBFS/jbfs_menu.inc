@@ -479,6 +479,7 @@ public void CreateHelpSubMenu(int client,char[] cmdname)
     menu.AddItem(helpcmd,helpcmd,ITEMDRAW_DISABLED);
     menu.AddItem(helphelp,helphelp,ITEMDRAW_DISABLED);
     menu.ExitBackButton = true;
+    menu.Display(client, MENU_TIME_FOREVER);
 }
 
 public int HelpMenuHandler(Menu menu, MenuAction action, int param1, int param2)
@@ -529,6 +530,7 @@ public void CreateHelpMenu(int client)
     menu.AddItem("Fire","Fire");
     menu.AddItem("LR","LR");
     menu.AddItem("Surrender","Surrender");
+    menu.Display(client, MENU_TIME_FOREVER);
 }
 
 public int ClientMenuHandler(Menu menu, MenuAction action, int param1, int param2)
