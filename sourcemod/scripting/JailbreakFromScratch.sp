@@ -102,6 +102,8 @@ public void OnPluginStart()
     AutoExecConfig(true,"jbfs");
 
     //regular commands for players
+    
+    RegConsoleCmd("sm_jhelp",Command_HelpMenu,"Open the Help Menu");
     RegConsoleCmd("sm_w",Command_Warden,"Become the Warden");
     RegConsoleCmd("sm_warden",Command_Warden,"Become the Warden");
     
