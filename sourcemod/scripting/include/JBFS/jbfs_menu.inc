@@ -476,8 +476,8 @@ public void CreateHelpSubMenu(int client,char[] cmdname)
     Format(helpcmd,sizeof(helpcmd),"%sCmd",cmdname);
     char helphelp[64];
     Format(helphelp,sizeof(helphelp),"%sHelp",cmdname);
-    menu.AddItem(helpcmd,helpcmd,ITEMDRAW_DISABLED);
-    menu.AddItem(helphelp,helphelp,ITEMDRAW_DISABLED);
+    menu.AddItem(helpcmd,helpcmd,ITEMDRAW_RAWLINE);
+    menu.AddItem(helphelp,helphelp,ITEMDRAW_RAWLINE);
     menu.ExitBackButton = true;
     menu.Display(client, MENU_TIME_FOREVER);
 }
