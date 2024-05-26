@@ -1,4 +1,10 @@
 //Client Commands
+public Action Command_HelpMenu(int client, int args)
+{
+    CreateHelpMenu(client)
+    return Plugin_Handled;
+}
+
 public Action Command_Warden(int client, int args)
 {
     if (GetClientTeam(client)!=BLU)

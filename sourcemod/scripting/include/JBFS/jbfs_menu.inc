@@ -468,8 +468,6 @@ public int HelpSubMenuHandler(Menu menu, MenuAction action, int param1, int para
     return 0;
 }
 
-//why is this hardcoded, you may ask?
-//well, it's the easiest way to allow conditional menu values based on player/config state
 public void CreateHelpSubMenu(int client,char[] cmdname)
 {
     Menu menu = new Menu(AdminWardenMenuHandler,MENU_ACTIONS_ALL);
@@ -477,7 +475,7 @@ public void CreateHelpSubMenu(int client,char[] cmdname)
     char helpcmd[64];
     Format(helpcmd,sizeof(helpcmd),"%sCmd",cmdname);
     char helphelp[64];
-    Format(helphelp,sizeof(helphelp),"%sCmd",cmdname);
+    Format(helphelp,sizeof(helphelp),"%sHelp",cmdname);
     menu.AddItem(helpcmd,helpcmd,ITEMDRAW_DISABLED);
     menu.AddItem(helphelp,helphelp,ITEMDRAW_DISABLED);
     menu.ExitBackButton = true;
@@ -524,7 +522,7 @@ public int HelpMenuHandler(Menu menu, MenuAction action, int param1, int param2)
 public void CreateHelpMenu(int client)
 {
     Menu menu = new Menu(AdminWardenMenuHandler,MENU_ACTIONS_ALL);
-    menu.SetTitle("%T","WardenMenuTitle",client);
+    menu.SetTitle("%T","HelpMenuTitle",client);
     menu.AddItem("Help","Help");
     menu.AddItem("Warden","Warden");
     menu.AddItem("FF","FF");
