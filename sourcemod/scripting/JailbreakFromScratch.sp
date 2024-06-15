@@ -10,6 +10,7 @@
 #include <tf2>
 #include <tf2_stocks>
 #include <dhooks>
+#include <basecomm>
 
 public Plugin myinfo =
 {
@@ -83,6 +84,9 @@ public void OnPluginStart()
     cvarJBFS[WeaponSearch] = CreateConVar("sm_jbfs_weaponsearch","1","Allow guards to search prisoners for weapons while holding melee.\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0);
     cvarJBFS[SearchTime] = CreateConVar("sm_jbfs_weaponsearchtime","3.0","Time required to search for weapons.",FCVAR_NOTIFY,true,0.5,true,5.0);
     cvarJBFS[WardenLockTime] = CreateConVar("sm_jbfs_wardenlocktime","0.0","Clamp round time to this value, in seconds, when warden locks.\n0 = Disabled",FCVAR_NOTIFY,true,0.0,true,300.0)
+    cvarJBFS[RebelTime] = CreateConVar("sm_jbfs_rebeltime","30","Length in seconds that a prisoner gains a rebel particle whenever they rebel.\n0 to disable the rebel system",FCVAR_NOTIFY,true,0.0,true,120.0)
+    cvarJBFS[RebelAmmo] = CreateConVar("sm_jbfs_rebelammo","0","Should picking up ammo trigger the Rebel system?\nRequires sm_jbfs_rebeltime > 0\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0)
+    cvarJBFS[AdminMuteImmunity] = CreateConVar("sm_jbfs_adminmuteimmunity","1","Should Admins be immune to Warden mutes?\nRequires sm_jbfs_wcmd_mute to be set\nFlags defined in sm_jbfs_acmd_wardenmute used to determine eligible admins.\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0)
     cvarJBFS[Version] = CreateConVar("jbfs_version",PLUGIN_VERSION,PLUGIN_NAME,FCVAR_REPLICATED | FCVAR_NOTIFY | FCVAR_SPONLY | FCVAR_DONTRECORD);
     //admincmd cvars
     cvarJBFS_CMD[ACMD_WardenMenu] = CreateConVar("sm_jbfs_acmd_adminmenu","2","Admin commands (sm_jbfs_acmd_*) requires setting admin flag bits.\nSee: https://wiki.alliedmods.net/Checking_Admin_Flags_(SourceMod_Scripting)\n\nAdmin flag(s) required to open the admin warden menu.",FCVAR_NOTIFY,true,0.0,true,2097151.0);
@@ -94,11 +98,13 @@ public void OnPluginStart()
     cvarJBFS_CMD[ACMD_CC] = CreateConVar("sm_jbfs_acmd_cc","2","Admin flag(s) required to toggle collisions.",FCVAR_NOTIFY,true,0.0,true,2097151.0);
     cvarJBFS_CMD[ACMD_ForceLR] = CreateConVar("sm_jbfs_acmd_forcelr","2","Admin flag(s) required to force last request.",FCVAR_NOTIFY,true,0.0,true,2097151.0);
     cvarJBFS_CMD[ACMD_ForceFreeday] = CreateConVar("sm_jbfs_acmd_forcefreeday","2","Admin flag(s) required to force freeday.",FCVAR_NOTIFY,true,0.0,true,2097151.0)
+    cvarJBFS_CMD[ACMD_WardenMute] = CreateConVar("sm_jbfs_acmd_wardenmute","2","Admin flag(s) required to force toggle a Warden Mute",FCVAR_NOTIFY,true,0.0,true,2097151.0);
     //wmenu cvars
     cvarJBFS_CMD[WCMD_Cells] = CreateConVar("sm_jbfs_wcmd_cells","1","Allow the Warden to open/close the cell doors\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0)
     cvarJBFS_CMD[WCMD_FriendlyFire] = CreateConVar("sm_jbfs_wcmd_ff","1","Allow the Warden to toggle friendly-fire\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0)
     cvarJBFS_CMD[WCMD_Collisions] = CreateConVar("sm_jbfs_wcmd_cc","1","Allow the Warden to toggle collisions\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0)
     cvarJBFS_CMD[WCMD_Marker] = CreateConVar("sm_jbfs_wcmd_marker","1","Allow the Warden to create markers\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0)
+    cvarJBFS_CMD[WCMD_Mute] = CreateConVar("sm_jbfs_wcmd_mute","1","Allow the Warden to mute all other players\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0)
     AutoExecConfig(true,"jbfs");
 
     //regular commands for players
@@ -138,6 +144,8 @@ public void OnPluginStart()
     
     RegConsoleCmd("sm_marker",Command_WardenMarker,"Create a Warden marker");
     
+    RegConsoleCmd("sm_wmute",Command_WardenMute,"Toggle a server-wide mute, so only the Warden can speak");
+
     RegConsoleCmd("sm_glr",Command_GiveLastRequest,"Give a prisoner LR");
     RegConsoleCmd("sm_givelr",Command_GiveLastRequest,"Give a prisoner LR");
 
@@ -213,6 +221,8 @@ public void OnConfigsExecuted()
         RegAdminCmd("sm_forcelr",Command_Admin_ForceLastRequest,cvarJBFS_CMD[ACMD_ForceLR].IntValue,"Force give a prisoner LR");
         
         RegAdminCmd("sm_freeday",Command_Admin_ForceFreeday,cvarJBFS_CMD[ACMD_ForceFreeday].IntValue,"Force give a prisoner a freeday")
+
+        RegAdminCmd("sm_awmute",Command_Admin_WardenMute,cvarJBFS_CMD[ACMD_WardenMute].IntValue,"Toggle a server-wide mute, so only the Warden can speak")
         
         RegAdminCmd("sm_awm",Command_Admin_WardenMenu,cvarJBFS_CMD[ACMD_WardenMenu].IntValue,"Open the Admin Warden menu");
         RegAdminCmd("sm_awmenu",Command_Admin_WardenMenu,cvarJBFS_CMD[ACMD_WardenMenu].IntValue,"Open the Admin Warden menu");

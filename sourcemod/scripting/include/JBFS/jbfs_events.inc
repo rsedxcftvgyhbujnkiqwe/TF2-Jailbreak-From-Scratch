@@ -6,11 +6,13 @@ public void OnPreRoundStart(Event event, const char[] name, bool dontBroadcast)
     LRConfig.LRChosen = LR_None;
     LRConfig.LRWinner = 0; //this is done here so you can get lr winner on round end
     JBFS.RoundActive = false;  
-    //surrender timers
+    //surrender/rebel stuff
     SetArray(JBFS.HasSurrendered,sizeof(JBFS.HasSurrendered),false);
+    SetArray(JBFS.IsRebel,sizeof(JBFS.IsRebel),false)
     for (int i;i<=MaxClients;i++)
     {
         if (IsValidHandle(JBFS.SurrenderTimers[i])) KillTimer(JBFS.SurrenderTimers[i]);
+        if (IsValidHandle(JBFS.RebelTimer[i])) KillTimer(JBFS.RebelTimer[i]);
     }
 
     //warden stuff
@@ -18,6 +20,8 @@ public void OnPreRoundStart(Event event, const char[] name, bool dontBroadcast)
     LockWarden(false);
     SetArray(JBFS.FireStatus,sizeof(JBFS.FireStatus),false);
     ResetActiveLR();
+    //unset warden mute if it's active
+    if (JBFS.WardenMuteActive) ResetWardenMute();
     //send warden set -1
     JBGameEvent(JBEvent_SetWarden);
     //reset convars
@@ -162,6 +166,8 @@ public void DeathEvents(int client)
     RemoveParticle(client);
     SetArray(g_BlockedWeapons[client],6,-1);
     g_HasBlockedWeapons[client] = false;
+    if (IsValidHandle(JBFS.RebelTimer[client]))KillTimer(JBFS.RebelTimer[client]);
+    if (JBFS.IsRebel[client]) ResetRebelStatus(client);
 }
 
 public void OnPlayerTeamChange(Event event, const char[] name, bool dontBroadcast)
@@ -208,10 +214,16 @@ public Action:OnTakeDamage(victim,&attacker,&inflictor,&Float:damage,&damagetype
             action = Plugin_Changed;
         }
         //dealing damage removes your freeday
+        bool FreedayRemoved = false
         if(LRConfig.FreedaysActive[attacker] && damage > 0)
         {
             LRRemoveFreeday(attacker);
             CPrintToChatAll("%t %t","PluginTag","FreedayLost",attacker)
+            FreedayRemoved = true
+        }
+        if (GetClientTeam(attacker)==RED && GetClientTeam(victim)==BLU)
+        {
+            SetRebelStatus(attacker,FreedayRemoved)
         }
     }
     return action
@@ -239,12 +251,14 @@ public void AmmoTaken(int client, bool return_weapons)
                 TF2Attrib_RemoveByDefIndex(client,49)
         }
     }
+    bool FreedayRemoved = false;
     if (LRConfig.FreedaysActive[client])
     {
         LRRemoveFreeday(client);
         CPrintToChatAll("%t %t","PluginTag","FreedayLost",client)
+        FreedayRemoved = true;
     }
-
+    if (cvarJBFS[RebelAmmo]) SetRebelStatus(client,FreedayRemoved);
 }
 
 public void OnTakeAmmo(const char[] output, int caller, int activator, float delay)

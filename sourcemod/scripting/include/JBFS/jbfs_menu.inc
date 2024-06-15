@@ -6,6 +6,7 @@
 #define WMENU_CHOICE6 "#wmchoice6"
 #define WMENU_CHOICE7 "#wmchoice7"
 #define WMENU_CHOICE8 "#wmchoice8"
+#define WMENU_CHOICE9 "#wmchoice9"
 
 
 #define LRCHOICE1 "#lrchoice1"
@@ -212,6 +213,10 @@ public int AdminWardenMenuHandler(Menu menu, MenuAction action, int param1, int 
             {
                 Command_Admin_UnlockWarden(param1,0);
             }
+            else if (StrEqual(info, WMENU_CHOICE9))
+            {
+                Command_Admin_WardenMute(param1,0);
+            }
             CreateAdminWardenMenu(param1, menu.Selection)
         }
         case MenuAction_Cancel:
@@ -271,6 +276,11 @@ public int AdminWardenMenuHandler(Menu menu, MenuAction action, int param1, int 
                 Format(display,sizeof(display),"%T","AdminWardenMenuUnlockWarden",param1);
                 return RedrawMenuItem(display);
             }
+            else if (StrEqual(info,WMENU_CHOICE9))
+            {
+                Format(display,sizeof(display),"%T","AdminWardenMenuWardenMute",param1);
+                return RedrawMenuItem(display);
+            }
         }
     }
     return 0;
@@ -303,6 +313,10 @@ public void CreateAdminWardenMenu(int client,int selection)
     {
         menu.AddItem(WMENU_CHOICE7,"Lock Warden");
         menu.AddItem(WMENU_CHOICE8,"Unlock Warden");
+    }
+    if(CheckCommandAccess(client,"sm_awmute",2))
+    {
+        menu.AddItem(WMENU_CHOICE9,"Warden Mute");
     }
     menu.DisplayAt(client,selection,MENU_TIME_FOREVER);
 }
@@ -530,6 +544,18 @@ public void CreateHelpMenu(int client)
     menu.AddItem("Fire","Fire");
     menu.AddItem("LR","LR");
     menu.AddItem("Surrender","Surrender");
+    if (client == JBFS.Warden)
+    {
+        menu.AddItem("WardenMenu","WardenMenu");
+        menu.AddItem("Unwarden","Unwarden");
+        menu.AddItem("OpenCells","OpenCells");
+        menu.AddItem("CloseCells","CloseCells");
+        menu.AddItem("WardenFF","WardenFF");
+        menu.AddItem("WardenCol","WardenCol");
+        menu.AddItem("Marker","Marker");
+        menu.AddItem("GiveLR","GiveLR");
+        menu.AddItem("WardenMute","WardenMute");
+    }
     menu.Display(client, MENU_TIME_FOREVER);
 }
 

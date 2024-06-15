@@ -18,7 +18,7 @@
 	}
 	"WardenHelp"
 	{
-		"en"	"Become the Warden if you are on the guard team. You can only become Warden if Warden is unlocked, and no one else is Warden."
+		"en"	"Become the Warden if you are on the guard team"
 	}
 	"FFCmd"
 	{
@@ -50,7 +50,7 @@
 	}
 	"SurrenderHelp"
 	{
-		"en"	"Surrender your ammo. Lose any extra weapons or perks from having ammo"
+		"en"	"Surrender your ammo and weapons, stripping you to melee"
 	}
 	"UnwardenCmd"
 	{
@@ -114,6 +114,14 @@
 	}
 	"GiveLRHelp"
 	{
-		"en"	"Give a prisoner LR if you are the Warden"
+		"en"	"Give a prisoner Last Request if you are the Warden"
+	}
+	"WardenMuteCmd"
+	{
+		"en"	"/awardenmute, /awmute"
+	}
+	"WardenMuteHelp"
+	{
+		"en"	"Toggle server-wide mute where only the Warden can speak"
 	}
 }

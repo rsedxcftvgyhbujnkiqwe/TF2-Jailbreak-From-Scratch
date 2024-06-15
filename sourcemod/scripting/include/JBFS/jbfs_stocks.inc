@@ -198,6 +198,8 @@ stock void RemoveWarden(int reason)
         }
     }
     RemoveParticle(currentwarden);
+    //unset warden mute if it's active
+    if (JBFS.WardenMuteActive) ResetWardenMute();
 }
 
 //choose a random warden
@@ -734,11 +736,11 @@ stock void InitClientAttributes(int client)
     }
 }
 
-stock void SetRebel(int client)
+stock void RemoveFreeday(int client)
 {
-    //abstraction that serves to do anything to a player when they rebel
-    //probably only freeday removal for forseeable future
-    if ( IsClientInGame(client) && IsPlayerAlive(client) && GetClientTeam(client)==RED)
+    //abstraction that serves to remove freeday
+    //used by vscript
+    if ( IsClientInGame(client) && IsPlayerAlive(client) && GetClientTeam(client)==RED && LRConfig.FreedaysActive[client])
     {
         LRRemoveFreeday(client);
         CPrintToChatAll("%t %t","PluginTag","FreedayLost",client)
@@ -752,4 +754,65 @@ stock void SetRoundTime(int time)
     int timer = FindEntityByClassname(-1,"team_round_timer");
     SetVariantInt(time);
     AcceptEntityInput(timer,"SetTime");
+}
+
+stock void SetRebelStatus(int client,bool silent=false)
+{
+    //the rebel system itself should be handled here
+    //any action that is blanket rebelling should call this
+    //in reality it's not "disabled" just the client facing part of it is
+    if (IsValidHandle(JBFS.RebelTimer[client]))KillTimer(JBFS.RebelTimer[client]);
+    int time = cvarJBFS[RebelTime].IntValue > 0;
+    //don't run the rebel code on warday
+    //waste of an edict probably, everyone's a rebel!
+    if (time > 0 && !LRConfig.WardayActive)
+    {
+        JBFS.RebelTimer[client] = CreateTimer(float(time),Timer_RebelStatus,client,TIMER_FLAG_NO_MAPCHANGE);
+        AttachParticle(client,"medic_radiusheal_red_volume")
+        //easier to handle freeday removal/notifications outside of this - pass silent if necessary
+        if (!JBFS.IsRebel[client]){
+            if (!silent) CPrintToChatAll("%t %t","PluginTag","PrisonerRebelled",client)
+        }
+    }
+    //we set this after because checking if it's already set is useful earlier
+    JBFS.IsRebel[client] = true
+}
+
+stock void ResetRebelStatus(int client)
+{
+    JBFS.IsRebel[client] = false;
+    RemoveParticle(client)
+    CPrintToChat(client,"%t %t","PluginTag","RebelStatusRemoved");
+}
+
+stock void IssueWardenMute()
+{
+    JBFS.WardenMuteActive = true;
+    bool adminimmune = cvarJBFS[AdminMuteImmunity].BoolValue;
+    CPrintToChatAll("%t %t","PluginTag","WardenMuteOn")
+    for(int i=1;i<=MaxClients;i++)
+    {
+        if (adminimmune && CheckCommandAccess(i,"sm_awmute",2)) continue;
+        if (i != JBFS.Warden && !JBFS.WardenMuted[i] && !BaseComm_IsClientMuted(i))
+        {
+            JBFS.WardenMuted[i] = true;
+            BaseComm_SetClientMute(i, true);
+        }
+    }
+}
+
+stock void ResetWardenMute()
+{
+    JBFS.WardenMuteActive = false;
+    CPrintToChatAll("%t %t","PluginTag","WardenMuteOff")
+    for(int i=1;i<=MaxClients;i++)
+    {
+        //someone should only get this state if they weren't muted
+        //by another plugin, so this is safe to do
+        if (JBFS.WardenMuted[i])
+        {
+            JBFS.WardenMuted[i] = false;
+            BaseComm_SetClientMute(i, false);
+        }
+    }
 }
