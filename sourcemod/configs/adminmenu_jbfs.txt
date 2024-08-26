@@ -2,14 +2,98 @@
 {
     "JBFS"
     {
-        "cmd"           "sm_fw #1"
-        "admin"         "sm_fw"
-        "execute"       "player"
-        "1"
+        "Force Warden"
         {
-            "type"      "player"
-            "method"    "name"
-            "title"     "Player to force warden"
+            "cmd"           "sm_fw"
+            "admin"         "sm_fw"
+            "execute"       "player"
+        }
+        "Force Unwarden"
+        {
+            "cmd"           "sm_fuw"
+            "admin"         "sm_fuw"
+            "execute"       "player"
+        }
+        "Lock Warden"
+        {
+            "cmd"           "sm_lw"
+            "admin"         "sm_lw"
+            "execute"       "player"
+        }
+        "Jail Time"
+        {
+            "cmd"           "sm_jtime #1"
+            "admin"         "sm_jtime"
+            "execute"       "player"
+            "1"
+            {
+                "type"      "list"
+                "title"     "Round Time"
+                "1"         "30"
+                "1."        "30 seconds"
+                "2"         "60"
+                "2."        "1 minute"
+                "3"         "120"
+                "3."        "2 minutes"
+                "4"         "300"
+                "4."        "5 minutes"
+                "5"         "600"
+                "5."        "10 minutes"
+            }
+        }
+        "Open Cells"
+        {
+            "cmd"           "sm_foc"
+            "admin"         "sm_foc"
+            "execute"       "player"
+        }
+        "Close Cells"
+        {
+            "cmd"           "sm_fcc"
+            "admin"         "sm_fcc"
+            "execute"       "player"
+        }
+        "Toggle Friendly Fire"
+        {
+            "cmd"           "sm_aff"
+            "admin"         "sm_aff"
+            "execute"       "player"
+        }
+        "Toggle Collisions"
+        {
+            "cmd"           "sm_acc"
+            "admin"         "sm_acc"
+            "execute"       "player"
+        }
+        "Force Last Request"
+        {
+            "cmd"           "sm_flr #1"
+            "admin"         "sm_flr"
+            "execute"       "player"
+            "1"
+            {
+                "type"      "player"
+                "method"    "steamid"
+                "title"     "Player to give Last Request"
+            }
+        }
+        "Force Freday"
+        {
+            "cmd"           "sm_freeday"
+            "admin"         "sm_freeday"
+            "execute"       "player"
+            "1"
+            {
+                "type"      "player"
+                "method"    "steamid"
+                "title"     "Player to give Freeday"
+            }
+        }
+        "Warden Mute"
+        {
+            "cmd"           "sm_awmute"
+            "admin"         "sm_awmute"
+            "execute"       "player"
         }
     }
 }
