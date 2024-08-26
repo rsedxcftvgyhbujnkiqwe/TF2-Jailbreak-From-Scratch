@@ -213,8 +213,3 @@ stock any Min(any val1, any val2)
     if (val1 < val2) return val1;
     else return val2;
 }
-stock void GetTimestamp(char[] buffer, int size)
-{
-    int unixTime = GetTime();
-    FormatTime(buffer, size, "%Y-%m-%d %H:%M:%S", unixTime);
-}

@@ -79,11 +79,11 @@ stock void DB_VerifyTables()
     };
     for(int i;i<7;i++)
     {
-        if (!ColumnExists(GangTable,gang_columns[0][i]))
+        if (!DB_ColumnExists(GangTable,gang_columns[0][i]))
         {
             char definition[64];
             Format(definition,sizeof(definition),"%s %s",gang_columns[0][i],gang_columns[1][i]);
-            AddColumn(GangTable,gang_columns[0][i],definition);
+            DB_AddColumn(GangTable,definition);
         }
     }
     char player_columns[2][5][32] = {
@@ -104,11 +104,11 @@ stock void DB_VerifyTables()
     };
     for(int i;i<5;i++)
     {
-        if (!ColumnExists(PlayerTable,player_columns[0][i]))
+        if (!DB_ColumnExists(PlayerTable,player_columns[0][i]))
         {
             char definition[64];
             Format(definition,sizeof(definition),"%s %s",player_columns[0][i],player_columns[1][i]);
-            AddColumn(PlayerTable,player_columns[0][i],definition);
+            DB_AddColumn(PlayerTable,definition);
         }
     }
     PrintToServer("JBFS Column Existence verified.")
@@ -127,7 +127,7 @@ stock bool DB_ColumnExists(const char[] table_name, const char[] column_name)
         char qerror[255];
         SQL_GetError(hDatabase, qerror, sizeof(qerror));
         PrintToServer("Failed to query (error: %s)", qerror);
-        PrintToServer("Error checking for column in table %s. Please report this error, or add the column manually.",table_nanme)
+        PrintToServer("Error checking for column in table %s. Please report this error, or add the column manually.",table_name)
         return true; //counterintuitive but we don't want to touch the SQL table unless we should, and this is inconclusive
     }
 
@@ -444,8 +444,9 @@ stock int DB_CreateGang(char name[32])
     char nid[sizeof(name)];
     ReduceString(nid,sizeof(name),name);
 
-    char[32] timestamp;
-    GetTimestamp(timestamp,sizeof(timestamp))
+    char timestamp[32];
+    int unixTime = GetTime();
+    FormatTime(timestamp, sizeof(timestamp), "%Y-%m-%d %H:%M:%S", unixTime);
 
     //create the new gang
     SQL_FormatQuery(hDatabase,query,sizeof(query),
