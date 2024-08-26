@@ -24,6 +24,7 @@ stock void GotDatabase(Database db, const char[] error, any data)
         ... "nid VARCHAR(32), " //name ID, string that represents simplified gang name.
         ... "status INT, " //status, 1 = active, 0 = disbanded
         ... "creation_date INT, " //unix timestamp
+        ... "creation_timestamp DATETIME, " //datetime timestamp
 		... "PRIMARY KEY (uid));",GangTable);
     if (!SQL_FastQuery(hDatabase, query))
     {
@@ -46,6 +47,113 @@ stock void GotDatabase(Database db, const char[] error, any data)
         SQL_GetError(hDatabase, qerror, sizeof(qerror));
         PrintToServer("Failed to query (error: %s)", qerror);
         return;
+    }
+
+    PrintToServer("JBFS Table existence verified.")
+
+    DB_VerifyTables();
+}
+
+//This exists to hopefully smooth the transition between plugin updates. Needs a manual update each time one of these values is changed
+stock void DB_VerifyTables()
+{
+    char gang_columns[2][7][32] = {
+        {
+            "name",
+            "tag",
+            "uid",
+            "nid",
+            "status",
+            "creation_date",
+            "creation_date_timestamp"
+        },
+        {
+            "VARCHAR(32)",
+            "VARCHAR(4)",
+            "INT",
+            "VARCHAR(32)",
+            "INT",
+            "INT",
+            "DATETIME"
+        }
+    };
+    for(int i;i<7;i++)
+    {
+        if (!ColumnExists(GangTable,gang_columns[0][i]))
+        {
+            char definition[64];
+            Format(definition,sizeof(definition),"%s %s",gang_columns[0][i],gang_columns[1][i]);
+            AddColumn(GangTable,gang_columns[0][i],definition);
+        }
+    }
+    char player_columns[2][5][32] = {
+        {
+            "name",
+            "steamid",
+            "gang_id",
+            "rank",
+            "mid"
+        },
+        {
+            "VARCHAR(32)",
+            "VARCHAR(22)",
+            "INT",
+            "INT",
+            "INT"
+        }
+    };
+    for(int i;i<5;i++)
+    {
+        if (!ColumnExists(PlayerTable,player_columns[0][i]))
+        {
+            char definition[64];
+            Format(definition,sizeof(definition),"%s %s",player_columns[0][i],player_columns[1][i]);
+            AddColumn(PlayerTable,player_columns[0][i],definition);
+        }
+    }
+    PrintToServer("JBFS Column Existence verified.")
+}
+
+stock bool DB_ColumnExists(const char[] table_name, const char[] column_name)
+{
+    char query[512];
+    SQL_FormatQuery(hDatabase,query,sizeof(query),"SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS "
+        ... "WHERE TABLE_NAME = '%s' "
+        ... "AND COLUMN_NAME = '%s';",table_name,column_name);
+
+    DBResultSet hQuery = SQL_Query(hDatabase,query);
+    if (hQuery == null)
+    {
+        char qerror[255];
+        SQL_GetError(hDatabase, qerror, sizeof(qerror));
+        PrintToServer("Failed to query (error: %s)", qerror);
+        PrintToServer("Error checking for column in table %s. Please report this error, or add the column manually.",table_nanme)
+        return true; //counterintuitive but we don't want to touch the SQL table unless we should, and this is inconclusive
+    }
+
+    int count;
+    while (SQL_FetchRow(hQuery))
+    {
+        count = SQL_FetchInt(hQuery, 0);
+    }
+
+    delete hQuery;
+    if (count > 0) return true;
+    return false;
+}
+
+stock void DB_AddColumn(const char[] table_name, const char[] column_def)
+{
+    char query[512];
+    SQL_FormatQuery(hDatabase,query,sizeof(query),"ALTER TABLE %s "
+        ... "ADD COLUMN %s",table_name,column_def);
+    
+    DBResultSet hQuery = SQL_Query(hDatabase,query);
+    if (hQuery == null)
+    {
+        char qerror[255];
+        SQL_GetError(hDatabase, qerror, sizeof(qerror));
+        PrintToServer("Failed to query (error: %s)", qerror);
     }
 }
 
@@ -336,12 +444,15 @@ stock int DB_CreateGang(char name[32])
     char nid[sizeof(name)];
     ReduceString(nid,sizeof(name),name);
 
+    char[32] timestamp;
+    GetTimestamp(timestamp,sizeof(timestamp))
+
     //create the new gang
     SQL_FormatQuery(hDatabase,query,sizeof(query),
             "INSERT INTO %s "
-        ... "(name, tag, uid, nid, status, creation_date) "
-        ... "VALUES ('%s', '%s', %d, '%s', %d, %d)",
-            GangTable, name, "\0", uid, nid, 1, GetTime());
+        ... "(name, tag, uid, nid, status, creation_date, creation_timestamp) "
+        ... "VALUES ('%s', '%s', %d, '%s', %d, %d, '%s')",
+            GangTable, name, "\0", uid, nid, 1, GetTime(),timestamp);
     if (!SQL_FastQuery(hDatabase, query))
     {
         char qerror[255];
