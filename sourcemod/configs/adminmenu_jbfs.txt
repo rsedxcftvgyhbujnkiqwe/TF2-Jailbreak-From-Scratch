@@ -1,0 +1,15 @@
+"Commands"
+{
+    "JBFS"
+    {
+        "cmd"           "sm_fw #1"
+        "admin"         "sm_fw"
+        "execute"       "player"
+        "1"
+        {
+            "type"      "player"
+            "method"    "name"
+            "title"     "Player to force warden"
+        }
+    }
+}
