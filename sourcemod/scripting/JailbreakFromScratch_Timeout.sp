@@ -117,7 +117,7 @@ public void GotDatabase(Database db, const char[] error, any data)
 
     char query[512];
     SQL_FormatQuery(hDatabase,query,sizeof(query), "CREATE TABLE IF NOT EXISTS %s"
-        ... "(timestamp INT, "
+        ... "(timestamp DATETIME, "
 		...	"offender_steamid VARCHAR(22), "
 		... "offender_name VARCHAR(32), "
 		... "admin_steamid VARCHAR(22), "
@@ -153,12 +153,14 @@ public void DB_AddGuardBan(int client, int BanType, int duration, int admin, cha
     {
         DB_UpdateBanLength(ID,0);
     }
-    int timestamp = GetTime();
+    char timestamp[32];
+    int unixTime = GetTime();
+    FormatTime(timestamp, sizeof(timestamp), "%Y-%m-%d %H:%M:%S", unixTime);
     char query[256];
     SQL_FormatQuery(hDatabase,query,sizeof(query),
             "INSERT INTO %s "
 		... "(timestamp, offender_steamid, offender_name, admin_steamid, admin_name, ban_type, ban_length, ban_left, reason) "
-		... "VALUES (%d, '%s', '%N', '%s', '%N', %d, %d, %d, '%s')",
+		... "VALUES ('s', '%s', '%N', '%s', '%N', %d, %d, %d, '%s')",
 			TableName, timestamp, ID, client, IDAdmin, admin, BanType, duration, duration, reason);
     
     if (!SQL_FastQuery(hDatabase, query))
