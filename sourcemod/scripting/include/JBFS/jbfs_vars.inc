@@ -310,3 +310,7 @@ int g_PrevButtons[MAXPLAYERS+1];
 
 Handle AimHud;
 Handle SearchHud;
+
+//admin menu
+TopMenu hAdminMenu = null;
+TopMenuObject obj_jbfscommands;

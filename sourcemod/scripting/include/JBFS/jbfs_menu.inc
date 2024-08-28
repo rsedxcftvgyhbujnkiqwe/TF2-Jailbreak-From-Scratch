@@ -72,6 +72,10 @@ public int WardenMenuHandler(Menu menu, MenuAction action, int param1, int param
             {
                 CPrintToChat(param1,"%T %T","PluginTag","CommandUsageGiveLR")
             }
+            else if (StrEqual(info, WMENU_CHOICE7))
+            {
+                Command_WardenMute(param1,0);
+            }
             g_WMenuTime = gametime;
             CreateWardenMenu(param1, menu.Selection)
         }
@@ -129,6 +133,11 @@ public int WardenMenuHandler(Menu menu, MenuAction action, int param1, int param
                 Format(display,sizeof(display),"%T","WardenMenuLastRequest",param1);
                 return RedrawMenuItem(display);
             }
+            else if (StrEqual(info,WMENU_CHOICE7))
+            {
+                Format(display,sizeof(display),"%T","WardenMenuMute",param1);
+                return RedrawMenuItem(display);
+            }
         }
     }
     return 0;
@@ -159,6 +168,7 @@ public void CreateWardenMenu(int client,int selection)
     if (cvarJBFS_CMD[WCMD_Collisions].BoolValue) menu.AddItem(WMENU_CHOICE4,"Toggle Collisions");
     if (cvarJBFS_CMD[WCMD_Marker].BoolValue) menu.AddItem(WMENU_CHOICE5,"Marker");
     menu.AddItem(WMENU_CHOICE6,"Last Request");
+    if (cvarJBFS_CMD[WCMD_Mute].BoolValue) menu.AddItem(WMENU_CHOICE7,"Warden Mute");
     menu.DisplayAt(client,selection,MENU_TIME_FOREVER);
 }
 
@@ -666,4 +676,60 @@ public Action Command_Admin_ForceLastRequest(int client, int args)
 public bool AdminGiveLR(int admin, int target)
 {
     return SetLRWinner(target,admin,true,admin)
+}
+
+public void OnAdminMenuReady(Handle aTopMenu)
+{
+  TopMenu topmenu = TopMenu.FromHandle(aTopMenu);
+ 
+  if (obj_jbfscommands == INVALID_TOPMENUOBJECT)
+  {
+    OnAdminMenuCreated(topmenu);
+  }
+ 
+  if (topmenu == hAdminMenu)
+  {
+    return;
+  }
+ 
+  hAdminMenu = topmenu;
+}
+
+public void OnAdminMenuCreated(Handle aTopMenu)
+{
+  TopMenu topmenu = TopMenu.FromHandle(aTopMenu);
+ 
+  if (topmenu == hAdminMenu && obj_jbfscommands != INVALID_TOPMENUOBJECT)
+  {
+    return;
+  }
+ 
+  obj_jbfscommands = AddToTopMenu(
+    topmenu,
+    "JBFS Commands",
+    TopMenuObject_Category,
+    CategoryHandler,
+    INVALID_TOPMENUOBJECT
+  );
+}
+
+public void CategoryHandler(
+    TopMenu topmenu, 
+    TopMenuAction action,
+    TopMenuObject object_id,
+    int param,
+    char[] buffer,
+    int maxlength)
+{
+  switch (action)
+  {
+    case TopMenuAction_DisplayTitle:
+    {
+      strcopy(buffer, maxlength, "JBFS Commands:");
+    }
+    case TopMenuAction_DisplayOption:
+    {
+      strcopy(buffer, maxlength, "JBFS Commands");
+    }
+  }
 }

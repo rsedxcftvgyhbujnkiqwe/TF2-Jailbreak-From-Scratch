@@ -762,7 +762,7 @@ stock void SetRebelStatus(int client,bool silent=false)
     //any action that is blanket rebelling should call this
     //in reality it's not "disabled" just the client facing part of it is
     if (IsValidHandle(JBFS.RebelTimer[client]))KillTimer(JBFS.RebelTimer[client]);
-    int time = cvarJBFS[RebelTime].IntValue > 0;
+    int time = cvarJBFS[RebelTime].IntValue;
     //don't run the rebel code on warday
     //waste of an edict probably, everyone's a rebel!
     if (time > 0 && !LRConfig.WardayActive)

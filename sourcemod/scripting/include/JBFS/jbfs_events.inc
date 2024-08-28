@@ -258,7 +258,7 @@ public void AmmoTaken(int client, bool return_weapons)
         CPrintToChatAll("%t %t","PluginTag","FreedayLost",client)
         FreedayRemoved = true;
     }
-    if (cvarJBFS[RebelAmmo]) SetRebelStatus(client,FreedayRemoved);
+    if (cvarJBFS[RebelAmmo].BoolValue) SetRebelStatus(client,FreedayRemoved);
 }
 
 public void OnTakeAmmo(const char[] output, int caller, int activator, float delay)

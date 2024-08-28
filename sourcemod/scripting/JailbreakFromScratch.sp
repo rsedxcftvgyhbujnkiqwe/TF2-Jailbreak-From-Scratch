@@ -11,6 +11,9 @@
 #include <tf2_stocks>
 #include <dhooks>
 #include <basecomm>
+#undef REQUIRE_PLUGIN
+#include <adminmenu>
+#define REQUIRE_PLUGIN
 
 public Plugin myinfo =
 {
@@ -180,6 +183,13 @@ public void OnPluginStart()
 
     AimHud = CreateHudSynchronizer();
     SearchHud = CreateHudSynchronizer();
+
+    //admin menu call
+    TopMenu topmenu;
+    if (LibraryExists("adminmenu") && ((topmenu = GetAdminTopMenu()) != null))
+    {
+        OnAdminMenuReady(topmenu);
+    }
 }
 
 public void OnConfigsExecuted()
@@ -328,6 +338,12 @@ public void OnLibraryRemoved(const char[] name)
     if (StrEqual(name, "vscript"))
     {
         vscript = false;
+    }
+#endif
+#if defined _adminmenu_included
+    if (StrEqual(name, "adminmenu", false))
+    {
+        hAdminMenu = null;
     }
 #endif
 }

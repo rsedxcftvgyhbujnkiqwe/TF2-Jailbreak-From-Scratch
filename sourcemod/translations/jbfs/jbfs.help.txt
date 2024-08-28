@@ -118,7 +118,7 @@
 	}
 	"WardenMuteCmd"
 	{
-		"en"	"/awardenmute, /awmute"
+		"en"	"/wardenmute, /wmute"
 	}
 	"WardenMuteHelp"
 	{
