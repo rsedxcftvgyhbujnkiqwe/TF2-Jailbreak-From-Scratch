@@ -1,5 +1,5 @@
 #define PLUGIN_NAME         "[JBFS] Gangs"
-#define PLUGIN_VERSION      "1.1"
+#define PLUGIN_VERSION      "1.1.0"
 #define PLUGIN_AUTHOR       "blank"
 #define PLUGIN_DESCRIPTION  "Gang plugin for JBFS"
 

@@ -662,7 +662,7 @@ stock int DB_GetPlayerMID(int client,int gang_uid)
     SQL_FormatQuery(hDatabase,query,sizeof(query),
                 "SELECT mid "
             ... "FROM %s "
-            ... "WHERE gang_uid = %d"
+            ... "WHERE gang_uid = %d "
             ... "AND steamid = '%s';",PlayerTable,gang_uid,ID);
 
     DBResultSet hQuery = SQL_Query(hDatabase,query);
