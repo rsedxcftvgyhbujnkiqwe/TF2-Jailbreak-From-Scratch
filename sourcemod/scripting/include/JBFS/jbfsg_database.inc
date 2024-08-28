@@ -30,7 +30,7 @@ stock void GotDatabase(Database db, const char[] error, any data)
     {
         char qerror[255];
         SQL_GetError(hDatabase, qerror, sizeof(qerror));
-        PrintToServer("Failed to query (error: %s)", qerror);
+        PrintToServer("GotDatabase::Failed to query (error: %s)", qerror);
         return;
     }
 
@@ -45,7 +45,7 @@ stock void GotDatabase(Database db, const char[] error, any data)
     {
         char qerror[255];
         SQL_GetError(hDatabase, qerror, sizeof(qerror));
-        PrintToServer("Failed to query (error: %s)", qerror);
+        PrintToServer("GotDatabase::Failed to query (error: %s)", qerror);
         return;
     }
 
@@ -126,7 +126,7 @@ stock bool DB_ColumnExists(const char[] table_name, const char[] column_name)
     {
         char qerror[255];
         SQL_GetError(hDatabase, qerror, sizeof(qerror));
-        PrintToServer("Failed to query (error: %s)", qerror);
+        PrintToServer("DB_ColumnExists::Failed to query (error: %s)", qerror);
         PrintToServer("Error checking for column in table %s. Please report this error, or add the column manually.",table_name)
         return true; //counterintuitive but we don't want to touch the SQL table unless we should, and this is inconclusive
     }
@@ -146,14 +146,14 @@ stock void DB_AddColumn(const char[] table_name, const char[] column_def)
 {
     char query[512];
     SQL_FormatQuery(hDatabase,query,sizeof(query),"ALTER TABLE %s "
-        ... "ADD COLUMN %s",table_name,column_def);
+        ... "ADD COLUMN %s;",table_name,column_def);
     
     DBResultSet hQuery = SQL_Query(hDatabase,query);
     if (hQuery == null)
     {
         char qerror[255];
         SQL_GetError(hDatabase, qerror, sizeof(qerror));
-        PrintToServer("Failed to query (error: %s)", qerror);
+        PrintToServer("DB_AddColumn::Failed to query (error: %s)", qerror);
     }
 }
 
@@ -164,14 +164,14 @@ stock int DB_GetPlayerGang(int client)
     SQL_FormatQuery(hDatabase,query,sizeof(query),
             "SELECT gang_uid "
         ... "FROM %s "
-        ... "WHERE steamid = '%s' ",PlayerTable,ID);
+        ... "WHERE steamid = '%s';",PlayerTable,ID);
 
     DBResultSet hQuery = SQL_Query(hDatabase,query);
     if (hQuery == null)
     {
         char qerror[255];
         SQL_GetError(hDatabase, qerror, sizeof(qerror));
-        PrintToServer("Failed to query (error: %s)", qerror);
+        PrintToServer("DB_GetPlayerGang::Failed to query (error: %s)", qerror);
         return 0;
     }
 
@@ -199,14 +199,14 @@ stock int DB_GetPlayerGangRank(int client)
     SQL_FormatQuery(hDatabase,query,sizeof(query),
             "SELECT rank "
         ... "FROM %s "
-        ... "WHERE steamid = '%s' ",PlayerTable,ID);
+        ... "WHERE steamid = '%s';",PlayerTable,ID);
 
     DBResultSet hQuery = SQL_Query(hDatabase,query);
     if (hQuery == null)
     {
         char qerror[255];
         SQL_GetError(hDatabase, qerror, sizeof(qerror));
-        PrintToServer("Failed to query (error: %s)", qerror);
+        PrintToServer("DB_GetPlayerGangRank::Failed to query (error: %s)", qerror);
         return 0;
     }
 
@@ -233,12 +233,12 @@ stock bool DB_SetPlayerGangRankByMID(int gang_uid, int mid, int rank)
             "UPDATE %s "
         ... "SET rank = %d "
         ... "WHERE mid = %d "
-        ... "AND gang_uid = %d",PlayerTable,rank,mid,gang_uid)
+        ... "AND gang_uid = %d;",PlayerTable,rank,mid,gang_uid)
     if (!SQL_FastQuery(hDatabase, query))
     {
         char qerror[255];
         SQL_GetError(hDatabase, qerror, sizeof(qerror));
-        PrintToServer("Failed to query (error: %s)", qerror);
+        PrintToServer("DB_SetPlayerGangRankByMID::Failed to query (error: %s)", qerror);
         return false;
     }
     return true;
@@ -252,14 +252,14 @@ stock bool DB_SetPlayerGang(int client, int gang_uid, int rank, int mid)
     char query[512];
     SQL_FormatQuery(hDatabase,query,sizeof(query),
                 "SELECT count(*) FROM %s "
-            ... "WHERE steamid = '%s'",PlayerTable,ID);
+            ... "WHERE steamid = '%s';",PlayerTable,ID);
 
     DBResultSet hQuery = SQL_Query(hDatabase,query);
     if (hQuery == null)
     {
         char qerror[255];
         SQL_GetError(hDatabase, qerror, sizeof(qerror));
-        PrintToServer("Failed to query (error: %s)", qerror);
+        PrintToServer("DB_SetPlayerGang::Failed to query (error: %s)", qerror);
         return false;
     }
 
@@ -284,13 +284,13 @@ stock bool DB_SetPlayerGang(int client, int gang_uid, int rank, int mid)
             ... "gang_uid = %d, "
             ... "rank = %d, "
             ... "mid = %d "
-            ... "WHERE steamid = '%s' ",
+            ... "WHERE steamid = '%s';",
             PlayerTable,sanitized_name,gang_uid,rank,mid,ID)
         if (!SQL_FastQuery(hDatabase, query))
         {
             char qerror[255];
             SQL_GetError(hDatabase, qerror, sizeof(qerror));
-            PrintToServer("Failed to query (error: %s)", qerror);
+            PrintToServer("DB_SetPlayerGang::Failed to query (error: %s)", qerror);
             return false;
         }
     }
@@ -299,13 +299,13 @@ stock bool DB_SetPlayerGang(int client, int gang_uid, int rank, int mid)
         SQL_FormatQuery(hDatabase,query,sizeof(query),
                 "INSERT INTO %s "
             ... "(steamid, name, gang_uid, rank, mid) "
-            ... "VALUES ('%s', '%s', %d, %d, %d)",
+            ... "VALUES ('%s', '%s', %d, %d, %d);",
                 PlayerTable, ID, sanitized_name, gang_uid, rank,mid);
         if (!SQL_FastQuery(hDatabase, query))
         {
             char qerror[255];
             SQL_GetError(hDatabase, qerror, sizeof(qerror));
-            PrintToServer("Failed to query (error: %s)", qerror);
+            PrintToServer("DB_SetPlayerGang::Failed to query (error: %s)", qerror);
             return false;
         }
     }
@@ -318,14 +318,14 @@ stock bool DB_GetGangName(int gang_uid, char[] buffer, int maxlength)
     SQL_FormatQuery(hDatabase,query,sizeof(query),
                 "SELECT name "
             ... "FROM %s "
-            ... "WHERE uid = %d ",GangTable,gang_uid);
+            ... "WHERE uid = %d;",GangTable,gang_uid);
 
     DBResultSet hQuery = SQL_Query(hDatabase,query);
     if (hQuery == null)
     {
         char qerror[255];
         SQL_GetError(hDatabase, qerror, sizeof(qerror));
-        PrintToServer("Failed to query (error: %s)", qerror);
+        PrintToServer("DB_GetGangName::Failed to query (error: %s)", qerror);
         return false;
     }
 
@@ -345,14 +345,14 @@ stock bool DB_GetGangTag(int gang_uid, char[] buffer, int maxlength)
     SQL_FormatQuery(hDatabase,query,sizeof(query),
                 "SELECT tag "
             ... "FROM %s "
-            ... "WHERE uid = %d ",GangTable,gang_uid);
+            ... "WHERE uid = %d;",GangTable,gang_uid);
 
     DBResultSet hQuery = SQL_Query(hDatabase,query);
     if (hQuery == null)
     {
         char qerror[255];
         SQL_GetError(hDatabase, qerror, sizeof(qerror));
-        PrintToServer("Failed to query (error: %s)", qerror);
+        PrintToServer("DB_GetGangTag::Failed to query (error: %s)", qerror);
         return false;
     }
 
@@ -377,13 +377,13 @@ stock bool DB_SetGangName(int gang_uid, char name[32])
         "UPDATE %s "
     ... "SET name = '%s', "
     ... "nid = '%s' "
-    ... "WHERE uid = %d ",
+    ... "WHERE uid = %d;",
     GangTable,name,nid,gang_uid)
     if (!SQL_FastQuery(hDatabase, query))
     {
         char qerror[255];
         SQL_GetError(hDatabase, qerror, sizeof(qerror));
-        PrintToServer("Failed to query (error: %s)", qerror);
+        PrintToServer("DB_SetGangName::Failed to query (error: %s)", qerror);
         return false;
     }
     return true;
@@ -395,13 +395,13 @@ stock bool DB_SetGangTag(int gang_uid, char tag[5])
     SQL_FormatQuery(hDatabase,query,sizeof(query),
         "UPDATE %s "
     ... "SET tag = '%s' "
-    ... "WHERE uid = %d ",
+    ... "WHERE uid = %d;",
     GangTable,tag,gang_uid)
     if (!SQL_FastQuery(hDatabase, query))
     {
         char qerror[255];
         SQL_GetError(hDatabase, qerror, sizeof(qerror));
-        PrintToServer("Failed to query (error: %s)", qerror);
+        PrintToServer("DB_SetGangTag::Failed to query (error: %s)", qerror);
         return false;
     }
     return true;
@@ -419,14 +419,14 @@ stock int DB_CreateGang(char name[32])
     SQL_FormatQuery(hDatabase,query,sizeof(query),
                 "SELECT MAX(uid) "
             ... "AS largest_uid "
-            ... "FROM %s",GangTable);
+            ... "FROM %s;",GangTable);
 
     DBResultSet hQuery = SQL_Query(hDatabase,query);
     if (hQuery == null)
     {
         char qerror[255];
         SQL_GetError(hDatabase, qerror, sizeof(qerror));
-        PrintToServer("Failed to query (error: %s)", qerror);
+        PrintToServer("DB_CreateGang::Failed to query (error: %s)", qerror);
         return 0;
     }
 
@@ -452,13 +452,13 @@ stock int DB_CreateGang(char name[32])
     SQL_FormatQuery(hDatabase,query,sizeof(query),
             "INSERT INTO %s "
         ... "(name, tag, uid, nid, status, creation_date, creation_timestamp) "
-        ... "VALUES ('%s', '%s', %d, '%s', %d, %d, '%s')",
+        ... "VALUES ('%s', '%s', %d, '%s', %d, %d, '%s');",
             GangTable, name, "\0", uid, nid, 1, GetTime(),timestamp);
     if (!SQL_FastQuery(hDatabase, query))
     {
         char qerror[255];
         SQL_GetError(hDatabase, qerror, sizeof(qerror));
-        PrintToServer("Failed to query (error: %s)", qerror);
+        PrintToServer("DB_CreateGang::Failed to query (error: %s)", qerror);
         return 0;
     }
     return uid;
@@ -471,14 +471,14 @@ stock bool DB_GangExists(int gang_uid)
     char query[128];
     SQL_FormatQuery(hDatabase,query,sizeof(query),
                 "SELECT count(*) FROM %s "
-            ... "WHERE uid = %d",GangTable,gang_uid);
+            ... "WHERE uid = %d;",GangTable,gang_uid);
 
     DBResultSet hQuery = SQL_Query(hDatabase,query);
     if (hQuery == null)
     {
         char qerror[255];
         SQL_GetError(hDatabase, qerror, sizeof(qerror));
-        PrintToServer("Failed to query (error: %s)", qerror);
+        PrintToServer("DB_GangExists::Failed to query (error: %s)", qerror);
         return false;
     }
 
@@ -502,14 +502,14 @@ stock bool DB_GangNameExists(char name[32])
     SQL_FormatQuery(hDatabase,query,sizeof(query),
                 "SELECT count(*) FROM %s "
             ... "WHERE nid = '%s' "
-            ... "AND status = 1",GangTable,nid);
+            ... "AND status = 1;",GangTable,nid);
 
     DBResultSet hQuery = SQL_Query(hDatabase,query);
     if (hQuery == null)
     {
         char qerror[255];
         SQL_GetError(hDatabase, qerror, sizeof(qerror));
-        PrintToServer("Failed to query (error: %s)", qerror);
+        PrintToServer("DB_GangNameExists::Failed to query (error: %s)", qerror);
         return false;
     }
 
@@ -529,14 +529,14 @@ stock bool DB_GangTagExists(char tag[5])
     char query[128];
     SQL_FormatQuery(hDatabase,query,sizeof(query),
                 "SELECT count(*) FROM %s "
-            ... "WHERE tag = '%s'",GangTable,tag);
+            ... "WHERE tag = '%s';",GangTable,tag);
 
     DBResultSet hQuery = SQL_Query(hDatabase,query);
     if (hQuery == null)
     {
         char qerror[255];
         SQL_GetError(hDatabase, qerror, sizeof(qerror));
-        PrintToServer("Failed to query (error: %s)", qerror);
+        PrintToServer("DB_GangTagExists::Failed to query (error: %s)", qerror);
         return false;
     }
 
@@ -557,14 +557,14 @@ stock int DB_GetGangSize(int gang_uid)
     SQL_FormatQuery(hDatabase,query,sizeof(query),
                 "SELECT COUNT(steamid) "
             ... "FROM %s "
-            ... "WHERE gang_uid = %d ",PlayerTable,gang_uid);
+            ... "WHERE gang_uid = %d;",PlayerTable,gang_uid);
 
     DBResultSet hQuery = SQL_Query(hDatabase,query);
     if (hQuery == null)
     {
         char qerror[255];
         SQL_GetError(hDatabase, qerror, sizeof(qerror));
-        PrintToServer("Failed to query (error: %s)", qerror);
+        PrintToServer("DB_GetGangSize::Failed to query (error: %s)", qerror);
         return 0;
     }
 
@@ -588,12 +588,12 @@ stock void DB_RemovePlayerFromGang(int client, int gang_uid)
         SQL_FormatQuery(hDatabase,query,sizeof(query), 
                 "DELETE FROM %s "
             ... "WHERE gang_uid = %d "
-            ... "AND steamid = '%s'",PlayerTable,gang_uid,ID);
+            ... "AND steamid = '%s';",PlayerTable,gang_uid,ID);
         if (!SQL_FastQuery(hDatabase, query))
         {
             char qerror[255];
             SQL_GetError(hDatabase, qerror, sizeof(qerror));
-            PrintToServer("Failed to query (error: %s)", qerror);
+            PrintToServer("DB_RemovePlayerFromGang::Failed to query (error: %s)", qerror);
             return;
         }
     }
@@ -606,12 +606,12 @@ stock void DB_RemovePlayerFromGangByMID(int gang_uid, int mid)
         SQL_FormatQuery(hDatabase,query,sizeof(query), 
                 "DELETE FROM %s "
             ... "WHERE gang_uid = %d "
-            ... "AND mid = %d",PlayerTable,gang_uid,mid);
+            ... "AND mid = %d;",PlayerTable,gang_uid,mid);
         if (!SQL_FastQuery(hDatabase, query))
         {
             char qerror[255];
             SQL_GetError(hDatabase, qerror, sizeof(qerror));
-            PrintToServer("Failed to query (error: %s)", qerror);
+            PrintToServer("DB_RemovePlayerFromGangByMID::Failed to query (error: %s)", qerror);
             return;
         }
     }
@@ -625,12 +625,12 @@ stock void DB_SetGangStatus(int gang_uid, int status)
         SQL_FormatQuery(hDatabase,query,sizeof(query), 
                 "UPDATE %s "
             ... "SET status = %d "
-            ... "WHERE uid = %d",GangTable,status,gang_uid);
+            ... "WHERE uid = %d;",GangTable,status,gang_uid);
         if (!SQL_FastQuery(hDatabase, query))
         {
             char qerror[255];
             SQL_GetError(hDatabase, qerror, sizeof(qerror));
-            PrintToServer("Failed to query (error: %s)", qerror);
+            PrintToServer("DB_SetGangStatus::Failed to query (error: %s)", qerror);
             return;
         }
     }
@@ -644,14 +644,14 @@ stock bool DB_IsGangActive(int gang_uid)
         SQL_FormatQuery(hDatabase,query,sizeof(query),
                     "SELECT status "
                 ... "FROM %s "
-                ... "WHERE uid = %d ",GangTable,gang_uid);
+                ... "WHERE uid = %d;",GangTable,gang_uid);
 
         DBResultSet hQuery = SQL_Query(hDatabase,query);
         if (hQuery == null)
         {
             char qerror[255];
             SQL_GetError(hDatabase, qerror, sizeof(qerror));
-            PrintToServer("Failed to query (error: %s)", qerror);
+            PrintToServer("DB_IsGangActive::Failed to query (error: %s)", qerror);
             return false;
         }
 
@@ -675,14 +675,14 @@ stock int DB_GetMaxMID(int gang_uid)
                 "SELECT MAX(mid) "
             ... "AS largest_mid "
             ... "FROM %s "
-            ... "WHERE gang_uid = %d",PlayerTable,gang_uid);
+            ... "WHERE gang_uid = %d;",PlayerTable,gang_uid);
 
     DBResultSet hQuery = SQL_Query(hDatabase,query);
     if (hQuery == null)
     {
         char qerror[255];
         SQL_GetError(hDatabase, qerror, sizeof(qerror));
-        PrintToServer("Failed to query (error: %s)", qerror);
+        PrintToServer("DB_GetMaxMID::Failed to query (error: %s)", qerror);
         return 0;
     }
 
@@ -702,14 +702,14 @@ stock bool DB_MIDExists(int gang_uid, int mid)
                 "SELECT COUNT(steamid) "
             ... "FROM %s "
             ... "WHERE gang_uid = %d "
-            ... "AND mid = %d",PlayerTable,gang_uid,mid);
+            ... "AND mid = %d;",PlayerTable,gang_uid,mid);
 
     DBResultSet hQuery = SQL_Query(hDatabase,query);
     if (hQuery == null)
     {
         char qerror[255];
         SQL_GetError(hDatabase, qerror, sizeof(qerror));
-        PrintToServer("Failed to query (error: %s)", qerror);
+        PrintToServer("DB_MIDExists::Failed to query (error: %s)", qerror);
         return false;
     }
 
@@ -733,14 +733,14 @@ stock bool DB_GetInfoByMID(int gang_uid, int mid, char id_buffer[32], char name_
                 "SELECT steamid, name, rank "
             ... "FROM %s "
             ... "WHERE gang_uid = %d "
-            ... "AND mid = %d",PlayerTable,gang_uid,mid);
+            ... "AND mid = %d;",PlayerTable,gang_uid,mid);
 
     DBResultSet hQuery = SQL_Query(hDatabase,query);
     if (hQuery == null)
     {
         char qerror[255];
         SQL_GetError(hDatabase, qerror, sizeof(qerror));
-        PrintToServer("Failed to query (error: %s)", qerror);
+        PrintToServer("DB_GetInfoByMID::Failed to query (error: %s)", qerror);
         return false;
     }
     bool fetched = false;
@@ -768,14 +768,14 @@ stock int DB_GetPlayerMID(int client,int gang_uid)
                 "SELECT mid "
             ... "FROM %s "
             ... "WHERE gang_uid = %d"
-            ... "AND steamid = '%s'",PlayerTable,gang_uid,ID);
+            ... "AND steamid = '%s';",PlayerTable,gang_uid,ID);
 
     DBResultSet hQuery = SQL_Query(hDatabase,query);
     if (hQuery == null)
     {
         char qerror[255];
         SQL_GetError(hDatabase, qerror, sizeof(qerror));
-        PrintToServer("Failed to query (error: %s)", qerror);
+        PrintToServer("DB_GetPlayerMID::Failed to query (error: %s)", qerror);
         return 0;
     }
 

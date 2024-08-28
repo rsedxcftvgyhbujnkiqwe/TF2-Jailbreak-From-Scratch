@@ -321,4 +321,4 @@ stock void ApplyGangBuff(int gang_index,int active)
             ApplyGangBuffsClient(i,active);
         }
     }
-}
+}s
