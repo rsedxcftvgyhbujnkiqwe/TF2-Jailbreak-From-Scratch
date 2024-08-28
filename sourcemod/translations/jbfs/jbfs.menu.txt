@@ -50,7 +50,7 @@
 	}
 	"WardenMenuMute"
 	{
-		"en"		"Warden Mute"
+		"en"		"Toggle Warden Mute"
 	}
 	"AdminWardenMenuForceWarden"
 	{

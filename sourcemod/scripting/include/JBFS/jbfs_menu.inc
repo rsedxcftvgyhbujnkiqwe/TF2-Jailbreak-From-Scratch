@@ -1,3 +1,5 @@
+//I really do not enjoy doing menus
+
 #define WMENU_CHOICE1 "#wmchoice1"
 #define WMENU_CHOICE2 "#wmchoice2"
 #define WMENU_CHOICE3 "#wmchoice3"
@@ -680,37 +682,110 @@ public bool AdminGiveLR(int admin, int target)
 
 public void OnAdminMenuReady(Handle aTopMenu)
 {
-  TopMenu topmenu = TopMenu.FromHandle(aTopMenu);
- 
-  if (obj_jbfscommands == INVALID_TOPMENUOBJECT)
-  {
-    OnAdminMenuCreated(topmenu);
-  }
- 
-  if (topmenu == hAdminMenu)
-  {
-    return;
-  }
- 
-  hAdminMenu = topmenu;
+    TopMenu topmenu = TopMenu.FromHandle(aTopMenu);
+
+    if (obj_jbfscommands == INVALID_TOPMENUOBJECT)
+    {
+        OnAdminMenuCreated(topmenu);
+    }
+
+    if (topmenu == hAdminMenu)
+    {
+        return;
+    }
+
+    hAdminMenu = topmenu;
 }
 
 public void OnAdminMenuCreated(Handle aTopMenu)
 {
-  TopMenu topmenu = TopMenu.FromHandle(aTopMenu);
- 
-  if (topmenu == hAdminMenu && obj_jbfscommands != INVALID_TOPMENUOBJECT)
-  {
-    return;
-  }
- 
-  obj_jbfscommands = AddToTopMenu(
-    topmenu,
-    "JBFS Commands",
-    TopMenuObject_Category,
-    CategoryHandler,
-    INVALID_TOPMENUOBJECT
-  );
+    TopMenu topmenu = TopMenu.FromHandle(aTopMenu);
+
+    if (topmenu == hAdminMenu && obj_jbfscommands != INVALID_TOPMENUOBJECT)
+    {
+        return;
+    }
+
+    obj_jbfscommands = AddToTopMenu(
+        topmenu,
+        "JBFS Commands",
+        TopMenuObject_Category,
+        CategoryHandler,
+        INVALID_TOPMENUOBJECT
+    );
+
+    AddToTopMenu(topmenu,
+        "sm_forcewarden",
+        TopMenuObject_Item,ItemHandler,obj_jbfscommands,
+        "sm_forcewarden",
+        cvarJBFS_CMD[ACMD_ForceWarden].IntValue
+    );
+    AddToTopMenu(topmenu,
+        "sm_forceunwarden",
+        TopMenuObject_Item,ItemHandler,obj_jbfscommands,
+        "sm_forceunwarden",
+        cvarJBFS_CMD[ACMD_ForceWarden].IntValue
+    );
+    AddToTopMenu(topmenu,
+        "sm_lockwarden",
+        TopMenuObject_Item,ItemHandler,obj_jbfscommands,
+        "sm_lockwarden",
+        cvarJBFS_CMD[ACMD_LockWarden].IntValue
+    );
+    AddToTopMenu(topmenu,
+        "sm_unlockwarden",
+        TopMenuObject_Item,ItemHandler,obj_jbfscommands,
+        "sm_unlockwarden",
+        cvarJBFS_CMD[ACMD_LockWarden].IntValue
+    );
+    AddToTopMenu(topmenu,
+        "sm_forceopencells",
+        TopMenuObject_Item,ItemHandler,obj_jbfscommands,
+        "sm_forceopencells",
+        cvarJBFS_CMD[ACMD_Cells].IntValue
+    );
+    AddToTopMenu(topmenu,
+        "sm_forceclosecells",
+        TopMenuObject_Item,ItemHandler,obj_jbfscommands,
+        "sm_forceclosecells",
+        cvarJBFS_CMD[ACMD_Cells].IntValue
+    );
+    AddToTopMenu(topmenu,
+        "sm_aff",
+        TopMenuObject_Item,ItemHandler,obj_jbfscommands,
+        "sm_aff",
+        cvarJBFS_CMD[ACMD_FF].IntValue
+    );
+    AddToTopMenu(topmenu,
+        "sm_acc",
+        TopMenuObject_Item,ItemHandler,obj_jbfscommands,
+        "sm_acc",
+        cvarJBFS_CMD[ACMD_CC].IntValue
+    );
+    AddToTopMenu(topmenu,
+        "sm_forcelr",
+        TopMenuObject_Item,ItemHandler,obj_jbfscommands,
+        "sm_forcelr",
+        cvarJBFS_CMD[ACMD_ForceLR].IntValue
+    );
+    AddToTopMenu(topmenu,
+        "sm_freeday",
+        TopMenuObject_Item,ItemHandler,obj_jbfscommands,
+        "sm_freeday",
+        cvarJBFS_CMD[ACMD_ForceFreeday].IntValue
+    );
+    AddToTopMenu(topmenu,
+        "sm_awmute",
+        TopMenuObject_Item,ItemHandler,obj_jbfscommands,
+        "sm_awmute",
+        cvarJBFS_CMD[ACMD_WardenMute].IntValue
+    );
+    AddToTopMenu(topmenu,
+        "sm_jailtime",
+        TopMenuObject_Item,ItemHandler,obj_jbfscommands,
+        "sm_jailtime",
+        cvarJBFS_CMD[ACMD_JailTime].IntValue
+    );
 }
 
 public void CategoryHandler(
@@ -721,15 +796,132 @@ public void CategoryHandler(
     char[] buffer,
     int maxlength)
 {
-  switch (action)
-  {
-    case TopMenuAction_DisplayTitle:
+    switch (action)
     {
-      strcopy(buffer, maxlength, "JBFS Commands:");
+        case TopMenuAction_DisplayTitle:
+        {
+            strcopy(buffer, maxlength, "JBFS Commands:");
+        }
+        case TopMenuAction_DisplayOption:
+        {
+            strcopy(buffer, maxlength, "JBFS Commands");
+        }
     }
-    case TopMenuAction_DisplayOption:
+}
+
+public void ItemHandler(
+    TopMenu topmenu,
+    TopMenuAction action,
+    TopMenuObject object_id,
+    int param,
+    char[] buffer,
+    int maxlength)
+{
+    char command[64];
+    topmenu.GetObjName(object_id,command,sizeof(command))
+    switch (action)
     {
-      strcopy(buffer, maxlength, "JBFS Commands");
+        case TopMenuAction_DisplayOption:
+        {
+            if (StrEqual(command,"sm_forcewarden"))
+            {
+                strcopy(buffer,maxlength, "Force Warden");
+            }
+            else if (StrEqual(command,"sm_forceunwarden"))
+            {
+                strcopy(buffer,maxlength, "Force Unwarden");
+            }
+            else if (StrEqual(command,"sm_lockwarden"))
+            {
+                strcopy(buffer,maxlength, "Lock Warden");
+            }
+            else if (StrEqual(command,"sm_unlockwarden"))
+            {
+                strcopy(buffer,maxlength, "Unlock Warden");
+            }
+            else if (StrEqual(command,"sm_forceopencells"))
+            {
+                strcopy(buffer,maxlength, "Open Cells");
+            }
+            else if (StrEqual(command,"sm_forceclosecells"))
+            {
+                strcopy(buffer,maxlength, "Close Cells");
+            }
+            else if (StrEqual(command,"sm_aff"))
+            {
+                strcopy(buffer,maxlength, "Toggle Friendly Fire");
+            }
+            else if (StrEqual(command,"sm_acc"))
+            {
+                strcopy(buffer,maxlength, "Toggle Collisions");
+            }
+            else if (StrEqual(command,"sm_forcelr"))
+            {
+                strcopy(buffer,maxlength, "Force LR");
+            }
+            else if (StrEqual(command,"sm_freeday"))
+            {
+                strcopy(buffer,maxlength, "Force Freeday");
+            }
+            else if (StrEqual(command,"sm_awmute"))
+            {
+                strcopy(buffer,maxlength, "Toggle Warden Mute");
+            }
+            else if (StrEqual(command,"sm_jailtime"))
+            {
+                strcopy(buffer,maxlength, "Change Round Time");
+            }
+        }
+        case TopMenuAction_SelectOption:
+        {
+            if (StrEqual(command,"sm_forcewarden"))
+            {
+                Command_Admin_ForceWarden(param,0);
+            }
+            else if (StrEqual(command,"sm_forceunwarden"))
+            {
+                Command_Admin_ForceUnWarden(param,0);
+            }
+            else if (StrEqual(command,"sm_lockwarden"))
+            {
+                Command_Admin_LockWarden(param,0);
+            }
+            else if (StrEqual(command,"sm_unlockwarden"))
+            {
+                Command_Admin_UnlockWarden(param,0);
+            }
+            else if (StrEqual(command,"sm_forceopencells"))
+            {
+                Command_Admin_OpenCells(param,0);
+            }
+            else if (StrEqual(command,"sm_forceclosecells"))
+            {
+                Command_Admin_CloseCells(param,0);
+            }
+            else if (StrEqual(command,"sm_aff"))
+            {
+                Command_Admin_ToggleFriendlyFire(param,0);
+            }
+            else if (StrEqual(command,"sm_acc"))
+            {
+                Command_Admin_ToggleCollisions(param,0);
+            }
+            else if (StrEqual(command,"sm_forcelr"))
+            {
+                Command_Admin_ForceLastRequest(param,0);
+            }
+            else if (StrEqual(command,"sm_freeday"))
+            {
+                Command_Admin_ForceFreeday(param,0);
+            }
+            else if (StrEqual(command,"sm_awmute"))
+            {
+                Command_Admin_WardenMute(param,0);
+            }
+            else if (StrEqual(command,"sm_jailtime"))
+            {
+                Command_Admin_JailTime(param,0);
+            }
+        }
     }
-  }
 }
