@@ -494,7 +494,7 @@ public int ClientMenuHandler(Menu menu, MenuAction action, int param1, int param
     return 0;
 }
 
-public void CreateClientSelectMenu(int client, ClientFilterFunc filterFn, ClientRunFunc runFn, MenuCallbackFunc callbackFn,bool backbutton=false)
+void CreateClientSelectMenu(int client, ClientFilterFunc filterFn, ClientRunFunc runFn, MenuCallbackFunc callbackFn,bool backbutton=false)
 {
     g_RunFn[client] = runFn;
     g_filterFn[client] = filterFn;

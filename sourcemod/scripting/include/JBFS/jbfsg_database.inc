@@ -143,6 +143,9 @@ stock bool DB_SetPlayerGang(int client, int gang_uid, int rank, int mid)
 {
     char ID[32]; GetClientAuthId(client,AuthId_Steam2,ID,sizeof(ID));
 
+    //no bots in the table!
+    if (StrEqual(ID,"BOT")) return false;
+
     //this check is annoying but luckily it only ever needs to be made here
     char query[512];
     SQL_FormatQuery(hDatabase,query,sizeof(query),
