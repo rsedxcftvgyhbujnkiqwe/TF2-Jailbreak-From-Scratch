@@ -76,7 +76,7 @@ public int GangMenuHandler(Menu menu, MenuAction action, int param1, int param2)
                 //officer
                 else if (StrEqual(info, GMENUCHOICE_GANG4) && g_PlayerData[param1].rank >= GangRank_Officer)
                 {
-                    CreateClientSelectMenu(param1,FilterFn_Inviteable,RunFn_InivteToGang,CreateGangMenu);
+                    CreateClientSelectMenu(param1,FilterFn_Inviteable,RunFn_InivteToGang,CreateGangMenu,true);
                     reopen_menu = false;
                 }
                 else if (StrEqual(info, GMENUCHOICE_GANG5) && g_PlayerData[param1].rank >= GangRank_Officer)
@@ -494,7 +494,7 @@ public int ClientMenuHandler(Menu menu, MenuAction action, int param1, int param
     return 0;
 }
 
-public void CreateClientSelectMenu(int client, ClientFilterFunc filterFn, ClientRunFunc runFn, MenuCallbackFunc callbackFn)
+public void CreateClientSelectMenu(int client, ClientFilterFunc filterFn, ClientRunFunc runFn, MenuCallbackFunc callbackFn,bool backbutton=false)
 {
     g_RunFn[client] = runFn;
     g_filterFn[client] = filterFn;
@@ -531,6 +531,7 @@ public void CreateClientSelectMenu(int client, ClientFilterFunc filterFn, Client
         Call_Finish();
         return;
     }
+    if (backbutton) menu.ExitBackButton = true;
     menu.Display(client, MENU_TIME_FOREVER);
 }
 

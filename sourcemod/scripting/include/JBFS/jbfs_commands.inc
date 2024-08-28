@@ -288,7 +288,7 @@ public Action Command_WardenMute(int client, int args)
             CPrintToChat(client,"%t %t","PluginTag","CommandDisabled");
             return Plugin_Handled;
         }
-        if (JBFS.WardenMuteActive)
+        if (!JBFS.WardenMuteActive)
         {
             IssueWardenMute()
         }
@@ -487,7 +487,7 @@ public Action Command_Admin_ForceFreeday(int client, int args)
 
 public Action Command_Admin_WardenMute(int client, int args)
 {
-    if (JBFS.WardenMuteActive)
+    if (!JBFS.WardenMuteActive)
     {
         IssueWardenMute()
     }

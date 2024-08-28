@@ -56,7 +56,7 @@
 	}
 	"GangChatCmd"
 	{
-		"en"		"/gangchat, /gc
+		"en"		"/gangchat, /gc"
 	}
 	"GangChatHelp"
 	{
