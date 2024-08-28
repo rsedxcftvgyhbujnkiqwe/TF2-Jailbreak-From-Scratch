@@ -561,6 +561,8 @@ stock void LRSetFreeday(int client)
     LRConfig.FreedaysActive[client] = true;
     CPrintToChatAll("%t %t","PluginTag","LRFreedayActive",client);
     if(GetClientTeam(client)!=RED) return;
+    //remove the timer if someone ends up getting force freeday'd while a rebel.
+    if (IsValidHandle(JBFS.RebelTimer[client]))KillTimer(JBFS.RebelTimer[client]);
     TF2_RespawnPlayer(client);
 }
 

@@ -379,7 +379,7 @@ public int HelpSubMenuHandler(Menu menu, MenuAction action, int param1, int para
 public void CreateHelpSubMenu(int client,char[] cmdname)
 {
     Menu menu = new Menu(HelpSubMenuHandler,MENU_ACTIONS_ALL);
-    menu.SetTitle("%T","HelpMenuTitle",client);
+    menu.SetTitle("%T","GangHelpMenuTitle",client);
     char helpcmd[64];
     Format(helpcmd,sizeof(helpcmd),"Gang%sCmd",cmdname);
     char helphelp[64];
