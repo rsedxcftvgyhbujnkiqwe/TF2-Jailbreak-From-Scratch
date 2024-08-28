@@ -715,64 +715,10 @@ public void OnAdminMenuCreated(Handle aTopMenu)
     );
 
     AddToTopMenu(topmenu,
-        "sm_forcewarden",
+        "sm_jailtime",
         TopMenuObject_Item,ItemHandler,obj_jbfscommands,
-        "sm_forcewarden",
-        cvarJBFS_CMD[ACMD_ForceWarden].IntValue
-    );
-    AddToTopMenu(topmenu,
-        "sm_forceunwarden",
-        TopMenuObject_Item,ItemHandler,obj_jbfscommands,
-        "sm_forceunwarden",
-        cvarJBFS_CMD[ACMD_ForceWarden].IntValue
-    );
-    AddToTopMenu(topmenu,
-        "sm_lockwarden",
-        TopMenuObject_Item,ItemHandler,obj_jbfscommands,
-        "sm_lockwarden",
-        cvarJBFS_CMD[ACMD_LockWarden].IntValue
-    );
-    AddToTopMenu(topmenu,
-        "sm_unlockwarden",
-        TopMenuObject_Item,ItemHandler,obj_jbfscommands,
-        "sm_unlockwarden",
-        cvarJBFS_CMD[ACMD_LockWarden].IntValue
-    );
-    AddToTopMenu(topmenu,
-        "sm_forceopencells",
-        TopMenuObject_Item,ItemHandler,obj_jbfscommands,
-        "sm_forceopencells",
-        cvarJBFS_CMD[ACMD_Cells].IntValue
-    );
-    AddToTopMenu(topmenu,
-        "sm_forceclosecells",
-        TopMenuObject_Item,ItemHandler,obj_jbfscommands,
-        "sm_forceclosecells",
-        cvarJBFS_CMD[ACMD_Cells].IntValue
-    );
-    AddToTopMenu(topmenu,
-        "sm_aff",
-        TopMenuObject_Item,ItemHandler,obj_jbfscommands,
-        "sm_aff",
-        cvarJBFS_CMD[ACMD_FF].IntValue
-    );
-    AddToTopMenu(topmenu,
-        "sm_acc",
-        TopMenuObject_Item,ItemHandler,obj_jbfscommands,
-        "sm_acc",
-        cvarJBFS_CMD[ACMD_CC].IntValue
-    );
-    AddToTopMenu(topmenu,
-        "sm_forcelr",
-        TopMenuObject_Item,ItemHandler,obj_jbfscommands,
-        "sm_forcelr",
-        cvarJBFS_CMD[ACMD_ForceLR].IntValue
-    );
-    AddToTopMenu(topmenu,
-        "sm_freeday",
-        TopMenuObject_Item,ItemHandler,obj_jbfscommands,
-        "sm_freeday",
-        cvarJBFS_CMD[ACMD_ForceFreeday].IntValue
+        "sm_jailtime",
+        cvarJBFS_CMD[ACMD_JailTime].IntValue
     );
     AddToTopMenu(topmenu,
         "sm_awmute",
@@ -781,10 +727,64 @@ public void OnAdminMenuCreated(Handle aTopMenu)
         cvarJBFS_CMD[ACMD_WardenMute].IntValue
     );
     AddToTopMenu(topmenu,
-        "sm_jailtime",
+        "sm_freeday",
         TopMenuObject_Item,ItemHandler,obj_jbfscommands,
-        "sm_jailtime",
-        cvarJBFS_CMD[ACMD_JailTime].IntValue
+        "sm_freeday",
+        cvarJBFS_CMD[ACMD_ForceFreeday].IntValue
+    );
+    AddToTopMenu(topmenu,
+        "sm_forcelr",
+        TopMenuObject_Item,ItemHandler,obj_jbfscommands,
+        "sm_forcelr",
+        cvarJBFS_CMD[ACMD_ForceLR].IntValue
+    );
+    AddToTopMenu(topmenu,
+        "sm_acc",
+        TopMenuObject_Item,ItemHandler,obj_jbfscommands,
+        "sm_acc",
+        cvarJBFS_CMD[ACMD_CC].IntValue
+    );
+    AddToTopMenu(topmenu,
+        "sm_forceclosecells",
+        TopMenuObject_Item,ItemHandler,obj_jbfscommands,
+        "sm_forceclosecells",
+        cvarJBFS_CMD[ACMD_Cells].IntValue
+    );
+    AddToTopMenu(topmenu,
+        "sm_forceclosecells",
+        TopMenuObject_Item,ItemHandler,obj_jbfscommands,
+        "sm_forceclosecells",
+        cvarJBFS_CMD[ACMD_Cells].IntValue
+    );
+    AddToTopMenu(topmenu,
+        "sm_forceopencells",
+        TopMenuObject_Item,ItemHandler,obj_jbfscommands,
+        "sm_forceopencells",
+        cvarJBFS_CMD[ACMD_Cells].IntValue
+    );
+    AddToTopMenu(topmenu,
+        "sm_unlockwarden",
+        TopMenuObject_Item,ItemHandler,obj_jbfscommands,
+        "sm_unlockwarden",
+        cvarJBFS_CMD[ACMD_LockWarden].IntValue
+    );
+    AddToTopMenu(topmenu,
+        "sm_lockwarden",
+        TopMenuObject_Item,ItemHandler,obj_jbfscommands,
+        "sm_lockwarden",
+        cvarJBFS_CMD[ACMD_LockWarden].IntValue
+    );
+    AddToTopMenu(topmenu,
+        "sm_forceunwarden",
+        TopMenuObject_Item,ItemHandler,obj_jbfscommands,
+        "sm_forceunwarden",
+        cvarJBFS_CMD[ACMD_ForceWarden].IntValue
+    );
+    AddToTopMenu(topmenu,
+        "sm_forcewarden",
+        TopMenuObject_Item,ItemHandler,obj_jbfscommands,
+        "sm_forcewarden",
+        cvarJBFS_CMD[ACMD_ForceWarden].IntValue
     );
 }
 
