@@ -31,6 +31,7 @@ public Plugin myinfo =
 
 public void OnPluginStart()
 {
+    PrintToServer("===Starting %s, version %s===",PLUGIN_NAME,PLUGIN_VERSION);
     cvarJBFS[DatabaseName] = CreateConVar("sm_jbfsg_database","jbfsgangs","Name of SQL database to use. Configured in databases.cfg",FCVAR_NOTIFY);
     cvarJBFS[AnnounceGangCreate] = CreateConVar("sm_jbfsg_announcegangcreate","1","Whether to announce to all players when gangs are created/abandoned.\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0);
     cvarJBFS[AnnounceGangName] = CreateConVar("sm_jbfsg_announcegangname","1","Whether to announce to all players when gangs change their names.\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0);
