@@ -8,6 +8,11 @@
 	{
 		"en"		"{day9}[JBFS]{valve}"
 	}
+	"PluginAdvertisement"
+	{
+		"#format"	"{1:s}"
+		"en"		"{wheat}Running version {day9}{1}{wheat}. Type {day9}!jhelp{wheat} for a list of commands.
+	}
 	"WardenWarnLocked"
 	{
 		"en"		"{wheat}Warden is locked."
@@ -500,5 +505,22 @@
 		"en"		"{unique}{1}{wheat} was caught with weapons during a search!"
 		"chi"		"{unique}{1}{wheat} 在搜索过程中被发现有武器！"
 		"en"		"{unique}{1}{wheat} arama sırasında silahlarla yakalandı!"
+	}
+	"PrisonerRebelled"
+	{
+		"#format"	"{1:N}"
+		"en"		"{unique}{1}{wheat} has rebelled and has been marked as a rebel."
+	}
+	"RebelStatusRemoved"
+	{
+		"en"		"{wheat}Your rebel status has been removed."
+	}
+	"WardenMuteOn"
+	{
+		"en"		"{wheat}Server-wide Warden mute has been toggled on."
+	}
+	"WardenMuteOff"
+	{
+		"en"		"{wheat}Server-wide Warden mute has been toggled off."
 	}
 }

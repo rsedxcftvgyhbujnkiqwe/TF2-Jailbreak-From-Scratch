@@ -1,0 +1,127 @@
+"Phrases"
+{
+	"HelpMenuTitle"
+	{
+		"en"	"Help Menu"
+	}
+	"HelpCmd"
+	{
+		"en"	"/jhelp"
+	}
+	"HelpHelp"
+	{
+		"en"	"Open this help menu"
+	}
+	"WardenCmd"
+	{
+		"en"	"/warden, /w"
+	}
+	"WardenHelp"
+	{
+		"en"	"Become the Warden if you are on the guard team"
+	}
+	"FFCmd"
+	{
+		"en"	"/ff"
+	}
+	"FFHelp"
+	{
+		"en"	"Show status of Friendly Fire in chat"
+	}
+	"FireCmd"
+	{
+		"en"	"/fire"
+	}
+	"FireHelp"
+	{
+		"en"	"Vote to fire the Warden. Requires a majority vote from players"
+	}
+	"LRCmd"
+	{
+		"en"	"/lr"
+	}
+	"LRHelp"
+	{
+		"en"	"Print the current Last Request in chat"
+	}
+	"SurrenderCmd"
+	{
+		"en"	"/surrender"
+	}
+	"SurrenderHelp"
+	{
+		"en"	"Surrender your ammo and weapons, stripping you to melee"
+	}
+	"UnwardenCmd"
+	{
+		"en"	"/unwarden, /uw"
+	}
+	"UnwardenHelp"
+	{
+		"en"	"Retire from Warden if you  are currently Warden"
+	}
+	"OpenCellsCmd"
+	{
+		"en"	"/opencells, /oc"
+	}
+	"OpenCellsHelp"
+	{
+		"en"	"Open the cell doors. Requires server owner to configure the map"
+	}
+	"CloseCellsCmd"
+	{
+		"en"	"/closecells, /cc"
+	}
+	"CloseCellsHelp"
+	{
+		"en"	"Close the cell doors. Requires server owner to configure the map"
+	}
+	"WardenMenuCmd"
+	{
+		"en"	"/wardenmenu, /wmenu, /wm"
+	}
+	"WardenMenuHelp"
+	{
+		"en"	"Open the Warden menu"
+	}
+	"WardenFFCmd"
+	{
+		"en"	"/wardenff, /wff"
+	}
+	"WardenFFHelp"
+	{
+		"en"	"Toggle Friendly Fire if you are the Warden"
+	}
+	"WardenColCmd"
+	{
+		"en"	"/wardencol, /wcol, /wcc"
+	}
+	"WardenColHelp"
+	{
+		"en"	"Toggle Collisions if you are the Warden"
+	}
+	"MarkerCmd"
+	{
+		"en"	"/marker"
+	}
+	"MarkerHelp"
+	{
+		"en"	"Create a Warden marker"
+	}
+	"GiveLRCmd"
+	{
+		"en"	"/givelr, /glr"
+	}
+	"GiveLRHelp"
+	{
+		"en"	"Give a prisoner Last Request if you are the Warden"
+	}
+	"WardenMuteCmd"
+	{
+		"en"	"/wardenmute, /wmute"
+	}
+	"WardenMuteHelp"
+	{
+		"en"	"Toggle server-wide mute where only the Warden can speak"
+	}
+}

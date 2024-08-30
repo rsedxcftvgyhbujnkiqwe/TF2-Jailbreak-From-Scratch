@@ -1,6 +1,6 @@
 #if defined _vscript_included
 VScriptFunction g_GetWarden;
-VScriptFunction g_SetRebel;
+VScriptFunction g_RemoveFreeday;
 VScriptFunction g_IsFreeday;
 VScriptFunction g_TakenAmmo;
 
@@ -11,11 +11,11 @@ stock void CreateVScriptFunctions()
     g_GetWarden.Return = FIELD_INTEGER;
     g_GetWarden.SetFunctionEmpty();
 
-    //SetRebel function
-    g_SetRebel = VScript_CreateGlobalFunction("SetRebel");
-    g_SetRebel.SetParam(1,FIELD_INTEGER);
-    g_SetRebel.Return = FIELD_VOID;
-    g_SetRebel.SetFunctionEmpty();
+    //RemoveFreeday function
+    g_RemoveFreeday = VScript_CreateGlobalFunction("RemoveFreeday");
+    g_RemoveFreeday.SetParam(1,FIELD_INTEGER);
+    g_RemoveFreeday.Return = FIELD_VOID;
+    g_RemoveFreeday.SetFunctionEmpty();
 
     //IsFreeday function
     g_IsFreeday = VScript_CreateGlobalFunction("IsFreeday");
@@ -37,9 +37,9 @@ stock void RegisterVScriptFunctions()
     //GetWarden function
     g_GetWarden.Register();
     g_GetWarden.CreateDetour().Enable(Hook_Pre,Detour_GetWarden);
-    //SetRebel function
-    g_SetRebel.Register();
-    g_SetRebel.CreateDetour().Enable(Hook_Pre,Detour_SetRebel);
+    //RemoveFreeday function
+    g_RemoveFreeday.Register();
+    g_RemoveFreeday.CreateDetour().Enable(Hook_Pre,Detour_RemoveFreeday);
     //IsFreeday function
     g_IsFreeday.Register();
     g_IsFreeday.CreateDetour().Enable(Hook_Pre,Detour_IsFreeday);
@@ -59,7 +59,7 @@ stock MRESReturn Detour_GetWarden(DHookReturn hReturn)
     return MRES_Ignored;
 }
 
-stock MRESReturn Detour_SetRebel(DHookReturn hReturn, DHookParam hParam)
+stock MRESReturn Detour_RemoveFreeday(DHookReturn hReturn, DHookParam hParam)
 {
     if (vscript)
     {
@@ -67,7 +67,7 @@ stock MRESReturn Detour_SetRebel(DHookReturn hReturn, DHookParam hParam)
         if (userid > 0)
         {
             int client = GetClientOfUserId(userid);
-            SetRebel(client);
+            RemoveFreeday(client);
             return MRES_Supercede;
         }
     }

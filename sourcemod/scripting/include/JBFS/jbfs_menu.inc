@@ -1,3 +1,5 @@
+//I really do not enjoy doing menus
+
 #define WMENU_CHOICE1 "#wmchoice1"
 #define WMENU_CHOICE2 "#wmchoice2"
 #define WMENU_CHOICE3 "#wmchoice3"
@@ -6,6 +8,7 @@
 #define WMENU_CHOICE6 "#wmchoice6"
 #define WMENU_CHOICE7 "#wmchoice7"
 #define WMENU_CHOICE8 "#wmchoice8"
+#define WMENU_CHOICE9 "#wmchoice9"
 
 
 #define LRCHOICE1 "#lrchoice1"
@@ -69,7 +72,11 @@ public int WardenMenuHandler(Menu menu, MenuAction action, int param1, int param
             }
             else if (StrEqual(info, WMENU_CHOICE6))
             {
-                CPrintToChat(param1,"%t %t","PluginTag","CommandUsageGiveLR")
+                CPrintToChat(param1,"%T %T","PluginTag","CommandUsageGiveLR")
+            }
+            else if (StrEqual(info, WMENU_CHOICE7))
+            {
+                Command_WardenMute(param1,0);
             }
             g_WMenuTime = gametime;
             CreateWardenMenu(param1, menu.Selection)
@@ -81,7 +88,7 @@ public int WardenMenuHandler(Menu menu, MenuAction action, int param1, int param
             {
                 case MenuCancel_Exit,MenuCancel_NoDisplay:
                 {
-                    CPrintToChat(param1,"%t %t","PluginTag","WardenMenuReOpen");
+                    CPrintToChat(param1,"%T %T","PluginTag","WardenMenuReOpen");
                 }
             }
         }
@@ -128,6 +135,11 @@ public int WardenMenuHandler(Menu menu, MenuAction action, int param1, int param
                 Format(display,sizeof(display),"%T","WardenMenuLastRequest",param1);
                 return RedrawMenuItem(display);
             }
+            else if (StrEqual(info,WMENU_CHOICE7))
+            {
+                Format(display,sizeof(display),"%T","WardenMenuMute",param1);
+                return RedrawMenuItem(display);
+            }
         }
     }
     return 0;
@@ -137,7 +149,7 @@ public Action Command_WardenMenu(int client, int args)
 {
     if(client!=JBFS.Warden)
     {
-        CPrintToChat(client,"%t %t","PluginTag","WardenWarnNotWarden");
+        CPrintToChat(client,"%T %T","PluginTag","WardenWarnNotWarden");
         return Plugin_Handled;
     }
     CreateWardenMenu(client,0);
@@ -148,7 +160,7 @@ public void CreateWardenMenu(int client,int selection)
 {
     Menu menu = new Menu(WardenMenuHandler, MENU_ACTIONS_ALL);
     g_WMenu[client] = menu;
-    menu.SetTitle("%T","WardenMenuTitle",LANG_SERVER);
+    menu.SetTitle("%T","WardenMenuTitle",client);
     if (cvarJBFS_CMD[WCMD_Cells].BoolValue)
     {
         menu.AddItem(WMENU_CHOICE1,"Open Cells");
@@ -158,6 +170,7 @@ public void CreateWardenMenu(int client,int selection)
     if (cvarJBFS_CMD[WCMD_Collisions].BoolValue) menu.AddItem(WMENU_CHOICE4,"Toggle Collisions");
     if (cvarJBFS_CMD[WCMD_Marker].BoolValue) menu.AddItem(WMENU_CHOICE5,"Marker");
     menu.AddItem(WMENU_CHOICE6,"Last Request");
+    if (cvarJBFS_CMD[WCMD_Mute].BoolValue) menu.AddItem(WMENU_CHOICE7,"Warden Mute");
     menu.DisplayAt(client,selection,MENU_TIME_FOREVER);
 }
 
@@ -211,6 +224,10 @@ public int AdminWardenMenuHandler(Menu menu, MenuAction action, int param1, int 
             else if (StrEqual(info, WMENU_CHOICE8))
             {
                 Command_Admin_UnlockWarden(param1,0);
+            }
+            else if (StrEqual(info, WMENU_CHOICE9))
+            {
+                Command_Admin_WardenMute(param1,0);
             }
             CreateAdminWardenMenu(param1, menu.Selection)
         }
@@ -271,6 +288,11 @@ public int AdminWardenMenuHandler(Menu menu, MenuAction action, int param1, int 
                 Format(display,sizeof(display),"%T","AdminWardenMenuUnlockWarden",param1);
                 return RedrawMenuItem(display);
             }
+            else if (StrEqual(info,WMENU_CHOICE9))
+            {
+                Format(display,sizeof(display),"%T","AdminWardenMenuWardenMute",param1);
+                return RedrawMenuItem(display);
+            }
         }
     }
     return 0;
@@ -284,7 +306,7 @@ public Action Command_Admin_WardenMenu(int client, int args)
 public void CreateAdminWardenMenu(int client,int selection)
 {
     Menu menu = new Menu(AdminWardenMenuHandler,MENU_ACTIONS_ALL);
-    menu.SetTitle("%T","WardenMenuTitle",LANG_SERVER);
+    menu.SetTitle("%T","WardenMenuTitle",client);
     if(CheckCommandAccess(client,"sm_forceopencells",2))
     {
         menu.AddItem(WMENU_CHOICE1,"Open Cells");
@@ -303,6 +325,10 @@ public void CreateAdminWardenMenu(int client,int selection)
     {
         menu.AddItem(WMENU_CHOICE7,"Lock Warden");
         menu.AddItem(WMENU_CHOICE8,"Unlock Warden");
+    }
+    if(CheckCommandAccess(client,"sm_awmute",2))
+    {
+        menu.AddItem(WMENU_CHOICE9,"Warden Mute");
     }
     menu.DisplayAt(client,selection,MENU_TIME_FOREVER);
 }
@@ -361,7 +387,7 @@ public int LRMenuHandler(Menu menu, MenuAction action, int param1, int param2)
         }
         case MenuAction_Cancel:
         {
-            CPrintToChatAll("%t %t","PluginTag","LRMenuClose")
+            CPrintToChatAll("%T %T","PluginTag","LRMenuClose")
             //do nothing
         }
         case MenuAction_End:
@@ -413,7 +439,7 @@ public void CreateLRMenu(int client)
 {
     Menu menu = new Menu(LRMenuHandler, MENU_ACTIONS_ALL);
     LRConfig.menu = menu;
-    menu.SetTitle("%T","LRMenuTitle",LANG_SERVER);
+    menu.SetTitle("%T","LRMenuTitle",client);
     menu.AddItem(LRCHOICE1,"Freeday for yourself");
     menu.AddItem(LRCHOICE2,"Freeday for others");
     menu.AddItem(LRCHOICE3,"Freeday for all");
@@ -430,6 +456,119 @@ public void CreateLRMenu(int client)
     }
     menu.ExitButton = false;
     menu.Display(client,MENU_TIME_FOREVER);
+}
+
+public int HelpSubMenuHandler(Menu menu, MenuAction action, int param1, int param2)
+{
+    switch (action)
+    {
+        case MenuAction_End:
+        {
+            delete menu;
+        }
+        case MenuAction_Cancel:
+        {
+            if (param2 == MenuCancel_ExitBack)
+            {
+                CreateHelpMenu(param1)
+            }
+        }
+        case MenuAction_Select:
+        {
+            //this menu has nothing selectable
+            //nothing to do here
+        }
+        case MenuAction_DrawItem:
+        {
+            return ITEMDRAW_DISABLED;
+        }
+        case MenuAction_DisplayItem:
+        {
+            char info[64];
+            menu.GetItem(param2, info, sizeof(info));
+            char display[64];
+            Format(display,sizeof(display),"%T",info,param1);
+            return RedrawMenuItem(display);
+        }
+    }
+    return 0;
+}
+
+public void CreateHelpSubMenu(int client,char[] cmdname)
+{
+    Menu menu = new Menu(HelpSubMenuHandler,MENU_ACTIONS_ALL);
+    menu.SetTitle("%T","HelpMenuTitle",client);
+    char helpcmd[64];
+    Format(helpcmd,sizeof(helpcmd),"%sCmd",cmdname);
+    char helphelp[64];
+    Format(helphelp,sizeof(helphelp),"%sHelp",cmdname);
+    menu.AddItem(helpcmd,helpcmd);
+    menu.AddItem(helphelp,helphelp);
+    menu.ExitBackButton = true;
+    menu.Display(client, MENU_TIME_FOREVER);
+}
+
+public int HelpMenuHandler(Menu menu, MenuAction action, int param1, int param2)
+{
+    switch (action)
+    {
+        case MenuAction_End:
+        {
+            delete menu;
+        }
+        case MenuAction_Cancel:
+        {
+            //pass
+        }
+        case MenuAction_Select:
+        {
+            char info[64];
+            menu.GetItem(param2, info, sizeof(info));
+            CreateHelpSubMenu(param1,info)
+        }
+        case MenuAction_DrawItem:
+        {
+            //pass
+        }
+        case MenuAction_DisplayItem:
+        {
+            char info[64];
+            menu.GetItem(param2, info, sizeof(info));
+            char temp[64];
+            Format(temp,sizeof(temp),"%sCmd",info)
+            char display[64];
+            Format(display,sizeof(display),"%T",temp,param1);
+            return RedrawMenuItem(display);
+        }
+    }
+    return 0;
+}
+
+//why is this hardcoded, you may ask?
+//well, it's the easiest way to allow conditional menu values based on player/config state
+public void CreateHelpMenu(int client)
+{
+    Menu menu = new Menu(HelpMenuHandler,MENU_ACTIONS_ALL);
+    menu.SetTitle("%T","HelpMenuTitle",client);
+    menu.AddItem("Help","Help");
+    menu.AddItem("Warden","Warden");
+    menu.AddItem("FF","FF");
+    menu.AddItem("Fire","Fire");
+    menu.AddItem("LR","LR");
+    menu.AddItem("Surrender","Surrender");
+    if (client == JBFS.Warden)
+    {
+        menu.AddItem("WardenMenu","WardenMenu");
+        menu.AddItem("Unwarden","Unwarden");
+        menu.AddItem("OpenCells","OpenCells");
+        menu.AddItem("CloseCells","CloseCells");
+        menu.AddItem("WardenFF","WardenFF");
+        menu.AddItem("WardenCol","WardenCol");
+        menu.AddItem("Marker","Marker");
+        menu.AddItem("GiveLR","GiveLR");
+        menu.AddItem("WardenMute","WardenMute");
+    }
+    menu.Display(client, MENU_TIME_FOREVER);
 }
 
 public int ClientMenuHandler(Menu menu, MenuAction action, int param1, int param2)
@@ -539,4 +678,250 @@ public Action Command_Admin_ForceLastRequest(int client, int args)
 public bool AdminGiveLR(int admin, int target)
 {
     return SetLRWinner(target,admin,true,admin)
+}
+
+public void OnAdminMenuReady(Handle aTopMenu)
+{
+    TopMenu topmenu = TopMenu.FromHandle(aTopMenu);
+
+    if (obj_jbfscommands == INVALID_TOPMENUOBJECT)
+    {
+        OnAdminMenuCreated(topmenu);
+    }
+
+    if (topmenu == hAdminMenu)
+    {
+        return;
+    }
+
+    hAdminMenu = topmenu;
+}
+
+public void OnAdminMenuCreated(Handle aTopMenu)
+{
+    TopMenu topmenu = TopMenu.FromHandle(aTopMenu);
+
+    if (topmenu == hAdminMenu && obj_jbfscommands != INVALID_TOPMENUOBJECT)
+    {
+        return;
+    }
+
+    obj_jbfscommands = AddToTopMenu(
+        topmenu,
+        "JBFS Commands",
+        TopMenuObject_Category,
+        CategoryHandler,
+        INVALID_TOPMENUOBJECT
+    );
+
+    AddToTopMenu(topmenu,
+        "sm_jailtime",
+        TopMenuObject_Item,ItemHandler,obj_jbfscommands,
+        "sm_jailtime",
+        cvarJBFS_CMD[ACMD_JailTime].IntValue
+    );
+    AddToTopMenu(topmenu,
+        "sm_awmute",
+        TopMenuObject_Item,ItemHandler,obj_jbfscommands,
+        "sm_awmute",
+        cvarJBFS_CMD[ACMD_WardenMute].IntValue
+    );
+    AddToTopMenu(topmenu,
+        "sm_freeday",
+        TopMenuObject_Item,ItemHandler,obj_jbfscommands,
+        "sm_freeday",
+        cvarJBFS_CMD[ACMD_ForceFreeday].IntValue
+    );
+    AddToTopMenu(topmenu,
+        "sm_forcelr",
+        TopMenuObject_Item,ItemHandler,obj_jbfscommands,
+        "sm_forcelr",
+        cvarJBFS_CMD[ACMD_ForceLR].IntValue
+    );
+    AddToTopMenu(topmenu,
+        "sm_acc",
+        TopMenuObject_Item,ItemHandler,obj_jbfscommands,
+        "sm_acc",
+        cvarJBFS_CMD[ACMD_CC].IntValue
+    );
+    AddToTopMenu(topmenu,
+        "sm_forceclosecells",
+        TopMenuObject_Item,ItemHandler,obj_jbfscommands,
+        "sm_forceclosecells",
+        cvarJBFS_CMD[ACMD_Cells].IntValue
+    );
+    AddToTopMenu(topmenu,
+        "sm_forceclosecells",
+        TopMenuObject_Item,ItemHandler,obj_jbfscommands,
+        "sm_forceclosecells",
+        cvarJBFS_CMD[ACMD_Cells].IntValue
+    );
+    AddToTopMenu(topmenu,
+        "sm_forceopencells",
+        TopMenuObject_Item,ItemHandler,obj_jbfscommands,
+        "sm_forceopencells",
+        cvarJBFS_CMD[ACMD_Cells].IntValue
+    );
+    AddToTopMenu(topmenu,
+        "sm_unlockwarden",
+        TopMenuObject_Item,ItemHandler,obj_jbfscommands,
+        "sm_unlockwarden",
+        cvarJBFS_CMD[ACMD_LockWarden].IntValue
+    );
+    AddToTopMenu(topmenu,
+        "sm_lockwarden",
+        TopMenuObject_Item,ItemHandler,obj_jbfscommands,
+        "sm_lockwarden",
+        cvarJBFS_CMD[ACMD_LockWarden].IntValue
+    );
+    AddToTopMenu(topmenu,
+        "sm_forceunwarden",
+        TopMenuObject_Item,ItemHandler,obj_jbfscommands,
+        "sm_forceunwarden",
+        cvarJBFS_CMD[ACMD_ForceWarden].IntValue
+    );
+    AddToTopMenu(topmenu,
+        "sm_forcewarden",
+        TopMenuObject_Item,ItemHandler,obj_jbfscommands,
+        "sm_forcewarden",
+        cvarJBFS_CMD[ACMD_ForceWarden].IntValue
+    );
+}
+
+public void CategoryHandler(
+    TopMenu topmenu, 
+    TopMenuAction action,
+    TopMenuObject object_id,
+    int param,
+    char[] buffer,
+    int maxlength)
+{
+    switch (action)
+    {
+        case TopMenuAction_DisplayTitle:
+        {
+            strcopy(buffer, maxlength, "JBFS Commands:");
+        }
+        case TopMenuAction_DisplayOption:
+        {
+            strcopy(buffer, maxlength, "JBFS Commands");
+        }
+    }
+}
+
+public void ItemHandler(
+    TopMenu topmenu,
+    TopMenuAction action,
+    TopMenuObject object_id,
+    int param,
+    char[] buffer,
+    int maxlength)
+{
+    char command[64];
+    topmenu.GetObjName(object_id,command,sizeof(command))
+    switch (action)
+    {
+        case TopMenuAction_DisplayOption:
+        {
+            if (StrEqual(command,"sm_forcewarden"))
+            {
+                strcopy(buffer,maxlength, "Force Warden");
+            }
+            else if (StrEqual(command,"sm_forceunwarden"))
+            {
+                strcopy(buffer,maxlength, "Force Unwarden");
+            }
+            else if (StrEqual(command,"sm_lockwarden"))
+            {
+                strcopy(buffer,maxlength, "Lock Warden");
+            }
+            else if (StrEqual(command,"sm_unlockwarden"))
+            {
+                strcopy(buffer,maxlength, "Unlock Warden");
+            }
+            else if (StrEqual(command,"sm_forceopencells"))
+            {
+                strcopy(buffer,maxlength, "Open Cells");
+            }
+            else if (StrEqual(command,"sm_forceclosecells"))
+            {
+                strcopy(buffer,maxlength, "Close Cells");
+            }
+            else if (StrEqual(command,"sm_aff"))
+            {
+                strcopy(buffer,maxlength, "Toggle Friendly Fire");
+            }
+            else if (StrEqual(command,"sm_acc"))
+            {
+                strcopy(buffer,maxlength, "Toggle Collisions");
+            }
+            else if (StrEqual(command,"sm_forcelr"))
+            {
+                strcopy(buffer,maxlength, "Force LR");
+            }
+            else if (StrEqual(command,"sm_freeday"))
+            {
+                strcopy(buffer,maxlength, "Force Freeday");
+            }
+            else if (StrEqual(command,"sm_awmute"))
+            {
+                strcopy(buffer,maxlength, "Toggle Warden Mute");
+            }
+            else if (StrEqual(command,"sm_jailtime"))
+            {
+                strcopy(buffer,maxlength, "Change Round Time");
+            }
+        }
+        case TopMenuAction_SelectOption:
+        {
+            if (StrEqual(command,"sm_forcewarden"))
+            {
+                Command_Admin_ForceWarden(param,0);
+            }
+            else if (StrEqual(command,"sm_forceunwarden"))
+            {
+                Command_Admin_ForceUnWarden(param,0);
+            }
+            else if (StrEqual(command,"sm_lockwarden"))
+            {
+                Command_Admin_LockWarden(param,0);
+            }
+            else if (StrEqual(command,"sm_unlockwarden"))
+            {
+                Command_Admin_UnlockWarden(param,0);
+            }
+            else if (StrEqual(command,"sm_forceopencells"))
+            {
+                Command_Admin_OpenCells(param,0);
+            }
+            else if (StrEqual(command,"sm_forceclosecells"))
+            {
+                Command_Admin_CloseCells(param,0);
+            }
+            else if (StrEqual(command,"sm_aff"))
+            {
+                Command_Admin_ToggleFriendlyFire(param,0);
+            }
+            else if (StrEqual(command,"sm_acc"))
+            {
+                Command_Admin_ToggleCollisions(param,0);
+            }
+            else if (StrEqual(command,"sm_forcelr"))
+            {
+                Command_Admin_ForceLastRequest(param,0);
+            }
+            else if (StrEqual(command,"sm_freeday"))
+            {
+                Command_Admin_ForceFreeday(param,0);
+            }
+            else if (StrEqual(command,"sm_awmute"))
+            {
+                Command_Admin_WardenMute(param,0);
+            }
+            else if (StrEqual(command,"sm_jailtime"))
+            {
+                Command_Admin_JailTime(param,0);
+            }
+        }
+    }
 }

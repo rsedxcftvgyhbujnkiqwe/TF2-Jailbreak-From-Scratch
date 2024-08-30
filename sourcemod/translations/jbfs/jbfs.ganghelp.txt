@@ -1,87 +1,137 @@
 "Phrases"
 {
-	"GangHelp"
+	"GangHelpMenuTitle"
 	{
-		"en"		"{wheat}List of gang related commands:"
-		"chi"		"{wheat}帮派相关命令列表："
-		"tr"		"{wheat}Çete ile ilgili komutların listesi:"
+		"en"		"Gang Help Menu"
+	}
+	"GangHelpCmd"
+	{
+		"en"		"/ganghelp, /ghelp"
 	}
 	"GangHelpHelp"
 	{
-		"en"		"/ganghelp, /ghelp - Print this help output."
-		"chi"		"/ganghelp, /ghelp - 打印此帮助输出。"
-		"tr"		"/ganghelp, /ghelp - Bu yardım çıktısını yazdır."
+		"en"		"Print this help output."
+		"chi"		"打印此帮助输出。"
+		"tr"		"Bu yardım çıktısını yazdır."
+	}
+	"GangMenuCmd"
+	{
+		"en"		"/gangmenu, /gmenu, /gang, /g"
 	}
 	"GangMenuHelp"
 	{
-		"en"		"/gangmenu, /gmenu, /gang, /g - Open the gang menu."
-		"chi"		"/gangmenu, /gmenu, /gang, /g - 打开帮派菜单。"
-		"tr"		"/gangmenu, /gmenu, /gang, /g - Çete menüsünü aç."
+		"en"		"Open the gang menu."
+		"chi"		"打开帮派菜单。"
+		"tr"		"Çete menüsünü aç."
+	}
+	"GangCreateCmd"
+	{
+		"en"		"/gangcreate"
 	}
 	"GangCreateHelp"
 	{
-		"en"		"/gangcreate - Create a gang."
-		"chi"		"/gangcreate - 创建一个帮派。"
-		"tr"		"/gangcreate - Çete oluştur."
+		"en"		"Create a gang."
+		"chi"		"创建一个帮派。"
+		"tr"		"Çete oluştur."
+	}
+	"GangJoinCmd"
+	{
+		"en"		"/gangjoin, /gjoin"
 	}
 	"GangJoinHelp"
 	{
-		"en"		"/gangjoin, /gjoin - Join a gang you have been invited to."
-		"chi"		"/gangjoin, /gjoin - 加入你被邀请的帮派。"
-		"tr"		"/gangjoin, /gjoin - Davet edildiğin bir çeteye katıl."
+		"en"		"Join a gang you have been invited to."
+		"chi"		"加入你被邀请的帮派。"
+		"tr"		"Davet edildiğin bir çeteye katıl."
+	}
+	"GangLeaveCmd"
+	{
+		"en"		"/gangleave, /gleave"
 	}
 	"GangLeaveHelp"
 	{
-		"en"		"/gangleave, /gleave - Leave your gang."
-		"chi"		"/gangleave, /gleave - 离开你的帮派。"
-		"tr"		"/gangleave, /gleave - Çetenden ayrıl."
+		"en"		"Leave your gang."
+		"chi"		"离开你的帮派。"
+		"tr"		"Çetenden ayrıl."
+	}
+	"GangChatCmd"
+	{
+		"en"		"/gangchat, /gc"
 	}
 	"GangChatHelp"
 	{
-		"en"		"/gangchat, /gc - Toggle gang chat."
-		"chi"		"/gangchat, /gc - 切换帮派聊天。"
-		"tr"		"/gangchat, /gc - Çete sohbetini aç/kapat."
+		"en"		"Toggle gang chat."
+		"chi"		"切换帮派聊天。"
+		"tr"		"Çete sohbetini aç/kapat."
+	}
+	"GangPointsCmd"
+	{
+		"en"		"/gangpoints, /gpoints"
 	}
 	"GangPointsHelp"
 	{
-		"en"		"/gangpoints, /gpoints - List gang points."
-		"chi"		"/gangpoints, /gpoints - 列出帮派积分。"
-		"tr"		"/gangpoints, /gpoints - Çete puanını sırala."
+		"en"		"List gang points."
+		"chi"		"列出帮派积分。"
+		"tr"		"Çete puanını sırala."
+	}
+	"GangInviteCmd"
+	{
+		"en"		"/ganginvite, /ginv"
 	}
 	"GangInviteHelp"
 	{
-		"en"		"/ganginvite, /ginv - Invite a player to your gang."
-		"chi"		"/ganginvite, /ginv - 邀请玩家加入你的帮派。"
-		"tr"		"/ganginvite, /ginv - Çetene bir oyuncu davet et."
+		"en"		"Invite a player to your gang."
+		"chi"		"邀请玩家加入你的帮派。"
+		"tr"		"Çetene bir oyuncu davet et."
+	}
+	"GangNameCmd"
+	{
+		"en"		"/gangname, /gname"
 	}
 	"GangNameHelp"
 	{
-		"en"		"/gangname, /gname - Change your gang's name."
-		"chi"		"/gangname, /gname - 更改你的帮派名称。"
-		"tr"		"/gangname, /gname - Senin çetenin ismini değiştir."
+		"en"		"Change your gang's name."
+		"chi"		"更改你的帮派名称。"
+		"tr"		"Senin çetenin ismini değiştir."
+	}
+	"GangTagCmd"
+	{
+		"en"		"/gangtag, /gtag"
 	}
 	"GangTagHelp"
 	{
-		"en"		"/gangtag, /gtag - Change your gang's tag."
-		"chi"		"/gangtag, /gtag - 更改你的帮派标签。"
-		"tr"		"/gangtag, /gtag - Senin çetenin etiketini değiştir."
+		"en"		"Change your gang's tag."
+		"chi"		"更改你的帮派标签。"
+		"tr"		"Senin çetenin etiketini değiştir."
+	}
+	"GangPromoteCmd"
+	{
+		"en"		"/gangpromote, /gpromo"
 	}
 	"GangPromoteHelp"
 	{
-		"en"		"/gangpromote, /gpromo - Promote a player in your gang."
-		"chi"		"/gangpromote, /gpromo - 提升你帮派中的一个玩家。"
-		"tr"		"/gangpromote, /gpromo - Çetendeki bir oyuncuyu terfi ettir."
+		"en"		"Promote a player in your gang."
+		"chi"		"提升你帮派中的一个玩家。"
+		"tr"		"Çetendeki bir oyuncuyu terfi ettir."
+	}
+	"GangDemoteCmd"
+	{
+		"en"		"/gangdemote, /gdemo"
 	}
 	"GangDemoteHelp"
 	{
-		"en"		"/gangdemote, /gdemo - Demote a player in your gang."
-		"chi"		"/gangdemote, /gdemo - 降低你帮派中的一个玩家的级别。"
-		"tr"		"/gangdemote, /gdemo - Çetendeki bir oyuncunun rütbesini düşür."
+		"en"		"Demote a player in your gang."
+		"chi"		"降低你帮派中的一个玩家的级别。"
+		"tr"		"Çetendeki bir oyuncunun rütbesini düşür."
+	}
+	"GangKickCmd"
+	{
+		"en"		"/gangkick, /gkick"
 	}
 	"GangKickHelp"
 	{
-		"en"		"/gangkick, /gkick - Kick a player from your gang."
-		"chi"		"/gangkick, /gkick - 从你的帮派中踢出一个玩家。"
-		"tr"		"/gangkick, /gkick - Çetenden bir oyuncuyu at."
+		"en"		"Kick a player from your gang."
+		"chi"		"从你的帮派中踢出一个玩家。"
+		"tr"		"Çetenden bir oyuncuyu at."
 	}
 }

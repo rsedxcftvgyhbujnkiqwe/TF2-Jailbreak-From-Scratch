@@ -1,5 +1,5 @@
 #define PLUGIN_NAME         "[JBFS] Gangs"
-#define PLUGIN_VERSION      "1.0"
+#define PLUGIN_VERSION      "1.1.0"
 #define PLUGIN_AUTHOR       "blank"
 #define PLUGIN_DESCRIPTION  "Gang plugin for JBFS"
 
@@ -31,12 +31,13 @@ public Plugin myinfo =
 
 public void OnPluginStart()
 {
-    cvarJBFS[DatabaseName] = CreateConVar("sm_jbfsg_database","jbfsgangs","Name of SQL database to use. Configured in databases.cfg",FCVAR_NOTIFY)
-    cvarJBFS[AnnounceGangCreate] = CreateConVar("sm_jbfsg_announcegangcreate","1","Whether to announce to all players when gangs are created/abandoned.\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0)
-    cvarJBFS[AnnounceGangName] = CreateConVar("sm_jbfsg_announcegangname","1","Whether to announce to all players when gangs change their names.\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0)
-    cvarJBFS[GangChat] = CreateConVar("sm_jbfsg_gangchat","1","Enable the Gang chat feature, which allows gang members to send messages only other gang members can see.\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0)
-    cvarJBFS[MaxGangSize] = CreateConVar("sm_jbfs_maxgangsize","12","Maximum number of players allowed in a gang.\nReducing this later will not prune members",FCVAR_NOTIFY,true,1.0,true,64.0)
-    cvarJBFS[GangTags] = CreateConVar("sm_jbfs_gangtags","1","Enable gang tags in chat.\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0)
+    PrintToServer("===Starting %s, version %s===",PLUGIN_NAME,PLUGIN_VERSION);
+    cvarJBFS[DatabaseName] = CreateConVar("sm_jbfsg_database","jbfsgangs","Name of SQL database to use. Configured in databases.cfg",FCVAR_NOTIFY);
+    cvarJBFS[AnnounceGangCreate] = CreateConVar("sm_jbfsg_announcegangcreate","1","Whether to announce to all players when gangs are created/abandoned.\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0);
+    cvarJBFS[AnnounceGangName] = CreateConVar("sm_jbfsg_announcegangname","1","Whether to announce to all players when gangs change their names.\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0);
+    cvarJBFS[GangChat] = CreateConVar("sm_jbfsg_gangchat","1","Enable the Gang chat feature, which allows gang members to send messages only other gang members can see.\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0);
+    cvarJBFS[MaxGangSize] = CreateConVar("sm_jbfs_maxgangsize","12","Maximum number of players allowed in a gang.\nReducing this later will not prune members",FCVAR_NOTIFY,true,1.0,true,64.0);
+    cvarJBFS[GangTags] = CreateConVar("sm_jbfs_gangtags","1","Enable gang tags in chat.\n0 = No\n1 = Yes",FCVAR_NOTIFY,true,0.0,true,1.0);
     cvarJBFS[Version] = CreateConVar("jbfst_version",PLUGIN_VERSION,PLUGIN_NAME,FCVAR_REPLICATED | FCVAR_NOTIFY | FCVAR_SPONLY | FCVAR_DONTRECORD);
     AutoExecConfig(true,"jbfsgangs");
 

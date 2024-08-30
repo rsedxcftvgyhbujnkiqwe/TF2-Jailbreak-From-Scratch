@@ -76,7 +76,7 @@ public int GangMenuHandler(Menu menu, MenuAction action, int param1, int param2)
                 //officer
                 else if (StrEqual(info, GMENUCHOICE_GANG4) && g_PlayerData[param1].rank >= GangRank_Officer)
                 {
-                    CreateClientSelectMenu(param1,FilterFn_Inviteable,RunFn_InivteToGang,CreateGangMenu);
+                    CreateClientSelectMenu(param1,FilterFn_Inviteable,RunFn_InivteToGang,CreateGangMenu,true);
                     reopen_menu = false;
                 }
                 else if (StrEqual(info, GMENUCHOICE_GANG5) && g_PlayerData[param1].rank >= GangRank_Officer)
@@ -340,6 +340,124 @@ public void CreateShopMenu(int client,int selection)
 }
 
 
+public int HelpSubMenuHandler(Menu menu, MenuAction action, int param1, int param2)
+{
+    switch (action)
+    {
+        case MenuAction_End:
+        {
+            delete menu;
+        }
+        case MenuAction_Cancel:
+        {
+            if (param2 == MenuCancel_ExitBack)
+            {
+                CreateHelpMenu(param1)
+            }
+        }
+        case MenuAction_Select:
+        {
+            //this menu has nothing selectable
+            //nothing to do here
+        }
+        case MenuAction_DrawItem:
+        {
+            return ITEMDRAW_DISABLED;
+        }
+        case MenuAction_DisplayItem:
+        {
+            char info[64];
+            menu.GetItem(param2, info, sizeof(info));
+            char display[64];
+            Format(display,sizeof(display),"%T",info,param1);
+            return RedrawMenuItem(display);
+        }
+    }
+    return 0;
+}
+
+public void CreateHelpSubMenu(int client,char[] cmdname)
+{
+    Menu menu = new Menu(HelpSubMenuHandler,MENU_ACTIONS_ALL);
+    menu.SetTitle("%T","GangHelpMenuTitle",client);
+    char helpcmd[64];
+    Format(helpcmd,sizeof(helpcmd),"Gang%sCmd",cmdname);
+    char helphelp[64];
+    Format(helphelp,sizeof(helphelp),"Gang%sHelp",cmdname);
+    menu.AddItem(helpcmd,helpcmd);
+    menu.AddItem(helphelp,helphelp);
+    menu.ExitBackButton = true;
+    menu.Display(client, MENU_TIME_FOREVER);
+}
+
+public int HelpMenuHandler(Menu menu, MenuAction action, int param1, int param2)
+{
+    switch (action)
+    {
+        case MenuAction_End:
+        {
+            delete menu;
+        }
+        case MenuAction_Cancel:
+        {
+            //pass
+        }
+        case MenuAction_Select:
+        {
+            char info[64];
+            menu.GetItem(param2, info, sizeof(info));
+            CreateHelpSubMenu(param1,info)
+        }
+        case MenuAction_DrawItem:
+        {
+            //pass
+        }
+        case MenuAction_DisplayItem:
+        {
+            char info[64];
+            menu.GetItem(param2, info, sizeof(info));
+            char temp[64];
+            Format(temp,sizeof(temp),"Gang%sCmd",info)
+            char display[64];
+            Format(display,sizeof(display),"%T",temp,param1);
+            return RedrawMenuItem(display);
+        }
+    }
+    return 0;
+}
+
+//why is this hardcoded, you may ask?
+//well, it's the easiest way to allow conditional menu values based on player/config state
+public void CreateHelpMenu(int client)
+{
+    Menu menu = new Menu(HelpMenuHandler,MENU_ACTIONS_ALL);
+    int rank = g_PlayerData[client].rank;
+    menu.SetTitle("%T","GangHelpMenuTitle",client);
+    menu.AddItem("Help","Help")
+    menu.AddItem("Menu","Menu")
+    menu.AddItem("Create","Create")
+    menu.AddItem("Join","Join")
+    if (rank >= GangRank_Muscle)
+    {
+        menu.AddItem("Leave","Leave")
+        menu.AddItem("Chat","Chat")
+        menu.AddItem("Points","Points")
+    }
+    if (rank >= GangRank_Officer)
+    {
+        menu.AddItem("Invite","Invite")
+    }
+    if (rank == GangRank_Boss)
+    {
+        menu.AddItem("Name","Name")
+        menu.AddItem("Tag","Tag")
+        menu.AddItem("Promote","Promote")
+        menu.AddItem("Demote","Demote")
+        menu.AddItem("Kick","Kick")
+    }
+    menu.Display(client, MENU_TIME_FOREVER);
+}
+
 //client select menu
 
 public int ClientMenuHandler(Menu menu, MenuAction action, int param1, int param2)
@@ -376,7 +494,7 @@ public int ClientMenuHandler(Menu menu, MenuAction action, int param1, int param
     return 0;
 }
 
-public void CreateClientSelectMenu(int client, ClientFilterFunc filterFn, ClientRunFunc runFn, MenuCallbackFunc callbackFn)
+void CreateClientSelectMenu(int client, ClientFilterFunc filterFn, ClientRunFunc runFn, MenuCallbackFunc callbackFn,bool backbutton=false)
 {
     g_RunFn[client] = runFn;
     g_filterFn[client] = filterFn;
@@ -413,6 +531,7 @@ public void CreateClientSelectMenu(int client, ClientFilterFunc filterFn, Client
         Call_Finish();
         return;
     }
+    if (backbutton) menu.ExitBackButton = true;
     menu.Display(client, MENU_TIME_FOREVER);
 }
 

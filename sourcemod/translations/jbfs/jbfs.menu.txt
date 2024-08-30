@@ -48,6 +48,10 @@
 		"chi"		"最终请求"
 		"tr"		"Son İstek"
 	}
+	"WardenMenuMute"
+	{
+		"en"		"Toggle Warden Mute"
+	}
 	"AdminWardenMenuForceWarden"
 	{
 		"en"		"Force Random Warden"

@@ -1,29 +1,6 @@
 Action Command_GangHelp(int client, int args)
 {
-    int rank = g_PlayerData[client].rank;
-    CPrintToChat(client,"%t %t","PluginGangTag","GangHelp")
-    CPrintToChat(client,"%t %t","PluginGangTag","GangHelpHelp")
-    CPrintToChat(client,"%t %t","PluginGangTag","GangMenuHelp")
-    CPrintToChat(client,"%t %t","PluginGangTag","GangCreateHelp")
-    CPrintToChat(client,"%t %t","PluginGangTag","GangJoinHelp")
-    if (rank >= GangRank_Muscle)
-    {
-        CPrintToChat(client,"%t %t","PluginGangTag","GangLeaveHelp")
-        CPrintToChat(client,"%t %t","PluginGangTag","GangChatHelp")
-        CPrintToChat(client,"%t %t","PluginGangTag","GangPointsHelp")
-    }
-    if (rank >= GangRank_Officer)
-    {
-        CPrintToChat(client,"%t %t","PluginGangTag","GangInviteHelp")
-    }
-    if (rank == GangRank_Boss)
-    {
-        CPrintToChat(client,"%t %t","PluginGangTag","GangNameHelp")
-        CPrintToChat(client,"%t %t","PluginGangTag","GangTagHelp")
-        CPrintToChat(client,"%t %t","PluginGangTag","GangPromoteHelp")
-        CPrintToChat(client,"%t %t","PluginGangTag","GangDemoteHelp")
-        CPrintToChat(client,"%t %t","PluginGangTag","GangKickHelp")
-    }
+    CreateHelpMenu(client);
     return Plugin_Handled;
 }
 

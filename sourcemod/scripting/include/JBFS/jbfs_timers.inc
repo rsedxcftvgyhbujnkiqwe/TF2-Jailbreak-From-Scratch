@@ -1,3 +1,9 @@
+public Action Timer_Advertisement(Handle timer)
+{
+    CPrintToChatAll("%t %t","PluginTag","PluginAdvertisement",PLUGIN_VERSION)
+    return Plugin_Continue;
+}
+
 public Action Timer_ChooseWarden(Handle timer)
 {
     ChooseWarden();
@@ -52,6 +58,12 @@ public Action Timer_AllowSurrender(Handle timer, int client)
 public Action Timer_AllowSearch(Handle timer,int client)
 {
     JBFS.BeenSearched[client] = false;
+    return Plugin_Stop;
+}
+
+public Action Timer_RebelStatus(Handle timer, int client)
+{
+    ResetRebelStatus(client);
     return Plugin_Stop;
 }
 

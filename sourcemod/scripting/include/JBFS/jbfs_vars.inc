@@ -44,6 +44,9 @@ enum
     WeaponSearch,
     SearchTime,
     WardenLockTime,
+    RebelTime,
+    RebelAmmo,
+    AdminMuteImmunity,
     Version
 }
 ConVar cvarJBFS[Version+1];
@@ -65,6 +68,7 @@ enum
     WCMD_FriendlyFire,
     WCMD_Collisions,
     WCMD_Marker,
+    WCMD_Mute,
     ACMD_ForceWarden,
     ACMD_LockWarden,
     ACMD_JailTime,
@@ -73,6 +77,7 @@ enum
     ACMD_CC,
     ACMD_ForceLR,
     ACMD_ForceFreeday,
+    ACMD_WardenMute,
     ACMD_WardenMenu
     
 }
@@ -90,6 +95,13 @@ enum
     UW_Fire,
     UW_TeamChange,
     UW_Silent
+}
+
+enum
+{
+    RebelReason_None,
+    RebelReason_Attack,
+    RebelReason_Ammo
 }
 
 enum struct gamemode
@@ -117,6 +129,10 @@ enum struct gamemode
     Handle SearchTimers[MAXPLAYERS+1];
     bool BeenSearched[MAXPLAYERS+1];
     bool SearchFound[MAXPLAYERS+1];
+    bool IsRebel[MAXPLAYERS+1];
+    Handle RebelTimer[MAXPLAYERS+1];
+    bool WardenMuteActive;
+    bool WardenMuted[MAXPLAYERS+1];
 }
 public gamemode JBFS;
 
@@ -294,3 +310,7 @@ int g_PrevButtons[MAXPLAYERS+1];
 
 Handle AimHud;
 Handle SearchHud;
+
+//admin menu
+TopMenu hAdminMenu = null;
+TopMenuObject obj_jbfscommands;

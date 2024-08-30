@@ -1,4 +1,10 @@
 //Client Commands
+public Action Command_HelpMenu(int client, int args)
+{
+    CreateHelpMenu(client)
+    return Plugin_Handled;
+}
+
 public Action Command_Warden(int client, int args)
 {
     if (GetClientTeam(client)!=BLU)
@@ -272,6 +278,32 @@ public Action Command_WardenMarker(int client, int args)
     return Plugin_Handled;
 }
 
+public Action Command_WardenMute(int client, int args)
+{
+    if (client == JBFS.Warden)
+    {
+
+        if (!cvarJBFS_CMD[WCMD_Mute].BoolValue)
+        {
+            CPrintToChat(client,"%t %t","PluginTag","CommandDisabled");
+            return Plugin_Handled;
+        }
+        if (!JBFS.WardenMuteActive)
+        {
+            IssueWardenMute()
+        }
+        else
+        {
+            ResetWardenMute()
+        }
+    }
+    else
+    {
+        CPrintToChat(client,"%t %t","PluginTag","WardenWarnNotWarden");
+    }
+    return Plugin_Handled;
+}
+
 //Admin Commands
 public Action Command_Admin_ForceWarden(int client, int args)
 {
@@ -449,5 +481,19 @@ public Action Command_Admin_ForceFreeday(int client, int args)
     GetClientEyeAngles(client,clientangles);
     LRSetFreeday(target);
     TeleportEntity(target,clientpos,clientangles,NULL_VECTOR);
+    return Plugin_Handled;
+}
+
+
+public Action Command_Admin_WardenMute(int client, int args)
+{
+    if (!JBFS.WardenMuteActive)
+    {
+        IssueWardenMute()
+    }
+    else
+    {
+        ResetWardenMute()
+    }
     return Plugin_Handled;
 }
