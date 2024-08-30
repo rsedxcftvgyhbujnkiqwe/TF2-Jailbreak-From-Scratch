@@ -1,7 +1,7 @@
-## JBFS Timeouts v1.1.0
+## JBFS Timeouts v1.1.1
 ### Changes
 - Changed timestamp column in SQL from int to datetime.
-## JBFS Gangs v1.1.1
+## JBFS Gangs v1.1.0
 ### Changes
 - Updated the help command to spawn a help menu instead of printing to chat.
 - Updated Gangs SQL table definition. creation_date renamed to creation_timestamp and changed to datetime from int.
