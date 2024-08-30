@@ -1,3 +1,22 @@
+## JBFS Timeouts v1.1.0
+### Changes
+- Changed timestamp column in SQL from int to datetime.
+## JBFS Gangs v1.1.1
+### Changes
+- Updated the help command to spawn a help menu instead of printing to chat.
+- Updated Gangs SQL table definition. creation_date renamed to creation_timestamp and changed to datetime from int.
+### Bug Fixes
+- Fixed SQL issue in DB_GetPlayerMID function
+- Fixed Gang Invite player selection menu not having a back button
+## JBFS v1.3.0
+###  Changes
+- Added Rebel system. If enabled, prisoners will glow for a short while after attacking guards, and additionally after grabbing ammo (if configured). Notification is made in chat for rebels.
+- Added Warden Mute command. Allows the warden/admins to toggle a mute which mutes all players in the server except for the Warden.
+- Updated the help command to spawn a help menu instead of printing to chat.
+- Renamed the SetRebel VScript function to RemoveFreeday and updated functionality. Inputs the same.
+### Bug Fixes
+- Fixed some menu titles not being translated properly
+- Updated translations
 ## JBFS v1.2.3
 ### Bug Fixes
 - Fixed issue where guard crit convar was not being evaluated properly

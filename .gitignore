@@ -23,7 +23,6 @@
 
 !/sourcemod/configs/
 /sourcemod/configs/*
-!/sourcemod/configs/adminmenu_jbfs.txt
 !/sourcemod/configs/jbfs
 !/sourcemod/configs/jbfs/*
 
