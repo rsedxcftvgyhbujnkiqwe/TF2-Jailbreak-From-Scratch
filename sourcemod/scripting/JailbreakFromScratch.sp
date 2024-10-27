@@ -1,5 +1,5 @@
 #define PLUGIN_NAME         "Jailbreak From Scratch"
-#define PLUGIN_VERSION      "1.3.0"
+#define PLUGIN_VERSION      "1.3.1"
 #define PLUGIN_AUTHOR       "blank"
 #define PLUGIN_DESCRIPTION  "Minimal TF2 Jailbreak plugin"
 
