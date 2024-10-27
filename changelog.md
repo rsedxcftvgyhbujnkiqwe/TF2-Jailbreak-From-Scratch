@@ -1,3 +1,7 @@
+## JBFS v1.3.1
+### Bug Fixes
+- Fixed some faulty translation formatting preventing LR selection from warden menu
+- Fixed windows gamedata for weapon pickup
 ## JBFS Timeouts v1.1.1
 ### Changes
 - Changed timestamp column in SQL from int to datetime.
