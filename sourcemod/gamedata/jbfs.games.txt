@@ -7,11 +7,11 @@
         {
             "CTFDroppedWeapon::InitPickedUpWeapon"
             {
-				"library"	"server"
-				"linux"		"@_ZN16CTFDroppedWeapon18InitPickedUpWeaponEP9CTFPlayerP13CTFWeaponBase"
-				"linux64"	"@_ZN16CTFDroppedWeapon18InitPickedUpWeaponEP9CTFPlayerP13CTFWeaponBase"
-				"windows"	"\x55\x8B\xEC\x83\xEC\x14\xD9\xEE\x53"
-				"windows64"	"\x48\x89\x5C\x24\x08\x48\x89\x6C\x24\x10\x48\x89\x74\x24\x18\x57\x41\x56\x41\x57\x48\x83\xEC\x40\x4C\x8B\xFA"
+                "library"   "server"
+                "linux"     "@_ZN16CTFDroppedWeapon18InitPickedUpWeaponEP9CTFPlayerP13CTFWeaponBase"
+                "linux64"   "@_ZN16CTFDroppedWeapon18InitPickedUpWeaponEP9CTFPlayerP13CTFWeaponBase"
+                "windows"   "\x55\x8B\xEC\x83\xEC\x14\xD9\xEE\x53"
+                "windows64" "\x48\x89\x5C\x24\x08\x48\x89\x6C\x24\x10\x48\x89\x74\x24\x18\x57\x41\x56\x41\x57\x48\x83\xEC\x40\x4C\x8B\xFA"
             }
         }
         "Functions"
