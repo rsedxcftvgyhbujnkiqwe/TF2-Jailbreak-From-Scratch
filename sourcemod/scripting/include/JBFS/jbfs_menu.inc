@@ -72,7 +72,7 @@ public int WardenMenuHandler(Menu menu, MenuAction action, int param1, int param
             }
             else if (StrEqual(info, WMENU_CHOICE6))
             {
-                CPrintToChat(param1,"%T %T","PluginTag","CommandUsageGiveLR")
+                Command_GiveLastRequest(param1,0);
             }
             else if (StrEqual(info, WMENU_CHOICE7))
             {
@@ -88,7 +88,7 @@ public int WardenMenuHandler(Menu menu, MenuAction action, int param1, int param
             {
                 case MenuCancel_Exit,MenuCancel_NoDisplay:
                 {
-                    CPrintToChat(param1,"%T %T","PluginTag","WardenMenuReOpen");
+                    CPrintToChat(param1,"%T %T","PluginTag",param1,"WardenMenuReOpen",param1);
                 }
             }
         }
@@ -149,7 +149,7 @@ public Action Command_WardenMenu(int client, int args)
 {
     if(client!=JBFS.Warden)
     {
-        CPrintToChat(client,"%T %T","PluginTag","WardenWarnNotWarden");
+        CPrintToChat(client,"%T %T","PluginTag",client,"WardenWarnNotWarden",client);
         return Plugin_Handled;
     }
     CreateWardenMenu(client,0);
@@ -387,7 +387,7 @@ public int LRMenuHandler(Menu menu, MenuAction action, int param1, int param2)
         }
         case MenuAction_Cancel:
         {
-            CPrintToChatAll("%T %T","PluginTag","LRMenuClose")
+            CPrintToChatAll("%T %T","PluginTag",param1,"LRMenuClose",param1)
             //do nothing
         }
         case MenuAction_End:

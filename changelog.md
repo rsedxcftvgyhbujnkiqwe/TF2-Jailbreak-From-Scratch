@@ -1,3 +1,15 @@
+## JBFS Timeouts v1.1.2
+### Changes
+- Changed release compilation target to Sourcemod 1.12 now that it's stable
+## JBFS Gangs v1.1.1
+### Changes
+- Changed release compilation target to Sourcemod 1.12 now that it's stable
+## JBFS v1.3.1
+### Changes
+- Changed release compilation target to Sourcemod 1.12 now that it's stable
+### Bug Fixes
+- Fixed some faulty translation formatting preventing LR selection from warden menu
+- Fixed windows gamedata for weapon pickup
 ## JBFS Timeouts v1.1.1
 ### Changes
 - Changed timestamp column in SQL from int to datetime.
