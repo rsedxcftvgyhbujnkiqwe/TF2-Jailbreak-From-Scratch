@@ -88,7 +88,7 @@ public int WardenMenuHandler(Menu menu, MenuAction action, int param1, int param
             {
                 case MenuCancel_Exit,MenuCancel_NoDisplay:
                 {
-                    CPrintToChat(param1,"%T %T","PluginTag",client,"WardenMenuReOpen",client);
+                    CPrintToChat(param1,"%T %T","PluginTag",param1,"WardenMenuReOpen",param1);
                 }
             }
         }
