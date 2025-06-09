@@ -1,3 +1,6 @@
+# Archive Notice
+To put it bluntly, I have neither the time not motivation to work on this plugin much anymore. I already did not play jailbreak much but I've played less and less and grown uninterested in it. If anyone would like to spiritually succeed this plugin you have my blessings but I doubt I will return to working on it. There is a chance, but maintaining a plugin with gamedata fixes and code changes for updates for a mode I don't even play is just annoying. I apologize to anyone who was invested in this project. At the least, it helped me learn sourcemod.
+
 # Jailbreak From Scratch
 A hand made jailbreak plugin for Team Fortress 2, with more modern features.
 
